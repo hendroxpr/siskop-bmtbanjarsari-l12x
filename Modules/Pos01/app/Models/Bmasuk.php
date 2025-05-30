@@ -27,11 +27,7 @@ class Bmasuk extends Model
     {
         return $this->belongsTo(Supplier::class,'idsupplier');
     }
-    public function jenispembayaran()
-    {
-        return $this->belongsTo(Jenispembayaran::class,'idjenispembayaran');
-    }
-   
+       
     /**
      * The attributes that are mass assignable.
      *

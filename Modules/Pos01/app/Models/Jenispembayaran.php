@@ -17,10 +17,6 @@ class Jenispembayaran extends Model
     public $timestamps = false;
     public $incrementing = false;
 
-    public function bmasuk()
-    {
-        return $this->hasMany(Bmasuk::class,'idjenispembayaran','id');
-    }
     public function stok()
     {
         return $this->hasMany(Stok::class,'idjenispembayaran','id');

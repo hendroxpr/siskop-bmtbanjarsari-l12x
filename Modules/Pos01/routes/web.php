@@ -3,10 +3,12 @@
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Modules\Pos01\Http\Controllers\laporan\KartustokController;
+use Modules\Pos01\Http\Controllers\laporan\PembelianController;
 use Modules\Pos01\Http\Controllers\laporan\StokkeluarmasukController;
 use Modules\Pos01\Http\Controllers\laporan\StokbarangController;
+use Modules\Pos01\Http\Controllers\master\MaminController;
 use Modules\Pos01\Http\Controllers\pengaturan\ParameterController;
-use Modules\Pos01\Http\Controllers\transaksi\BayarhutangController;
+use Modules\Pos01\Http\Controllers\transaksi\BayarhutangcustomerController;
 use Modules\Pos01\Http\Controllers\transaksi\BmasukController;
 use Modules\Pos01\Http\Controllers\master\BarangController;
 use Modules\Pos01\Http\Controllers\master\BarangruangController;
@@ -19,7 +21,9 @@ use Modules\Pos01\Http\Controllers\master\SatuanController;
 use Modules\Pos01\Http\Controllers\master\SupplierController;
 use Modules\Pos01\Http\Controllers\master\LembagaController;
 use Modules\Pos01\Http\Controllers\Pos01Controller;
+use Modules\Pos01\Http\Controllers\transaksi\BayarhutangSupplierController;
 use Modules\Pos01\Http\Controllers\transaksi\BkeluarController;
+use Modules\Pos01\Http\Controllers\transaksi\MkeluarController;
 
 // use Modules\Pos01\Http\Controllers\master\AnggotaController;
 /*
@@ -83,6 +87,16 @@ Route::post('/master/barangruangkirimsyarat', [BarangruangController::class, 'ki
 Route::get('/master/barangruangedit/{id}', [BarangruangController::class, 'edit'])->name('pos01.master.barangruang_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
 Route::get('/master/barangruangdestroy/{id}', [BarangruangController::class, 'destroy'])->name('pos01.master.barangruang_destroy')->middleware('auth'); /* hapus data barangruang */
 
+/* master - mamin */
+Route::get('/master/mamin', [MaminController  ::class, 'index'])->name('pos01.master.mamin.index')->middleware('auth'); /* halaman mamin */
+Route::get('/master/maminshow', [MaminController::class, 'show'])->name('pos01.master.mamin_show')->middleware('auth'); /* menampilkan data mamin pada datatable javascript */
+Route::get('/master/maminshowmamin', [MaminController::class, 'showmamin'])->name('pos01.master.mamin_showmamin')->middleware('auth'); /* menampilkan data mamin untuk pilihan pada datatable javascript */
+Route::get('/master/maminlistkategori', [MaminController::class, 'listkategori'])->name('pos01.master.mamin_listkategori')->middleware('auth'); /* menampilkan list kategori */
+Route::get('/master/maminlistsatuan', [MaminController::class, 'listsatuan'])->name('pos01.master.mamin_listsatuan')->middleware('auth'); /* menampilkan satuan */
+Route::post('/master/mamincreate', [MaminController::class, 'create'])->name('pos01.master.mamin_create')->middleware('auth'); /* menambah mamin */
+Route::get('/master/maminedit/{id}', [MaminController::class, 'edit'])->name('pos01.master.mamin_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/master/mamindestroy/{id}', [MaminController::class, 'destroy'])->name('pos01.master.mamin_destroy')->middleware('auth'); /* hapus data mamin */
+
 /* master - barcode */
 Route::get('/master/barcode', [BarcodeController::class, 'index'])->name('pos01.master.barcode.index')->middleware('auth'); /* halaman barcode */
 Route::get('/master/barcodeshow', [BarcodeController::class, 'show'])->name('pos01.master.barcode_show')->middleware('auth'); /* menampilkan data barcode pada datatable javascript */
@@ -95,7 +109,6 @@ Route::get('/master/barcodedestroy/{id}', [BarcodeController::class, 'destroy'])
 Route::get('/master/supplier', [SupplierController::class, 'index'])->name('pos01.master.supplier.index')->middleware('auth'); /* halaman supplier */
 Route::get('/master/suppliershow', [SupplierController::class, 'show'])->name('pos01.master.supplier_show')->middleware('auth'); /* menampilkan data supplier pada datatable javascript */
 Route::post('/master/suppliercreate', [SupplierController::class, 'create'])->name('pos01.master.supplier_create')->middleware('auth'); /* menambah supplier */
-Route::get('/master/supplieredit/{id}', [SupplierController::class, 'edit'])->name('pos01.master.supplier_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
 Route::get('/master/supplieredit/{id}', [SupplierController::class, 'edit'])->name('pos01.master.supplier_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
 Route::get('/master/supplierdestroy/{id}', [SupplierController::class, 'destroy'])->name('pos01.master.supplier_destroy')->middleware('auth'); /* hapus data supplier */
 
@@ -137,7 +150,9 @@ Route::get('/transaksi/bmasuklistruang', [BmasukController::class, 'listruang'])
 Route::get('/transaksi/bmasuklistjenispembayaran', [BmasukController::class, 'listjenispembayaran'])->name('pos01.transaksi.bmasuk_listjenispembayaran')->middleware('auth'); /* menampilkan list jenispembayaran */
 Route::get('/transaksi/bmasuklistsupplier', [BmasukController::class, 'listsupplier'])->name('pos01.transaksi.bmasuk_listsupplier')->middleware('auth'); /* menampilkan list supplier */
 Route::post('/transaksi/bmasukcreate', [BmasukController::class, 'create'])->name('pos01.transaksi.bmasuk_create')->middleware('auth'); /* menambah data bmasuk */
+Route::post('/transaksi/bmasukproses', [BmasukController::class, 'proses'])->name('pos01.transaksi.bmasuk_proses')->middleware('auth'); /* menambah proses bmasuk */
 Route::get('/transaksi/bmasukedit/{id}', [BmasukController::class, 'edit'])->name('pos01.transaksi.bmasuk_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/transaksi/bmasukdisplaypembayaran/{id}', [BmasukController::class, 'displaypembayaran'])->name('pos01.transaksi.bmasuk_displaypembayaran')->middleware('auth'); /* menampilkan pembayaran */
 Route::post('/transaksi/bmasukupdate', [BmasukController::class, 'update'])->name('pos01.transaksi.bmasuk_update')->middleware('auth'); /* update data bmasuk */
 Route::post('/transaksi/bmasukposting', [BmasukController::class, 'posting'])->name('pos01.transaksi.bmasuk_posting')->middleware('auth'); /* posting data bmasuk */
 Route::get('/transaksi/bmasukdestroy/{id}', [BmasukController::class, 'destroy'])->name('pos01.transaksi.bmasuk_destroy')->middleware('auth'); /* hapus data bmasuk */
@@ -164,28 +179,72 @@ Route::post('/transaksi/bkeluarupdate', [BkeluarController::class, 'update'])->n
 Route::post('/transaksi/bkeluarposting', [BkeluarController::class, 'posting'])->name('pos01.transaksi.bkeluar_posting')->middleware('auth'); /* posting data bkeluar */
 Route::get('/transaksi/bkeluardestroy/{id}', [BkeluarController::class, 'destroy'])->name('pos01.transaksi.bkeluar_destroy')->middleware('auth'); /* hapus data bkeluar */
 
-/* transaksi - bayarhutang */
-Route::get('/transaksi/bayarhutang', [BayarhutangController::class, 'index'])->name('pos01.transaksi.bayarhutang.index')->middleware('auth'); /* halaman bayarhutang */
-Route::get('/transaksi/bayarhutangshow', [BayarhutangController::class, 'show'])->name('pos01.transaksi.bayarhutang_show')->middleware('auth'); /* menampilkan data bayarhutang pada datatable javascript */
-Route::post('/transaksi/bayarhutangkirimsyarat', [BayarhutangController::class, 'kirimsyarat'])->name('pos01.transaksi.bayarhutang_kirimsyarat')->middleware('auth'); /* kirim syarat */
-Route::post('/transaksi/bayarhutangcariid', [BayarhutangController::class, 'cariid'])->name('pos01.transaksi.bayarhutang_cariid')->middleware('auth'); /* cari data anggota */
-Route::get('/transaksi/bayarhutangshowhutang', [BayarhutangController::class, 'showhutang'])->name('pos01.transaksi.bayarhutang_showhutang')->middleware('auth'); /* menampilkan hutang pada datatable javascript */
-Route::get('/transaksi/bayarhutangshowanggota', [BayarhutangController::class, 'showanggota'])->name('pos01.transaksi.bayarhutang_showanggota')->middleware('auth'); /* menampilkan anggota pada datatable javascript */
-Route::post('/transaksi/bayarhutangnomorbukti', [BayarhutangController::class, 'nomorbukti'])->name('pos01.transaksi.bayarhutang_nomorbukti')->middleware('auth'); /* buat nomorbukti */
-Route::post('/transaksi/bayarhutangnomorposting', [BayarhutangController::class, 'nomorposting'])->name('pos01.transaksi.bayarhutang_nomorposting')->middleware('auth'); /* buat nomorposting */
-Route::get('/transaksi/bayarhutanglisthutang', [BayarhutangController::class, 'listhutang'])->name('pos01.transaksi.bayarhutang_listhutang')->middleware('auth'); /* menampilkan list hutang */
-Route::get('/transaksi/bayarhutanglisthutangx', [BayarhutangController::class, 'listhutangx'])->name('pos01.transaksi.bayarhutang_listhutangx')->middleware('auth'); /* menampilkan list hutangx */
-Route::get('/transaksi/bayarhutanglistruang', [BayarhutangController::class, 'listruang'])->name('pos01.transaksi.bayarhutang_listruang')->middleware('auth'); /* menampilkan list ruang */
-Route::get('/transaksi/bayarhutanglistanggota', [BayarhutangController::class, 'listanggota'])->name('pos01.transaksi.bayarhutang_listanggota')->middleware('auth'); /* menampilkan list anggota */
-Route::get('/transaksi/bayarhutanglistjenispembayaran', [BayarhutangController::class, 'listjenispembayaran'])->name('pos01.transaksi.bayarhutang_listjenispembayaran')->middleware('auth'); /* menampilkan list jenispembayaran */
-Route::post('/transaksi/bayarhutangcreate', [BayarhutangController::class, 'create'])->name('pos01.transaksi.bayarhutang_create')->middleware('auth'); /* menambah data bayarhutang */
-Route::post('/transaksi/bayarhutangproses', [BayarhutangController::class, 'proses'])->name('pos01.transaksi.bayarhutang_proses')->middleware('auth'); /* menambah proses */
-Route::get('/transaksi/bayarhutangedit/{id}', [BayarhutangController::class, 'edit'])->name('pos01.transaksi.bayarhutang_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
-Route::get('/transaksi/bayarhutangdisplayhutang/{id}', [BayarhutangController::class, 'displayhutang'])->name('pos01.transaksi.bayarhutang_displayhutang')->middleware('auth'); /* menampilkan data hutang */
-Route::get('/transaksi/bayarhutangdisplaypembayaran/{id}', [BayarhutangController::class, 'displaypembayaran'])->name('pos01.transaksi.bayarhutang_displaypembayaran')->middleware('auth'); /* menampilkan pembayaran */
-Route::post('/transaksi/bayarhutangupdate', [BayarhutangController::class, 'update'])->name('pos01.transaksi.bayarhutang_update')->middleware('auth'); /* update data bayarhutang */
-Route::post('/transaksi/bayarhutangposting', [BayarhutangController::class, 'posting'])->name('pos01.transaksi.bayarhutang_posting')->middleware('auth'); /* posting data bayarhutang */
-Route::get('/transaksi/bayarhutangdestroy/{id}', [BayarhutangController::class, 'destroy'])->name('pos01.transaksi.bayarhutang_destroy')->middleware('auth'); /* hapus data bayarhutang */
+/* transaksi - mkeluar */
+Route::get('/transaksi/mkeluar', [MkeluarController ::class, 'index'])->name('pos01.transaksi.mkeluar.index')->middleware('auth'); /* halaman mkeluar */
+Route::get('/transaksi/mkeluarshow', [MkeluarController::class, 'show'])->name('pos01.transaksi.mkeluar_show')->middleware('auth'); /* menampilkan data mkeluar pada datatable javascript */
+Route::post('/transaksi/mkeluarkirimsyarat', [MkeluarController::class, 'kirimsyarat'])->name('pos01.transaksi.mkeluar_kirimsyarat')->middleware('auth'); /* kirim syarat */
+Route::post('/transaksi/mkeluarcariid', [MkeluarController::class, 'cariid'])->name('pos01.transaksi.mkeluar_cariid')->middleware('auth'); /* cari data anggota */
+Route::get('/transaksi/mkeluarshowmamin', [MkeluarController::class, 'showmamin'])->name('pos01.transaksi.mkeluar_showmamin')->middleware('auth'); /* menampilkan mamin pada datatable javascript */
+Route::get('/transaksi/mkeluarshowanggota', [MkeluarController::class, 'showanggota'])->name('pos01.transaksi.mkeluar_showanggota')->middleware('auth'); /* menampilkan anggota pada datatable javascript */
+Route::post('/transaksi/mkeluarnomorbukti', [MkeluarController::class, 'nomorbukti'])->name('pos01.transaksi.mkeluar_nomorbukti')->middleware('auth'); /* buat nomorbukti */
+Route::post('/transaksi/mkeluarnomorposting', [MkeluarController::class, 'nomorposting'])->name('pos01.transaksi.mkeluar_nomorposting')->middleware('auth'); /* buat nomorposting */
+Route::get('/transaksi/mkeluarlistmamin', [MkeluarController::class, 'listmamin'])->name('pos01.transaksi.mkeluar_listmamin')->middleware('auth'); /* menampilkan list mamin */
+Route::get('/transaksi/mkeluarlistanggota', [MkeluarController::class, 'listanggota'])->name('pos01.transaksi.mkeluar_listanggota')->middleware('auth'); /* menampilkan list anggota */
+Route::get('/transaksi/mkeluarlistjenispembayaran', [MkeluarController::class, 'listjenispembayaran'])->name('pos01.transaksi.mkeluar_listjenispembayaran')->middleware('auth'); /* menampilkan list jenispembayaran */
+Route::post('/transaksi/mkeluarcreate', [MkeluarController::class, 'create'])->name('pos01.transaksi.mkeluar_create')->middleware('auth'); /* menambah data mkeluar */
+Route::post('/transaksi/mkeluarproses', [MkeluarController::class, 'proses'])->name('pos01.transaksi.mkeluar_proses')->middleware('auth'); /* menambah proses */
+Route::get('/transaksi/mkeluaredit/{id}', [MkeluarController::class, 'edit'])->name('pos01.transaksi.mkeluar_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/transaksi/mkeluardisplaypembayaran/{id}', [MkeluarController::class, 'displaypembayaran'])->name('pos01.transaksi.mkeluar_displaypembayaran')->middleware('auth'); /* menampilkan pembayaran */
+Route::get('/transaksi/mkeluarlihatpersen/{id}', [MkeluarController::class, 'lihatpersen'])->name('pos01.transaksi.mkeluar_lihatpersen')->middleware('auth'); /* menampilkan lihatpersen jasa */
+Route::post('/transaksi/mkeluarupdate', [MkeluarController::class, 'update'])->name('pos01.transaksi.mkeluar_update')->middleware('auth'); /* update data mkeluar */
+Route::post('/transaksi/mkeluarposting', [MkeluarController::class, 'posting'])->name('pos01.transaksi.mkeluar_posting')->middleware('auth'); /* posting data mkeluar */
+Route::get('/transaksi/mkeluardestroy/{id}', [MkeluarController::class, 'destroy'])->name('pos01.transaksi.mkeluar_destroy')->middleware('auth'); /* hapus data mkeluar */
+
+/* transaksi - bayarhutangcustomer */
+Route::get('/transaksi/bayarhutangcustomer', [BayarhutangcustomerController::class, 'index'])->name('pos01.transaksi.bayarhutangcustomer.index')->middleware('auth'); /* halaman bayarhutangcustomer */
+Route::get('/transaksi/bayarhutangcustomershow', [BayarhutangcustomerController::class, 'show'])->name('pos01.transaksi.bayarhutangcustomer_show')->middleware('auth'); /* menampilkan data bayarhutangcustomer pada datatable javascript */
+Route::post('/transaksi/bayarhutangcustomerkirimsyarat', [BayarhutangcustomerController::class, 'kirimsyarat'])->name('pos01.transaksi.bayarhutangcustomer_kirimsyarat')->middleware('auth'); /* kirim syarat */
+Route::post('/transaksi/bayarhutangcustomercariid', [BayarhutangcustomerController::class, 'cariid'])->name('pos01.transaksi.bayarhutangcustomer_cariid')->middleware('auth'); /* cari data anggota */
+Route::get('/transaksi/bayarhutangcustomershowhutang', [BayarhutangcustomerController::class, 'showhutang'])->name('pos01.transaksi.bayarhutangcustomer_showhutang')->middleware('auth'); /* menampilkan hutang pada datatable javascript */
+Route::get('/transaksi/bayarhutangcustomershowanggota', [BayarhutangcustomerController::class, 'showanggota'])->name('pos01.transaksi.bayarhutangcustomer_showanggota')->middleware('auth'); /* menampilkan anggota pada datatable javascript */
+Route::post('/transaksi/bayarhutangcustomernomorbukti', [BayarhutangcustomerController::class, 'nomorbukti'])->name('pos01.transaksi.bayarhutangcustomer_nomorbukti')->middleware('auth'); /* buat nomorbukti */
+Route::post('/transaksi/bayarhutangcustomernomorposting', [BayarhutangcustomerController::class, 'nomorposting'])->name('pos01.transaksi.bayarhutangcustomer_nomorposting')->middleware('auth'); /* buat nomorposting */
+Route::get('/transaksi/bayarhutangcustomerlisthutang', [BayarhutangcustomerController::class, 'listhutang'])->name('pos01.transaksi.bayarhutangcustomer_listhutang')->middleware('auth'); /* menampilkan list hutang */
+Route::get('/transaksi/bayarhutangcustomerlisthutangx', [BayarhutangcustomerController::class, 'listhutangx'])->name('pos01.transaksi.bayarhutangcustomer_listhutangx')->middleware('auth'); /* menampilkan list hutangx */
+Route::get('/transaksi/bayarhutangcustomerlistruang', [BayarhutangcustomerController::class, 'listruang'])->name('pos01.transaksi.bayarhutangcustomer_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::get('/transaksi/bayarhutangcustomerlistanggota', [BayarhutangcustomerController::class, 'listanggota'])->name('pos01.transaksi.bayarhutangcustomer_listanggota')->middleware('auth'); /* menampilkan list anggota */
+Route::get('/transaksi/bayarhutangcustomerlistjenispembayaran', [BayarhutangcustomerController::class, 'listjenispembayaran'])->name('pos01.transaksi.bayarhutangcustomer_listjenispembayaran')->middleware('auth'); /* menampilkan list jenispembayaran */
+Route::post('/transaksi/bayarhutangcustomercreate', [BayarhutangcustomerController::class, 'create'])->name('pos01.transaksi.bayarhutangcustomer_create')->middleware('auth'); /* menambah data bayarhutangcustomer */
+Route::post('/transaksi/bayarhutangcustomerproses', [BayarhutangcustomerController::class, 'proses'])->name('pos01.transaksi.bayarhutangcustomer_proses')->middleware('auth'); /* menambah proses */
+Route::get('/transaksi/bayarhutangcustomeredit/{id}', [BayarhutangcustomerController::class, 'edit'])->name('pos01.transaksi.bayarhutangcustomer_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/transaksi/bayarhutangcustomerdisplayhutang/{id}', [BayarhutangcustomerController::class, 'displayhutang'])->name('pos01.transaksi.bayarhutangcustomer_displayhutang')->middleware('auth'); /* menampilkan data hutang */
+Route::get('/transaksi/bayarhutangcustomerdisplaypembayaran/{id}', [BayarhutangcustomerController::class, 'displaypembayaran'])->name('pos01.transaksi.bayarhutangcustomer_displaypembayaran')->middleware('auth'); /* menampilkan pembayaran */
+Route::post('/transaksi/bayarhutangcustomerupdate', [BayarhutangcustomerController::class, 'update'])->name('pos01.transaksi.bayarhutangcustomer_update')->middleware('auth'); /* update data bayarhutangcustomer */
+Route::post('/transaksi/bayarhutangcustomerposting', [BayarhutangcustomerController::class, 'posting'])->name('pos01.transaksi.bayarhutangcustomer_posting')->middleware('auth'); /* posting data bayarhutangcustomer */
+Route::get('/transaksi/bayarhutangcustomerdestroy/{id}', [BayarhutangcustomerController::class, 'destroy'])->name('pos01.transaksi.bayarhutangcustomer_destroy')->middleware('auth'); /* hapus data bayarhutangcustomer */
+
+/* transaksi - bayarhutangsupplier */
+Route::get('/transaksi/bayarhutangsupplier', [BayarhutangSupplierController ::class, 'index'])->name('pos01.transaksi.bayarhutangsupplier.index')->middleware('auth'); /* halaman bayarhutangsupplier */
+Route::get('/transaksi/bayarhutangsuppliershow', [BayarhutangsupplierController::class, 'show'])->name('pos01.transaksi.bayarhutangsupplier_show')->middleware('auth'); /* menampilkan data bayarhutangsupplier pada datatable javascript */
+Route::post('/transaksi/bayarhutangsupplierkirimsyarat', [BayarhutangsupplierController::class, 'kirimsyarat'])->name('pos01.transaksi.bayarhutangsupplier_kirimsyarat')->middleware('auth'); /* kirim syarat */
+Route::post('/transaksi/bayarhutangsuppliercariid', [BayarhutangsupplierController::class, 'cariid'])->name('pos01.transaksi.bayarhutangsupplier_cariid')->middleware('auth'); /* cari data supplier */
+Route::get('/transaksi/bayarhutangsuppliershowhutang', [BayarhutangsupplierController::class, 'showhutang'])->name('pos01.transaksi.bayarhutangsupplier_showhutang')->middleware('auth'); /* menampilkan hutang pada datatable javascript */
+Route::get('/transaksi/bayarhutangsuppliershowsupplier', [BayarhutangsupplierController::class, 'showsupplier'])->name('pos01.transaksi.bayarhutangsupplier_showsupplier')->middleware('auth'); /* menampilkan supplier pada datatable javascript */
+Route::post('/transaksi/bayarhutangsuppliernomorbukti', [BayarhutangsupplierController::class, 'nomorbukti'])->name('pos01.transaksi.bayarhutangsupplier_nomorbukti')->middleware('auth'); /* buat nomorbukti */
+Route::post('/transaksi/bayarhutangsuppliernomorposting', [BayarhutangsupplierController::class, 'nomorposting'])->name('pos01.transaksi.bayarhutangsupplier_nomorposting')->middleware('auth'); /* buat nomorposting */
+Route::get('/transaksi/bayarhutangsupplierlisthutang', [BayarhutangsupplierController::class, 'listhutang'])->name('pos01.transaksi.bayarhutangsupplier_listhutang')->middleware('auth'); /* menampilkan list hutang */
+Route::get('/transaksi/bayarhutangsupplierlisthutangx', [BayarhutangsupplierController::class, 'listhutangx'])->name('pos01.transaksi.bayarhutangsupplier_listhutangx')->middleware('auth'); /* menampilkan list hutangx */
+Route::get('/transaksi/bayarhutangsupplierlistruang', [BayarhutangsupplierController::class, 'listruang'])->name('pos01.transaksi.bayarhutangsupplier_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::get('/transaksi/bayarhutangsupplierlistsupplier', [BayarhutangsupplierController::class, 'listsupplier'])->name('pos01.transaksi.bayarhutangsupplier_listsupplier')->middleware('auth'); /* menampilkan list anggota */
+Route::get('/transaksi/bayarhutangsupplierlistjenispembayaran', [BayarhutangsupplierController::class, 'listjenispembayaran'])->name('pos01.transaksi.bayarhutangsupplier_listjenispembayaran')->middleware('auth'); /* menampilkan list jenispembayaran */
+Route::post('/transaksi/bayarhutangsuppliercreate', [BayarhutangsupplierController::class, 'create'])->name('pos01.transaksi.bayarhutangsupplier_create')->middleware('auth'); /* menambah data bayarhutangsupplier */
+Route::post('/transaksi/bayarhutangsupplierproses', [BayarhutangsupplierController::class, 'proses'])->name('pos01.transaksi.bayarhutangsupplier_proses')->middleware('auth'); /* menambah proses */
+Route::get('/transaksi/bayarhutangsupplieredit/{id}', [BayarhutangsupplierController::class, 'edit'])->name('pos01.transaksi.bayarhutangsupplier_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/transaksi/bayarhutangsupplierdisplayhutang/{id}', [BayarhutangsupplierController::class, 'displayhutang'])->name('pos01.transaksi.bayarhutangsupplier_displayhutang')->middleware('auth'); /* menampilkan data hutang */
+Route::get('/transaksi/bayarhutangsupplierdisplaypembayaran/{id}', [BayarhutangsupplierController::class, 'displaypembayaran'])->name('pos01.transaksi.bayarhutangsupplier_displaypembayaran')->middleware('auth'); /* menampilkan pembayaran */
+Route::post('/transaksi/bayarhutangsupplierupdate', [BayarhutangsupplierController::class, 'update'])->name('pos01.transaksi.bayarhutangsupplier_update')->middleware('auth'); /* update data bayarhutangsupplier */
+Route::post('/transaksi/bayarhutangsupplierposting', [BayarhutangsupplierController::class, 'posting'])->name('pos01.transaksi.bayarhutangsupplier_posting')->middleware('auth'); /* posting data bayarhutangsupplier */
+Route::get('/transaksi/bayarhutangsupplierdestroy/{id}', [BayarhutangsupplierController::class, 'destroy'])->name('pos01.transaksi.bayarhutangsupplier_destroy')->middleware('auth'); /* hapus data bayarhutangsupplier */
 
 /* laporan - stokbarang */
 Route::get('/laporan/stokbarang', [StokbarangController::class, 'index'])->name('pos01.laporan.stokbarang.index')->middleware('auth'); /* halaman stokbarang */
@@ -240,6 +299,22 @@ Route::post('/laporan/kartustokcreate', [KartustokController::class, 'create'])-
 Route::post('/laporan/kartustokkirimsyarat', [KartustokController::class, 'kirimsyarat'])->name('pos01.laporan.kartustok_kirimsyarat')->middleware('auth'); /* kirimsyarat */
 Route::get('/laporan/kartustokedit/{id}', [KartustokController::class, 'edit'])->name('pos01.laporan.kartustok_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
 Route::get('/laporan/kartustokdestroy/{id}', [KartustokController::class, 'destroy'])->name('pos01.laporan.kartustok_destroy')->middleware('auth'); /* hapus data kartustok */
+
+/* laporan - pembelian */
+Route::get('/laporan/pembelian', [PembelianController ::class, 'index'])->name('pos01.laporan.pembelian.index')->middleware('auth'); /* halaman pembelian */
+Route::get('/laporan/pembelianshowstokrekap', [PembelianController::class, 'showstokrekap'])->name('pos01.laporan.pembelian_showstokrekap')->middleware('auth'); /* menampilkan data stokrekap pada datatable javascript */
+Route::get('/laporan/pembelianshowstokrekapfifo', [PembelianController::class, 'showstokrekapfifo'])->name('pos01.laporan.pembelian_showstokrekapfifo')->middleware('auth'); /* menampilkan data stokrekapfifo pada datatable javascript */
+Route::get('/laporan/pembelianshowstokrekapmova', [PembelianController::class, 'showstokrekapmova'])->name('pos01.laporan.pembelian_showstokrekapmova')->middleware('auth'); /* menampilkan data stokrekapmova pada datatable javascript */
+Route::get('/laporan/pembelianshowstokrekaplifo', [PembelianController::class, 'showstokrekaplifo'])->name('pos01.laporan.pembelian_showstokrekaplifo')->middleware('auth'); /* menampilkan data stokrekaplifo pada datatable javascript */
+Route::get('/laporan/pembelianshowsupplier', [PembelianController::class, 'showsupplier'])->name('pos01.laporan.pembelian_showsupplier')->middleware('auth'); /* menampilkan data supplier yg gk ada di pembelian pada datatable javascript */
+Route::get('/laporan/pembelianlistsupplier', [PembelianController::class, 'listsupplier'])->name('pos01.laporan.pembelian_listsupplier')->middleware('auth'); /* menampilkan list supplier */
+Route::get('/laporan/pembelianlistruang', [PembelianController::class, 'listruang'])->name('pos01.laporan.pembelian_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::get('/laporan/pembelianlistjenispembayaran', [PembelianController::class, 'listjenispembayaran'])->name('pos01.laporan.pembelian_listjenispembayaran')->middleware('auth'); /* menampilkan list jenispembayaran */
+Route::post('/laporan/pembeliancreate', [PembelianController::class, 'create'])->name('pos01.laporan.pembelian_create')->middleware('auth'); /* menambah pembelian */
+Route::post('/laporan/pembeliankirimsyarat', [PembelianController::class, 'kirimsyarat'])->name('pos01.laporan.pembelian_kirimsyarat')->middleware('auth'); /* kirimsyarat */
+Route::post('/laporan/pembelianceksupplier', [PembelianController::class, 'ceksupplier'])->name('pos01.laporan.pembelian_ceksupplier')->middleware('auth'); /* ceksupplier */
+Route::get('/laporan/pembelianedit/{id}', [PembelianController::class, 'edit'])->name('pos01.laporan.pembelian_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/laporan/pembeliandestroy/{id}', [PembelianController::class, 'destroy'])->name('pos01.laporan.pembelian_destroy')->middleware('auth'); /* hapus data pembelian */
 
 /* pengaturan - parameter */
 Route::get('/pengaturan/parameter', [ParameterController::class, 'index'])->name('pos01.pengaturan.parameter.index')->middleware('auth'); /* halaman parameter */

@@ -611,47 +611,13 @@ class BkeluarController extends Controller
 
         // return json_encode('data');
     }
-
-    public function prosesx(Request $request){
-        date_default_timezone_set('Asia/Jakarta');
-        $created_at1 = date('Y-m-d  H:i:s'); 
-        $tglsekarang = date('Y-m-d');
-        $status1 = 'hutang';
-
-        $subtotals1 = $request['subtotals1']; 
-        $ppns1 = $request['ppns1'];
-        $diskons1 = $request['diskons1'];
-        $totals1 = $request['totals1'];
-        $bayars1 = $request['bayars1'];
-        $vouchers1 = $request['vouchers1'];
-        $ambilsavings1 = $request['ambilsavings1'];
-        $kembalis1 = $request['kembalis1'];
-        $savings1 = $request['savings1'];
-        $idjenispembayaran1 = $request['idjenispembayaran1'];
-        $nomorpostingnya1 = $request['nomorpostingnya1'];
-        $tglpostingnya1 = $request['tglpostingnya1'];
-        $nomorbuktia1 = $request['nomorbuktia1'];
-        $tgltransaksi1 = $request['tgltransaksi1'];
-        $idanggota1 = $request['idanggota1'];
-        $xangsuran1 = $request['kali1'];
-
-        $persenjasa1 = $request['persenjasa1'];
-        $nilaihutang1 = $request['nilaihutang1'];
-
-        $np = explode(".", $request['$nomorpostingnya1']);
-
-        // $nomorp1 = intval($np[3]); 
-        $tampil = Stok::where('nomorstatus','=',$nomorbuktia1)->get();
-        foreach ($tampil as $baris) {
-             $nomorp1 = $baris->nomorp;
-        }  
-    }
+    
     public function proses(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         $created_at1 = date('Y-m-d  H:i:s'); 
         $tglsekarang = date('Y-m-d');
-        $status1 = 'hutang';
+        $status1 = 'hutangcus';
 
         $subtotals1 = $request['subtotals1']; 
         $ppns1 = $request['ppns1'];
@@ -1036,7 +1002,6 @@ class BkeluarController extends Controller
             return $data;
 
     }
-    
 
     /**
      * Show the form for editing the specified resource.
@@ -1089,7 +1054,9 @@ class BkeluarController extends Controller
     }
     function listanggota()
     {
-        $tampil = Anggota::with('lembaga')->get();
+        $tampil = Anggota::with('lembaga')
+            ->where('aktif','=','Y')
+            ->get();
         foreach ($tampil as $baris) {
             echo "<option value='" . $baris->id . "'>".$baris->ecard."|".$baris->nia."|".$baris->ktp."|".$baris->nama."|". $baris->lembaga->lembaga . "</option>";
         }
@@ -1215,13 +1182,26 @@ class BkeluarController extends Controller
     public function cariid(Request $request)
     {
         $cari = $request['cari1'];
+
+        session(['carix' => $cari]);
                
-        $data = Anggota::with('lembaga')
-                ->where('ecard','=',$cari)
-                ->Orwhere('nia','=',$cari)
-                ->Orwhere('ktp','=',$cari)
-                ->Orwhere('telp','=',$cari)
-                ->get();
+        // $data = Anggota::with('lembaga')
+        //         ->where('ecard','=',$cari)
+        //         ->Orwhere('nia','=',$cari)
+        //         ->Orwhere('ktp','=',$cari)
+        //         ->Orwhere('telp','=',$cari)
+        //         ->get();
+
+         $data = Anggota::with('lembaga')
+                ->where('aktif','=','Y')
+                ->where(function (Builder $query) {
+                    $cari = session('carix');
+                    return $query->where('ecard','=',$cari)
+                    ->Orwhere('nia','=',$cari)
+                    ->Orwhere('ktp','=',$cari)
+                    ->Orwhere('telp','=',$cari);
+                })
+                ->get();        
          
         return json_encode(array('data' => $data));
 

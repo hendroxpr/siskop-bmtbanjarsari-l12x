@@ -59,6 +59,17 @@
       background-color: #ddd;
       color: black;
     }
+
+    a {
+        color: white;
+    }
+   .table-hover tbody tr:hover {
+        background-color: rgb(87, 181, 188) !important;
+        color: black;
+    }
+
+   
+    
 </style>
 
     <div class="box-header mb-3">  
@@ -66,7 +77,7 @@
             
             <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-4  text-right">
+                    <div class="col-md-4 text-right">
                         <h6 class="mt-2">Tgl. Transaksi</h6>
                     </div>
                     <div class="col-md-7">
@@ -80,7 +91,7 @@
                         <h6 class="mt-2  text-right">Nomor Bukti-a</h6>
                     </div>
                     <div class="col-md-7 input-group">
-                        <input name="nomorbuktia1" id="nomorbuktia1" class="form-control w3-input w3-border rounded-0" type="search" placeholder="KLR.001.20230131.001" disabled value="{{ $nomorbuktia }}">                        
+                        <input name="nomorbuktia1" id="nomorbuktia1" class="form-control w3-input w3-border rounded-0" type="search" placeholder="KMM.001.20230131.001" disabled value="{{ $nomorbuktia }}">                        
                         <div class="input-group-append">
                           <button id="btn_nomorbuktia1" name="btn_nomorbuktia1" type="button" style="border-radius:0px; border:none;" title="Generate Nomor Bukti-a" disabled><i style="font-size:24" class="fa">&#xf013;</i></button>
                         </div>
@@ -186,7 +197,6 @@
 							<th style="width:50px">Kode</th>
 							<th style="width:50px">Barcode</th>
 							<th style="width:200px">Nama Barang</th>														
-							<th style="width:50px">Ruang</th>														
 							<th style="width:50px">Qty</th>
 							<th style="width:50px">HJS</th>
 							<th style="width:50px">HPPJ</th>
@@ -208,7 +218,6 @@
                             <td></td>
                             <td></td>
                             <td style="text-align: center"><b>TOTAL :</b></td>														
-                            <td></td>														
                             <td></td>
                             <td></td>
                             <td style="text-align: right"><b><span id='totalhpp1' name='totalhpp1'></span></b></td>
@@ -247,8 +256,8 @@
                                     <h6 class="mt-2">Nama Barang</h6>
                                 </div>
                                 <div class="col-md-9 input-group">
-                                    <input name="barang1" id="barang1" class="form-control w3-input w3-border" type="text" placeholder="Nama Barang" readonly>
-                                    <select  name="idbarang1" id="idbarang1" class=" form-control w3-input w3-border" style="border-radius:0px; border:none; display:none;"></select>
+                                    {{-- <input name="barang1" id="barang1" class="form-control w3-input w3-border" type="text" placeholder="Nama Barang" style="border-radius:0px; border:none; display:none;" readonly> --}}
+                                    <select  name="idbarang1" id="idbarang1" class=" form-control w3-input w3-border" style="border-radius:0px; border:none; display:block;"></select>
                                     <div class="input-group-append">
                                       <button id="btn_caribarang1" name="btn_caribarang1" type="button" style="border-radius:0px; border:none;"><i style="font-size:24" class="fas">&#xf002;</i></button>
                                       <input name="idbarang1x" id="idbarang1x" type="hidden">
@@ -275,16 +284,6 @@
                                     <input name="barcode1" id="barcode1" class="w3-input w3-border" type="text" placeholder="barcode" readonly>
                                 </div>								  
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-3 mt-1" align="right">									
-                                    <h6 class="mt-2">Ruang</h6>
-                                </div>
-                                <div class="col-md-9"> 
-                                    <select name="idruang1" id="idruang1" style="display: none;"></select>                               
-                                    <input name="ruang1" id="ruang1" class="w3-input w3-border" type="text" placeholder="ruang" readonly>
-                                </div>								  
-                            </div>
                              
                             <div class="row">
                                 <div class="col-md-3 mt-1" align="right">									
@@ -300,7 +299,6 @@
                                     <h6 class="mt-2">HJS</h6>
                                 </div>
                                 <div class="col-md-9"> 
-                                    <input name="hbs1" id="hbs1" class="" type="hidden">  
                                     <input name="hjs1" id="hjs1" class="w3-input w3-border text-right" type="search" placeholder="Harga Jual Satuan" value="0"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">                             
                                 </div>								  
                             </div>
@@ -309,7 +307,6 @@
                                     <h6 class="mt-2">HPPJ</h6>
                                 </div>
                                 <div class="col-md-9">
-                                    <input name="hpp1" id="hpp1" class="" type="hidden">
                                     <input name="hppj1" id="hppj1" class="w3-input w3-border" type="search" placeholder="Harga Pokok Penjualan" style="text-align: right" value="0" readonly>
                                 </div>								  
                             </div>
@@ -327,8 +324,8 @@
                                     <h6 class="mt-2">Diskon</h6>
                                 </div>
                                 <div class="col-md-9">                                
-                                    <input name="diskonpersen1" id="diskonpersen1" class="" type="hidden" value="0">
                                     <input name="diskon1" id="diskon1" class="w3-input w3-border text-right" type="search" placeholder="Diskon" value="0"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+                                    <input name="diskonpersen1" id="diskonpersen1" class="" type="hidden" value="0">
                                 </div>								  
                             </div>
                             <div class="row">
@@ -366,7 +363,7 @@
 
     <!-- ModalCariBarang modal fade-->
 	<div class="modal fade" id="ModalCariBarang"  data-backdrop="static">
-		<div class="modal-dialog modal-xl">  <!-- modal-(sm, lg, xl) ukuran lebar modal -->
+		<div class="modal-dialog modal-lg">  <!-- modal-(sm, lg, xl) ukuran lebar modal -->
 			<div class="modal-content bg-info w3-animate-zoom">
 				
 				<div class="modal-header">
@@ -385,15 +382,12 @@
                                     <thead>
                                         <tr style="align-content: center">
                                             <th style="width:10px;">#</th>
-                                            <th style="width:50px">Kode</th>
+                                            <th style="width:20px">Kode</th>
                                             <th style="width:50px">Barcode</th>
-                                            <th style="width:200px">Nama Barang</th>
-                                            <th style="width:20px">Qty</th>
+                                            <th style="width:200px">Nama Menu</th>
                                             <th style="width:20px">Satuan</th>
-                                            <th style="width:20px">HBS</th>
+                                            <th style="width:100px">Kategori</th>
                                             <th style="width:20px">HJS</th>
-                                            <th style="width:50px">Ruang</th>
-                                            <th style="width:100px">Seksi</th>
                                         </tr>
                                     </thead>
                                     <tfoot id="show_footer">
@@ -860,33 +854,20 @@ $(document).ready(function(){
     function tampil_listbarang(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.bkeluar_listbarang')}}',
+            url   : '{{route('pos01.transaksi.mkeluar_listmamin')}}',
             
             success: function(data){				    
                 $("#idbarang1").html(data);                
             }
         })                    
     }
-
-    tampil_listruang();
-    //menampilkan combo ruang
-    function tampil_listruang(){				
-        $.ajax({
-            type: 'get',
-            url   : '{{route('pos01.transaksi.bkeluar_listruang')}}',
-            
-            success: function(data){				    
-                $("#idruang1").html(data);                
-            }
-        })                    
-    }
-
+    
     tampil_listanggota();
     //menampilkan combo anggota
     function tampil_listanggota(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.bkeluar_listanggota')}}',
+            url   : '{{route('pos01.transaksi.mkeluar_listanggota')}}',
             
             success: function(data){				    
                 $("#idanggota1").html(data);                
@@ -899,7 +880,7 @@ $(document).ready(function(){
     function tampil_listjenispembayaran(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.bkeluar_listjenispembayaran')}}',
+            url   : '{{route('pos01.transaksi.mkeluar_listjenispembayaran')}}',
             
             success: function(data){				    
                 $("#idjenispembayaran1").html(data);                
@@ -924,7 +905,7 @@ $(document).ready(function(){
         
         $.ajax({
             type  : 'get',
-            url   : `{{route('pos01.transaksi.bkeluar_show')}}`,
+            url   : `{{route('pos01.transaksi.mkeluar_show')}}`,
             async : false,
             dataType : 'json',
                                              
@@ -958,9 +939,9 @@ $(document).ready(function(){
                     if(tglposting=='0'){
                         html += '<tr>';
                         aksi = '<td style="text-align:center;">' +
-                                    '<a href="javascript:;" title="Edit Data"  class="btn btn-success btn-xs item_edit" data="'+resultData[i].id+'" data2="'+resultData[i].barang.kode+'" data3="'+resultData[i].barang.nabara+'" data4="'+resultData[i].keterangan+'"><i style="font-size:18px;" class="fa" >&#xf044;</i></a>'+ ' ' +
+                                    '<a href="javascript:;" title="Edit Data"  class="btn btn-success btn-xs item_edit" data="'+resultData[i].id+'" data2="'+resultData[i].mamin.kode+'" data3="'+resultData[i].mamin.namamin+'" data4="'+resultData[i].keterangan+'"><i style="font-size:18px;" class="fa" >&#xf044;</i></a>'+ ' ' +
                                     '<a href="javascript:;" title="Hapus Data"  class="btn btn-danger btn-xs item_hapus" ' +
-                                        'data="'+resultData[i].id+'" data2="'+resultData[i].barang.kode+'" data3="'+resultData[i].barang.nabara+'" data4="'+resultData[i].keterangan+'" ' +
+                                        'data="'+resultData[i].id+'" data2="'+resultData[i].mamin.kode+'" data3="'+resultData[i].mamin.namamin+'" data4="'+resultData[i].keterangan+'" ' +
                                         '><i style="font-size:18px" class="fa">&#xf00d;</i></a>' +   
                                 '</td>';
                         $('#btn_tambah1').removeAttr('disabled');
@@ -969,9 +950,9 @@ $(document).ready(function(){
                     }else{
                         html += '<tr style="background:goldenrod">';
                         aksi = '<td style="text-align:center;">' +
-                                '<a href="javascript:;" title="Edit Data"  class="btn btn-success btn-xs item_edit  disabled" data="'+resultData[i].id+'" data2="'+resultData[i].barang.kode+'" data3="'+resultData[i].barang.nabara+'" data4="'+resultData[i].keterangan+'"><i style="font-size:18px;" class="fa">&#xf044;</i></a>'+ ' ' +
+                                '<a href="javascript:;" title="Edit Data"  class="btn btn-success btn-xs item_edit  disabled" data="'+resultData[i].id+'" data2="'+resultData[i].mamin.kode+'" data3="'+resultData[i].mamin.namamin+'" data4="'+resultData[i].keterangan+'"><i style="font-size:18px;" class="fa">&#xf044;</i></a>'+ ' ' +
                                 '<a href="javascript:;" title="Hapus Data"  class="btn btn-danger btn-xs item_hapus  disabled" ' +
-                                    'data="'+resultData[i].id+'" data2="'+resultData[i].barang.kode+'" data3="'+resultData[i].barang.nabara+'" data4="'+resultData[i].keterangan+'" ' +
+                                    'data="'+resultData[i].id+'" data2="'+resultData[i].mamin.kode+'" data3="'+resultData[i].mamin.nabara+'" data4="'+resultData[i].keterangan+'" ' +
                                     '><i style="font-size:18px" class="fa">&#xf00d;</i></a>' +   
                             '</td>';
                         $('#btn_tambah1').attr('disabled', '');
@@ -980,10 +961,9 @@ $(document).ready(function(){
 
                     html += 
                                 '<td align="center">'+ (i+1) +'</td>'+                            								
-                                '<td>'+resultData[i].barang.kode+'</td>'+
-                                '<td>'+resultData[i].barang.barcode+'</td>'+
-                                '<td>'+resultData[i].barang.nabara+'</td>'+
-                                '<td>'+resultData[i].ruang.ruang+'</td>'+
+                                '<td>'+resultData[i].mamin.kode+'</td>'+
+                                '<td>'+resultData[i].mamin.barcode+'</td>'+
+                                '<td>'+resultData[i].mamin.namamin+'</td>'+
                                 '<td align="center">'+formatAngka(resultData[i].qty,'')+'</td>'+
                                 '<td align="right">'+formatAngka(resultData[i].hjs,'')+'</td>'+
                                 '<td align="right">'+formatAngka(resultData[i].hppj,'')+'</td>'+
@@ -1076,7 +1056,7 @@ $(document).ready(function(){
            ],
            processing: true,
            serverSide: true,
-           ajax   : `{{route('pos01.transaksi.bkeluar_showbarang')}}`,
+           ajax   : `{{route('pos01.transaksi.mkeluar_showmamin')}}`,
            columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -1084,63 +1064,53 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                    orderable: false, 
                    searchable: false },
-                { data: 'kode', name: 'barang.kode', className: 'dt-center' },
-                { data: 'barcode', name: 'barang.barcode', className: 'dt-center' },
-                { data: 'nabara', name: 'barang.nabara'},
-                { data: 'qty', name: 'qty', className: 'dt-center'},
-                { data: 'satuan', name: 'barang.satuan.satuan'},
-                { data: 'hbs', name: 'barang.hbs', className: 'dt-right' },
-                { data: 'hjs', name: 'barang.hjs', className: 'dt-right' },
-                { data: 'ruang', name: 'ruang.ruang' },
-                { data: 'seksi', name: 'ruang.seksi.seksi' },
+                { data: 'kode', name: 'kode', className: 'dt-center' },
+                { data: 'barcode', name: 'barcode', className: 'dt-center' },
+                { data: 'namamin', name: 'namamin'},
+                { data: 'satuan', name: 'satuan.satuan'},
+                { data: 'kategori', name: 'kategori.kategori'},
+                { data: 'hjs', name: 'hjs', className: 'dt-right' },
                
            ]
        });
     }
 
-    $('#show_barang').on('click','.item_nabara',function(){ 
-        ambilcari(this);        
+    $('#show_barang').on('click','.item_namamin',function(){ 
+        ambilcaribarang(this);        
+    });
+   
+    $('#show_barang').on('click','.item_barcode',function(){        
+        ambilcaribarang(this);        
     });
     $('#show_barang').on('click','.item_kode',function(){        
-        ambilcari(this);        
-    });
-    $('#show_barang').on('click','.item_barcode',function(){        
-        ambilcari(this);        
+        ambilcaribarang(this);        
     });
 
-    function ambilcari(t){
+    function ambilcaribarang(t){
         var id1 = $(this).attr('data');
         var idbarang1 = $(t).attr('data1');
         var kode1 = $(t).attr('data2');
         var barcode1 = $(t).attr('data3');
-        var idruang1 = $(t).attr('data6');
-        var hbs1 = $(t).attr('data4');
         var hjs1 = $(t).attr('data5');
-        var qtycek1 = $(t).attr('data11');
-        var qty1 = $('#qty1').val();
         var ppnpersen1 = $(t).attr('data9');
         var diskonpersen1 = $(t).attr('data10');
+        
+        ambil_mamin(idbarang1);
 
-        $('#idbarang1').val(idbarang1);
-        $('#barang1').val($('#idbarang1 option:selected').text());
-        $('#kode1').val(kode1);
-        $('#hbs1').val(hbs1);
-        $('#qtycek1').val(qtycek1);
-        $('#hjs1').val(formatAngka(hjs1,''));
-        $('#barcode1').val(barcode1);
-        $('#idruang1').val(idruang1);
-        $('#ruang1').val($('#idruang1 option:selected').text());
-        $('#ppnpersen1').val(ppnpersen1);
-        $('#diskonpersen1').val(diskonpersen1);
+        // $('#idbarang1').val(idbarang1);
+        // $('#barang1').val($('#idbarang1 option:selected').text());
+        // $('#kode1').val(kode1);
+        // $('#qtycek1').val(qtycek1);
+        // $('#hjs1').val(formatAngka(hjs1,''));
+        // $('#barcode1').val(barcode1);
+        // $('#ppnpersen1').val(ppnpersen1);
+        // $('#diskonpersen1').val(diskonpersen1);
 
         setTimeout(() => {
-            var hbsx = parseFloat(hbs1);
             var qtyx = parseFloat(qty1.replace(/[^,\d]/g, '').toString());
             var hjsx = parseFloat(hjs1.replace(/[^,\d]/g, '').toString());
             var ppnpersenx = parseFloat(ppnpersen1);
             var diskonpersenx = parseFloat(diskonpersen1);
-            var hppx = qtyx * hbsx; 
-            $('#hpp1').val(hppx);
 
             var hppjx = qtyx * hjsx;
             $('#hppj1').val(formatAngka(hppjx,''));
@@ -1171,7 +1141,7 @@ $(document).ready(function(){
            ],
            processing: true,
            serverSide: true,
-           ajax   : `{{route('pos01.transaksi.bkeluar_showanggota')}}`,
+           ajax   : `{{route('pos01.transaksi.mkeluar_showanggota')}}`,
            columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -1248,7 +1218,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bkeluar_cariid')}}',
+            url    : '{{route('pos01.transaksi.mkeluar_cariid')}}',
             async : false,
             dataType : 'json',
             // data : FormData,
@@ -1318,13 +1288,13 @@ $(document).ready(function(){
             displaypembayaran(nomorbuktia1);
 
     }
-
+   
     function displaypembayaran(idx){
         var id1=idx;
         
             $.ajax({
                 type  : 'get',
-                url   : `{{ url('pos01/transaksi/bkeluardisplaypembayaran//')}}/${id1}`,
+                url   : `{{ url('pos01/transaksi/mkeluardisplaypembayaran//')}}/${id1}`,
                 async : false,
                 dataType : 'json',	
                 
@@ -1368,7 +1338,7 @@ $(document).ready(function(){
                     }
                 },
                 error : function(data){
-                    
+                    alert('salah');
                 }
             }); 
     }
@@ -1378,7 +1348,7 @@ $(document).ready(function(){
         
             $.ajax({
                 type  : 'get',
-                url   : `{{ url('pos01/transaksi/bkeluarlihatpersen//')}}/${id1}`,
+                url   : `{{ url('pos01/transaksi/mkeluarlihatpersen//')}}/${id1}`,
                 async : false,
                 dataType : 'json',	
                 
@@ -1487,27 +1457,16 @@ $(document).ready(function(){
     });
     
     $("#qty1").on('change',function(){ 
-        var qtycek = parseFloat($("#qtycek1").val());
-        var qty = parseFloat($("#qty1").val());
-
-        if(qty>=qtycek){
-            var mak = qtycek;
-            $("#qty1").val(mak);
+        if($("#qty1").val()==''){
+            $("#qty1").val('0');
         }
+        var qty = parseFloat($("#qty1").val());
 
         setTimeout(() => {
             var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
             var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();  
             var j2 = $("#qty1").val().length;
             var k2 = $("#hjs1").val().length;
-            if($("#qty1").val()=='0'||$("#qty1").val()==''){
-                $("#hpp1").val('0');
-            }else{
-               
-                var qtyx = parseFloat($("#qty1").val());
-                var hbsx = parseFloat($("#hbs1").val());
-                $("#hpp1").val(qtyx*hbsx);
-            }
 
             if(j2=='0'||k2=='0'){
                 
@@ -1543,28 +1502,18 @@ $(document).ready(function(){
             document.getElementById("btn_simpan").disabled = false;
         }
     });
+    
     $("#qty1").on('keyup',function(){ 
-        var qtycek = parseFloat($("#qtycek1").val());
-        var qty = parseFloat($("#qty1").val());
-
-        if(qty>=qtycek){
-            var mak = qtycek;
-            $("#qty1").val(mak);
+        if($("#qty1").val()==''){
+            $("#qty1").val('0');
         }
+        var qty = parseFloat($("#qty1").val());
 
         setTimeout(() => {
             var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
             var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();  
             var j2 = $("#qty1").val().length;
             var k2 = $("#hjs1").val().length;
-            if($("#qty1").val()=='0'||$("#qty1").val()==''){
-                $("#hpp1").val('0');
-            }else{
-               
-                var qtyx = parseFloat($("#qty1").val());
-                var hbsx = parseFloat($("#hbs1").val());
-                $("#hpp1").val(qtyx*hbsx);
-            }
 
             if(j2=='0'||k2=='0'){
                 
@@ -1766,7 +1715,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bkeluar_kirimsyarat')}}',
+            url    : '{{route('pos01.transaksi.mkeluar_kirimsyarat')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -1827,22 +1776,27 @@ $(document).ready(function(){
         let k1 = y.length;
         let k2 = z.length;
         let k3 = j.length;
+        let nama1 = $("#nama1").val(); 
+        let nama2 = nama1.trim();
 
-        if(w=='KLR'&&b==z&&k1=='3'&&k3=='4'){
-            btn_baru_click();
-        
-            $("#iconx").removeClass("fas fa-edit");
-            $("#iconx").addClass("fas fa-plus-square");
-            $("#modalx").removeClass("modal-content bg-success w3-animate-zoom");
-            $("#modalx").addClass("modal-content bg-primary w3-animate-zoom");
-            document.getElementById("btn_simpan").disabled = false;
-            $('#ModalAdd').modal('show');
-            $('#id1').val('0');
-            $('#judulx').html(' Tambah Data');
-        
-        }else{
-            swalnomorbuktisalah(x);
-        }
+            if(w=='KMM'&&b==z&&k1=='3'&&k3=='4'){
+                if(nama2==''){
+                    swalpelanggankosong();
+                }else{
+                    btn_baru_click();        
+                    $("#iconx").removeClass("fas fa-edit");
+                    $("#iconx").addClass("fas fa-plus-square");
+                    $("#modalx").removeClass("modal-content bg-success w3-animate-zoom");
+                    $("#modalx").addClass("modal-content bg-primary w3-animate-zoom");
+                    document.getElementById("btn_simpan").disabled = false;
+                    $('#ModalAdd').modal('show');
+                    $('#id1').val('0');
+                    $('#judulx').html(' Tambah Data');
+                }
+            
+            }else{
+                swalnomorbuktisalah(x);
+            }
     }); 
     
     function data_simpan(){
@@ -1852,10 +1806,6 @@ $(document).ready(function(){
         var nomorbuktia1=$('#nomorbuktia1').val();
         var idbarang1=$('#idbarang1').val();
         var idanggota1=$('#idanggota1').val();
-        var idruang1=$('#idruang1').val();
-        var hbs1=$('#hbs1').val();
-        var hpp1=$('#hpp1').val();
-        var qtycek1=$('#qtycek1').val();
         var qty1=$('#qty1').val().replace(/[^,\d]/g, '').toString();
         var hjs1=$('#hjs1').val().replace(/[^,\d]/g, '').toString();
         var hppj1=$('#hppj1').val().replace(/[^,\d]/g, '').toString();
@@ -1871,11 +1821,7 @@ $(document).ready(function(){
             formData.append('nomorbuktia1', nomorbuktia1);
             formData.append('idbarang1', idbarang1);
             formData.append('idanggota1', idanggota1);
-            formData.append('idruang1', idruang1);
-            formData.append('hbs1', hbs1);
-            formData.append('hpp1', hpp1);
             formData.append('hjs1', hjs1);
-            formData.append('qtycek1', qtycek1);
             formData.append('qty1', qty1);
             formData.append('hppj1', hppj1);
             formData.append('ppn1', ppn1);
@@ -1887,7 +1833,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bkeluar_create')}}',
+            url    : '{{route('pos01.transaksi.mkeluar_create')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -1927,7 +1873,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bkeluar_nomorbukti')}}',
+            url    : '{{route('pos01.transaksi.mkeluar_nomorbukti')}}',
             async : false,
             dataType : 'json',
             // data : FormData,
@@ -1955,7 +1901,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bkeluar_nomorposting')}}',
+            url    : '{{route('pos01.transaksi.mkeluar_nomorposting')}}',
             async : false,
             dataType : 'json',
             // data : FormData,
@@ -1986,7 +1932,7 @@ $(document).ready(function(){
         btn_edit_click();
 
         var id1=$(this).attr('data');
-
+        
         $('#id1').val(id1);
         data_edit(id1);
 
@@ -2002,7 +1948,7 @@ $(document).ready(function(){
             
             $.ajax({
                 type  : 'get',
-                url   : `{{ url('pos01/transaksi/bkeluaredit')}}/${id1}`,
+                url   : `{{ url('pos01/transaksi/mkeluaredit')}}/${id1}`,
                 async : false,
                 dataType : 'json',	
                 
@@ -2011,17 +1957,12 @@ $(document).ready(function(){
                     var i;                
                     var resultData = data.data;	                			
                     for(i=0; i<resultData.length; i++){
-                        jumlahx = parseFloat(resultData[i].hpp)+parseFloat(resultData[i].ppn)-parseFloat(resultData[i].diskon);
-                        $('#idbarang1').val(resultData[i].idbarang);
+                        jumlahx = parseFloat(resultData[i].hppj)+parseFloat(resultData[i].ppn)-parseFloat(resultData[i].diskon);
+                        $('#idbarang1').val(resultData[i].idmamin);
                         $('#barang1').val($('#idbarang1 option:selected').text());
-                        $('#kode1').val(resultData[i].barang.kode);
-                        $('#barcode1').val(resultData[i].barang.barcode);
-                        $('#idruang1').val(resultData[i].idruang);
-                        $('#ruang1').val($('#idruang1 option:selected').text()); 
-                        $('#hbs1').val(resultData[i].hbs);
-                        $('#hpp1').val(resultData[i].hpp);
-                        $('#qtycek1').val(resultData[i].qtycek);
-
+                        $('#kode1').val(resultData[i].mamin.kode);
+                        $('#barcode1').val(resultData[i].mamin.barcode);
+                       
                         $('#qty1').val(formatAngka(resultData[i].qty,''));						
                         $('#hjs1').val(formatAngka(resultData[i].hjs,''));						
                         $('#hppj1').val(formatAngka(resultData[i].hppj,''));						
@@ -2061,8 +2002,7 @@ $(document).ready(function(){
             }else{
                 
                 setTimeout(() => {
-                    displaypembayaran(nomorbuktia1);
-                    
+                    displaypembayaran(nomorbuktia1);                    
                 }, 100);
 
                 setTimeout(() => {
@@ -2324,6 +2264,43 @@ $(document).ready(function(){
         }
         lihatpersen(kalix);
     });
+    
+    $("#idbarang1").on('change',function(){
+        setTimeout(() => {
+            ambil_mamin($("#idbarang1").val());
+        }, 100);
+    });
+
+    function ambil_mamin(idx){
+        var id1=idx;			
+            $.ajax({
+		        type  : 'get',
+		        url   : `{{ url('pos01/master/maminedit')}}/${id1}`,
+		        async : false,
+		        dataType : 'json',	
+				
+		        success : function(data){
+                    var i;                
+                    var resultData = data.data;	                			
+                    for(i=0; i<resultData.length; i++){
+                        
+                        $('#kode1').val(resultData[i].kode);
+                        $('#barcode1').val(resultData[i].barcode);
+                        $('#hjs1').val(formatAngka(resultData[i].hjs,''));;
+                        $('#ppnpersen1').val(resultData[i].ppnjual);
+                        $('#diskonpersen1').val(resultData[i].diskonjual);
+                        setTimeout(() => {
+                            $('#hjs1').change();
+                        }, 100);
+                        
+                    }
+                    
+		        },
+                error : function(data){
+                    alert(id1);
+                }
+		    }); 
+    }
 
     
     $("#idjenispembayaran1").on('change',function(){
@@ -2429,7 +2406,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bkeluar_posting')}}',
+            url    : '{{route('pos01.transaksi.mkeluar_posting')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -2502,7 +2479,7 @@ $(document).ready(function(){
         
         $.ajax({
             type  : 'get',
-            url   : '{{url('pos01/transaksi/bkeluardestroy')}}/'+id3,
+            url   : '{{url('pos01/transaksi/mkeluardestroy')}}/'+id3,
             async : false,
             dataType : 'json',					
             success : function(data){
@@ -2566,7 +2543,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bkeluar_proses')}}',
+            url    : '{{route('pos01.transaksi.mkeluar_proses')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -2687,7 +2664,16 @@ $(document).ready(function(){
         Swal.fire({
             icon: 'error',
             title: 'Oops...Nomor Bukti "' + x + '" ilegal !',
-            text: 'Klik Generate Nomor Bukti (icon gear)',
+            html: '<p>Klik Generate Nomor Bukti ( <i style="font-size:24" class="fa">&#xf013;</i> )</p>',
+            timer:5000
+        })
+    }
+
+    function swalpelanggankosong(){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...Nama pelanggan belum dipilih',
+            html: '<p>Isi kolom search atau Klik <i style="font-size:24" class="fas">&#xf002;</i></p>',
             timer:5000
         })
     }

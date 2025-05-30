@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Menusub;
+use Modules\Pos01\Models\Hutang;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -137,8 +138,16 @@ class SupplierController extends Controller
     
     public function edit($id)
     {
-        $data = Supplier::where('id', '=', $id)->get();
-        return json_encode(array('data' => $data));       
+        // $data = Supplier::where('id', '=', $id)->get();
+        // return json_encode(array('data' => $data)); 
+        
+        $saldohutang = Hutang::where('idsupplier','=',$id)->sum('pokok');
+
+        $data = Supplier::select('*')
+        ->selectRaw('('. $saldohutang .') as saldohutang')
+        ->where('id', '=', $id)  
+        ->get();
+        return json_encode(array('data' => $data)); 
     }
 
     /**

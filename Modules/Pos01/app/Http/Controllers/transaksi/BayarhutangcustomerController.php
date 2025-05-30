@@ -31,7 +31,7 @@ use Modules\Pos01\Models\Stokmova;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class BayarhutangController extends Controller
+class BayarhutangcustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,11 +46,11 @@ class BayarhutangController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Bayar Hutang</b>.';
-        $page = 'pos01::transaksi.bayarhutang';
-        $link = '/pos01/transaksi/bayarhutang';
+        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Bayar Hutang (Customer)</b>.';
+        $page = 'pos01::transaksi.bayarhutangcustomer';
+        $link = '/pos01/transaksi/bayarhutangcustomer';
         $subtitle = 'Transaksi';
-        $caption = 'Bayar Hutang';
+        $caption = 'Bayar Hutang (customer)';
         $jmlhal = 2;
 
         $menu=Menusub::where('link','=',$link)
@@ -126,7 +126,7 @@ class BayarhutangController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         $created_at1 = date('Y-m-d  H:i:s'); 
-        $status1 = 'bayar';
+        $status1 = 'bayarcus';
 
         $tgltransaksi1 = $request['tgltransaksi1'];
         $nomorbukti1 = $request['nomorbukti1'];
@@ -257,7 +257,7 @@ class BayarhutangController extends Controller
         date_default_timezone_set('Asia/Jakarta');
         $created_at1 = date('Y-m-d  H:i:s'); 
         $tglsekarang = date('Y-m-d');
-        $status1 = 'hutang';
+        $status1 = 'hutangcus';
 
         $subtotals1 = $request['subtotals1']; 
         $ppns1 = $request['ppns1'];
@@ -461,6 +461,7 @@ class BayarhutangController extends Controller
     public function showanggota()
     {
         $idanggotax = Hutang::select('idanggota')
+            ->where('idsupplier','=','0')
             ->where('kodepokok','=','1');
 
         $anggota = Anggota::with('lembaga')
@@ -591,6 +592,7 @@ class BayarhutangController extends Controller
     function listanggota()
     {
         $idanggotax = Hutang::select('idanggota')
+            ->where('idsupplier','=','0')
             ->where('kodepokok','=','1');
     
         $tampil = Anggota::with('lembaga')
@@ -598,6 +600,7 @@ class BayarhutangController extends Controller
             ->get();
         foreach ($tampil as $baris) {
             $saldox = Hutang::where('idanggota','=',$baris->id)
+                    ->where('idsupplier','=','0')
                     ->where('kodepokok','=','1')
                     ->sum('pokok');
             echo "<option value='" . $baris->id . "'>".$baris->ecard."|".$baris->nia."|".$baris->ktp."|".$baris->nama."|". $baris->lembaga->lembaga."|". $saldox . "</option>";
@@ -652,8 +655,8 @@ class BayarhutangController extends Controller
             $idx = ''.$userid;
         }
         
-        //nomor kwitansi contoh : BHT.010.20230527.0009
-        $nbx = 'BHT' . '.' . $idx . '.' . $tgl1 . '.' . $no;  
+        //nomor kwitansi contoh : BHC.010.20230527.0009
+        $nbx = 'BHC' . '.' . $idx . '.' . $tgl1 . '.' . $no;  
         $nomorbukti = "'$nbx'";
 
         $data = Satuan::limit(1)
@@ -728,6 +731,7 @@ class BayarhutangController extends Controller
     public function cariid(Request $request)
     {
         $idanggotax = Hutang::select('idanggota')
+        ->where('idsupplier','=','0')
         ->where('kodepokok','=','1');
     
         $cari = $request['cari1'];        

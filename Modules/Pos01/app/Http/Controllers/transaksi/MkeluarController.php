@@ -19,6 +19,8 @@ use Modules\Pos01\Models\Barangruang;
 use Modules\Pos01\Models\Bkeluar;
 use Modules\Pos01\Models\Hutang;
 use Modules\Pos01\Models\Jenispembayaran;
+use Modules\Pos01\Models\Mamin;
+use Modules\Pos01\Models\Mkeluar;
 use Modules\Pos01\Models\Parameter;
 use Modules\Pos01\Models\Ruang;
 use Modules\Pos01\Models\Satuan;
@@ -27,11 +29,12 @@ use Modules\Pos01\Models\Seksi;
 use Modules\Pos01\Models\Stok;
 use Modules\Pos01\Models\Stokfifo;
 use Modules\Pos01\Models\Stoklifo;
+use Modules\Pos01\Models\Stokmamin;
 use Modules\Pos01\Models\Stokmova;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class BkeluarController extends Controller
+class mkeluarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -46,11 +49,11 @@ class BkeluarController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Barang Keluar</b>.';
-        $page = 'pos01::transaksi.bkeluar';
-        $link = '/pos01/transaksi/bkeluar';
+        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Mamin Keluar</b>.';
+        $page = 'pos01::transaksi.mkeluar';
+        $link = '/pos01/transaksi/mkeluar';
         $subtitle = 'Transaksi';
-        $caption = 'Barang Keluar';
+        $caption = 'Mamin Keluar';
         $jmlhal = 2;
 
         $menu=Menusub::where('link','=',$link)
@@ -84,27 +87,20 @@ class BkeluarController extends Controller
 
         $validatedData = $request->validate([
             'idbarang1' => 'required',
-            'idruang1' => 'required',
             'nomorbuktia1' => 'required',
             'tgltransaksi1' => 'required',
             'idanggota1' => 'required',
         ]);
-        
-        //untuk input tabel yang asli
 
         $data = [
             'tgltransaksi' => $validatedData['tgltransaksi1'],
             'nomorbuktia' => $validatedData['nomorbuktia1'],
             'nomorba' => $nomorba1,
-            'idbarang' => $validatedData['idbarang1'],
+            'idmamin' => $validatedData['idbarang1'],
             'idanggota' => $validatedData['idanggota1'],
-            'idruang' => $validatedData['idruang1'],
             
             'qty' => $request['qty1'],
-            'qtycek' => $request['qtycek1'],
-            'hbs' => $request['hbs1'],
             'hjs' => $request['hjs1'],
-            'hpp' => $request['hpp1'],
             'hppj' => $request['hppj1'],
             'ppn' => $request['ppn1'],
             'diskon' => $request['diskon1'],
@@ -116,9 +112,9 @@ class BkeluarController extends Controller
         ];
 
         if ($id == '0') {
-            Bkeluar::create($data);
+            Mkeluar::create($data);
         } else {
-            Bkeluar::where('id', '=', $id)->update($data);
+            Mkeluar::where('id', '=', $id)->update($data);
         }
         return json_encode(array('data' => $data));
     }
@@ -127,7 +123,7 @@ class BkeluarController extends Controller
     {
         date_default_timezone_set('Asia/Jakarta');
         $created_at1 = date('Y-m-d  H:i:s'); 
-        $status1 = 'keluar';
+        $status1 = 'keluarmam';
 
         $tgltransaksi1 = $request['tgltransaksi1'];
         $nomorbuktia1 = $request['nomorbuktia1'];
@@ -144,463 +140,69 @@ class BkeluarController extends Controller
             'nomorposting1' => 'required',
         ]);
 
-        $tampil = Bkeluar::with(['barang','ruang','anggota']) 
+        $tampil = mkeluar::with(['mamin','anggota']) 
             ->where('tgltransaksi','=',  $validatedData['tgltransaksi1'])            
             ->where('nomorbuktia','=',  $validatedData['nomorbuktia1'])
             ->get();
 
+            // SELECT `id`, `idmamin`, `idanggota`, `tgltransaksi`, `nomorba`, `nomorbuktia`, `qty`, `hjs`, `hppj`, 
+            // `ppnpersen`, `diskonpersen`, `ppn`, `diskon`, `tglposting`, `nomorposting`, `keterangan`, `email`, `iduser` FROM `mkeluar` WHERE 1
         foreach ($tampil as $baris) {
-            $idbarang1 = $baris->idbarang;
-            $idruang1 = $baris->idruang;
+            $idmamin1 = $baris->idmamin;
             $idanggota1 = $baris->idanggota;
             $nama1 = $baris->anggota->nama;
-            $idseksi1 = $baris->ruang->idseksi;
             $idstatus1 = $baris->id;
             $tgltransaksi1 = $baris->tgltransaksi;
             $nomorbuktia1 = $baris->nomorbuktia;
             $qty1 = $baris->qty;
-            $hbs1 = $baris->hbs;
             $hjs1 = $baris->hjs;
-            $hpp1 = $baris->hpp;
             $hppj1 = $baris->hppj;
             $ppn1 = $baris->ppn;
             $diskon1 = $baris->diskon;
             $email1 = $baris->email;
             $keterangan1 = $baris->keterangan;
             $iduser1 = $baris->iduser;
-
-            //2.barangruang
-            $qty2 = Barangruang::where('idbarang','=',$idbarang1)
-            ->where('idruang','=',$idruang1)->count();
-
-            if($qty2==1){
-                $tampil2 = Barangruang::where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)->get();
-                foreach ($tampil2 as $baris) {
-                    $qtyx = $baris->qty;
-                }
-                $data2 = [
-                    'qty' => $qtyx-$qty1,
-                ];
-                Barangruang::where('idbarang','=',$idbarang1)
-                    ->where('idruang','=',$idruang1)->update($data2);
-            }
-
-            //3.barang gak dipakai
-                // $qty2 = Barang::where('id','=',$idbarang1)->count();
-                // if($qty2==1){                
-                //     $data2 = [
-                //         'hbs' => $hbs1,
-                //     ];
-                //     Barang::where('id','=',$idbarang1)->update($data2);
-                // }
-
-            //4.stok
-            $qty2 = Stok::where('idbarang','=',$idbarang1)
-            ->where('idruang','=',$idruang1)->count();
-
-            if($qty2<>'0'){
-                $tampil2 = stok::limit(1)
-                ->where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<',$created_at1)
-                ->orderBy('created_at','desc')
-                ->get();
-                
-                foreach ($tampil2 as $baris) {
-                    $awalx = $baris->akhir;
-                    $hbsawalx = $baris->hbsakhir;
-                    $hppawalx = $baris->hppakhir;
-                }
-                $akhirx = $awalx - $qty1;
-                $hbsakhirx = $hbs1;
-                $hppakhirx = $akhirx*$hbs1; 
-                $labajx = $hppj1+$ppn1-$diskon1-$hpp1; 
-
-                $data2 = [
-                    'idbarang' => $idbarang1,
-                    'idanggota' => $idanggota1,
-                    'idseksi' => $idseksi1,
-                    'idruang' => $idruang1,
-                    'nama' => $nama1,
-                    'status' => $status1,
-                    'tglstatus' => $tgltransaksi1,
-                    'nomorstatus' => $nomorbuktia1,
-                    'idstatus' => $idstatus1,
-                    'created_at' => $created_at1,
-                    'tglposting' => $validatedData['tglposting1'],
-                    'nomorp' => $nomorp1,
-                    'nomorposting' => $validatedData['nomorposting1'],
-                    'awal' => $awalx,
-                    'hbsawal' => $hbsawalx,
-                    'hppawal' => $hppawalx,
-                    'keluar' => $qty1,
-                    'hbskeluar' => $hbs1,
-                    'hppkeluar' => $hpp1,
-                    'ppnkeluar' => $ppn1,
-                    'diskonkeluar' => $diskon1,
-                    'hjs' => $hjs1,
-                    'hppj' => $hppj1,
-                    'labaj' => $labajx,
-                    'akhir' => $akhirx,
-                    'hbsakhir' => $hbs1,
-                    'hppakhir' => $hppakhirx,
-                    'email' => $email1,
-                    'iduser' => $iduser1,
-                    'keterangan' => $keterangan1,
-                ];
-                Stok::create($data2);
-            }else{
-                //
-            }
-
-            //5.stokmova
-            $qty2 = Stokmova::where('idbarang','=',$idbarang1)
-            ->where('idruang','=',$idruang1)->count();
-
-            if($qty2<>'0'){
-                $tampil2 = Stokmova::limit(1)
-                ->where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<',$created_at1)
-                ->orderBy('created_at','desc')
-                ->get();
-                
-                foreach ($tampil2 as $baris) {
-                    $awalx = $baris->akhir;
-                    $hbsawalx = $baris->hbsakhir;
-                    $hppawalx = $baris->hppakhir;
-                }
-
-                $totalawaldankeluar = $hppawalx - $hpp1; 
-                $totalqtyawaldankeluar = $awalx - $qty1;
-                $hbsakhirx =  $totalawaldankeluar/$totalqtyawaldankeluar;
-                
-                $keluarx = $qty1;
-                $hbskeluarx = $hbs1; 
-                $hppkeluarx = $hpp1; 
-                
-                $akhirx = $awalx-$keluarx;
-                $hppakhirx = $akhirx*$hbsakhirx; 
-                $labajx = $hppj1+$ppn1-$diskon1-$hpp1;
-
-                $data2 = [
-                    'idbarang' => $idbarang1,
-                    'idanggota' => $idanggota1,
-                    'idseksi' => $idseksi1,
-                    'idruang' => $idruang1,
-                    'nama' => $nama1,
-                    'status' => $status1,
-                    'tglstatus' => $tgltransaksi1,
-                    'nomorstatus' => $nomorbuktia1,
-                    'idstatus' => $idstatus1,
-                    'created_at' => $created_at1,
-                    'tglposting' => $validatedData['tglposting1'],
-                    'nomorp' => $nomorp1,
-                    'nomorposting' => $validatedData['nomorposting1'],
-                    'awal' => $awalx,
-                    'hbsawal' => $hbsawalx,
-                    'hppawal' => $hppawalx,
-                    'keluar' => $qty1,
-                    'hbskeluar' => $hbskeluarx,
-                    'hppkeluar' => $hppkeluarx,
-                    'ppnkeluar' => $ppn1,
-                    'diskonkeluar' => $diskon1,
-                    'hjs' => $hjs1,
-                    'hppj' => $hppj1,
-                    'labaj' => $labajx,
-                    'akhir' => $akhirx,
-                    'hbsakhir' => $hbsakhirx,
-                    'hppakhir' => $hppakhirx,
-                    'email' => $email1,
-                    'iduser' => $iduser1,
-                    'keterangan' => $keterangan1,
-                ];
-                Stokmova::create($data2);
-            }else{
-                //
-            }
             
-            //5.stokfifo
-            $qty2 = Stokfifo::where('idbarang','=',$idbarang1)
-            ->where('idruang','=',$idruang1)
-            ->where('created_at','<',$created_at1)
-            ->where('kodepokok','=','1')
-            ->count();
+            //4.stokmamin
+            $qty2 = Stokmamin::where('idmamin','=',$idmamin1)
+                ->count();
+            
+                $data2 = [
+                    'idmamin' => $idmamin1,
+                    'idanggota' => $idanggota1,
+                    'nama' => $nama1,
+                    'status' => $status1,
+                    'tglstatus' => $tgltransaksi1,
+                    'nomorstatus' => $nomorbuktia1,
+                    'idstatus' => $idstatus1,
+                    'created_at' => $created_at1,
+                    'tglposting' => $validatedData['tglposting1'],
+                    'nomorp' => $nomorp1,
+                    'nomorposting' => $validatedData['nomorposting1'],
+                    'keluar' => $qty1,
+                    'ppnkeluar' => $ppn1,
+                    'diskonkeluar' => $diskon1,
+                    'hjs' => $hjs1,
+                    'hppj' => $hppj1,
+                    'email' => $email1,
+                    'iduser' => $iduser1,
+                    'keterangan' => $keterangan1,
+                ];
 
             if($qty2<>'0'){
-                //cek data terakhir
-                $tampil2 = Stokfifo::limit(1)
-                ->where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<',$created_at1)
-                ->where('kodepokok','=','2')
-                ->orderBy('created_at','desc')
-                ->get();
-                foreach ($tampil2 as $baris) {
-                    $awalx = $baris->akhir;
-                    $hbsawalx = $baris->hbsakhir;
-                    $hppawalx = $baris->hppakhir;
-                }
-
-                $qty3 = Stokfifo::where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<=',$created_at1)
-                ->where('kodepokok','=','1')
-                ->count();
-                
-                if($qty3<>'0'){
-                    $tampil3 = Stokfifo::where('idbarang','=',$idbarang1)
-                    ->where('idruang','=',$idruang1)
-                    ->where('created_at','<=',$created_at1)
-                    ->where('kodepokok','=','1')
-                    ->orderBy('created_at','asc')
-                    ->get();
-                    $pkkx = 0;
-                    $hpppkkx = 0;
-                    $sisax = $qty1;
-                    $totalhppkeluar=0;
-                    $qtyx = 0;
-                    foreach ($tampil3 as $baris) {
-                        $idx = $baris->id;
-                        $pokokx = $baris->pokok;
-                        $pkkx = $pkkx + $pokokx;
-                        $sisax = $qty1 - $pkkx;
-                        $hbspokokx = $baris->hbspokok;    
-                        if($sisax<'0'){
-                            if($qtyx=='0'){
-                                $sisapokok = $pokokx-$qty1;
-                                $totalhppkeluar = $totalhppkeluar + ($qty1 * $hbspokokx);
-                                $sisahpppokok = $sisapokok * $hbspokokx; 
-                                $data1 = [
-                                    'pokok' => $sisapokok,
-                                    'hpppokok' => $sisahpppokok,
-                                ];
-                                Stokfifo::where('id', '=', $idx)->update($data1);                            
-                                
-                            }else{
-                                $sisapokok = $pokokx-$qtyx;
-                                $totalhppkeluar = $totalhppkeluar + ($qtyx * $hbspokokx);
-                                $sisahpppokok = $sisapokok * $hbspokokx;
-                                $data1 = [
-                                    'pokok' => $sisapokok,
-                                    'hpppokok' => $sisahpppokok,
-                                ];
-                                Stokfifo::where('id', '=', $idx)->update($data1);                            
-
-                            }
-                            break;
-                        }else{
-                            $qtyx = $qty1-$pkkx;
-                            $totalhppkeluar = $totalhppkeluar + ($pokokx * $hbspokokx);
-                            $data1 = [
-                                'pokok' => 0,
-                                'hbspokok' => 0,
-                                'hpppokok' => 0,
-                                'kodepokok' => 0,
-                            ];
-                            Stokfifo::where('id', '=', $idx)->update($data1);
-                            
-                            if($qtyx=='0'){                                                              
-                                break;
-                            }
-
-                        }
-                        
-                    }
-
-                    $akhirx = $awalx - $qty1;
-                    $hppkeluarx = $totalhppkeluar;
-                    $hbskeluarx = $hppkeluarx/$qty1;
-                    $hppakhirx = $hppawalx - $hppkeluarx;
-                    $hbsakhirx = $hppakhirx/$akhirx;
-                    $labajx = $hppj1+$ppn1-$diskon1-$hpp1;  
-                    $data2 = [
-                        'idbarang' => $idbarang1,
-                        'idanggota' => $idanggota1,
-                        'idseksi' => $idseksi1,
-                        'idruang' => $idruang1,
-                        'nama' => $nama1,
-                        'status' => $status1,
-                        'tglstatus' => $tgltransaksi1,
-                        'nomorstatus' => $nomorbuktia1,
-                        'idstatus' => $idstatus1,
-                        'created_at' => $created_at1,
-                        'tglposting' => $validatedData['tglposting1'],
-                        'nomorp' => $nomorp1,
-                        'nomorposting' => $validatedData['nomorposting1'],
-                        'awal' => $awalx,
-                        'hbsawal' => $hbsawalx,
-                        'hppawal' => $hppawalx,
-                        'keluar' => $qty1,
-                        'hbskeluar' => $hbskeluarx,
-                        'hppkeluar' => $hppkeluarx,
-                        'ppnkeluar' => $ppn1,
-                        'diskonkeluar' => $diskon1,
-                        'hjs' => $hjs1,
-                        'hppj' => $hppj1,
-                        'labaj' => $labajx,
-                        'akhir' => $akhirx,
-                        'hbsakhir' => $hbsakhirx,
-                        'hppakhir' => $hppakhirx,
-                        'email' => $email1,
-                        'iduser' => $iduser1,
-                        'keterangan' => $keterangan1,
-                        'kodepokok' => 2,
-                    ];
-                    Stokfifo::create($data2);
-                }else{
-                    //
-                }
-
+                // Stokmamin::create($data2);
             }else{
+                Stokmamin::create($data2);
                 //
             }
 
-            //5.stoklifo
-            $qty2 = Stoklifo::where('idbarang','=',$idbarang1)
-            ->where('idruang','=',$idruang1)
-            ->where('created_at','<',$created_at1)
-            ->where('kodepokok','=','1')
-            ->count();
-
-            if($qty2<>'0'){
-                //cek data terakhir
-                $tampil2 = Stoklifo::limit(1)
-                ->where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<',$created_at1)
-                ->where('kodepokok','=','2')
-                ->orderBy('created_at','desc')
-                ->get();
-                foreach ($tampil2 as $baris) {
-                    $awalx = $baris->akhir;
-                    $hbsawalx = $baris->hbsakhir;
-                    $hppawalx = $baris->hppakhir;
-                }
-
-                $qty3 = Stoklifo::where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<=',$created_at1)
-                ->where('kodepokok','=','1')
-                ->count();
-                
-                if($qty3<>'0'){
-                    $tampil3 = Stoklifo::where('idbarang','=',$idbarang1)
-                    ->where('idruang','=',$idruang1)
-                    ->where('created_at','<=',$created_at1)
-                    ->where('kodepokok','=','1')
-                    ->orderBy('created_at','desc')
-                    ->get();
-                    $pkkx = 0;
-                    $hpppkkx = 0;
-                    $sisax = $qty1;
-                    $totalhppkeluar=0;
-                    $qtyx = 0;
-                    foreach ($tampil3 as $baris) {
-                        $idx = $baris->id;
-                        $pokokx = $baris->pokok;
-                        $pkkx = $pkkx + $pokokx;
-                        $sisax = $qty1 - $pkkx;
-                        $hbspokokx = $baris->hbspokok;    
-                        if($sisax<'0'){
-                            if($qtyx=='0'){
-                                $sisapokok = $pokokx-$qty1;
-                                $totalhppkeluar = $totalhppkeluar + ($qty1 * $hbspokokx);
-                                $sisahpppokok = $sisapokok * $hbspokokx; 
-                                $data1 = [
-                                    'pokok' => $sisapokok,
-                                    'hpppokok' => $sisahpppokok,
-                                ];
-                                Stoklifo::where('id', '=', $idx)->update($data1);                            
-                                
-                            }else{
-                                $sisapokok = $pokokx-$qtyx;
-                                $totalhppkeluar = $totalhppkeluar + ($qtyx * $hbspokokx);
-                                $sisahpppokok = $sisapokok * $hbspokokx;
-                                $data1 = [
-                                    'pokok' => $sisapokok,
-                                    'hpppokok' => $sisahpppokok,
-                                ];
-                                Stoklifo::where('id', '=', $idx)->update($data1);                            
-
-                            }
-                            break;
-                        }else{
-                            $qtyx = $qty1-$pkkx;
-                            $totalhppkeluar = $totalhppkeluar + ($pokokx * $hbspokokx);
-                            $data1 = [
-                                'pokok' => 0,
-                                'hbspokok' => 0,
-                                'hpppokok' => 0,
-                                'kodepokok' => 0,
-                            ];
-                            Stoklifo::where('id', '=', $idx)->update($data1);
-                            
-                            if($qtyx=='0'){                                                              
-                                break;
-                            }
-
-                        }
-                        
-                    }
-
-                    $akhirx = $awalx - $qty1;
-                    $hppkeluarx = $totalhppkeluar;
-                    $hbskeluarx = $hppkeluarx/$qty1;
-                    $hppakhirx = $hppawalx - $hppkeluarx;
-                    $hbsakhirx = $hppakhirx/$akhirx;  
-                    $labajx = $hppj1+$ppn1-$diskon1-$hpp1;
-
-                    $data2 = [
-                        'idbarang' => $idbarang1,
-                        'idanggota' => $idanggota1,
-                        'idseksi' => $idseksi1,
-                        'idruang' => $idruang1,
-                        'nama' => $nama1,
-                        'status' => $status1,
-                        'tglstatus' => $tgltransaksi1,
-                        'nomorstatus' => $nomorbuktia1,
-                        'idstatus' => $idstatus1,
-                        'created_at' => $created_at1,
-                        'tglposting' => $validatedData['tglposting1'],
-                        'nomorp' => $nomorp1,
-                        'nomorposting' => $validatedData['nomorposting1'],
-                        'awal' => $awalx,
-                        'hbsawal' => $hbsawalx,
-                        'hppawal' => $hppawalx,
-                        'keluar' => $qty1,
-                        'hbskeluar' => $hbskeluarx,
-                        'hppkeluar' => $hppkeluarx,
-                        'ppnkeluar' => $ppn1,
-                        'diskonkeluar' => $diskon1,
-                        'hjs' => $hjs1,
-                        'hppj' => $hppj1,
-                        'labaj' => $labajx,
-                        'akhir' => $akhirx,
-                        'hbsakhir' => $hbsakhirx,
-                        'hppakhir' => $hppakhirx,
-                        'email' => $email1,
-                        'iduser' => $iduser1,
-                        'keterangan' => $keterangan1,
-                        'kodepokok' => 2,
-                    ];
-                    Stoklifo::create($data2);
-                }else{
-                    //
-                }
-
-            }else{
-                //
-            }
-
-            //6.update bmasuk
+            //6.update mkeluar
             $data = [
                 'tglposting' => $validatedData['tglposting1'],
                 'nomorposting' => $validatedData['nomorposting1'],                        
             ];
                  
-            Bkeluar::with(['barang','ruang','anggota']) 
+            mkeluar::with(['mamin','anggota']) 
             ->where('tgltransaksi','=', $tgltransaksi1)            
             ->where('nomorbuktia','=', $nomorbuktia1)
             ->update($data);
@@ -611,13 +213,13 @@ class BkeluarController extends Controller
 
         // return json_encode('data');
     }
-
+    
     public function proses(Request $request)
     {
         date_default_timezone_set('Asia/Jakarta');
         $created_at1 = date('Y-m-d  H:i:s'); 
         $tglsekarang = date('Y-m-d');
-        $status1 = 'hutang';
+        $status1 = 'hutangcus';
 
         $subtotals1 = $request['subtotals1']; 
         $ppns1 = $request['ppns1'];
@@ -638,10 +240,15 @@ class BkeluarController extends Controller
         $persenjasa1 = $request['persenjasa1'];
         $nilaihutang1 = $request['nilaihutang1'];
 
+        // $np = explode(".", $request['$nomorpostingnya1']);
+        // $nomorp1 = intval($np[3]);
+        $tampil = Stokmamin::where('nomorstatus','=',$nomorbuktia1)->get();
+        foreach ($tampil as $baris) {
+             $nomorp1 = $baris->nomorp;
+        }
             
         if($tgltransaksi1 == $tglsekarang){
-            //update stok, stokfifo, stoklifo, updatemova
-
+            //update stokmamin
             $data = [
                 'subtotals' => $subtotals1,
                 'ppns' => $ppns1,
@@ -655,23 +262,11 @@ class BkeluarController extends Controller
                 'idjenispembayaran' => $idjenispembayaran1,                
                 'xangsuran' => $xangsuran1,                
             ]; 
-            $tampil = Stok::where('nomorstatus','=',$nomorbuktia1)->count();
+            $tampil = Stokmamin::where('nomorstatus','=',$nomorbuktia1)->count();
             if($tampil<>'0'){
                 Stok::where('nomorstatus','=',$nomorbuktia1)->update($data);
             }
-            $tampil = Stokfifo::where('nomorstatus','=',$nomorbuktia1)->count();
-            if($tampil<>'0'){
-                Stokfifo::where('nomorstatus','=',$nomorbuktia1)->update($data);
-            }
-            $tampil = Stoklifo::where('nomorstatus','=',$nomorbuktia1)->count();
-            if($tampil<>'0'){
-                Stoklifo::where('nomorstatus','=',$nomorbuktia1)->update($data);
-            }
-            $tampil = Stokmova::where('nomorstatus','=',$nomorbuktia1)->count();
-            if($tampil<>'0'){
-                Stokmova::where('nomorstatus','=',$nomorbuktia1)->update($data);
-            }
-
+            
             //savings
             if($savings1=='0'||''){
                 Savings::where('idanggota','=',$idanggota1)
@@ -765,6 +360,7 @@ class BkeluarController extends Controller
                             'kodepokok' => 2,
                             'xangsuran' => $xangsuran1,
                             'created_at' => $created_at1,
+                            'nomorp' => $nomorp1,
                             'tglposting' => $tglpostingnya1,
                             'nomorposting' => $nomorpostingnya1,
                             'masuk' => $nilaihutang1,
@@ -783,6 +379,7 @@ class BkeluarController extends Controller
                             'kodepokok' => 2,
                             'idanggota' => $idanggota1,
                             'tglstatus' => $tgltransaksi1,
+                            'nomorp' => $nomorp1,
                             'nomorstatus' => $nomorbuktia1,
                             'status' => $status1,
                             'tglposting' => $tglpostingnya1,
@@ -805,6 +402,7 @@ class BkeluarController extends Controller
                         'kodepokok' => 2,
                         'idanggota' => $idanggota1,
                         'tglstatus' => $tgltransaksi1,
+                        'nomorp' => $nomorp1,
                         'nomorstatus' => $nomorbuktia1,
                         'status' => $status1,
                         'tglposting' => $tglpostingnya1,
@@ -829,6 +427,7 @@ class BkeluarController extends Controller
                     'kodepokok' => 1,
                     'idanggota' => $idanggota1,
                     'tglstatus' => $tgltransaksi1,
+                    'nomorp' => $nomorp1,
                     'nomorstatus' => $nomorbuktia1,
                     'status' => $status1,
                     'tglposting' => $tglpostingnya1,
@@ -850,8 +449,6 @@ class BkeluarController extends Controller
                     Hutang::create($data); 
                 }
             }
-
-
 
             
         }else{
@@ -884,7 +481,7 @@ class BkeluarController extends Controller
         $tgltransaksi1 = session('tgltransaksi1');    
         $nomorbuktia1 = session('nomorbuktia1');    
 
-        $data = Bkeluar::with(['barang','ruang','anggota'])            
+        $data = mkeluar::with(['mamin','anggota'])            
             ->where('tgltransaksi','=', $tgltransaksi1)            
             ->where('nomorbuktia','=', $nomorbuktia1)            
             ->get();
@@ -892,57 +489,50 @@ class BkeluarController extends Controller
 
     }
 
-    public function showbarang()
+    public function showmamin()
     {
-        $barangruang = Barangruang::with('barang','seksi','ruang')
-            ->where('qty','>',0)
+        $mamin = Mamin::with('satuan','kategori')
+            ->whereNull('expired')
+            ->orderBy('namamin','asc')
             ->get();
-        $datax = DataTables::of($barangruang                          
+        $datax = DataTables::of($mamin                          
             );
 
         $data = $datax
             ->addIndexColumn()
            
-            ->addColumn('nabara', function ($row) {
-                return '<a href="#" style="color: white;" title="'. ($row->idbarang ? $row->barang->nabara : '-') .'" class="item_nabara " data1="' . $row->idbarang . '" data2="'. $row->barang->kode. '" data3="'. $row->barang->barcode. '" data4="'. $row->barang->hbs. '" data5="'. $row->barang->hjs. '" data6="'. $row->idruang. '" data7="'. $row->barang->ppnbeli. '" data8="'. $row->barang->diskonbeli. '" data9="'. $row->barang->ppnjual. '" data10="'. $row->barang->diskonjual. '" data11="'. $row->qty. '">'.($row->idbarang ? $row->barang->nabara : '-').'</a> ';
+            ->addColumn('namamin', function ($row) {
+                return '<a href="#" style="color: white;" title="'. ($row->namamin) .'" class="item_namamin " data1="' . $row->id . '" data2="'. $row->kode . '" data3="'. $row->barcode . '" data4="'. $row->namamin. '" data5="'. $row->satuan->satuan. '" data6="'. $row->kategori->kategori. '" data7="'. $row->hjs. '">'.($row->namamin).'</a> ';
             })
             ->addColumn('kode', function ($row) {
-                return '<a href="#" style="color: white;" title="'. ($row->idbarang ? $row->barang->kode : '-') .'" class="item_kode " data1="' . $row->idbarang . '" data2="'. $row->barang->kode. '" data3="'. $row->barang->barcode. '" data4="'. $row->barang->hbs. '" data5="'. $row->barang->hjs. '" data6="'. $row->idruang. '" data7="'. $row->barang->ppnbeli. '" data8="'. $row->barang->diskonbeli. '" data9="'. $row->barang->ppnjual. '" data10="'. $row->barang->diskonjual. '" data11="'. $row->qty. '">'.($row->idbarang ? $row->barang->kode : '-').'</a> ';
+                return '<a href="#" style="color: white; " title="'. ($row->kode) .'" class="item_kode " data1="' . $row->id . '" data2="'. $row->kode . '" data3="'. $row->barcode . '" data4="'. $row->namamin. '" data5="'. $row->satuan->satuan. '" data6="'. $row->kategori->kategori. '" data7="'. $row->hjs. '">' . ($row->kode).'</a> ';
             })
             ->addColumn('barcode', function ($row) {
-                return '<a href="#" style="color: white;" title="'. ($row->idbarang ? $row->barang->barcode : '-') .'" class="item_barcode " data1="' . $row->idbarang . '" data2="'. $row->barang->kode. '" data3="'. $row->barang->barcode. '" data4="'. $row->barang->hbs. '" data5="'. $row->barang->hjs. '" data6="'. $row->idruang. '" data7="'. $row->barang->ppnbeli. '" data8="'. $row->barang->diskonbeli. '" data9="'. $row->barang->ppnjual. '" data10="'. $row->barang->diskonjual. '" data11="'. $row->qty. '">'.($row->idbarang ? $row->barang->barcode : '-').'</a> ';
+                return '<a href="#" style="color: white;" title="'. ($row->barcode) .'" class="item_barcode " data1="' . $row->id . '" data2="'. $row->kode . '" data3="'. $row->barcode . '" data4="'. $row->namamin. '" data5="'. $row->satuan->satuan. '" data6="'. $row->kategori->kategori. '" data7="'. $row->hjs. '">'.($row->barcode).'</a> ';
             })
-            
-            ->addColumn('hbs', function ($row) {
-                return $row->idbarang ? number_format($row->barang->hbs,0) : '';
-            })
+           
             ->addColumn('hjs', function ($row) {
-                return $row->idbarang ? number_format($row->barang->hjs,0) : '';
+                return $row->hjs ? number_format($row->hjs,0) : '';
             })
             ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
+                return $row->idsatuan ? $row->satuan->kode : '';
             })
-            ->addColumn('ruang', function ($row) {
-                return $row->idruang ? $row->ruang->ruang : '';
-            })
-            ->addColumn('seksi', function ($row) {
-                return $row->idruang ? $row->ruang->seksi->seksi : '';
+            ->addColumn('kategori', function ($row) {
+                return $row->idkategori ? $row->kategori->kategori : '';
             })
             
-            ->addColumn('action', function ($row) {
-                return '<a href="#" title="Edit Data" class="btn btn-success btn-xs item_edit" data="' . $row->id . '" data2="'. $row->barang->nabara.'" data3="'. $row->barang->kode.'" data4="'. $row->barang->barcode.'"><i style="font-size:18px" class="fa">&#xf044;</i></a> ' .
-                       '<a href="#" title="Hapus Data" class="btn btn-danger btn-xs item_hapus" data="' . $row->id . '" data2="'. $row->barang->nabara.'" data3="'. $row->barang->kode.'" data4="'. $row->barang->barcode.'"><i style="font-size:18px" class="fa">&#xf00d;</i></a>';
-            })
+            // ->addColumn('action', function ($row) {
+            //     return '<a href="#" title="Edit Data" class="btn btn-success btn-xs item_edit" data="' . $row->id . '" data2="'. $row->barang->nabara.'" data3="'. $row->barang->kode.'" data4="'. $row->barang->barcode.'"><i style="font-size:18px" class="fa">&#xf044;</i></a> ' .
+            //            '<a href="#" title="Hapus Data" class="btn btn-danger btn-xs item_hapus" data="' . $row->id . '" data2="'. $row->barang->nabara.'" data3="'. $row->barang->kode.'" data4="'. $row->barang->barcode.'"><i style="font-size:18px" class="fa">&#xf00d;</i></a>';
+            // })
             
             ->rawColumns([
-                'nabara',
+                'namamin',
                 'kode',
                 'barcode',
-                'hbs',
                 'hjs',
                 'satuan',
-                'ruang',
-                'seksi',
+                'kategori',
                 'action'])
 
             ->make(true);
@@ -961,7 +551,7 @@ class BkeluarController extends Controller
            
             ->addColumn('ecard', function ($row) { 
                 $lembaga = $row->lembaga->lembaga;
-                return '<a href="#" style="color: white;" title="'. ($row->ecard ? $row->ecard : '-') .'" class="item_ecard " data1="' . $row->id . '" data2="'. $row->ecard. '" data3="'. $row->nia. '" data4="'. $row->ktp. '" data5="'. $row->nama. '" data6="'. $row->lembaga->lembaga. '" data7="'. $row->telp. '" data100="'. $row->id. '">'.($row->ecard ? $row->ecard : '-').'</a> ';
+                return '<a href="#" style="" title="'. ($row->ecard ? $row->ecard : '-') .'" class="item_ecard " data1="' . $row->id . '" data2="'. $row->ecard. '" data3="'. $row->nia. '" data4="'. $row->ktp. '" data5="'. $row->nama. '" data6="'. $row->lembaga->lembaga. '" data7="'. $row->telp. '" data100="'. $row->id. '">'.($row->ecard ? $row->ecard : '-').'</a> ';
             })
             ->addColumn('nia', function ($row) {
                 return '<a href="#" style="color: white;" title="'. ($row->nia ? $row->nia : '-') .'" class="item_nia " data1="' . $row->id . '" data2="'. $row->ecard. '" data3="'. $row->nia. '" data4="'. $row->ktp. '" data5="'. $row->nama. '" data6="'. $row->lembaga->lembaga. '" data7="'. $row->telp. '" data100="'. $row->id. '">'.($row->nia ? $row->nia : '-').'</a> ';
@@ -994,7 +584,6 @@ class BkeluarController extends Controller
             return $data;
 
     }
-    
 
     /**
      * Show the form for editing the specified resource.
@@ -1003,8 +592,8 @@ class BkeluarController extends Controller
      */
     public function edit($id)
     {
-        $data = Bkeluar::where('id', '=', $id)
-            ->with(['barang','ruang','anggota'])
+        $data = mkeluar::where('id', '=', $id)
+            ->with(['mamin','anggota'])
             ->get();
         return json_encode(array('data' => $data));       
     }
@@ -1031,11 +620,11 @@ class BkeluarController extends Controller
         return json_encode(array('data' => $data));
     }
   
-    function listbarang()
+    function listmamin()
     {
-        $tampil = Barang::orderBy('nabara','asc')->get();
+        $tampil = Mamin::orderBy('namamin','asc')->get();
         foreach ($tampil as $baris) {
-            echo "<option value='" . $baris->id . "'>". $baris->nabara . "</option>";
+            echo "<option value='" . $baris->id . "'>". $baris->namamin . "</option>";
         }
     }
     function listruang()
@@ -1047,7 +636,9 @@ class BkeluarController extends Controller
     }
     function listanggota()
     {
-        $tampil = Anggota::with('lembaga')->get();
+        $tampil = Anggota::with('lembaga')
+            ->where('aktif','=','Y')
+            ->get();
         foreach ($tampil as $baris) {
             echo "<option value='" . $baris->id . "'>".$baris->ecard."|".$baris->nia."|".$baris->ktp."|".$baris->nama."|". $baris->lembaga->lembaga . "</option>";
         }
@@ -1070,12 +661,12 @@ class BkeluarController extends Controller
         $m1 = Carbon::parse($tgltransaksi1)->format('m');
         $y1 = Carbon::parse($tgltransaksi1)->format('Y');
         
-        $jmldata = Bkeluar::where('tgltransaksi','=',$tgltransaksi1)            
+        $jmldata = Mkeluar::where('tgltransaksi','=',$tgltransaksi1)            
             ->count();
         if ($jmldata==0){
             $nomor = 1;    
         }else{
-            $nomor = Bkeluar::select('nomorba')
+            $nomor = Mkeluar::select('nomorba')
                 ->where('tgltransaksi','=',$tgltransaksi1)
                 ->max('nomorba')+1;
         }  
@@ -1099,8 +690,8 @@ class BkeluarController extends Controller
             $idx = ''.$userid;
         }
         
-        //nomor kwitansi contoh : KLR.010.20230527.0009
-        $nbx = 'KLR' . '.' . $idx . '.' . $tgl1 . '.' . $no;  
+        //nomor kwitansi contoh : KMM.010.20230527.0009
+        $nbx = 'KMM' . '.' . $idx . '.' . $tgl1 . '.' . $no;  
         $nomorbukti = "'$nbx'";
 
         $data = Satuan::limit(1)
@@ -1148,6 +739,7 @@ class BkeluarController extends Controller
         }else{
             $idx = ''.$userid;
         }
+        
 
         //nomor kwitansi contoh : POS.010.20230527.0009
         $nbx = 'POS' . '.' . $idx . '.' . $tgl1 . '.' . $no;  
@@ -1172,13 +764,26 @@ class BkeluarController extends Controller
     public function cariid(Request $request)
     {
         $cari = $request['cari1'];
+
+        session(['carix' => $cari]);
                
-        $data = Anggota::with('lembaga')
-                ->where('ecard','=',$cari)
-                ->Orwhere('nia','=',$cari)
-                ->Orwhere('ktp','=',$cari)
-                ->Orwhere('telp','=',$cari)
-                ->get();
+        // $data = Anggota::with('lembaga')
+        //         ->where('ecard','=',$cari)
+        //         ->Orwhere('nia','=',$cari)
+        //         ->Orwhere('ktp','=',$cari)
+        //         ->Orwhere('telp','=',$cari)
+        //         ->get();
+
+         $data = Anggota::with('lembaga')
+                ->where('aktif','=','Y')
+                ->where(function (Builder $query) {
+                    $cari = session('carix');
+                    return $query->where('ecard','=',$cari)
+                    ->Orwhere('nia','=',$cari)
+                    ->Orwhere('ktp','=',$cari)
+                    ->Orwhere('telp','=',$cari);
+                })
+                ->get();        
          
         return json_encode(array('data' => $data));
 
@@ -1187,13 +792,21 @@ class BkeluarController extends Controller
     public function displaypembayaran($id)
     {
         
-        $tampil = Hutang::where('nomorstatus','=',$id)
-        ->where('kodepokok','=','1')
-        ->get();
-        
-        foreach ($tampil as $baris) {
-            $persenjasa = $baris->persenjasa;
-            $asli = $baris->asli;
+        $jml = hutang::where('nomorstatus','=',$id)
+            ->where('kodepokok','=','1')
+            ->count();
+        if($jml <> '0'){
+            $tampil = hutang::where('nomorstatus','=',$id)
+                ->where('kodepokok','=','1')
+                ->get();
+            
+            foreach ($tampil as $baris) {
+                $persenjasa = $baris->persenjasa;
+                $asli = $baris->asli;
+            }
+        }else{
+            $persenjasa = 0;
+            $asli = 0;
         }
 
         $tampil = Stok::where('nomorstatus','=',$id)
@@ -1202,15 +815,14 @@ class BkeluarController extends Controller
         foreach ($tampil as $baris) {
             $jml = $jml + $baris->bayars + $baris->vouchers + $baris->ambilsavings;
         }
-
-        $data = Stok::limit(1)
-        ->select('*')
-        ->selectRaw('('. $jml .') as jml')
-        ->selectRaw('('. $persenjasa .') as persenjasa')
-        ->selectRaw('('. $asli .') as nilaihutang')
-        ->where('nomorstatus','=',$id)        
-        ->orderBy('id','desc')
-        ->get();
+        
+        $data = stok::limit(1)->select('*')
+            ->selectRaw('('. $jml .') as jml')
+            ->selectRaw('('. $persenjasa .') as persenjasa')
+            ->selectRaw('('. $asli .') as nilaihutang')
+            ->where('nomorstatus','=',$id)        
+            ->orderBy('id','desc')
+            ->get();
 
         return json_encode(array('data' => $data));       
     }

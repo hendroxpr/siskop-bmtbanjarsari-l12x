@@ -88,7 +88,7 @@
                         <h6 class="mt-2  text-right">Nomor Bukti</h6>
                     </div>
                     <div class="col-md-7 input-group">
-                        <input name="nomorbukti1" id="nomorbukti1" class="form-control w3-input w3-border rounded-0" type="search" placeholder="BTH.001.20230131.001" disabled value="{{ $nomorbukti }}">                        
+                        <input name="nomorbukti1" id="nomorbukti1" class="form-control w3-input w3-border rounded-0" type="search" placeholder="BHC.001.20230131.001" disabled value="{{ $nomorbukti }}">                        
                         <div class="input-group-append">
                           <button id="btn_nomorbukti1" name="btn_nomorbukti1" type="button" style="border-radius:0px; border:none;" title="Generate Nomor Bukti-a" disabled><i style="font-size:24" class="fa">&#xf013;</i></button>
                         </div>
@@ -785,7 +785,7 @@ $(document).ready(function(){
     function tampil_listhutang(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.bayarhutang_listhutang')}}',
+            url   : '{{route('pos01.transaksi.bayarhutangcustomer_listhutang')}}',
             
             success: function(data){				    
                 $("#idhutang1").html(data);                
@@ -796,7 +796,7 @@ $(document).ready(function(){
     function tampil_listhutangx(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.bayarhutang_listhutangx')}}',
+            url   : '{{route('pos01.transaksi.bayarhutangcustomer_listhutangx')}}',
             
             success: function(data){				    
                 $("#idhutangx1").html(data);                
@@ -809,7 +809,7 @@ $(document).ready(function(){
     function tampil_listanggota(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.bayarhutang_listanggota')}}',
+            url   : '{{route('pos01.transaksi.bayarhutangcustomer_listanggota')}}',
             
             success: function(data){				    
                 $("#idanggota1").html(data);                
@@ -822,7 +822,7 @@ $(document).ready(function(){
     function tampil_listjenispembayaran(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.bayarhutang_listjenispembayaran')}}',
+            url   : '{{route('pos01.transaksi.bayarhutangcustomer_listjenispembayaran')}}',
             
             success: function(data){				    
                 $("#idjenispembayaran1").html(data);                
@@ -845,7 +845,7 @@ $(document).ready(function(){
     function tampil_data(){	
         $.ajax({
             type  : 'get',
-            url   : '{{route('pos01.transaksi.bayarhutang_show')}}',
+            url   : '{{route('pos01.transaksi.bayarhutangcustomer_show')}}',
             async : false,
             dataType : 'json',
             				 				
@@ -979,7 +979,7 @@ $(document).ready(function(){
            ],
            processing: true,
            serverSide: true,
-           ajax   : `{{route('pos01.transaksi.bayarhutang_showhutang')}}`,
+           ajax   : `{{route('pos01.transaksi.bayarhutangcustomer_showhutang')}}`,
            columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -1029,7 +1029,7 @@ $(document).ready(function(){
            ],
            processing: true,
            serverSide: true,
-           ajax   : `{{route('pos01.transaksi.bayarhutang_showanggota')}}`,
+           ajax   : `{{route('pos01.transaksi.bayarhutangcustomer_showanggota')}}`,
            columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -1114,7 +1114,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bayarhutang_cariid')}}',
+            url    : '{{route('pos01.transaksi.bayarhutangcustomer_cariid')}}',
             async : false,
             dataType : 'json',
             // data : FormData,
@@ -1159,7 +1159,7 @@ $(document).ready(function(){
                             setTimeout(() => {
                                 hutangDatatable = tampil_data_hutang(); 
                                 setTimeout(() => {
-                                    hutangDatatable.ajax.url('{{route('pos01.transaksi.bayarhutang_showhutang')}}').load();                
+                                    hutangDatatable.ajax.url('{{route('pos01.transaksi.bayarhutangcustomer_showhutang')}}').load();                
                                     hutangDatatable.draw(null, false);
                                                                         
                                 }, 500);           
@@ -1234,7 +1234,7 @@ $(document).ready(function(){
         
             $.ajax({
                 type  : 'get',
-                url   : `{{ url('pos01/transaksi/bayarhutangdisplaypembayaran//')}}/${id1}`,
+                url   : `{{ url('pos01/transaksi/bayarhutangcustomerdisplaypembayaran//')}}/${id1}`,
                 async : false,
                 dataType : 'json',	
                 
@@ -1356,7 +1356,7 @@ $(document).ready(function(){
                setTimeout(() => {
                     hutangDatatable = tampil_data_hutang();
                     setTimeout(() => {
-                        hutangDatatable.ajax.url('{{route('pos01.transaksi.bayarhutang_showhutang')}}').load();                
+                        hutangDatatable.ajax.url('{{route('pos01.transaksi.bayarhutangcustomer_showhutang')}}').load();                
                         hutangDatatable.draw(null, false);                         
                     }, 200);    
                 }, 200);               
@@ -1397,7 +1397,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bayarhutang_kirimsyarat')}}',
+            url    : '{{route('pos01.transaksi.bayarhutangcustomer_kirimsyarat')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -1470,7 +1470,7 @@ $(document).ready(function(){
             
             $.ajax({
                 type  : 'get',
-                url   : `{{ url('pos01/transaksi/bayarhutangdisplayhutang')}}/${id1}`,
+                url   : `{{ url('pos01/transaksi/bayarhutangcustomerdisplayhutang')}}/${id1}`,
                 async : false,
                 dataType : 'json',	
                 
@@ -1517,7 +1517,7 @@ $(document).ready(function(){
         let k2 = z.length;
         let k3 = j.length;
 
-        if(w=='BHT'&&b==z&&k1=='3'&&k3=='4'){
+        if(w=='BHC'&&b==z&&k1=='3'&&k3=='4'){
             btn_baru_click();
         
             $("#iconx").removeClass("fas fa-edit");
@@ -1562,7 +1562,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bayarhutang_create')}}',
+            url    : '{{route('pos01.transaksi.bayarhutangcustomer_create')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -1602,7 +1602,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bayarhutang_nomorbukti')}}',
+            url    : '{{route('pos01.transaksi.bayarhutangcustomer_nomorbukti')}}',
             async : false,
             dataType : 'json',
             // data : FormData,
@@ -1630,7 +1630,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bayarhutang_nomorposting')}}',
+            url    : '{{route('pos01.transaksi.bayarhutangcustomer_nomorposting')}}',
             async : false,
             dataType : 'json',
             // data : FormData,
@@ -1680,7 +1680,7 @@ $(document).ready(function(){
 
             $.ajax({
                 type  : 'get',
-                url   : `{{ url('pos01/transaksi/bayarhutangedit')}}/${id1}`,
+                url   : `{{ url('pos01/transaksi/bayarhutangcustomeredit')}}/${id1}`,
                 async : false,
                 dataType : 'json',	
                 
@@ -1719,9 +1719,14 @@ $(document).ready(function(){
     }
    
    $("#btn_pembayaran1").on('click',function(){ 
-       var nomorbukti1 = $('#nomorbukti1').val();       
-       var a1 = $("#displaysubtotal1").text();
-       var b1 = $("#nomorpostingnya1").val();
+        var nomorbukti1 = $('#nomorbukti1').val();       
+        var a1 = $("#displaysubtotal1").text();
+        var b1 = $("#nomorpostingnya1").val();
+
+        let x = $('#nomorbukti1').val();
+        const xArray = x.split(".");
+        let w = xArray[0];
+
        if(a1=='0'||a1==''){
             swaldatakosong('- Data belum ada -');
        }else{
@@ -1729,12 +1734,17 @@ $(document).ready(function(){
                 swaldatakosong('- Data belum diposting -');
                 // $("#ModalPembayaran").modal('show');
             }else{                
-                setTimeout(() => {
-                    displaypembayaran(nomorbukti1);
-                }, 100);
-                $("#ModalPembayaran").modal('show');
-                document.getElementById('kembalis1').setAttribute("style","background-color:red");
-                document.getElementById('savings1').setAttribute("style","background-color:red");
+                if(w=='BHC'){
+                    setTimeout(() => {
+                        displaypembayaran(nomorbukti1);
+                    }, 100);
+                    $("#ModalPembayaran").modal('show');
+                    document.getElementById('kembalis1').setAttribute("style","background-color:red");
+                    document.getElementById('savings1').setAttribute("style","background-color:red");
+                }else{
+                    swaldatakosong('- Data salah -');
+                }
+
                 
             }
        }       
@@ -2169,7 +2179,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bayarhutang_posting')}}',
+            url    : '{{route('pos01.transaksi.bayarhutangcustomer_posting')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -2242,7 +2252,7 @@ $(document).ready(function(){
         
         $.ajax({
             type  : 'get',
-            url   : '{{url('pos01/transaksi/bayarhutangdestroy')}}/'+id3,
+            url   : '{{url('pos01/transaksi/bayarhutangcustomerdestroy')}}/'+id3,
             async : false,
             dataType : 'json',					
             success : function(data){
@@ -2300,7 +2310,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.bayarhutang_proses')}}',
+            url    : '{{route('pos01.transaksi.bayarhutangcustomer_proses')}}',
             data: formData,
             cache: false,
             processData: false,

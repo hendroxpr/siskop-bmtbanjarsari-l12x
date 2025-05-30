@@ -26,12 +26,11 @@
 @endif
 
 <style>
-    #barcode1, #nabara1 {
+    #barcode1, #namamin1 {
             text-transform: uppercase; /* Memastikan tampilan awal huruf kapital */
         }
 
 </style>
-
 
     <div class="box-header mb-3">  
         <div class="row">
@@ -55,19 +54,14 @@
             <table id="data1" class="table table-bordered table-striped table-hover" style="width: 100%">
                 <thead>
                     <tr>
-                        <th style="width:10px;">#</th>                            
-                        <th style="width:10px">Kode</th>							
+                        <th style="width:10px;">#</th>
+                        <th style="width:10px">Kode</th>                            
                         <th style="width:50px">Barcode</th>							
-                        <th style="width:100px">Nama Barang</th>
+                        <th style="width:100px">Nama Mamin</th>
                         <th style="width:50px">Kategori</th>
                         <th style="width:50px">Satuan</th>
-                        <th style="width:10px">Qty</th>
-                        <th style="width:100px">Detail Qty</th>
-                        <th style="width:50px">Harga Beli</th>
                         <th style="width:50px">Harga Jual</th>
-                        <th style="width:50px">PPN Beli(%)</th>
                         <th style="width:50px">PPN Jual(%)</th>
-                        <th style="width:50px">Diskon Beli(%)</th>
                         <th style="width:50px">Diskon Jual(%)</th>
                         <th style="width:100px">Spek</th>
                         <th style="width:50px">Image</th>
@@ -105,6 +99,7 @@
                             <div class="row">
                                 {{-- kiri --}}
                                 <div class="col-md-6">
+                                    
                                     <div class="row">
                                         <div class="col-md-4 mt-1" align="right">									
                                             <h6 class="mt-2">Kode</h6>
@@ -120,17 +115,16 @@
                                         <div class="col-md-4 mt-1" align="right">									
                                             <h6 class="mt-2">Barcode *)</h6>
                                         </div>
-                                        <div class="col-md-8">                                
+                                        <div class="col-md-8">                                                                           
                                             <input name="barcode1" id="barcode1" class="w3-input w3-border" maxlength="15" type="search" placeholder="Barcode" autofocus value="{{ old('barcode1') }}" required>
-        
                                         </div>								  
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4 mt-1" align="right">									
-                                            <h6 class="mt-2">Nama Barang *)</h6>
+                                            <h6 class="mt-2">Nama Mamin *)</h6>
                                         </div>
                                         <div class="col-md-8">                                
-                                            <input name="nabara1" id="nabara1" class="w3-input w3-border" maxlength="40" type="search" placeholder="Nama Barang" value="{{ old('nabara1') }}" required>
+                                            <input name="namamin1" id="namamin1" class="w3-input w3-border" maxlength="40" type="search" placeholder="Nama Barang" value="{{ old('namamin1') }}" required>
                                         </div>								  
                                     </div>
                                     <div class="row">
@@ -149,14 +143,7 @@
                                             <select name="idsatuan1" id="idsatuan1" class="w3-input w3-border"></select>
                                         </div>								  
                                     </div> 
-                                    <div class="row">
-                                        <div class="col-md-4 mt-1" align="right">									
-                                            <h6 class="mt-2">Harga Beli</h6>
-                                        </div>
-                                        <div class="col-md-8">                                
-                                            <input name="hbs1" id="hbs1" class="w3-input w3-border text-right" type="search" placeholder="Harga Beli Satuan" value="{{ old('hbs1') }}"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
-                                        </div>								  
-                                    </div>      
+                                        
                                     <div class="row">
                                         <div class="col-md-4 mt-1" align="right">									
                                             <h6 class="mt-2">Harga Jual</h6>
@@ -164,16 +151,8 @@
                                         <div class="col-md-8">                                
                                             <input name="hjs1" id="hjs1" class="w3-input w3-border text-right" type="search" placeholder="Harga Jual Satuan" value="{{ old('hjs1') }}"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
                                         </div>								  
-                                    </div>      
-                                    
-                                    <div class="row">
-                                        <div class="col-md-4 mt-1" align="right">									
-                                            <h6 class="mt-2">PPN Beli(%)</h6>
-                                        </div>
-                                        <div class="col-md-8">                                
-                                            <input name="ppnbeli1" id="ppnbeli1" class="w3-input w3-border text-right" maxlength="" type="number" placeholder="PPN Beli(%)" value="{{ old('ppnbeli1') }}">
-                                        </div>								  
-                                    </div>      
+                                    </div>    
+                                                                             
                                     <div class="row">
                                         <div class="col-md-4 mt-1" align="right">									
                                             <h6 class="mt-2">PPN Jual(%)</h6>
@@ -181,15 +160,7 @@
                                         <div class="col-md-8">                                
                                             <input name="ppnjual1" id="ppnjual1" class="w3-input w3-border text-right" maxlength="" type="number" placeholder="PPN Jual(%)" value="{{ old('ppnjual1') }}">
                                         </div>								  
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-4 mt-1" align="right">									
-                                            <h6 class="mt-2">Diskon Beli(%)</h6>
-                                        </div>
-                                        <div class="col-md-8">                                
-                                            <input name="diskonbeli1" id="diskonbeli1" class="w3-input w3-border text-right" maxlength="" type="number" placeholder="Diskon Beli (%)" value="{{ old('diskonbeli1') }}">
-                                        </div>								  
-                                    </div>      
+                                    </div>                                        
                                     <div class="row">
                                         <div class="col-md-4 mt-1" align="right">									
                                             <h6 class="mt-2">Diskon Jual(%)</h6>
@@ -197,7 +168,26 @@
                                         <div class="col-md-8">                                
                                             <input name="diskonjual1" id="diskonjual1" class="w3-input w3-border text-right" maxlength="" type="number" placeholder="Diskon Jual (%)" value="{{ old('diskonjual1') }}">
                                         </div>								  
-                                    </div>      
+                                    </div> 
+                                    
+                                    <div class="row">
+                                        <div class="col-md-4 mt-1" align="right">									
+                                            <h6 class="mt-2">Spek</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="spek1" id="spek1" class="w3-input w3-border" maxlength="" type="search" placeholder="Spek" value="{{ old('spek1') }}">
+                                        </div>								  
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-md-4 mt-1" align="right">									
+                                            <h6 class="mt-2">Expired</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="expired1" id="expired1" class="w3-input w3-border" maxlength="10" type="search" placeholder="expired" value="{{ old('expired1') }}">
+                                        </div>								  
+                                    </div>
+                                     
                                           
                                         
                                 </div>
@@ -206,22 +196,7 @@
                                 {{-- kanan --}}
                                 <div class="col-md-6">
 
-                                    <div class="row">
-                                        <div class="col-md-4 mt-1" align="right">									
-                                            <h6 class="mt-2">Spek</h6>
-                                        </div>
-                                        <div class="col-md-8">                                
-                                            <input name="spek1" id="spek1" class="w3-input w3-border" maxlength="" type="search" placeholder="Spek" value="{{ old('spek1') }}">
-                                        </div>								  
-                                    </div>  
-                                    <div class="row">
-                                        <div class="col-md-4 mt-1" align="right">									
-                                            <h6 class="mt-2">Expired</h6>
-                                        </div>
-                                        <div class="col-md-8">                                
-                                            <input name="expired1" id="expired1" class="w3-input w3-border" maxlength="10" type="search" placeholder="expired" value="{{ old('expired1') }}">
-                                        </div>								  
-                                    </div>  
+                                    
                                     
                                     <div class="row">
                                         <div class="col-md-4 mt-1" align="right">									
@@ -395,7 +370,7 @@ $(document).ready(function(){
     function tampil_listkategori(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.master.barang_listkategori')}}',
+            url   : '{{route('pos01.master.mamin_listkategori')}}',
             
             success: function(data){				    
                 $("#idkategori1").html(data);
@@ -406,7 +381,7 @@ $(document).ready(function(){
     function tampil_listsatuan(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.master.barang_listsatuan')}}',
+            url   : '{{route('pos01.master.mamin_listsatuan')}}',
             
             success: function(data){				    
                 $("#idsatuan1").html(data);
@@ -432,7 +407,7 @@ $(document).ready(function(){
             ],
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.master.barang_show')}}`,
+            ajax   : `{{route('pos01.master.mamin_show')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -442,16 +417,11 @@ $(document).ready(function(){
                     searchable: false },
                 { data: 'kode', name: 'kode' },
                 { data: 'barcode', name: 'barcode' },
-                { data: 'nabara', name: 'nabara' },
+                { data: 'namamin', name: 'namamin' },
                 { data: 'kategori', name: 'kategori.kategori' },
                 { data: 'satuan', name: 'satuan.satuan' },
-                { data: 'qty', name: 'qty', className: 'dt-right' },
-                { data: 'detailqty', name: 'detailqty' },
-                { data: 'hbs', name: 'hbs', className: 'dt-right' },
                 { data: 'hjs', name: 'hjs', className: 'dt-right' },
-                { data: 'ppnbeli', name: 'ppnbeli' },
                 { data: 'ppnjual', name: 'ppnjual' },
-                { data: 'diskonbeli', name: 'diskonbeli' },
                 { data: 'diskonjual', name: 'diskonjual' },
                 { data: 'spek', name: 'spek' },
                 { data: 'image', name: 'image' },
@@ -488,13 +458,13 @@ $(document).ready(function(){
         document.getElementById("btn_simpan").style.display='block';        
         document.getElementById("btn_baru").style.display='none';
     }
-    
+
     $("#expired1").datepicker({
            dateFormat  : "yy-mm-dd",
            changeMonth : true,
            changeYear  : true,         
     });
-
+    
     //tambah data -> ok
     $('#btn_baru').on('click',function(){
         btn_baru_click();            
@@ -519,16 +489,13 @@ $(document).ready(function(){
     }); 
 
     function data_simpan(){
-        var id1=$('#id1').val();			
-        var kode1=$('#kode1').val();
+        var id1=$('#id1').val();
+        var kode1=$('#kode1').val();			
         var barcode1=$('#barcode1').val();
-        var nabara1=$('#nabara1').val();
+        var namamin1=$('#namamin1').val();
         var idkategori1=$('#idkategori1').val();
         var idsatuan1=$('#idsatuan1').val();
-        var hbs1=$('#hbs1').val().replace(/[^,\d]/g, '').toString();
         var hjs1=$('#hjs1').val().replace(/[^,\d]/g, '').toString();
-        var ppnbeli1=$('#ppnbeli1').val();
-        var diskonbeli1=$('#diskonbeli1').val();
         var ppnjual1=$('#ppnjual1').val();
         var diskonjual1=$('#diskonjual1').val();
         var spek1=$('#spek1').val();
@@ -540,13 +507,10 @@ $(document).ready(function(){
             formData.append('id1', id1);
             formData.append('kode1', kode1);
             formData.append('barcode1', barcode1);
-            formData.append('nabara1', nabara1);
+            formData.append('namamin1', namamin1);
             formData.append('idkategori1', idkategori1);
             formData.append('idsatuan1', idsatuan1);
-            formData.append('hbs1', hbs1);
             formData.append('hjs1', hjs1);
-            formData.append('ppnbeli1', ppnbeli1);
-            formData.append('diskonbeli1', diskonbeli1);
             formData.append('ppnjual1', ppnjual1);
             formData.append('diskonjual1', diskonjual1);
             formData.append('spek1', spek1);
@@ -557,7 +521,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.master.barang_create')}}',
+            url    : '{{route('pos01.master.mamin_create')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -573,11 +537,12 @@ $(document).ready(function(){
                     }
                 },
             error : function(formData){                    
-                swalgagaltambah(nabara1);                 
+                swalgagaltambah(namamin1);                 
                 }
         });
         
     }   
+   
 
     $("#btn_simpan").on('click',function(){
         data_simpan();	
@@ -609,7 +574,7 @@ $(document).ready(function(){
         var id1=idx;			
             $.ajax({
 		        type  : 'get',
-		        url   : `{{ url('pos01/master/barangedit')}}/${id1}`,
+		        url   : `{{ url('pos01/master/maminedit')}}/${id1}`,
 		        async : false,
 		        dataType : 'json',	
 				
@@ -621,13 +586,10 @@ $(document).ready(function(){
                         $('#id1').val(resultData[i].id);
                         $('#kode1').val(resultData[i].kode);
                         $('#barcode1').val(resultData[i].barcode);
-                        $('#nabara1').val(resultData[i].nabara);
+                        $('#namamin1').val(resultData[i].namamin);
                         $('#idkategori1').val(resultData[i].idkategori);
                         $('#idsatuan1').val(resultData[i].idsatuan);
-                        $('#hbs1').val(formatAngka(resultData[i].hbs,''));;
                         $('#hjs1').val(formatAngka(resultData[i].hjs,''));;
-                        $('#diskonbeli1').val(resultData[i].diskonbeli);
-                        $('#ppnbeli1').val(resultData[i].ppnbeli);
                         $('#diskonjual1').val(resultData[i].diskonjual);
                         $('#ppnjual1').val(resultData[i].ppnjual);
                         $('#spek1').val(resultData[i].spek);
@@ -692,7 +654,7 @@ $(document).ready(function(){
         var data3b=$('#data3b').val();
         $.ajax({
             type  : 'get',
-            url   : '{{url('pos01/master/barangdestroy')}}/'+id3,
+            url   : '{{url('pos01/master/mamindestroy')}}/'+id3,
             async : false,
             dataType : 'json',					
             success : function(data){

@@ -29,6 +29,10 @@ class Supplier extends Model
     {
         return $this->hasMany(Bmasuk::class,'idsupplier','id');
     }
+    public function bayarhutang()
+    {
+        return $this->hasMany(Bayarhutang::class,'idsupplier','id');
+    }
 
 
 

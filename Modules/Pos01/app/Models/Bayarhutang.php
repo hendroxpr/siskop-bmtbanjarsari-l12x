@@ -19,6 +19,10 @@ class Bayarhutang extends Model
     {
         return $this->belongsTo(Anggota::class,'idanggota');
     }
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class,'idsupplier');
+    }
     public function hutang()
     {
         return $this->belongsTo(Hutang::class,'idhutang');

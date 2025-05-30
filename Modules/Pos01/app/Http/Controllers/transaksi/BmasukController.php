@@ -15,6 +15,7 @@ use App\Models\Menusub;
 use Modules\Pos01\Models\Barang;
 use Modules\Pos01\Models\Barangruang;
 use Modules\Pos01\Models\Bmasuk;
+use Modules\Pos01\Models\Hutang;
 use Modules\Pos01\Models\Jenispembayaran;
 use Modules\Pos01\Models\Ruang;
 use Modules\Pos01\Models\Satuan;
@@ -95,9 +96,7 @@ class BmasukController extends Controller
             'idbarang' => $validatedData['idbarang1'],
             'idruang' => $validatedData['idruang1'],
             'nomorbuktib' => $request['nomorbuktib1'],
-            'idjenispembayaran' => $request['idjenispembayaran1'],
             'idsupplier' => $request['idsupplier1'],
-            'xangsuran' => $request['kali1'],
             
             'qty' => $request['qty1'],
             'hbs' => $request['hbs1'],
@@ -666,6 +665,194 @@ class BmasukController extends Controller
         // return json_encode('data');
     }
 
+    public function proses(Request $request)
+    {
+        date_default_timezone_set('Asia/Jakarta');
+        $created_at1 = date('Y-m-d  H:i:s'); 
+        $tglsekarang = date('Y-m-d');
+        $status1 = 'hutangsup';
+
+        $subtotals1 = $request['subtotals1']; 
+        $ppns1 = $request['ppns1'];
+        $diskons1 = $request['diskons1'];
+        $totals1 = $request['totals1'];
+        $bayars1 = $request['bayars1'];
+        $vouchers1 = $request['vouchers1'];
+        $kembalis1 = $request['kembalis1'];
+        $idjenispembayaran1 = $request['idjenispembayaran1'];
+        $nomorpostingnya1 = $request['nomorpostingnya1'];
+        $tglpostingnya1 = $request['tglpostingnya1'];
+        $nomorbuktia1 = $request['nomorbuktia1'];
+        $tgltransaksi1 = $request['tgltransaksi1'];
+        $idsupplier1 = $request['idsupplier1'];
+        $xangsuran1 = $request['kali1'];
+        $persenjasa1 = $request['persenjasa1'];
+        $nilaihutang1 = $request['nilaihutang1'];
+
+        // $np = explode(".", $request['$nomorpostingnya1']);
+        // $nomorp1 = intval($np[3]);
+        $tampil = Stok::where('nomorstatus','=',$nomorbuktia1)->get();
+        foreach ($tampil as $baris) {
+             $nomorp1 = $baris->nomorp;
+        }
+            
+        if($tgltransaksi1 == $tglsekarang){
+            //update stok, stokfifo, stoklifo, updatemova
+
+            $data = [
+                'subtotals' => $subtotals1,
+                'ppns' => $ppns1,
+                'diskons' => $diskons1,
+                'totals' => $totals1,
+                'bayars' => $bayars1,
+                'vouchers' => $vouchers1,
+                'kembalis' => $kembalis1,
+                'idjenispembayaran' => $idjenispembayaran1,                
+                'xangsuran' => $xangsuran1,                
+            ]; 
+            $tampil = Stok::where('nomorstatus','=',$nomorbuktia1)->count();
+            if($tampil<>'0'){
+                Stok::where('nomorstatus','=',$nomorbuktia1)->update($data);
+            }
+            $tampil = Stokfifo::where('nomorstatus','=',$nomorbuktia1)->count();
+            if($tampil<>'0'){
+                Stokfifo::where('nomorstatus','=',$nomorbuktia1)->update($data);
+            }
+            $tampil = Stoklifo::where('nomorstatus','=',$nomorbuktia1)->count();
+            if($tampil<>'0'){
+                Stoklifo::where('nomorstatus','=',$nomorbuktia1)->update($data);
+            }
+            $tampil = Stokmova::where('nomorstatus','=',$nomorbuktia1)->count();
+            if($tampil<>'0'){
+                Stokmova::where('nomorstatus','=',$nomorbuktia1)->update($data);
+            }
+
+            //hutang
+            if($idjenispembayaran1<>'99'){
+                Hutang::where('idsupplier','=',$idsupplier1)
+                ->where('nomorstatus','=',$nomorbuktia1)
+                ->delete();
+            }else{
+                $tampil = Hutang::where('idsupplier','=',$idsupplier1)
+                ->where('kodepokok','=',2)
+                ->where('created_at','<',$created_at1)
+                ->count(); 
+                if($tampil<>'0'){
+                    $tampil1 = Hutang::where('idsupplier','=',$idsupplier1)
+                        ->where('kodepokok','=',2)
+                        ->where('created_at','<',$created_at1)
+                        ->orderBy('created_at','desc')        
+                        ->get();
+                    foreach ($tampil1 as $baris) {
+                        $awalx = $baris->awal;
+                        $akhirx = $baris->akhir;
+                        $nomorbuktix = $baris->nomorstatus;
+                    }
+                    if($nomorbuktix==$nomorbuktia1){
+                        $data = [
+                            'kodepokok' => 2,
+                            'xangsuran' => $xangsuran1,
+                            'created_at' => $created_at1,
+                            'nomorp' => $nomorp1,
+                            'tglposting' => $tglpostingnya1,
+                            'nomorposting' => $nomorpostingnya1,
+                            'masuk' => $nilaihutang1,
+                            'akhir' => $awalx + $nilaihutang1,
+                            'totalori' => $totals1,
+                            'persenjasa' => $persenjasa1,
+                            'email' => auth()->user()->email,
+                            'iduser' => auth()->user()->id,                                
+                        ]; 
+                        Hutang::where('idsupplier','=',$idsupplier1)
+                        ->where('kodepokok','=',2)
+                        ->where('nomorstatus','=',$nomorbuktia1)
+                        ->update($data);
+                    }else{
+                        $data = [
+                            'kodepokok' => 2,
+                            'idsupplier' => $idsupplier1,
+                            'tglstatus' => $tgltransaksi1,
+                            'nomorp' => $nomorp1,
+                            'nomorstatus' => $nomorbuktia1,
+                            'status' => $status1,
+                            'tglposting' => $tglpostingnya1,
+                            'nomorposting' => $nomorpostingnya1,
+                            'xangsuran' => $xangsuran1,
+                            'created_at' => $created_at1,
+                            'awal' => $awalx,
+                            'masuk' => $nilaihutang1,
+                            'akhir' => $awalx + $nilaihutang1,
+                            'totalori' => $totals1,
+                            'persenjasa' => $persenjasa1,
+                            'email' => auth()->user()->email,
+                            'iduser' => auth()->user()->id,                                
+                        ];
+                        Hutang::create($data);
+                    }
+
+                }else{                
+                    $data = [
+                        'kodepokok' => 2,
+                        'idsupplier' => $idsupplier1,
+                        'tglstatus' => $tgltransaksi1,
+                        'nomorp' => $nomorp1,
+                        'nomorstatus' => $nomorbuktia1,
+                        'status' => $status1,
+                        'tglposting' => $tglpostingnya1,
+                        'nomorposting' => $nomorpostingnya1,
+                        'xangsuran' => $xangsuran1,
+                        'created_at' => $created_at1,
+                        'awal' => 0,
+                        'masuk' => $nilaihutang1,
+                        'akhir' => 0 + $nilaihutang1,
+                        'totalori' => $totals1,
+                        'persenjasa' => $persenjasa1,
+                        'email' => auth()->user()->email,
+                        'iduser' => auth()->user()->id,                               
+                    ];
+                    Hutang::create($data);
+                }
+                $tampil = Hutang::where('idsupplier','=',$idsupplier1)
+                ->where('kodepokok','=',1)
+                ->where('nomorstatus','=',$nomorbuktia1)
+                ->count();
+                $data = [
+                    'kodepokok' => 1,
+                    'idsupplier' => $idsupplier1,
+                    'tglstatus' => $tgltransaksi1,
+                    'nomorp' => $nomorp1,
+                    'nomorstatus' => $nomorbuktia1,
+                    'status' => $status1,
+                    'tglposting' => $tglpostingnya1,
+                    'nomorposting' => $nomorpostingnya1,
+                    'xangsuran' => $xangsuran1,
+                    'created_at' => $created_at1,
+                    'asli' => $nilaihutang1,
+                    'pokok' => $nilaihutang1,
+                    'totalori' => $totals1,
+                    'persenjasa' => $persenjasa1,
+                    'email' => auth()->user()->email,
+                    'iduser' => auth()->user()->id,
+                ];
+                if($tampil<>'0'){
+                    Hutang::where('idsupplier','=',$idsupplier1)
+                    ->where('kodepokok','=',1)
+                    ->where('nomorstatus','=',$nomorbuktia1)->update($data);
+                }else{
+                    Hutang::create($data); 
+                }
+            }
+
+            
+        }else{
+            //
+        }
+
+
+
+        // return json_encode('data');
+    }
+
     /**
      * Store a newly created resource in storage.
      * @param Request $request
@@ -928,9 +1115,48 @@ class BmasukController extends Controller
         session([
             'tgltransaksi1' => $request['tgltransaksi1'],
             'nomorbuktia1' => $request['nomorbuktia1'],
-            'nomorbuktib1' => $request['nomorbuktib1'],            
+            'nomorbuktib1' => $request['nomorbuktib1'],
+            'idsupplier1' => $request['idsupplier1'],            
         ]);
         
+    }
+
+    public function displaypembayaran($id)
+    {
+        
+        $jml = Hutang::where('nomorstatus','=',$id)
+            ->where('kodepokok','=','1')
+            ->count();
+        if($jml <> '0'){
+            $tampil = hutang::where('nomorstatus','=',$id)
+                ->where('kodepokok','=','1')
+                ->get();
+            
+            foreach ($tampil as $baris) {
+                $persenjasa = $baris->persenjasa;
+                $asli = $baris->asli;
+            }
+        }else{
+            $persenjasa = 0;
+            $asli = 0;
+        }
+
+        $tampil = Stok::where('nomorstatus','=',$id)
+        ->get();
+        $jml = 0;
+        foreach ($tampil as $baris) {
+            $jml = $jml + $baris->bayars + $baris->vouchers + $baris->ambilsavings;
+        }
+        
+        $data = stok::limit(1)->select('*')
+            ->selectRaw('('. $jml .') as jml')
+            ->selectRaw('('. $persenjasa .') as persenjasa')
+            ->selectRaw('('. $asli .') as nilaihutang')
+            ->where('nomorstatus','=',$id)        
+            ->orderBy('id','desc')
+            ->get();
+
+        return json_encode(array('data' => $data));       
     }
 
 }

@@ -26,6 +26,10 @@ class Anggota extends Model
     {
         return $this->hasMany(Bkeluar::class,'idanggota','id');
     }
+    public function mkeluar()
+    {
+        return $this->hasMany(Mkeluar::class,'idanggota','id');
+    }
     public function savings()
     {
         return $this->hasMany(Savings::class,'idanggota','id');
