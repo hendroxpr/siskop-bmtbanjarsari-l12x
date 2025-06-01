@@ -264,7 +264,7 @@ class mkeluarController extends Controller
             ]; 
             $tampil = Stokmamin::where('nomorstatus','=',$nomorbuktia1)->count();
             if($tampil<>'0'){
-                Stok::where('nomorstatus','=',$nomorbuktia1)->update($data);
+                Stokmamin::where('nomorstatus','=',$nomorbuktia1)->update($data);
             }
             
             //savings
@@ -711,12 +711,12 @@ class mkeluarController extends Controller
         $m1 = Carbon::parse($tglposting1)->format('m');
         $y1 = Carbon::parse($tglposting1)->format('Y');
         
-        $jmldata = Stok::where('tglposting','=',$tglposting1)            
+        $jmldata = Stokmamin::where('tglposting','=',$tglposting1)            
             ->count();
         if ($jmldata==0){
             $nomor = 1;    
         }else{
-            $nomor = Stok::select('nomorp')
+            $nomor = Stokmamin::select('nomorp')
                 ->where('tglposting','=',$tglposting1)
                 ->max('nomorp')+1;
         }  
@@ -809,14 +809,14 @@ class mkeluarController extends Controller
             $asli = 0;
         }
 
-        $tampil = Stok::where('nomorstatus','=',$id)
+        $tampil = Stokmamin::where('nomorstatus','=',$id)
         ->get();
         $jml = 0;
         foreach ($tampil as $baris) {
             $jml = $jml + $baris->bayars + $baris->vouchers + $baris->ambilsavings;
         }
         
-        $data = stok::limit(1)->select('*')
+        $data = stokmamin::limit(1)->select('*')
             ->selectRaw('('. $jml .') as jml')
             ->selectRaw('('. $persenjasa .') as persenjasa')
             ->selectRaw('('. $asli .') as nilaihutang')

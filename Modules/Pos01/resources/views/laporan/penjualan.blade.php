@@ -11,12 +11,19 @@
     if($idjenispembayaran==''){
         $idjenispembayaran = '-1';
     }    
-    $idsupplier = session('idsupplier1');
-    if($idsupplier==''){
-        $idsupplier = '-1';
-    }    
+
+    $idcustomer = session('idcustomer1');
+    if($idcustomer==''){
+        $idcustomer = '-1';
+    }   
+    
+    $idoperator = session('idoperator1');
+    if($idoperator==''){
+        $idoperator = '-1';
+    } 
    
-    $tabpembelian = session('tabpembelian1');
+    $tabpenjualanutama = session('tabpenjualanutama1');
+    $tabpenjualansub = session('tabpenjualansub1');
     $tgltransaksi1 = session('tgltransaksi1');   
     if($tgltransaksi1==''){
         $tgltransaksi1=session('memtanggal');;  
@@ -60,7 +67,8 @@
                     </div>
                     <div class="col-md-7">
                         <select name="idruang1" id="idruang1" class="w3-input w3-border" value="{{ $idruang }}"></select>
-                        <input name="tabpembelian1" id="tabpembelian1" class="" type="hidden" value="{{ $tabpembelian }}"> 
+                        <input name="tabpenjualanutama1" id="tabpenjualanutama1" class="" type="hidden" value="{{ $tabpenjualanutama }}"> 
+                        <input name="tabpenjualansub1" id="tabpenjualansub1" class="" type="hidden" value="{{ $tabpenjualansub }}"> 
                         <input name="event1" id="event1" class="" type="hidden" value="0"> 
                     </div>
                 </div>
@@ -91,16 +99,25 @@
 
                 <div class="row mt-2">
                     <div class="col-md-3" align="right">									
-                        <h6 class="mt-2">Supplier</h6>
+                        <h6 class="mt-2">Customer</h6>
                     </div>
                     <div class="col-md-7 input-group">
-                        <select  name="idsupplier1" id="idsupplier1" class=" form-control w3-input w3-border" style="border-radius:0px; border:none; display:block;" value="{{ $idsupplier }}"></select>
+                        <select  name="idcustomer1" id="idcustomer1" class=" form-control w3-input w3-border" style="border-radius:0px; border:none; display:block;" value="{{ $idcustomer }}"></select>
                         <div class="input-group-append">
-                            <button id="btn_carisupplier1" name="btn_carisupplier1" type="button" style="border-radius:0px; border:none;"><i style="font-size:24" class="fas">&#xf002;</i></button>
+                            <button id="btn_caricustomer1" name="btn_caricustomer1" type="button" style="border-radius:0px; border:none;"><i style="font-size:24" class="fas">&#xf002;</i></button>
                         </div>
-                        <select  name="idsupplierx1" id="idsupplierx1" class="" style="border-radius:0px; border:none; display:none;"></select>
+                        <select  name="idcustomerx1" id="idcustomerx1" class="" style="border-radius:0px; border:none; display:none;"></select>
                         <input name="cek1" id="cek1" class="" type="hidden">                                
                         <input name="id1" id="id1" class="" type="hidden"> 
+                    </div>
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-md-3" align="right">									
+                        <h6 class="mt-2">Operator</h6>
+                    </div>
+                    <div class="col-md-7 input-group">
+                        <select  name="idoperator1" id="idoperator1" class=" form-control w3-input w3-border" style="border-radius:0px; border:none; display:block;" value="{{ $idoperator }}"></select>
                     </div>
                 </div>
                 
@@ -122,267 +139,317 @@
 
     </div>
 
-    <ul class="nav nav-tabs" id="tab-pembelian" role="tablist">
+    <ul class="nav nav-tabs" id="tab-utama" role="tablist">
         <li class="nav-item">
-            <a class="nav-link" id="tab-pembeliandetail" data-toggle="pill" href="#isi-tab-pembeliandetail" role="tab" aria-controls="tab-pembeliandetail" aria-selected="true">Pembelian Detail</a>
+            <a class="nav-link" id="tab-upenjualansaja" data-toggle="pill" href="#isi-tab-upenjualansaja" role="tab" aria-controls="tab-upenjualansaja" aria-selected="true">Penjualan</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="tab-pembelianperitem" data-toggle="pill" href="#isi-tab-pembelianperitem" role="tab" aria-controls="tab-pembelianperitem" aria-selected="false">Pembelian Per Item</a>
+            <a class="nav-link" id="tab-upenjualanfifo" data-toggle="pill" href="#isi-tab-upenjualanfifo" role="tab" aria-controls="tab-upenjualanfifo" aria-selected="false">Penjualan FIFO</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="tab-pembelianpersupplier" data-toggle="pill" href="#isi-tab-pembelianpersupplier" role="tab" aria-controls="tab-pembelianpersupplier" aria-selected="false">Pembelian Per Supplier</a>
+            <a class="nav-link" id="tab-upenjualanmova" data-toggle="pill" href="#isi-tab-upenjualanmova" role="tab" aria-controls="tab-upenjualanmova" aria-selected="false">Penjualan Moving Average</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="tab-pembelianperfaktur" data-toggle="pill" href="#isi-tab-pembelianperfaktur" role="tab" aria-controls="tab-pembelianperfaktur" aria-selected="false">Pembelian Per Faktur</a>
+            <a class="nav-link" id="tab-upenjualanlifo" data-toggle="pill" href="#isi-tab-upenjualanlifo" role="tab" aria-controls="tab-upenjualanlifo" aria-selected="false">Penjualan LIFO</a>
         </li>               
         <li class="nav-item">
-            <a class="nav-link" id="tab-pembelianperjenispembayaran" data-toggle="pill" href="#isi-tab-pembelianperjenispembayaran" role="tab" aria-controls="tab-pembelianperjenispembayaran" aria-selected="false">Pembelian Per Jenis Pembayaran</a>
-        </li>               
-        <li class="nav-item">
-            <a class="nav-link" id="tab-pembelianpertanggal" data-toggle="pill" href="#isi-tab-pembelianpertanggal" role="tab" aria-controls="tab-pembelianpertanggal" aria-selected="false">Pembelian Per Tanggal</a>
-        </li>               
+            <a class="nav-link" id="tab-upenjualanlain" data-toggle="pill" href="#isi-tab-upenjualanlain" role="tab" aria-controls="tab-upenjualanlain" aria-selected="false">Penjualan Lain</a>
+        </li>              
     </ul>
+
+    
 
     <!--awal tabel-->        
     <div class="box-body" id="headerjudul" style="display: block;">
-        <div class="tab-content mt-3" id="tab-pembelian-tabContent">
+         <div class="tab-content mt-3" id="tab-utama-tabContent">
+            <!--tab-upenjualansaja -->
+            <div class="tab-pane fade" id="isi-tab-upenjualansaja" role="tabpanel" aria-labelledby="tab-upenjualansaja">
+                <ul class="nav nav-tabs" id="tab-penjualansaja" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-penjualansajadetail" data-toggle="pill" href="#isi-tab-penjualansajadetail" role="tab" aria-controls="tab-penjualansajadetail" aria-selected="true">Penjualan Detail</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-penjualansajaperitem" data-toggle="pill" href="#isi-tab-penjualansajaperitem" role="tab" aria-controls="tab-penjualansajaperitem" aria-selected="false">Penjualan Per Item</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-penjualansajapersupplier" data-toggle="pill" href="#isi-tab-penjualansajapersupplier" role="tab" aria-controls="tab-penjualansajapersupplier" aria-selected="false">Penjualan Per Supplier</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-penjualansajaperfaktur" data-toggle="pill" href="#isi-tab-penjualansajaperfaktur" role="tab" aria-controls="tab-penjualansajaperfaktur" aria-selected="false">Penjualan Per Faktur</a>
+                    </li>               
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-penjualansajaperjenispembayaran" data-toggle="pill" href="#isi-tab-penjualansajaperjenispembayaran" role="tab" aria-controls="tab-penjualansajaperjenispembayaran" aria-selected="false">Penjualan Per Jenis Pembayaran</a>
+                    </li>               
+                    <li class="nav-item">
+                        <a class="nav-link" id="tab-penjualansajapertanggal" data-toggle="pill" href="#isi-tab-penjualansajapertanggal" role="tab" aria-controls="tab-penjualansajapertanggal" aria-selected="false">Penjualan Per Tanggal</a>
+                    </li>               
+                </ul>
+
+                <div class="tab-content mt-3" id="tab-penjualansaja-tabContent">
+                    
+                    <!--tab-penjualansajadetail -->
+                    <div class="tab-pane fade" id="isi-tab-penjualansajadetail" role="tabpanel" aria-labelledby="tab-penjualansajadetail">
+                        <div id="reload" class="table-responsive">
+                            <table id="penjualansajadetail1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10px;">#</th>                            
+                                        <th style="width:10px">Faktur</th>
+                                        <th style="width:10px">Tanggal</th>
+                                        <th style="width:10px">Kode</th>
+                                        <th style="width:10px">Barcode</th>							
+                                        <th style="width:200px">Nama Barang</th>							
+                                        <th style="width:10px">Qty</th>							
+                                        <th style="width:20px">Satuan</th>							
+                                        <th style="width:20px">Harga</th>							
+                                        <th style="width:20px">Total</th>							
+                                        <th style="width:20px">Jenis</br>Pembayaran</th>							
+                                        <th style="width:50px">Supplier</th>							
+                                        <th style="width:100px">Lokasi</th>							
+                                        <th style="width:50px">Keterangan</th>						
+                                    </tr>
+                                </thead>
+                                <tfoot id="show_footerpenjualansajadetail1">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>                          
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="show_penjualansajadetail1">
+                                
+                                </tbody>
+                            </table>            
+                        </div>
+                    </div>
+                    <!--/tab-penjualansajadetail -->
+
+                    <!--tab-penjualansajaperitem -->
+                    <div class="tab-pane fade" id="isi-tab-penjualansajaperitem" role="tabpanel" aria-labelledby="tab-penjualansajaperitem">
+                        <div id="reload" class="table-responsive">
+                            <table id="penjualansajaperitem1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10px;">#</th>                            
+                                        <th style="width:10px">Kode</th>
+                                        <th style="width:10px">Barcode</th>							
+                                        <th style="width:200px">Nama Barang</th>							
+                                        <th style="width:10px">Jml Record</th>							
+                                        <th style="width:10px">Qty</th>							
+                                        <th style="width:20px">Satuan</th>							
+                                        <th style="width:20px">Harga</th>							
+                                        <th style="width:20px">Total</th>						
+                                    
+                                    </tr>
+                                </thead>
+                                <tfoot id="show_footerpenjualansajaperitem1">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+
+                                    </tr>
+                                </tfoot>
+                                <tbody id="show_penjualansajaperitem1">
+                                
+                                </tbody>
+                            </table>            
+                        </div>
+                    </div>
+                    <!--/tab-penjualansajaperitem -->
+
+                    <!--tab-penjualansajapersupplier -->
+                    <div class="tab-pane fade" id="isi-tab-penjualansajapersupplier" role="tabpanel" aria-labelledby="tab-penjualansajapersupplier">
+                        <div id="reload" class="table-responsive">
+                            <table id="penjualansajapersupplier1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10px;">#</th>                            
+                                        <th style="width:10px">Kode</th>
+                                        <th style="width:200px">Supplier</th>							
+                                        <th style="width:200px">Alamat</th>							
+                                        <th style="width:10px">Jml record</th>							
+                                        <th style="width:10px">Qty</th>							
+                                        <th style="width:20px">Harga</th>							
+                                        <th style="width:20px">Total</th>							
+                                    </tr>
+                                </thead>
+                                <tfoot id="show_footerpenjualansajapersupplier1">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="show_penjualansajapersupplier1">
+                                
+                                </tbody>
+                            </table>            
+                        </div>
+                    </div>
+                    <!--/tab-penjualansajapersupplier -->
+
+                    <!--tab-penjualansajaperfaktur -->
+                    <div class="tab-pane fade" id="isi-tab-penjualansajaperfaktur" role="tabpanel" aria-labelledby="tab-penjualansajaperfaktur">
+                        <div id="reload" class="table-responsive">
+                            <table id="penjualansajaperfaktur1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10px;">#</th>                            
+                                        <th style="width:10px">Faktur</th>
+                                        <th style="width:200px">Tanggal</th>							
+                                        <th style="width:10px">Jml Record</th>							
+                                        <th style="width:10px">Qty</th>							
+                                        <th style="width:20px">Harga</th>							
+                                        <th style="width:20px">Total</th>							
+                                    </tr>
+                                </thead>
+                                <tfoot id="show_footerpenjualansajaperfaktur1">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="show_penjualansajaperfaktur1">
+                                
+                                </tbody>
+                            </table>            
+                        </div>
+                    </div>
+                    <!--/tab-penjualansajaperfaktur -->
+
+                    <!--tab-penjualansajaperjenispembayaran -->
+                    <div class="tab-pane fade" id="isi-tab-penjualansajaperjenispembayaran" role="tabpanel" aria-labelledby="tab-penjualansajaperjenispembayaran">
+                        <div id="reload" class="table-responsive">
+                            <table id="penjualansajaperjenispembayaran1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10px;">#</th>                            
+                                        <th style="width:10px">Kode</th>
+                                        <th style="width:200px">Jenis Pembayaran</th>							
+                                        <th style="width:10px">Jml Record</th>							
+                                        <th style="width:10px">Qty</th>							
+                                        <th style="width:20px">Harga</th>							
+                                        <th style="width:20px">Total</th>							
+                                    </tr>
+                                </thead>
+                                <tfoot id="show_footerpenjualansajaperjenispembayaran1">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="show_penjualansajaperjenispembayaran1">
+                                
+                                </tbody>
+                            </table>            
+                        </div>
+                    </div>
+                    <!--/tab-penjualansajaperjenispembayaran -->
+
+                    <!--tab-penjualansajapertanggal -->
+                    <div class="tab-pane fade" id="isi-tab-penjualansajapertanggal" role="tabpanel" aria-labelledby="tab-penjualansajapertanggal">
+                        <div id="reload" class="table-responsive">
+                            <table id="penjualansajapertanggal1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width:10px;">#</th>                            
+                                        <th style="width:20px">Tanggal</th>							
+                                        <th style="width:10px">Jml Record</th>							
+                                        <th style="width:10px">Qty</th>							
+                                        <th style="width:20px">Harga</th>							
+                                        <th style="width:20px">Total</th>							
+                                    </tr>
+                                </thead>
+                                <tfoot id="show_footerpenjualansajapertanggal1">
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                                <tbody id="show_penjualansajapertanggal1">
+                                
+                                </tbody>
+                            </table>            
+                        </div>
+                    </div>
+                    <!--/tab-penjualansajapertanggal -->
+
+
+                </div>
+            </div>
+            <!--/tab-upenjualansaja -->
+
+            <!--tab-upenjualanfifo -->
+            <div class="tab-pane fade" id="isi-tab-upenjualanfifo" role="tabpanel" aria-labelledby="tab-upenjualanfifo">
+                upenjuaanfifo
+            </div>
+            <!--/tab-upenjualanfifo -->
             
-            <!--tab-pembeliandetail -->
-            <div class="tab-pane fade" id="isi-tab-pembeliandetail" role="tabpanel" aria-labelledby="tab-pembeliandetail">
-                <div id="reload" class="table-responsive">
-                    <table id="pembeliandetail1" class="table table-bordered table-striped table-hover" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:10px">Faktur</th>
-                                <th style="width:10px">Tanggal</th>
-                                <th style="width:10px">Kode</th>
-                                <th style="width:10px">Barcode</th>							
-                                <th style="width:200px">Nama Barang</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">Satuan</th>							
-                                <th style="width:20px">Harga</th>							
-                                <th style="width:20px">Total</th>							
-                                <th style="width:20px">Jenis</br>Pembayaran</th>							
-                                <th style="width:50px">Supplier</th>							
-                                <th style="width:100px">Lokasi</th>							
-                                <th style="width:50px">Keterangan</th>						
-                            </tr>
-                        </thead>
-                        <tfoot id="show_footerpembeliandetail1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>                          
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
-                        <tbody id="show_pembeliandetail1">
-                        
-                        </tbody>
-                    </table>            
-                </div>
+            <!--tab-upenjualanmova -->
+            <div class="tab-pane fade" id="isi-tab-upenjualanmova" role="tabpanel" aria-labelledby="tab-upenjualanmova">
+                upenjuaanmova
             </div>
-            <!--/tab-pembeliandetail -->
-
-            <!--tab-pembelianperitem -->
-            <div class="tab-pane fade" id="isi-tab-pembelianperitem" role="tabpanel" aria-labelledby="tab-pembelianperitem">
-                <div id="reload" class="table-responsive">
-                    <table id="pembelianperitem1" class="table table-bordered table-striped table-hover" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:10px">Kode</th>
-                                <th style="width:10px">Barcode</th>							
-                                <th style="width:200px">Nama Barang</th>							
-                                <th style="width:10px">Jml Record</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">Satuan</th>							
-                                <th style="width:20px">Harga</th>							
-                                <th style="width:20px">Total</th>						
-                              
-                            </tr>
-                        </thead>
-                        <tfoot id="show_footerpembelianperitem1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-
-                            </tr>
-                        </tfoot>
-                        <tbody id="show_pembelianperitem1">
-                        
-                        </tbody>
-                    </table>            
-                </div>
+            <!--/tab-upenjualanmova -->
+            
+            <!--tab-upenjualanlifo -->
+            <div class="tab-pane fade" id="isi-tab-upenjualanlifo" role="tabpanel" aria-labelledby="tab-upenjualanlifo">
+                upenjuaanlifo
             </div>
-            <!--/tab-pembelianperitem -->
-
-            <!--tab-pembelianpersupplier -->
-            <div class="tab-pane fade" id="isi-tab-pembelianpersupplier" role="tabpanel" aria-labelledby="tab-pembelianpersupplier">
-                <div id="reload" class="table-responsive">
-                    <table id="pembelianpersupplier1" class="table table-bordered table-striped table-hover" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:10px">Kode</th>
-                                <th style="width:200px">Supplier</th>							
-                                <th style="width:200px">Alamat</th>							
-                                <th style="width:10px">Jml record</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">Harga</th>							
-                                <th style="width:20px">Total</th>							
-                            </tr>
-                        </thead>
-                        <tfoot id="show_footerpembelianpersupplier1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
-                        <tbody id="show_pembelianpersupplier1">
-                        
-                        </tbody>
-                    </table>            
-                </div>
+            <!--/tab-upenjualanlilo -->
+            
+            <!--tab-upenjualanlain -->
+            <div class="tab-pane fade" id="isi-tab-upenjualanlain" role="tabpanel" aria-labelledby="tab-upenjualanlain">
+                upenjuaanlain
             </div>
-            <!--/tab-pembelianpersupplier -->
-
-            <!--tab-pembelianperfaktur -->
-            <div class="tab-pane fade" id="isi-tab-pembelianperfaktur" role="tabpanel" aria-labelledby="tab-pembelianperfaktur">
-                <div id="reload" class="table-responsive">
-                    <table id="pembelianperfaktur1" class="table table-bordered table-striped table-hover" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:10px">Faktur</th>
-                                <th style="width:200px">Tanggal</th>							
-                                <th style="width:10px">Jml Record</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">Harga</th>							
-                                <th style="width:20px">Total</th>							
-                            </tr>
-                        </thead>
-                        <tfoot id="show_footerpembelianperfaktur1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
-                        <tbody id="show_pembelianperfaktur1">
-                        
-                        </tbody>
-                    </table>            
-                </div>
-            </div>
-            <!--/tab-pembelianperfaktur -->
-
-            <!--tab-pembelianperjenispembayaran -->
-            <div class="tab-pane fade" id="isi-tab-pembelianperjenispembayaran" role="tabpanel" aria-labelledby="tab-pembelianperjenispembayaran">
-                <div id="reload" class="table-responsive">
-                    <table id="pembelianperjenispembayaran1" class="table table-bordered table-striped table-hover" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:10px">Kode</th>
-                                <th style="width:200px">Jenis Pembayaran</th>							
-                                <th style="width:10px">Jml Record</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">Harga</th>							
-                                <th style="width:20px">Total</th>							
-                            </tr>
-                        </thead>
-                        <tfoot id="show_footerpembelianperjenispembayaran1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
-                        <tbody id="show_pembelianperjenispembayaran1">
-                        
-                        </tbody>
-                    </table>            
-                </div>
-            </div>
-            <!--/tab-pembelianperjenispembayaran -->
-
-            <!--tab-pembelianpertanggal -->
-            <div class="tab-pane fade" id="isi-tab-pembelianpertanggal" role="tabpanel" aria-labelledby="tab-pembelianpertanggal">
-                <div id="reload" class="table-responsive">
-                    <table id="pembelianpertanggal1" class="table table-bordered table-striped table-hover" style="width: 100%">
-                        <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:20px">Tanggal</th>							
-                                <th style="width:10px">Jml Record</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">Harga</th>							
-                                <th style="width:20px">Total</th>							
-                            </tr>
-                        </thead>
-                        <tfoot id="show_footerpembelianpertanggal1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
-                        <tbody id="show_pembelianpertanggal1">
-                        
-                        </tbody>
-                    </table>            
-                </div>
-            </div>
-            <!--/tab-pembelianpertanggal -->
-
-
-        </div>
+            <!--/tab-upenjualanlain -->
+         </div>
     </div>    
 <!--akhir tabel-->
 
-<!-- ModalCariSupplier modal fade-->
-	<div class="modal fade" id="ModalCariSupplier"  data-backdrop="static">
-		<div class="modal-dialog modal-lg">  <!-- modal-(sm, lg, xl) ukuran lebar modal -->
+    <!-- ModalCariCustomer modal fade-->
+	<div class="modal fade" id="ModalCariCustomer"  data-backdrop="static">
+		<div class="modal-dialog modal-xl">  <!-- modal-(sm, lg, xl) ukuran lebar modal -->
 			<div class="modal-content bg-info w3-animate-zoom">
 				
 				<div class="modal-header">
-						<h3 class="modal-title"><i style="font-size:18" class="fas">&#xf002;</i><b> Cari Data Supplier</b></h3>
+						<h3 class="modal-title"><i style="font-size:18" class="fas">&#xf002;</i><b> Cari Data</b></h3>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span></button>
 						
@@ -393,23 +460,25 @@
 												
 						<div class="row">
 							<div id="reload" class="table-responsive">
-								<table id="carisupplier" width="100%" class="table table-bordered table-striped table-hover">
-									<thead>
-									<tr>
-										<th width="5px">#</th>
-										<th width="20px">Kode</th>																									
-										<th width="100px">Supplier</th>																									
-										<th width="100px">Alamat</th>																									
-									</tr>
-								</thead>
-								
-								<tfoot id="show_footercarisupplier">
-									
-								</tfoot>
-								<tbody id="show_datacarisupplier">
-								
-								</tbody>
-								</table>
+								<table id="customer" class="table table-bordered table-striped table-hover" style="width: 100%;">
+                                    <thead>
+                                        <tr style="align-content: center">
+                                            <th style="width:10px;">#</th>
+                                            <th style="width:50px">Ecard</th>
+                                            <th style="width:50px">NIA</th>
+                                            <th style="width:50px">KTP</th>
+                                            <th style="width:200px">Nama</th>
+                                            <th style="width:100px">Lembaga</th>
+                                            <th style="width:50px">Telp</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot id="show_footercustomer">
+                                        
+                                    </tfoot>
+                                    <tbody id="show_customer">
+                                    
+                                    </tbody>
+                                </table>
 							</div>			
 						</div>
 						
@@ -423,7 +492,7 @@
         </div>
         <!-- /.modal-dialog -->
 	</div>
-	<!-- end ModalCariID-->
+	<!-- end ModalCariCustomer -->
 
     <!-- khusus menyimpan data yang akan dihapus -->
     <input name="id3" id="id3"type="hidden">	
@@ -435,16 +504,16 @@
 
 
 <script type="text/javascript">
-    var pembeliandetail1Datatable;
-    var pembelianperitem1Datatable;
-    var pembelianpersupplier1Datatable;
-    var pembelianperfaktur1Datatable;
-    var pembelianperjenispembayaran1Datatable;
-    var pembelianpertanggal1Datatable;
+    var penjualansajadetail1Datatable;
+    var penjualansajaperitem1Datatable;
+    var penjualansajapersupplier1Datatable;
+    var penjualansajaperfaktur1Datatable;
+    var penjualansajaperjenispembayaran1Datatable;
+    var penjualansajapertanggal1Datatable;
 
-    var listsupplierDatatable;
+    var listcustomerDatatable;
     var listjenispembayaranDatatable;
-    var carisupplierDatatable;
+    var caricustomerDatatable;
 $(document).ready(function(){
     
     function formatRupiah(angka, prefix,desimal){
@@ -555,7 +624,7 @@ $(document).ready(function(){
     function tampil_listjenispembayaran(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.laporan.pembelian_listjenispembayaran')}}',
+            url   : '{{route('pos01.laporan.penjualan_listjenispembayaran')}}',
             
             success: function(data){				    
                 $("#idjenispembayaran1").html(data); 
@@ -563,75 +632,102 @@ $(document).ready(function(){
             }
         })                    
     }
-    //menampilkan combo supplier
-    // tampil_listsupplier();
-    function tampil_listsupplier(){				
+    //menampilkan combo customer
+    // tampil_listcustomer();
+    function tampil_listcustomer(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.laporan.pembelian_listsupplier')}}',
+            url   : '{{route('pos01.laporan.penjualan_listcustomer')}}',
             
             success: function(data){				    
-                $("#idsupplier1").html(data);
-                $("#idsupplier1").val({{ $idsupplier }});                
+                $("#idcustomer1").html(data);
+                $("#idcustomer1").val({{ $idcustomer }});                
+            }
+        })                    
+    }
+
+    // tampil_listoperator();
+    function tampil_listoperator(){				
+        $.ajax({
+            type: 'get',
+            url   : '{{route('pos01.laporan.penjualan_listoperator')}}',
+            
+            success: function(data){				    
+                $("#idoperator1").html(data); 
+                $("#idoperator1").val({{ $idoperator }});               
             }
         })                    
     }
     
     setTimeout(() => {
-        if($('#tabpembelian1').val()=='tab-pembeliandetail'){
-            $('#tab-pembeliandetail').click();          
-        }else if($('#tabpembelian1').val()=='tab-pembelianperitem'){
-            $('#tab-pembelianperitem').click();            
-        }else if($('#tabpembelian1').val()=='tab-pembelianpersupplier'){
-            $('#tab-pembelianpersupplier').click();            
-        }else if($('#tabpembelian1').val()=='tab-pembelianperfaktur'){
-            $('#tab-pembelianperfaktur').click();            
-        }else if($('#tabpembelian1').val()=='tab-pembelianperjenispembayaran'){
-            $('#tab-pembelianperjenispembayaran').click();            
-        }else if($('#tabpembelian1').val()=='tab-pembelianpertanggal'){
-            $('#tab-pembelianpertanggal').click();            
+        if($('#tabpenjualanutama1').val()=='tab-upenjualansaja'){
+            $('#tab-upenjualansaja').click();          
+        }else if($('#tabpenjualanutama1').val()=='tab-upenjualanfifo'){
+            $('#tab-upenjualanfifo').click();            
+        }else if($('#tabpenjualanutama1').val()=='tab-upenjualanmova'){
+            $('#tab-upenjualanmova').click();            
+        }else if($('#tabpenjualanutama1').val()=='tab-upenjualanlifo'){
+            $('#tab-upenjualanlifo').click();            
+        }else if($('#tabpenjualanutama1').val()=='tab-upenjualanlain'){
+            $('#tab-upenjualanlain').click();            
         }else{
-            $('#tab-pembeliandetail').click();            
+            $('#tab-upenjualansaja').click();            
+        }
+        
+        if($('#tabpenjualansub1').val()=='tab-penjualansajadetail'){
+            $('#tab-penjualansajadetail').click();          
+        }else if($('#tabpenjualansub1').val()=='tab-penjualansajaperitem'){
+            $('#tab-penjualansajaperitem').click();            
+        }else if($('#tabpenjualansub1').val()=='tab-penjualansajapercustomer'){
+            $('#tab-penjualansajapercustomer').click();            
+        }else if($('#tabpenjualansub1').val()=='tab-penjualansajaperfaktur'){
+            $('#tab-penjualansajaperfaktur').click();            
+        }else if($('#tabpenjualansub1').val()=='tab-penjualansajaperjenispembayaran'){
+            $('#tab-penjualansajaperjenispembayaran').click();            
+        }else if($('#tabpenjualansub1').val()=='tab-penjualansajapertanggal'){
+            $('#tab-penjualansajapertanggal').click();            
+        }else{
+            $('#tab-penjualansajadetail').click();            
         }
     }, 100);
     
-    $('#tab-pembeliandetail').on('click',function(){
-        $('#tabpembelian1').val('tab-pembeliandetail');
+    $('#tab-penjualansajadetail').on('click',function(){
+        $('#tabpenjualansub1').val('tab-penjualansajadetail');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 100);
     });
-    $('#tab-pembelianperitem').on('click',function(){
-        $('#tabpembelian1').val('tab-pembelianperitem');
+    $('#tab-penjualansajaperitem').on('click',function(){
+        $('#tabpenjualansub1').val('tab-penjualansajaperitem');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 100);
     });
-    $('#tab-pembelianpersupplier').on('click',function(){
-        $('#tabpembelian1').val('tab-pembelianpersupplier');
+    $('#tab-penjualansajapersupplier').on('click',function(){
+        $('#tabpenjualansub1').val('tab-penjualansajapersupplier');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 100);
     });
-    $('#tab-pembelianperfaktur').on('click',function(){
-        $('#tabpembelian1').val('tab-pembelianperfaktur');
+    $('#tab-penjualansajaperfaktur').on('click',function(){
+        $('#tabpenjualansub1').val('tab-penjualansajaperfaktur');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 100);
     });
-    $('#tab-pembelianperjenispembayaran').on('click',function(){
-        $('#tabpembelian1').val('tab-pembelianperjenispembayaran');
+    $('#tab-penjualansajaperjenispembayaran').on('click',function(){
+        $('#tabpenjualansub1').val('tab-penjualansajaperjenispembayaran');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 100);
     });
-    $('#tab-pembelianpertanggal').on('click',function(){
-        $('#tabpembelian1').val('tab-pembelianpertanggal');
+    $('#tab-penjualansajapertanggal').on('click',function(){
+        $('#tabpenjualansub1').val('tab-penjualansajapertanggal');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
@@ -641,8 +737,9 @@ $(document).ready(function(){
     //menampilkan combo ruang
     setTimeout(() => {
         tampil_listruang();
-        tampil_listsupplier();
+        tampil_listcustomer();
         tampil_listjenispembayaran();
+        tampil_listoperator();
               
     }, 100);
 
@@ -651,20 +748,7 @@ $(document).ready(function(){
     $('#idruang1').on('change',function(){
         $('#event1').val('1');
         setTimeout(() => {
-            kirimsyarat();            	
-            // setTimeout(() => {
-            //     listsupplierDatatable = tampil_listsupplier(); 
-            //     listjenispembayaranDatatable = tampil_listjenispembayaran(); 
-            //     carisupplierDatatable = tampil_carisupplier();                  
-            //     setTimeout(() => {
-            //         listsupplierDatatable.ajax.url('{{route('pos01.laporan.pembelian_listsupplier')}}').load();                
-            //         listjenispembayaranDatatable.draw(null, false);                                                    
-            //         listjenispembayaranDatatable.ajax.url('{{route('pos01.laporan.pembelian_listjenispembayaran')}}').load();                
-            //         listsupplierDatatable.draw(null, false);                                                    
-            //         carisupplierDatatable.ajax.url('{{route('pos01.laporan.pembelian_showsupplier')}}').load();                
-            //         carisupplierDatatable.draw(null, false);
-            //     }, 500);            
-            // }, 500);
+            kirimsyarat();
         }, 500);
     });
 
@@ -706,7 +790,7 @@ $(document).ready(function(){
             kirimsyarat();
         }, 100);					
     });
-    $('#idsupplier1').on('change',function(){	
+    $('#idcustomer1').on('change',function(){	
         $('#event1').val('1');	
         setTimeout(() => {
             kirimsyarat();
@@ -720,28 +804,39 @@ $(document).ready(function(){
         }, 100);					
     });
     
+    $('#idoperator1').on('change',function(){	
+        $('#event1').val('1');	
+        setTimeout(() => {
+            kirimsyarat();
+        }, 100);					
+    });
+    
     function kirimsyarat(){
         var event1=$('#event1').val();
         
         var idruang1=$('#idruang1').val();
-        var tabpembelian1=$('#tabpembelian1').val();
+        var tabpenjualanutama1=$('#tabpenjualanutama1').val();
+        var tabpenjualansub1=$('#tabpenjualansub1').val();
         var tgltransaksi1=$('#tgltransaksi1').val();
         var tgltransaksi2=$('#tgltransaksi2').val();
-        var idsupplier1=$('#idsupplier1').val();
+        var idcustomer1=$('#idcustomer1').val();
+        var idoperator1=$('#idoperator1').val();
         var idjenispembayaran1=$('#idjenispembayaran1').val();
         
         let formData = new FormData();
             formData.append('idruang1', idruang1);
-            formData.append('tabpembelian1', tabpembelian1);
+            formData.append('tabpenjualanutama1', tabpenjualanutama1);
+            formData.append('tabpenjualansub1', tabpenjualansub1);
             formData.append('tgltransaksi1', tgltransaksi1);
             formData.append('tgltransaksi2', tgltransaksi2);
-            formData.append('idsupplier1', idsupplier1);
+            formData.append('idcustomer1', idcustomer1);
+            formData.append('idoperator1', idoperator1);
             formData.append('idjenispembayaran1', idjenispembayaran1);
 
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.laporan.pembelian_kirimsyarat')}}',
+            url    : '{{route('pos01.laporan.penjualan_kirimsyarat')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -753,18 +848,18 @@ $(document).ready(function(){
                     if(event1=='1'){
                         $("#idruang1").val(idruang1);                                        
                         $("#idjenispembayaran1").val(idjenispembayaran1);                                        
-                        $("#idsupplier1").val(idsupplier1);                                        
+                        $("#idcustomer1").val(idcustomer1);                                        
                         tampil_dataTable();                   
                     }
                 }
         });
-    }
+    } 
  
     //menampilkan combo ruang
     function tampil_listruang(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.laporan.pembelian_listruang')}}',
+            url   : '{{route('pos01.laporan.penjualan_listruang')}}',
             
             success: function(data){				    
                 $("#idruang1").html(data);
@@ -774,9 +869,9 @@ $(document).ready(function(){
         })                    
     }
 
-    function tampil_pembeliandetail1(){
+    function tampil_penjualansajadetail1(){
         let i = 1;	
-        return $('#pembeliandetail1').DataTable({
+        return $('#penjualansajadetail1').DataTable({
             responsive : true,
             retrieve: true,
             autoWidth : true,
@@ -844,9 +939,9 @@ $(document).ready(function(){
         });
     }
 
-    function tampil_pembelianperitem1(){
+    function tampil_penjualansajaperitem1(){
         let i = 1;	
-        return $('#pembelianperitem1').DataTable({
+        return $('#penjualansajaperitem1').DataTable({
             responsive : true,
             retrieve: true,
             autoWidth : true,
@@ -909,9 +1004,9 @@ $(document).ready(function(){
         });
     }
 
-    function tampil_pembelianpersupplier1(){
+    function tampil_penjualansajapersupplier1(){
         let i = 1;	
-        return $('#pembelianpersupplier1').DataTable({
+        return $('#penjualansajapersupplier1').DataTable({
             responsive : true,
             retrieve: true,
             autoWidth : true,
@@ -973,9 +1068,9 @@ $(document).ready(function(){
         });
     }
 
-    function tampil_pembelianperfaktur1(){
+    function tampil_penjualansajaperfaktur1(){
         let i = 1;	
-        return $('#pembelianperfaktur1').DataTable({
+        return $('#penjualansajaperfaktur1').DataTable({
             responsive : true,
             retrieve: true,
             autoWidth : true,
@@ -1036,9 +1131,9 @@ $(document).ready(function(){
         });
     }
 
-    function tampil_pembelianperjenispembayaran1(){
+    function tampil_penjualansajaperjenispembayaran1(){
         let i = 1;	
-        return $('#pembelianperjenispembayaran1').DataTable({
+        return $('#penjualansajaperjenispembayaran1').DataTable({
             responsive : true,
             retrieve: true,
             autoWidth : true,
@@ -1099,9 +1194,9 @@ $(document).ready(function(){
         });
     }
 
-    function tampil_pembelianpertanggal1(){
+    function tampil_penjualansajapertanggal1(){
         let i = 1;	
-        return $('#pembelianpertanggal1').DataTable({
+        return $('#penjualansajapertanggal1').DataTable({
             responsive : true,
             retrieve: true,
             autoWidth : true,
@@ -1162,91 +1257,97 @@ $(document).ready(function(){
     }
 
     function tampil_dataTable(){        
-        pembeliandetail1Datatable.draw(null, false);        
-        pembelianperitem1Datatable.draw(null, false);        
-        pembelianpersupplier1Datatable.draw(null, false);        
-        pembelianperfaktur1Datatable.draw(null, false);        
-        pembelianperjenispembayaran1Datatable.draw(null, false);        
-        pembelianpertanggal1Datatable.draw(null, false);        
+        penjualansajadetail1Datatable.draw(null, false);        
+        penjualansajaperitem1Datatable.draw(null, false);        
+        penjualansajapersupplier1Datatable.draw(null, false);        
+        penjualansajaperfaktur1Datatable.draw(null, false);        
+        penjualansajaperjenispembayaran1Datatable.draw(null, false);        
+        penjualansajapertanggal1Datatable.draw(null, false);        
     }
 
     function koneksi_datatable(){
-        pembeliandetail1Datatable = tampil_pembeliandetail1();    
-        pembelianperitem1Datatable = tampil_pembelianperitem1();    
-        pembelianpersupplier1Datatable = tampil_pembelianpersupplier1();    
-        pembelianperfaktur1Datatable = tampil_pembelianperfaktur1(); 
-        pembelianperjenispembayaran1Datatable = tampil_pembelianperjenispembayaran1(); 
-        pembelianpertanggal1Datatable = tampil_pembelianpertanggal1(); 
+        penjualansajadetail1Datatable = tampil_penjualansajadetail1();    
+        penjualansajaperitem1Datatable = tampil_penjualansajaperitem1();    
+        penjualansajapersupplier1Datatable = tampil_penjualansajapersupplier1();    
+        penjualansajaperfaktur1Datatable = tampil_penjualansajaperfaktur1(); 
+        penjualansajaperjenispembayaran1Datatable = tampil_penjualansajaperjenispembayaran1(); 
+        penjualansajapertanggal1Datatable = tampil_penjualansajapertanggal1(); 
     }
 
-   $('#btn_carisupplier1').on('click',function(){
+   $('#btn_caricustomer1').on('click',function(){
         setTimeout(() => {
             var x = $('#event1').val();
             if(x=='0'){
                 $('#tgltransaksi1').change();
             } 
-            $('#ModalCariSupplier').modal('show');						
+            $('#ModalCariCustomer').modal('show');						
         }, 50);
     });
 
-    tampil_carisupplier();
-    function tampil_carisupplier(){
-        let i = 1;	
-        return $('#carisupplier').DataTable({
-            responsive : true,
-            retrieve: true,
-            autoWidth : true,
-            // buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
-            // dom: 'lBfrtip',
-            lengthMenu: [
-                [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
-                [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
-            ],
-            processing: true,
-            serverSide: true,
-            ajax   : `{{route('pos01.laporan.pembelian_showsupplier')}}`,
-            columns: [
+    tampil_caricustomer();
+    function tampil_caricustomer(){
+       let i = 1;	
+       return $('#customer').DataTable({
+           responsive : true,
+           retrieve: true,
+           autoWidth : true,
+           buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
+           dom: 'lfrtip',
+           lengthMenu: [
+               [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
+               [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
+           ],
+           processing: true,
+           serverSide: true,
+           ajax   : `{{route('pos01.transaksi.bkeluar_showanggota')}}`,
+           columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
                 // }},
                 {  "data": 'DT_RowIndex',
-                    orderable: false, 
-                    searchable: false },
-                { data: 'kode', name: 'kode' },
-                { data: 'supplier', name: 'supplier' },
-                { data: 'alamat', name: 'alamat' },
-                               
-            ]
-        });
+                   orderable: false, 
+                   searchable: false },
+                { data: 'ecard', name: 'ecard', className: 'dt-center' },
+                { data: 'nia', name: 'nia', className: 'dt-center' },
+                { data: 'ktp', name: 'ktp', className: 'dt-center' },
+                { data: 'nama', name: 'nama'},
+                { data: 'lembaga', name: 'anggota.lembaga'},
+                { data: 'telp', name: 'telp'},
+               
+           ]
+       });
     }
 
-     $('#show_datacarisupplier').on('click','.item_kode',function(){
-        ambilcarisupplier(this);        
+    $('#show_customer').on('click','.item_ecard',function(){ 
+        ambilcaricustomer(this);        
     });
-    $('#show_datacarisupplier').on('click','.item_supplier',function(){
-        ambilcarisupplier(this);        
+    $('#show_customer').on('click','.item_nia',function(){        
+        ambilcaricustomer(this);        
     });
-    $('#show_datacarisupplier').on('click','.item_alamat',function(){
-        ambilcarisupplier(this);        
+    $('#show_customer').on('click','.item_ktp',function(){        
+        ambilcaricustomer(this);        
+    });
+    $('#show_customer').on('click','.item_nama',function(){        
+        ambilcaricustomer(this);        
     });
 
-    function ambilcarisupplier(t){
+    function ambilcaricustomer(t){
         var data1 = $(t).attr('data1');
         var data2 = $(t).attr('data2');
         var data3 = $(t).attr('data3');
         var data4 = $(t).attr('data4');
         var data5 = $(t).attr('data5');
         $('#id1').val(data1);
-        $('#idsupplier1').val(data1);
+        $('#idcustomer1').val(data1);
         var a = $('#idruang1 option:selected').text();
-        var x = $('#idsupplier1 option:selected').text();
+        var x = $('#idcustomer1 option:selected').text();
         var y = x.trim();
         var z = '<p title="Cari spesifik data pada kolom search ...">Data yang dipilih tidak terdapat pada</br><b>'+a+'</b></p>';
         var k = $('#komen1').html(z);
         $('#event1').val('1');
         
         setTimeout(() => {
-           ceksupplier();           
+           cekcustomer();           
            
         }, 200);
 
@@ -1256,25 +1357,24 @@ $(document).ready(function(){
                 swalgagalpilih(z); 
             }else{
                 kirimsyarat();           
-                $('#ModalCariSupplier').modal('hide');
+                $('#ModalCariCustomer').modal('hide');
             }
             
         }, 200);
 
-
     }
 
-    function ceksupplier(){        
-        var idsup1=$('#id1').val();
+    function cekcustomer(){        
+        var idcus1=$('#id1').val();
 
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.laporan.pembelian_ceksupplier')}}',
+            url    : '{{route('pos01.laporan.penjualan_cekcustomer')}}',
             async : false,
             dataType : 'json',
             // data : FormData,
-            data : {idsup1:idsup1},
+            data : {idcus1:idcus1},
             // cache: false,
             // processData: false,
             // contentType: false,

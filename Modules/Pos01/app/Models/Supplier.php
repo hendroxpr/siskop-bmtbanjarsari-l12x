@@ -33,6 +33,10 @@ class Supplier extends Model
     {
         return $this->hasMany(Bayarhutang::class,'idsupplier','id');
     }
+    public function stok()
+    {
+        return $this->hasMany(Stok::class,'idsupplier','id');
+    }
 
 
 

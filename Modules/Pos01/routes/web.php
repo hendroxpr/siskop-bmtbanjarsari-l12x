@@ -4,6 +4,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Modules\Pos01\Http\Controllers\laporan\KartustokController;
 use Modules\Pos01\Http\Controllers\laporan\PembelianController;
+use Modules\Pos01\Http\Controllers\laporan\PenjualanController;
 use Modules\Pos01\Http\Controllers\laporan\StokkeluarmasukController;
 use Modules\Pos01\Http\Controllers\laporan\StokbarangController;
 use Modules\Pos01\Http\Controllers\master\MaminController;
@@ -301,11 +302,13 @@ Route::get('/laporan/kartustokedit/{id}', [KartustokController::class, 'edit'])-
 Route::get('/laporan/kartustokdestroy/{id}', [KartustokController::class, 'destroy'])->name('pos01.laporan.kartustok_destroy')->middleware('auth'); /* hapus data kartustok */
 
 /* laporan - pembelian */
-Route::get('/laporan/pembelian', [PembelianController ::class, 'index'])->name('pos01.laporan.pembelian.index')->middleware('auth'); /* halaman pembelian */
-Route::get('/laporan/pembelianshowstokrekap', [PembelianController::class, 'showstokrekap'])->name('pos01.laporan.pembelian_showstokrekap')->middleware('auth'); /* menampilkan data stokrekap pada datatable javascript */
-Route::get('/laporan/pembelianshowstokrekapfifo', [PembelianController::class, 'showstokrekapfifo'])->name('pos01.laporan.pembelian_showstokrekapfifo')->middleware('auth'); /* menampilkan data stokrekapfifo pada datatable javascript */
-Route::get('/laporan/pembelianshowstokrekapmova', [PembelianController::class, 'showstokrekapmova'])->name('pos01.laporan.pembelian_showstokrekapmova')->middleware('auth'); /* menampilkan data stokrekapmova pada datatable javascript */
-Route::get('/laporan/pembelianshowstokrekaplifo', [PembelianController::class, 'showstokrekaplifo'])->name('pos01.laporan.pembelian_showstokrekaplifo')->middleware('auth'); /* menampilkan data stokrekaplifo pada datatable javascript */
+Route::get('/laporan/pembelian', [PembelianController::class, 'index'])->name('pos01.laporan.pembelian.index')->middleware('auth'); /* halaman pembelian */
+Route::get('/laporan/pembelianshowpembeliandetail', [PembelianController::class, 'showpembeliandetail'])->name('pos01.laporan.pembelian_showpembeliandetail')->middleware('auth'); /* menampilkan data pembeliandetail pada datatable javascript */
+Route::get('/laporan/pembelianshowpembelianperitem', [PembelianController::class, 'showpembelianperitem'])->name('pos01.laporan.pembelian_showpembelianperitem')->middleware('auth'); /* menampilkan data pembelianperitem pada datatable javascript */
+Route::get('/laporan/pembelianshowpembelianpersupplier', [PembelianController::class, 'showpembelianpersupplier'])->name('pos01.laporan.pembelian_showpembelianpersupplier')->middleware('auth'); /* menampilkan data pembelianpersupplier pada datatable javascript */
+Route::get('/laporan/pembelianshowpembelianperfaktur', [PembelianController::class, 'showpembelianperfaktur'])->name('pos01.laporan.pembelian_showpembelianperfaktur')->middleware('auth'); /* menampilkan data pembelianperfaktur pada datatable javascript */
+Route::get('/laporan/pembelianshowpembelianperjenispembayaran', [PembelianController::class, 'showpembelianperjenispembayaran'])->name('pos01.laporan.pembelian_showpembelianperjenispembayaran')->middleware('auth'); /* menampilkan data pembelianperjenispembayaran pada datatable javascript */
+Route::get('/laporan/pembelianshowpembelianpertanggal', [PembelianController::class, 'showpembelianpertanggal'])->name('pos01.laporan.pembelian_showpembelianpertanggal')->middleware('auth'); /* menampilkan data pembelianpertanggal pada datatable javascript */
 Route::get('/laporan/pembelianshowsupplier', [PembelianController::class, 'showsupplier'])->name('pos01.laporan.pembelian_showsupplier')->middleware('auth'); /* menampilkan data supplier yg gk ada di pembelian pada datatable javascript */
 Route::get('/laporan/pembelianlistsupplier', [PembelianController::class, 'listsupplier'])->name('pos01.laporan.pembelian_listsupplier')->middleware('auth'); /* menampilkan list supplier */
 Route::get('/laporan/pembelianlistruang', [PembelianController::class, 'listruang'])->name('pos01.laporan.pembelian_listruang')->middleware('auth'); /* menampilkan list ruang */
@@ -315,6 +318,25 @@ Route::post('/laporan/pembeliankirimsyarat', [PembelianController::class, 'kirim
 Route::post('/laporan/pembelianceksupplier', [PembelianController::class, 'ceksupplier'])->name('pos01.laporan.pembelian_ceksupplier')->middleware('auth'); /* ceksupplier */
 Route::get('/laporan/pembelianedit/{id}', [PembelianController::class, 'edit'])->name('pos01.laporan.pembelian_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
 Route::get('/laporan/pembeliandestroy/{id}', [PembelianController::class, 'destroy'])->name('pos01.laporan.pembelian_destroy')->middleware('auth'); /* hapus data pembelian */
+
+/* laporan - penjualan */
+Route::get('/laporan/penjualan', [PenjualanController::class, 'index'])->name('pos01.laporan.penjualan.index')->middleware('auth'); /* halaman penjualan */
+Route::get('/laporan/penjualanshowpenjualandetail', [PenjualanController::class, 'showpenjualandetail'])->name('pos01.laporan.penjualan_showpenjualandetail')->middleware('auth'); /* menampilkan data penjualandetail pada datatable javascript */
+Route::get('/laporan/penjualanshowpenjualanperitem', [PenjualanController::class, 'showpenjualanperitem'])->name('pos01.laporan.penjualan_showpenjualanperitem')->middleware('auth'); /* menampilkan data penjualanperitem pada datatable javascript */
+Route::get('/laporan/penjualanshowpenjualanpersupplier', [PenjualanController::class, 'showpenjualanpersupplier'])->name('pos01.laporan.penjualan_showpenjualanpersupplier')->middleware('auth'); /* menampilkan data penjualanpersupplier pada datatable javascript */
+Route::get('/laporan/penjualanshowpenjualanperfaktur', [PenjualanController::class, 'showpenjualanperfaktur'])->name('pos01.laporan.penjualan_showpenjualanperfaktur')->middleware('auth'); /* menampilkan data penjualanperfaktur pada datatable javascript */
+Route::get('/laporan/penjualanshowpenjualanperjenispembayaran', [PenjualanController::class, 'showpenjualanperjenispembayaran'])->name('pos01.laporan.penjualan_showpenjualanperjenispembayaran')->middleware('auth'); /* menampilkan data penjualanperjenispembayaran pada datatable javascript */
+Route::get('/laporan/penjualanshowpenjualanpertanggal', [PenjualanController::class, 'showpenjualanpertanggal'])->name('pos01.laporan.penjualan_showpenjualanpertanggal')->middleware('auth'); /* menampilkan data penjualanpertanggal pada datatable javascript */
+Route::get('/laporan/penjualanshowsupplier', [PenjualanController::class, 'showsupplier'])->name('pos01.laporan.penjualan_showsupplier')->middleware('auth'); /* menampilkan data supplier yg gk ada di penjualan pada datatable javascript */
+Route::get('/laporan/penjualanlistcustomer', [PenjualanController::class, 'listcustomer'])->name('pos01.laporan.penjualan_listcustomer')->middleware('auth'); /* menampilkan list customer/anggota */
+Route::get('/laporan/penjualanlistruang', [PenjualanController::class, 'listruang'])->name('pos01.laporan.penjualan_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::get('/laporan/penjualanlistjenispembayaran', [PenjualanController::class, 'listjenispembayaran'])->name('pos01.laporan.penjualan_listjenispembayaran')->middleware('auth'); /* menampilkan list jenispembayaran */
+Route::get('/laporan/penjualanlistoperator', [PenjualanController::class, 'listoperator'])->name('pos01.laporan.penjualan_listoperator')->middleware('auth'); /* menampilkan list users */
+Route::post('/laporan/penjualancreate', [PenjualanController::class, 'create'])->name('pos01.laporan.penjualan_create')->middleware('auth'); /* menambah penjualan */
+Route::post('/laporan/penjualankirimsyarat', [PenjualanController::class, 'kirimsyarat'])->name('pos01.laporan.penjualan_kirimsyarat')->middleware('auth'); /* kirimsyarat */
+Route::post('/laporan/penjualancekcustomer', [PenjualanController::class, 'cekcustomer'])->name('pos01.laporan.penjualan_cekcustomer')->middleware('auth'); /* cekcustomer */
+Route::get('/laporan/penjualanedit/{id}', [PenjualanController::class, 'edit'])->name('pos01.laporan.penjualan_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/laporan/penjualandestroy/{id}', [PenjualanController::class, 'destroy'])->name('pos01.laporan.penjualan_destroy')->middleware('auth'); /* hapus data penjualan */
 
 /* pengaturan - parameter */
 Route::get('/pengaturan/parameter', [ParameterController::class, 'index'])->name('pos01.pengaturan.parameter.index')->middleware('auth'); /* halaman parameter */

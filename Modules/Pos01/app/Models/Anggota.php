@@ -42,6 +42,10 @@ class Anggota extends Model
     {
         return $this->hasMany(Bayarhutang::class,'idanggota','id');
     }
+    public function stok()
+    {
+        return $this->hasMany(Stok::class,'idanggota','id');
+    }
     /**
      * The attributes that are mass assignable.
      */

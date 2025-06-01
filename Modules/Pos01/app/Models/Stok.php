@@ -31,6 +31,14 @@ class Stok extends Model
     {
         return $this->belongsTo(Jenispembayaran::class,'idjenispembayaran');
     }
+    public function anggota()
+    {
+        return $this->belongsTo(Anggota::class,'idanggota');
+    }
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class,'idsupplier');
+    }
    
    
     /**

@@ -3,6 +3,7 @@
 namespace Modules\Pos01\Http\Controllers\laporan;
 
 use App\Http\Controllers\Controller;
+use App\Models\Users;
 use Illuminate\Http\Request;
 
 use DateTime;
@@ -13,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Menusub;
+use Modules\Pos01\Models\Anggota;
 use Modules\Pos01\Models\Barang;
 use Modules\Pos01\Models\Barangruang;
 use Modules\Pos01\Models\Hutang;
@@ -28,7 +30,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xml\Style\NumberFormat;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class PembelianController extends Controller
+class PenjualanController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,11 +44,11 @@ class PembelianController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan <b>Pembelian</b>.';
-        $page = 'pos01::laporan.pembelian';
-        $link = '/pos01/laporan/pembelian';
+        $remark = 'Halaman ini digunakan untuk menampilkan <b>Penjualan</b>.';
+        $page = 'pos01::laporan.penjualan';
+        $link = '/pos01/laporan/penjualan';
         $subtitle = 'Laporan';
-        $caption = 'Pembelian';
+        $caption = 'Penjualan';
         $jmlhal = 2;
        
         $menu=Menusub::where('link','=',$link)
@@ -2243,7 +2245,7 @@ class PembelianController extends Controller
             return $data;
 
     }
-    function listsupplier()
+    function listcustomer()
     {
 
         // $tglawal = session('tgltransaksi1');
@@ -2268,14 +2270,15 @@ class PembelianController extends Controller
         $idx1 = '-1';
         $idx2 = '0';
         $isix2 = 'UMUM';
-        $tampil = Supplier::where('id','<>','0')
+        $tampil = Anggota::where('id','<>','0')
             // ->whereIn('id',$idsupplier)
-            ->orderBy('supplier', 'asc')
+            ->with('lembaga')
+            ->orderBy('nama', 'asc')
             ->get();
             echo "<option value='" . $idx1 . "'>" . "- SEMUA -" . "</option>";
             echo "<option value='" . $idx2 . "'>". $isix2 . "</option>";
         foreach ($tampil as $baris) {
-            echo "<option value='" . $baris->id . "'>". $baris->supplier . "</option>";
+            echo "<option value='" . $baris->id . "'>". $baris->nama . " - " . $baris->lembaga->lembaga . "</option>";
         }
 
 
@@ -2334,10 +2337,20 @@ class PembelianController extends Controller
             echo "<option value='" . $baris->id . "'>". $baris->jenispembayaran . "</option>";
         }
     }
-    public function ceksupplier(Request $request)
+    function listoperator()
+    {
+        $idx = -1;
+        $tampil = Users::orderBy('name', 'asc')->get();
+            echo "<option value='" . $idx . "'>" . "- SEMUA -" . "</option>";
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->name . "</option>";
+        }
+
+    }
+    public function cekcustomer(Request $request)
     {
         
-        $idsup1=$request['idsup1'];
+        $idcus1=$request['idcus1'];
 
         $tglawal = session('tgltransaksi1');
         $tglakhir = session('tgltransaksi2');
@@ -2351,8 +2364,8 @@ class PembelianController extends Controller
             $idruangakhir = $idruangx;
         }
         
-        $jmlx = Stok::select('idsupplier')
-            ->where('idsupplier','=',$idsup1) 
+        $jmlx = Stok::select('idanggota')
+            ->where('idanggota','=',$idcus1) 
             ->where('status','=','masuk') 
             ->where('idruang','>=',$idruangawal) 
             ->where('idruang','<=',$idruangakhir) 
@@ -2374,9 +2387,11 @@ class PembelianController extends Controller
             'tabstok1' => $request['tabstok1'],
             'tgltransaksi1' => $request['tgltransaksi1'],
             'tgltransaksi2' => $request['tgltransaksi2'],
-            'idsupplier1' => $request['idsupplier1'],
+            'idoperator1' => $request['idoperator1'],
+            'idcustomer1' => $request['idcustomer1'],
             'idjenispembayaran1' => $request['idjenispembayaran1'],
-            'idpenjualan1' => $request['idpenjualan1'],
+            'idjenispenjualanutama1' => $request['idjenispenjualanutama1'],
+            'idjenispenjualansub1' => $request['idjenispenjualansub1'],
         ]);
     }
 
