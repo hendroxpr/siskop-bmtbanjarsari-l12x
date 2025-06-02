@@ -214,40 +214,53 @@ class PembelianController extends Controller
             })
             
             ->addColumn('hbsawal', function ($row) {
-                return $row->hbsawal ? Number_Format($row->hbsawal,0) : '';
+                return $row->hbsawal ? Number_Format($row->hbsawal,0) : 0;
             })
             ->addColumn('hppawal', function ($row) {
-                return $row->hppawal ? Number_Format($row->hppawal,0) : '';
+                return $row->hppawal ? Number_Format($row->hppawal,0) : 0;
             })
 
             ->addColumn('masuk', function ($row) {
-                return $row->masuk ? Number_Format($row->masuk,0) : '';
+                return $row->masuk ? Number_Format($row->masuk,0) : 0;
             })
             ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
+                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : 0;
             })
             ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
+                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : 0;
+            })
+            ->addColumn('ppnmasuk', function ($row) {
+                return $row->ppnmasuk ? Number_Format($row->ppnmasuk,0) : 0;
+            })
+            ->addColumn('diskonmasuk', function ($row) {
+                return $row->diskonmasuk ? Number_Format($row->diskonmasuk,0) : 0;
+            })
+            ->addColumn('totalmasuk', function ($row) {
+                $hpp = $row->hppmasuk ? $row->hppmasuk : 0; 
+                $ppn = $row->ppnmasuk ? $row->ppnmasuk : 0; 
+                $diskon = $row->diskonmasuk ? $row->diskonmasuk : 0;
+                $totalmasuk = $hpp + $ppn - $diskon;  
+                return $totalmasuk ? Number_Format($totalmasuk,0) : 0;
             })
 
             ->addColumn('keluar', function ($row) {
-                return $row->keluar ? Number_Format($row->keluar,0) : '';
+                return $row->keluar ? Number_Format($row->keluar,0) : 0;
             })
             ->addColumn('hbskeluar', function ($row) {
-                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : '';
+                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : 0;
             })
             ->addColumn('hppkeluar', function ($row) {
-                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : '';
+                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : 0;
             })
 
             ->addColumn('akhir', function ($row) {
-                return $row->akhir ? Number_Format($row->akhir,0) : '';
+                return $row->akhir ? Number_Format($row->akhir,0) : 0;
             })
             ->addColumn('hbsakhir', function ($row) {
-                return $row->hbsakhir ? Number_Format($row->hbsakhir,0) : '';
+                return $row->hbsakhir ? Number_Format($row->hbsakhir,0) : 0;
             })
             ->addColumn('hppakhir', function ($row) {
-                return $row->hppakhir ? Number_Format($row->hppakhir,0) : '';
+                return $row->hppakhir ? Number_Format($row->hppakhir,0) : 0;
             }) 
 
             ->addColumn('waktu', function ($row) {
@@ -259,6 +272,9 @@ class PembelianController extends Controller
                 return date_format($x,'Y-m-d');
             })   
             
+            ->rawColumns([
+                'totalmasuk',
+                ])
             
 
             ->make(true);
@@ -409,7 +425,7 @@ class PembelianController extends Controller
                         })
                     ->sum('masuk');
                 
-                $total = Stok::where('idbarang','=',$row->idbarang)
+                $subtotal = Stok::where('idbarang','=',$row->idbarang)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -423,6 +439,35 @@ class PembelianController extends Controller
                                         ->orWhere('status','=','returjual');
                         })
                     ->sum('hppmasuk');
+                
+                $ppn = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
 
                 return $qty;
             })
@@ -484,7 +529,7 @@ class PembelianController extends Controller
                         })
                     ->sum('masuk');
                 
-                $total = Stok::where('idbarang','=',$row->idbarang)
+                $subtotal = Stok::where('idbarang','=',$row->idbarang)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -498,10 +543,346 @@ class PembelianController extends Controller
                                         ->orWhere('status','=','returjual');
                         })
                     ->sum('hppmasuk');
+                
+                $ppn = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
 
-                return number_format($total/$qty,0);
+                return number_format($subtotal/$qty,0);
             })
 
+            ->addColumn('subtotal', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+
+                $qty = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('masuk');
+                
+                $subtotal = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('hppmasuk');
+                
+                $ppn = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($subtotal,0);
+            })
+
+            ->addColumn('ppn', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+
+                $qty = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('masuk');
+                
+                $subtotal = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('hppmasuk');
+                
+                $ppn = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($ppn,0);
+            })
+            ->addColumn('diskon', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+
+                $qty = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('masuk');
+                
+                $subtotal = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('hppmasuk');
+                
+                $ppn = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($diskon,0);
+            })
             ->addColumn('total', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -559,7 +940,7 @@ class PembelianController extends Controller
                         })
                     ->sum('masuk');
                 
-                $total = Stok::where('idbarang','=',$row->idbarang)
+                $subtotal = Stok::where('idbarang','=',$row->idbarang)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -573,7 +954,36 @@ class PembelianController extends Controller
                                         ->orWhere('status','=','returjual');
                         })
                     ->sum('hppmasuk');
-                return number_format($total,0);
+                
+                $ppn = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('idbarang','=',$row->idbarang)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($subtotal + $ppn - $diskon,0);
             })
 
             ->addColumn('jmlrecord', function ($row) {
@@ -645,6 +1055,9 @@ class PembelianController extends Controller
                 'jmlrecord',
                 'qty',
                 'harga',
+                'subtotal',
+                'ppn',
+                'diskon',
                 'total',
                 ])
 
@@ -790,7 +1203,7 @@ class PembelianController extends Controller
                         })
                     ->sum('masuk');
                 
-                $total = Stok::where('idsupplier','=',$row->idsupplier)
+                $subtotal = Stok::where('idsupplier','=',$row->idsupplier)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -865,7 +1278,7 @@ class PembelianController extends Controller
                         })
                     ->sum('masuk');
                 
-                $total = Stok::where('idsupplier','=',$row->idsupplier)
+                $subtotal = Stok::where('idsupplier','=',$row->idsupplier)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -880,10 +1293,10 @@ class PembelianController extends Controller
                         })
                     ->sum('hppmasuk');
 
-                return number_format($total/$qty,0);
+                return number_format($subtotal/$qty,0);
             })
 
-            ->addColumn('total', function ($row) {
+            ->addColumn('subtotal', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
                 if($tglawal==''||$tglawal=='0'){
@@ -940,7 +1353,7 @@ class PembelianController extends Controller
                         })
                     ->sum('masuk');
                 
-                $total = Stok::where('idsupplier','=',$row->idsupplier)
+                $subtotal = Stok::where('idsupplier','=',$row->idsupplier)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -954,7 +1367,212 @@ class PembelianController extends Controller
                                         ->orWhere('status','=','returjual');
                         })
                     ->sum('hppmasuk');
-                return number_format($total,0);
+                return number_format($subtotal,0);
+            })
+
+            ->addColumn('ppn', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+                
+                $ppn = Stok::where('idsupplier','=',$row->idsupplier)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                return number_format($ppn,0);
+            })
+
+            ->addColumn('diskon', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+                
+                $diskon = Stok::where('idsupplier','=',$row->idsupplier)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($diskon,0);
+            })
+
+            ->addColumn('total', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+                
+                $subtotal = Stok::where('idsupplier','=',$row->idsupplier)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('hppmasuk');
+                $ppn = Stok::where('idsupplier','=',$row->idsupplier)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('idsupplier','=',$row->idsupplier)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($subtotal + $ppn - $diskon,0);
             })
 
             ->addColumn('jmlrecord', function ($row) {
@@ -1025,6 +1643,9 @@ class PembelianController extends Controller
                 'jmlrecord',
                 'qty',
                 'harga',
+                'subtotal',
+                'ppn',
+                'diskon',
                 'total',
                 ])
 
@@ -1244,7 +1865,7 @@ class PembelianController extends Controller
                         })
                     ->sum('masuk');
                 
-                $total = Stok::where('nomorstatus','=',$row->nomorstatus)
+                $subtotal = Stok::where('nomorstatus','=',$row->nomorstatus)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -1259,10 +1880,10 @@ class PembelianController extends Controller
                         })
                     ->sum('hppmasuk');
 
-                return number_format($total/$qty,0);
+                return number_format($subtotal/$qty,0);
             })
 
-            ->addColumn('total', function ($row) {
+            ->addColumn('subtotal', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
                 if($tglawal==''||$tglawal=='0'){
@@ -1319,7 +1940,7 @@ class PembelianController extends Controller
                         })
                     ->sum('masuk');
                 
-                $total = Stok::where('nomorstatus','=',$row->nomorstatus)
+                $subtotal = Stok::where('nomorstatus','=',$row->nomorstatus)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -1333,7 +1954,212 @@ class PembelianController extends Controller
                                         ->orWhere('status','=','returjual');
                         })
                     ->sum('hppmasuk');
-                return number_format($total,0);
+                return number_format($subtotal,0);
+            })
+
+            ->addColumn('ppn', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+                
+                $ppn = Stok::where('nomorstatus','=',$row->nomorstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                return number_format($ppn,0);
+            })
+
+            ->addColumn('diskon', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+                
+                $diskon = Stok::where('nomorstatus','=',$row->nomorstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($diskon,0);
+            })
+
+            ->addColumn('total', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+                
+                $subtotal = Stok::where('nomorstatus','=',$row->nomorstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('hppmasuk');
+                $ppn = Stok::where('nomorstatus','=',$row->nomorstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('nomorstatus','=',$row->nomorstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($subtotal + $ppn - $diskon,0);
             })
 
             ->addColumn('jmlrecord', function ($row) {
@@ -1403,6 +2229,9 @@ class PembelianController extends Controller
                 'tglstatus',
                 'qty',
                 'harga',
+                'subtotal',
+                'ppn',
+                'diskon',
                 'total',
                 ])
 
@@ -1638,6 +2467,183 @@ class PembelianController extends Controller
                 return number_format($total/$qty,0);
             })
 
+            ->addColumn('subtotal', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+                
+                $subtotal = Stok::where('idjenispembayaran','=',$row->idjenispembayaran)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('hppmasuk');
+                return number_format($subtotal,0);
+            })
+
+            ->addColumn('ppn', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+                
+                $ppn = Stok::where('idjenispembayaran','=',$row->idjenispembayaran)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                return number_format($ppn,0);
+            })
+
+            ->addColumn('diskon', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+                
+                $diskon = Stok::where('idjenispembayaran','=',$row->idjenispembayaran)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($diskon,0);
+            })
+
             ->addColumn('total', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -1679,23 +2685,8 @@ class PembelianController extends Controller
                     $idjenispembayaranawal = $idjenispembayaranx;
                     $idjenispembayaranakhir = $idjenispembayaranx;
                 }
-
-                $qty = Stok::where('idjenispembayaran','=',$row->idjenispembayaran)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idsupplier','>=',$idsupplierawal)
-                    ->where('idsupplier','<=',$idsupplierakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','masuk')
-                                        ->orWhere('status','=','returjual');
-                        })
-                    ->sum('masuk');
                 
-                $total = Stok::where('idjenispembayaran','=',$row->idjenispembayaran)
+                $subtotal = Stok::where('idjenispembayaran','=',$row->idjenispembayaran)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -1709,9 +2700,36 @@ class PembelianController extends Controller
                                         ->orWhere('status','=','returjual');
                         })
                     ->sum('hppmasuk');
-                return number_format($total,0);
+                $ppn = Stok::where('idjenispembayaran','=',$row->idjenispembayaran)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('idjenispembayaran','=',$row->idjenispembayaran)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($subtotal + $ppn - $diskon,0);
             })
-
             ->addColumn('jmlrecord', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -1779,6 +2797,9 @@ class PembelianController extends Controller
                 'jenispembayaran',
                 'qty',
                 'harga',
+                'subtotal',
+                'ppn',
+                'diskon',
                 'total',
                 ])
 
@@ -2011,7 +3032,7 @@ class PembelianController extends Controller
                 return number_format($total/$qty,0);
             })
 
-            ->addColumn('total', function ($row) {
+            ->addColumn('subtotal', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
                 if($tglawal==''||$tglawal=='0'){
@@ -2068,7 +3089,7 @@ class PembelianController extends Controller
                         })
                     ->sum('masuk');
                 
-                $total = Stok::where('tglstatus','=',$row->tglstatus)
+                $subtotal = Stok::where('tglstatus','=',$row->tglstatus)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -2082,7 +3103,215 @@ class PembelianController extends Controller
                                         ->orWhere('status','=','returjual');
                         })
                     ->sum('hppmasuk');
-                return number_format($total,0);
+                return number_format($subtotal,0);
+            })
+
+            ->addColumn('ppn', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+
+                
+                $ppn = Stok::where('tglstatus','=',$row->tglstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                return number_format($ppn,0);
+            })
+
+            ->addColumn('diskon', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+
+                
+                $diskon = Stok::where('tglstatus','=',$row->tglstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($diskon,0);
+            })
+
+            ->addColumn('total', function ($row) {
+                $currentDate = date('Y-m-d');
+                $tglawal = session('tgltransaksi1');
+                if($tglawal==''||$tglawal=='0'){
+                    $tglawal=$currentDate;
+                }else{
+                    $tglawal=session('tgltransaksi1');
+                }
+                $tglakhir = session('tgltransaksi2');
+                if($tglakhir==''||$tglakhir=='0'){
+                    $tglakhir=$currentDate;
+                }else{
+                    $tglakhir=session('tgltransaksi2');
+                }
+
+                $idruangx = session('idruang1');
+                if($idruangx=='-1'||$idruangx==''){
+                    $idruangawal = 0;
+                    $idruangakhir = 999999;
+                }else{
+                    $idruangawal = $idruangx;
+                    $idruangakhir = $idruangx;
+                }
+
+                $idsupplierx = session('idsupplier1');
+                if($idsupplierx=='-1'||$idsupplierx==''){
+                    $idsupplierawal = 0;
+                    $idsupplierakhir = 999999;
+                }else{
+                    $idsupplierawal = $idsupplierx;
+                    $idsupplierakhir = $idsupplierx;
+                }
+
+                $idjenispembayaranx = session('idjenispembayaran1');
+                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
+                    $idjenispembayaranawal = 0;
+                    $idjenispembayaranakhir = 999999;
+                }else{
+                    $idjenispembayaranawal = $idjenispembayaranx;
+                    $idjenispembayaranakhir = $idjenispembayaranx;
+                }
+
+                
+                $subtotal = Stok::where('tglstatus','=',$row->tglstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('hppmasuk');
+                $ppn = Stok::where('tglstatus','=',$row->tglstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('ppnmasuk');
+                $diskon = Stok::where('tglstatus','=',$row->tglstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idsupplier','>=',$idsupplierawal)
+                    ->where('idsupplier','<=',$idsupplierakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','masuk')
+                                        ->orWhere('status','=','returjual');
+                        })
+                    ->sum('diskonmasuk');
+                return number_format($subtotal + $ppn + $diskon,0);
             })
 
             ->addColumn('jmlrecord', function ($row) {
@@ -2152,6 +3381,9 @@ class PembelianController extends Controller
                 'tglstatus',
                 'qty',
                 'harga',
+                'subtotal',
+                'ppn',
+                'diskon',
                 'total',
                 ])
 

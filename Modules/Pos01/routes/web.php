@@ -321,8 +321,8 @@ Route::get('/laporan/pembeliandestroy/{id}', [PembelianController::class, 'destr
 
 /* laporan - penjualan */
 Route::get('/laporan/penjualan', [PenjualanController::class, 'index'])->name('pos01.laporan.penjualan.index')->middleware('auth'); /* halaman penjualan */
-Route::get('/laporan/penjualanshowpenjualandetail', [PenjualanController::class, 'showpenjualandetail'])->name('pos01.laporan.penjualan_showpenjualandetail')->middleware('auth'); /* menampilkan data penjualandetail pada datatable javascript */
-Route::get('/laporan/penjualanshowpenjualanperitem', [PenjualanController::class, 'showpenjualanperitem'])->name('pos01.laporan.penjualan_showpenjualanperitem')->middleware('auth'); /* menampilkan data penjualanperitem pada datatable javascript */
+Route::get('/laporan/penjualanshowpenjualansajadetail', [PenjualanController::class, 'showpenjualansajadetail'])->name('pos01.laporan.penjualan_showpenjualansajadetail')->middleware('auth'); /* menampilkan data penjualansajadetail pada datatable javascript */
+Route::get('/laporan/penjualanshowpenjualansajaperitem', [PenjualanController::class, 'showpenjualansajaperitem'])->name('pos01.laporan.penjualan_showpenjualansajaperitem')->middleware('auth'); /* menampilkan data showpenjualansajaperitem pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanpersupplier', [PenjualanController::class, 'showpenjualanpersupplier'])->name('pos01.laporan.penjualan_showpenjualanpersupplier')->middleware('auth'); /* menampilkan data penjualanpersupplier pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanperfaktur', [PenjualanController::class, 'showpenjualanperfaktur'])->name('pos01.laporan.penjualan_showpenjualanperfaktur')->middleware('auth'); /* menampilkan data penjualanperfaktur pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanperjenispembayaran', [PenjualanController::class, 'showpenjualanperjenispembayaran'])->name('pos01.laporan.penjualan_showpenjualanperjenispembayaran')->middleware('auth'); /* menampilkan data penjualanperjenispembayaran pada datatable javascript */

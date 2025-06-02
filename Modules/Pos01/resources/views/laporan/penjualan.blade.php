@@ -201,11 +201,18 @@
                                         <th style="width:200px">Nama Barang</th>							
                                         <th style="width:10px">Qty</th>							
                                         <th style="width:20px">Satuan</th>							
-                                        <th style="width:20px">Harga</th>							
-                                        <th style="width:20px">Total</th>							
+                                        <th style="width:20px">HBS</th>							
+                                        <th style="width:20px">Total HB</th>				
+                                        <th style="width:20px">HJS</th>							
+                                        <th style="width:20px">Sub Total HJ</th>							
+                                        <th style="width:20px">PPN Jual</th>							
+                                        <th style="width:20px">Diskon Jual</th>							
+                                        <th style="width:20px">Total HJ</th>							
+                                        <th style="width:20px">Laba</th>							
                                         <th style="width:20px">Jenis</br>Pembayaran</th>							
-                                        <th style="width:50px">Supplier</th>							
+                                        <th style="width:50px">Customer</th>							
                                         <th style="width:100px">Lokasi</th>							
+                                        <th style="width:50px">Operator</th>							
                                         <th style="width:50px">Keterangan</th>						
                                     </tr>
                                 </thead>
@@ -219,9 +226,16 @@
                                         <th></th>
                                         <th></th>
                                         <th></th>
-                                        <th></th>
-                                        <th></th>
                                         <th></th>                          
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -248,13 +262,25 @@
                                         <th style="width:10px">Jml Record</th>							
                                         <th style="width:10px">Qty</th>							
                                         <th style="width:20px">Satuan</th>							
-                                        <th style="width:20px">Harga</th>							
-                                        <th style="width:20px">Total</th>						
+                                        <th style="width:20px">HBS</th>							
+                                        <th style="width:20px">Total HB</th>						
+                                        <th style="width:20px">HJS</th>						
+                                        <th style="width:20px">Sub Total Hj</th>						
+                                        <th style="width:20px">PPN Jual</th>						
+                                        <th style="width:20px">Diskon Jual</th>						
+                                        <th style="width:20px">Total HJ</th>						
+                                        <th style="width:20px">Laba</th>						
                                     
                                     </tr>
                                 </thead>
                                 <tfoot id="show_footerpenjualansajaperitem1">
                                     <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -895,25 +921,70 @@ $(document).ready(function(){
             };
     
             // Total over all pages
-            totalharga = api
+            totalhb = api
                 .column(9)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            subtotalhj = api
+                .column(11)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            ppnjual = api
+                .column(12)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            diskonjual = api
+                .column(13)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            totalhj = api
+                .column(14)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            laba = api
+                .column(15)
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
     
             // Total over this page
-            pagetotalharga = api
+            pagetotalhb = api
                 .column(9, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagesubtotalhj = api
+                .column(11, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pageppnjual = api
+                .column(12, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagediskonjual = api
+                .column(13, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagetotalhj = api
+                .column(14, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagelaba = api
+                .column(15, { page: 'current' })
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
     
             // Update footer
             api.column(1).footer().innerHTML = 'SUB TOTAL :';
-            api.column(9).footer().innerHTML = formatAngka(pagetotalharga,'');            
-            },
+            api.column(9).footer().innerHTML = formatAngka(pagetotalhb,'');            
+            api.column(11).footer().innerHTML = formatAngka(pagesubtotalhj,'');            
+            api.column(12).footer().innerHTML = formatAngka(pageppnjual,'');            
+            api.column(13).footer().innerHTML = formatAngka(pagediskonjual,'');            
+            api.column(14).footer().innerHTML = formatAngka(pagetotalhj,'');            
+            api.column(15).footer().innerHTML = formatAngka(pagelaba,'');            
+        },
 
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.laporan.pembelian_showpembeliandetail')}}`,
+            ajax   : `{{route('pos01.laporan.penjualan_showpenjualansajadetail')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -926,14 +997,22 @@ $(document).ready(function(){
                 { data: 'kode', name: 'barang.code', className: 'dt-center' },
                 { data: 'barcode', name: 'barang.barcode', className: 'dt-center' },
                 { data: 'nabara', name: 'barang.nabara', className: 'dt-left' },
-                { data: 'masuk', name: 'masuk', className: 'dt-center' },
+                { data: 'keluar', name: 'keluar', className: 'dt-center' },
                 { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
-                { data: 'hbsmasuk', name: 'hbsmasuk', className: 'dt-right' },
-                { data: 'hppmasuk', name: 'hppmasuk', className: 'dt-right' },
+                { data: 'hbskeluar', name: 'hbskeluar', className: 'dt-right' },
+                { data: 'hppkeluar', name: 'hppkeluar', className: 'dt-right' },
+                { data: 'hjs', name: 'hjs', className: 'dt-right' },
+                { data: 'hppj', name: 'hppj', className: 'dt-right' },
+                { data: 'ppnkeluar', name: 'ppnkeluar', className: 'dt-right' },
+                { data: 'diskonkeluar', name: 'diskonkeluar', className: 'dt-right' },
+                { data: 'totalhj', name: 'totalhj', className: 'dt-right' },
+                { data: 'laba', name: 'laba', className: 'dt-right' },
                 { data: 'jenispembayaran', name: 'jenispembayaran.jenispembayaran', className: 'dt-left' },
-                { data: 'supplier', name: 'supplier.supplier', className: 'dt-left' },
+                { data: 'customer', name: 'anggota.nama', className: 'dt-left' },
                 { data: 'ruang', name: 'ruang.ruang', className: 'dt-left' },
+                { data: 'users', name: 'users.name', className: 'dt-left' },
                 { data: 'keterangan', name: 'keterangan', className: 'dt-left' },
+                
                 
             ]
         });
@@ -984,7 +1063,7 @@ $(document).ready(function(){
 
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.laporan.pembelian_showpembelianperitem')}}`,
+            ajax   : `{{route('pos01.laporan.penjualan_showpenjualansajaperitem')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -999,6 +1078,12 @@ $(document).ready(function(){
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
                 { data: 'harga', name: 'harga', className: 'dt-right' },
+                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'total', name: 'total', className: 'dt-right' },
                 { data: 'total', name: 'total', className: 'dt-right' },
             ]
         });

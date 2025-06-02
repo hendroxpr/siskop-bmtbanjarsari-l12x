@@ -122,7 +122,7 @@ class PenjualanController extends Controller
      * @return Renderable
      */
     
-    public function showpembeliandetail()
+    public function showpenjualansajadetail()
     {
         date_default_timezone_set("Asia/Bangkok");
 
@@ -167,6 +167,15 @@ class PenjualanController extends Controller
             $idjenispembayaranakhir = $idjenispembayaranx;
         }
 
+        $iduserx = session('idoperator1');
+        if($iduserx=='-1'||$iduserx==''){
+            $iduserawal = 0;
+            $iduserakhir = 999999;
+        }else{
+            $iduserawal = $iduserx;
+            $iduserakhir = $iduserx;
+        }
+
         $stok = Stok::select('*')
             ->where('idruang','>=',$idruangawal)
             ->where('idruang','<=',$idruangakhir)
@@ -176,11 +185,13 @@ class PenjualanController extends Controller
             ->where('idsupplier','<=',$idsupplierakhir)
             ->where('idjenispembayaran','>=',$idjenispembayaranawal)
             ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+            ->where('iduser','>=',$iduserawal)
+            ->where('iduser','<=',$iduserakhir)
             ->where(function (Builder $query) {
-                    return $query->where('status','=','masuk')
-                                 ->orWhere('status','=','returjual');
+                    return $query->where('status','=','keluar')
+                                 ->orWhere('status','=','returbeli');
                 })
-            ->with('barang','seksi','ruang','jenispembayaran','anggota','supplier')
+            ->with('barang','seksi','ruang','jenispembayaran','anggota','supplier','users')
             // ->orderBy('tglstatus','asc')
             // ->orderBy('id','asc')
             ->get();
@@ -190,6 +201,9 @@ class PenjualanController extends Controller
         $data = $datax
             ->addIndexColumn()
            
+            ->addColumn('users', function ($row) {
+                return $row->iduser ? $row->users->name : '';
+            })
             ->addColumn('barang', function ($row) {
                 return $row->idbarang ? $row->barang->nabara : '';
             })
@@ -208,8 +222,8 @@ class PenjualanController extends Controller
             ->addColumn('jenispembayaran', function ($row) {
                 return $row->idjenispembayaran ? $row->jenispembayaran->jenispembayaran : '';
             })
-            ->addColumn('supplier', function ($row) {
-                return $row->idsupplier ? $row->supplier->supplier : '';
+            ->addColumn('customer', function ($row) {
+                return $row->idanggota ? $row->anggota->nama : '';
             })
             ->addColumn('ruang', function ($row) {
                 return $row->idruang ? $row->ruang->ruang : '';
@@ -251,6 +265,35 @@ class PenjualanController extends Controller
             ->addColumn('hppakhir', function ($row) {
                 return $row->hppakhir ? Number_Format($row->hppakhir,0) : '';
             }) 
+            ->addColumn('hjs', function ($row) {
+                return $row->hjs ? Number_Format($row->hjs,0) : 0;
+            }) 
+            ->addColumn('hppj', function ($row) {
+                return $row->hppj ? Number_Format($row->hppj,0) : 0;
+            }) 
+            ->addColumn('ppnkeluar', function ($row) {
+                return $row->ppnkeluar ? Number_Format($row->ppnkeluar,0) : 0;
+            }) 
+            ->addColumn('diskonkeluar', function ($row) {
+                return $row->diskonkeluar ? Number_Format($row->diskonkeluar,0) : 0;
+            }) 
+            ->addColumn('totalhj', function ($row) {
+                $hj = $row->hppj;
+                $ppn = $row->ppnkeluar;
+                $diskon = $row->diskonkeluar;
+                $totalhj = $hj + $ppn - $diskon;
+
+                return $totalhj ? Number_Format($totalhj,0) : 0;
+            }) 
+            ->addColumn('laba', function ($row) {
+                $hb = $row->hppkeluar;
+                $hj = $row->hppj;
+                $ppn = $row->ppnkeluar;
+                $diskon = $row->diskonkeluar;
+                $totalhj = $hj + $ppn - $diskon;
+                $laba = $totalhj - $hb;
+                return $laba ? Number_Format($laba,0) : 0;
+            }) 
 
             ->addColumn('waktu', function ($row) {
                 $x = date_create($row->created_at);
@@ -261,6 +304,10 @@ class PenjualanController extends Controller
                 return date_format($x,'Y-m-d');
             })   
             
+            ->rawColumns([
+                'totalhj',
+                'laba',
+                ])
             
 
             ->make(true);
@@ -269,7 +316,7 @@ class PenjualanController extends Controller
 
     }
 
-    public function showpembelianperitem()
+    public function showpenjualansajaperitem()
     {
         date_default_timezone_set("Asia/Bangkok");
 

@@ -162,6 +162,9 @@
                                 <th style="width:10px">Qty</th>							
                                 <th style="width:20px">Satuan</th>							
                                 <th style="width:20px">Harga</th>							
+                                <th style="width:20px">Sub Total</th>							
+                                <th style="width:20px">PPN</th>							
+                                <th style="width:20px">Diskon</th>							
                                 <th style="width:20px">Total</th>							
                                 <th style="width:20px">Jenis</br>Pembayaran</th>							
                                 <th style="width:50px">Supplier</th>							
@@ -182,6 +185,9 @@
                                 <th></th>
                                 <th></th>
                                 <th></th>                          
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -209,12 +215,18 @@
                                 <th style="width:10px">Qty</th>							
                                 <th style="width:20px">Satuan</th>							
                                 <th style="width:20px">Harga</th>							
+                                <th style="width:20px">Sub Total</th>						
+                                <th style="width:20px">PPN</th>						
+                                <th style="width:20px">Diskon</th>						
                                 <th style="width:20px">Total</th>						
                               
                             </tr>
                         </thead>
                         <tfoot id="show_footerpembelianperitem1">
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -248,11 +260,17 @@
                                 <th style="width:10px">Jml record</th>							
                                 <th style="width:10px">Qty</th>							
                                 <th style="width:20px">Harga</th>							
+                                <th style="width:20px">Sub Total</th>							
+                                <th style="width:20px">PPN</th>							
+                                <th style="width:20px">Diskon</th>							
                                 <th style="width:20px">Total</th>							
                             </tr>
                         </thead>
                         <tfoot id="show_footerpembelianpersupplier1">
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -283,11 +301,17 @@
                                 <th style="width:10px">Jml Record</th>							
                                 <th style="width:10px">Qty</th>							
                                 <th style="width:20px">Harga</th>							
+                                <th style="width:20px">Sub Total</th>							
+                                <th style="width:20px">PPN</th>							
+                                <th style="width:20px">Diskon</th>							
                                 <th style="width:20px">Total</th>							
                             </tr>
                         </thead>
                         <tfoot id="show_footerpembelianperfaktur1">
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -317,11 +341,17 @@
                                 <th style="width:10px">Jml Record</th>							
                                 <th style="width:10px">Qty</th>							
                                 <th style="width:20px">Harga</th>							
+                                <th style="width:20px">Sub Total</th>							
+                                <th style="width:20px">PPN</th>							
+                                <th style="width:20px">Diskon</th>							
                                 <th style="width:20px">Total</th>							
                             </tr>
                         </thead>
                         <tfoot id="show_footerpembelianperjenispembayaran1">
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -350,11 +380,17 @@
                                 <th style="width:10px">Jml Record</th>							
                                 <th style="width:10px">Qty</th>							
                                 <th style="width:20px">Harga</th>							
+                                <th style="width:20px">Sub Total</th>							
+                                <th style="width:20px">PPN</th>							
+                                <th style="width:20px">Diskon</th>							
                                 <th style="width:20px">Total</th>							
                             </tr>
                         </thead>
                         <tfoot id="show_footerpembelianpertanggal1">
                             <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -593,7 +629,7 @@ $(document).ready(function(){
         }else{
             $('#tab-pembeliandetail').click();            
         }
-    }, 100);
+    }, 1000);
     
     $('#tab-pembeliandetail').on('click',function(){
         $('#tabpembelian1').val('tab-pembeliandetail');
@@ -753,8 +789,10 @@ $(document).ready(function(){
                     if(event1=='1'){
                         $("#idruang1").val(idruang1);                                        
                         $("#idjenispembayaran1").val(idjenispembayaran1);                                        
-                        $("#idsupplier1").val(idsupplier1);                                        
-                        tampil_dataTable();                   
+                        $("#idsupplier1").val(idsupplier1);
+                        setTimeout(() => {
+                            tampil_dataTable();                   
+                        }, 1000);                                        
                     }
                 }
         });
@@ -780,7 +818,7 @@ $(document).ready(function(){
             responsive : true,
             retrieve: true,
             autoWidth : true,
-            buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
+            buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'landscape', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'landscape', pageSize: 'A4', title: '{{ $caption }}'}, ],        
             dom: 'lBfrtip',
             lengthMenu: [
                 [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
@@ -800,20 +838,47 @@ $(document).ready(function(){
             };
     
             // Total over all pages
-            totalharga = api
+            subtotalharga = api
                 .column(9)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            ppn = api
+                .column(10)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            diskon = api
+                .column(11)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            totalharga = api
+                .column(12)
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
     
             // Total over this page
-            pagetotalharga = api
+            pagesubtotalharga = api
                 .column(9, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pageppn = api
+                .column(10, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagediskon = api
+                .column(11, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagetotatharga = api
+                .column(12, { page: 'current' })
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
     
             // Update footer
             api.column(1).footer().innerHTML = 'SUB TOTAL :';
-            api.column(9).footer().innerHTML = formatAngka(pagetotalharga,'');            
+            api.column(9).footer().innerHTML = formatAngka(pagesubtotalharga,'');            
+            api.column(10).footer().innerHTML = formatAngka(pageppn,'');            
+            api.column(11).footer().innerHTML = formatAngka(pagediskon,'');            
+            api.column(12).footer().innerHTML = formatAngka(pagetotalharga,'');            
             },
 
             processing: true,
@@ -835,6 +900,9 @@ $(document).ready(function(){
                 { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
                 { data: 'hbsmasuk', name: 'hbsmasuk', className: 'dt-right' },
                 { data: 'hppmasuk', name: 'hppmasuk', className: 'dt-right' },
+                { data: 'ppnmasuk', name: 'ppnmasuk', className: 'dt-right' },
+                { data: 'diskonmasuk', name: 'diskonmasuk', className: 'dt-right' },
+                { data: 'totalmasuk', name: 'totalmasuk', className: 'dt-right' },
                 { data: 'jenispembayaran', name: 'jenispembayaran.jenispembayaran', className: 'dt-left' },
                 { data: 'supplier', name: 'supplier.supplier', className: 'dt-left' },
                 { data: 'ruang', name: 'ruang.ruang', className: 'dt-left' },
@@ -870,20 +938,47 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                subtotal = api
                     .column(8)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppn = api
+                    .column(9)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskon = api
+                    .column(10)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                total = api
+                    .column(11)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagesubtotal = api
                     .column(8, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppn = api
+                    .column(9, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskon = api
+                    .column(10, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotal = api
+                    .column(11, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(8).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(8).footer().innerHTML = formatAngka(pagesubtotal,'');  
+                api.column(9).footer().innerHTML = formatAngka(pageppn,'');  
+                api.column(10).footer().innerHTML = formatAngka(pagediskon,'');  
+                api.column(11).footer().innerHTML = formatAngka(pagetotal,'');  
 
             },
 
@@ -904,6 +999,9 @@ $(document).ready(function(){
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
                 { data: 'harga', name: 'harga', className: 'dt-right' },
+                { data: 'subtotal', name: 'subtotal', className: 'dt-right' },
+                { data: 'ppn', name: 'ppn', className: 'dt-right' },
+                { data: 'diskon', name: 'diskon', className: 'dt-right' },
                 { data: 'total', name: 'total', className: 'dt-right' },
             ]
         });
@@ -935,20 +1033,47 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                subtotal = api
                     .column(7)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppn = api
+                    .column(8)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskon = api
+                    .column(9)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                total = api
+                    .column(10)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagesubtotal = api
                     .column(7, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppn = api
+                    .column(8, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskon = api
+                    .column(9, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotal = api
+                    .column(10, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(7).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(7).footer().innerHTML = formatAngka(pagesubtotal,'');  
+                api.column(8).footer().innerHTML = formatAngka(pageppn,'');  
+                api.column(9).footer().innerHTML = formatAngka(pagediskon,'');  
+                api.column(10).footer().innerHTML = formatAngka(pagetotal,'');  
 
             },
 
@@ -968,6 +1093,9 @@ $(document).ready(function(){
                 { data: 'jmlrecord', name: 'jmlrecord', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'harga', name: 'harga', className: 'dt-right' },
+                { data: 'subtotal', name: 'subtotal', className: 'dt-right' },
+                { data: 'ppn', name: 'ppn', className: 'dt-right' },
+                { data: 'diskon', name: 'diskon', className: 'dt-right' },
                 { data: 'total', name: 'total', className: 'dt-right' },
             ]
         });
@@ -999,20 +1127,47 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                subtotal = api
                     .column(6)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppn = api
+                    .column(7)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskon = api
+                    .column(8)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                total = api
+                    .column(9)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagesubtotal = api
                     .column(6, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppn = api
+                    .column(7, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskon = api
+                    .column(8, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotal = api
+                    .column(9, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(6).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(6).footer().innerHTML = formatAngka(pagesubtotal,'');  
+                api.column(7).footer().innerHTML = formatAngka(pageppn,'');  
+                api.column(8).footer().innerHTML = formatAngka(pagediskon,'');  
+                api.column(9).footer().innerHTML = formatAngka(pagetotal,'');  
 
             },
 
@@ -1031,6 +1186,9 @@ $(document).ready(function(){
                 { data: 'jmlrecord', name: 'jmlrecord', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'harga', name: 'harga', className: 'dt-right' },
+                { data: 'subtotal', name: 'subtotal', className: 'dt-right' },
+                { data: 'ppn', name: 'ppn', className: 'dt-right' },
+                { data: 'diskon', name: 'diskon', className: 'dt-right' },
                 { data: 'total', name: 'total', className: 'dt-right' },
             ]
         });
@@ -1062,20 +1220,47 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                subtotal = api
                     .column(6)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppn = api
+                    .column(7)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskon = api
+                    .column(8)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                total = api
+                    .column(9)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagesubtotal = api
                     .column(6, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppn = api
+                    .column(7, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskon = api
+                    .column(8, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotal = api
+                    .column(9, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(6).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(6).footer().innerHTML = formatAngka(pagesubtotal,'');  
+                api.column(7).footer().innerHTML = formatAngka(pageppn,'');  
+                api.column(8).footer().innerHTML = formatAngka(pagediskon,'');  
+                api.column(9).footer().innerHTML = formatAngka(pagetotal,'');  
 
             },
 
@@ -1094,6 +1279,9 @@ $(document).ready(function(){
                 { data: 'jmlrecord', name: 'jmlrecord', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'harga', name: 'harga', className: 'dt-right' },
+                { data: 'subtotal', name: 'subtotal', className: 'dt-right' },
+                { data: 'ppn', name: 'ppn', className: 'dt-right' },
+                { data: 'diskon', name: 'diskon', className: 'dt-right' },
                 { data: 'total', name: 'total', className: 'dt-right' },
             ]
         });
@@ -1125,20 +1313,47 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                subtotal = api
                     .column(5)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppn = api
+                    .column(6)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskon = api
+                    .column(7)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                total = api
+                    .column(8)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagesubtotal = api
                     .column(5, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppn = api
+                    .column(6, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskon = api
+                    .column(7, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotal = api
+                    .column(8, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(5).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(5).footer().innerHTML = formatAngka(pagesubtotal,'');  
+                api.column(6).footer().innerHTML = formatAngka(pageppn,'');  
+                api.column(7).footer().innerHTML = formatAngka(pagediskon,'');  
+                api.column(8).footer().innerHTML = formatAngka(pagetotal,'');  
 
             },
 
@@ -1156,6 +1371,9 @@ $(document).ready(function(){
                 { data: 'jmlrecord', name: 'jmlrecord', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'harga', name: 'harga', className: 'dt-right' },
+                { data: 'subtotal', name: 'subtotal', className: 'dt-right' },
+                { data: 'ppn', name: 'ppn', className: 'dt-right' },
+                { data: 'diskon', name: 'diskon', className: 'dt-right' },
                 { data: 'total', name: 'total', className: 'dt-right' },
             ]
         });
@@ -1170,7 +1388,7 @@ $(document).ready(function(){
         pembelianpertanggal1Datatable.draw(null, false);        
     }
 
-    function koneksi_datatable(){
+    function koneksi_datatable(){        
         pembeliandetail1Datatable = tampil_pembeliandetail1();    
         pembelianperitem1Datatable = tampil_pembelianperitem1();    
         pembelianpersupplier1Datatable = tampil_pembelianpersupplier1();    
