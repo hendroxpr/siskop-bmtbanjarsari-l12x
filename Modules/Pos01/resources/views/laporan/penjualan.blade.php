@@ -313,12 +313,24 @@
                                         <th style="width:200px">Alamat</th>							
                                         <th style="width:10px">Jml record</th>							
                                         <th style="width:10px">Qty</th>							
-                                        <th style="width:20px">Harga</th>							
-                                        <th style="width:20px">Total</th>							
+                                        <th style="width:20px">HBS</th>							
+                                        <th style="width:20px">Total HB</th>							
+                                        <th style="width:20px">HJS</th>							
+                                        <th style="width:20px">Sub Total HJ</th>							
+                                        <th style="width:20px">PPN Jual</th>							
+                                        <th style="width:20px">Diskon Jual</th>							
+                                        <th style="width:20px">Total HJ</th>							
+                                        <th style="width:20px">Laba</th>							
                                     </tr>
                                 </thead>
                                 <tfoot id="show_footerpenjualansajapersupplier1">
                                     <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -348,12 +360,24 @@
                                         <th style="width:200px">Tanggal</th>							
                                         <th style="width:10px">Jml Record</th>							
                                         <th style="width:10px">Qty</th>							
-                                        <th style="width:20px">Harga</th>							
-                                        <th style="width:20px">Total</th>							
+                                        <th style="width:20px">HBS</th>							
+                                        <th style="width:20px">Total HB</th>							
+                                        <th style="width:20px">HJS</th>							
+                                        <th style="width:20px">Sub Total HJ</th>							
+                                        <th style="width:20px">PPN Jual</th>							
+                                        <th style="width:20px">Diskon Jual</th>							
+                                        <th style="width:20px">Total HJ</th>							
+                                        <th style="width:20px">Laba</th>							
                                     </tr>
                                 </thead>
                                 <tfoot id="show_footerpenjualansajaperfaktur1">
                                     <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -382,12 +406,24 @@
                                         <th style="width:200px">Jenis Pembayaran</th>							
                                         <th style="width:10px">Jml Record</th>							
                                         <th style="width:10px">Qty</th>							
-                                        <th style="width:20px">Harga</th>							
-                                        <th style="width:20px">Total</th>							
+                                        <th style="width:20px">HBS</th>							
+                                        <th style="width:20px">Total HB</th>							
+                                        <th style="width:20px">HJS</th>							
+                                        <th style="width:20px">Sub Total HJ</th>							
+                                        <th style="width:20px">PPN Jual</th>							
+                                        <th style="width:20px">Diskon Jual</th>							
+                                        <th style="width:20px">Total HJ</th>							
+                                        <th style="width:20px">Laba</th>							
                                     </tr>
                                 </thead>
                                 <tfoot id="show_footerpenjualansajaperjenispembayaran1">
                                     <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -415,12 +451,24 @@
                                         <th style="width:20px">Tanggal</th>							
                                         <th style="width:10px">Jml Record</th>							
                                         <th style="width:10px">Qty</th>							
-                                        <th style="width:20px">Harga</th>							
-                                        <th style="width:20px">Total</th>							
+                                        <th style="width:20px">HBS</th>							
+                                        <th style="width:20px">Total HB</th>							
+                                        <th style="width:20px">HJS</th>							
+                                        <th style="width:20px">Sub Total HJ</th>							
+                                        <th style="width:20px">PPN Jual</th>							
+                                        <th style="width:20px">Diskon Jual</th>							
+                                        <th style="width:20px">Total HJ</th>							
+                                        <th style="width:20px">Laba</th>							
                                     </tr>
                                 </thead>
                                 <tfoot id="show_footerpenjualansajapertanggal1">
                                     <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th></th>
@@ -1044,20 +1092,65 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                totalhb = api
                     .column(8)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                subtotalhj = api
+                    .column(10)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppnjual = api
+                    .column(11)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskonjual = api
+                    .column(12)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                totalhj = api
+                    .column(13)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                laba = api
+                    .column(14)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagetotalhb = api
                     .column(8, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagesubtotalhj = api
+                    .column(10, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppnjual = api
+                    .column(11, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskonjual = api
+                    .column(12, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotalhj = api
+                    .column(13, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagelaba = api
+                    .column(14, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(8).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(8).footer().innerHTML = formatAngka(pagetotalhb,'');  
+                api.column(10).footer().innerHTML = formatAngka(pagesubtotalhj,'');  
+                api.column(11).footer().innerHTML = formatAngka(pageppnjual,'');  
+                api.column(12).footer().innerHTML = formatAngka(pagediskonjual,'');  
+                api.column(13).footer().innerHTML = formatAngka(pagetotalhj,'');  
+                api.column(14).footer().innerHTML = formatAngka(pagelaba,'');  
 
             },
 
@@ -1077,14 +1170,14 @@ $(document).ready(function(){
                 { data: 'jmlrecord', name: 'jmlrecord', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
-                { data: 'harga', name: 'harga', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'hbs', name: 'hbs', className: 'dt-right' },
+                { data: 'totalhb', name: 'totalhb', className: 'dt-right' },
+                { data: 'hjs', name: 'hjs', className: 'dt-right' },
+                { data: 'subtotalhj', name: 'subtotalhj', className: 'dt-right' },
+                { data: 'ppnjual', name: 'ppnjual', className: 'dt-right' },
+                { data: 'diskonjual', name: 'diskonjual', className: 'dt-right' },
+                { data: 'totalhj', name: 'totalhj', className: 'dt-right' },
+                { data: 'laba', name: 'laba', className: 'dt-right' },
             ]
         });
     }
@@ -1115,26 +1208,71 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                totalhb = api
                     .column(7)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                subtotalhj = api
+                    .column(9)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppnjual = api
+                    .column(10)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskonjual = api
+                    .column(11)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                totalhj = api
+                    .column(12)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                laba = api
+                    .column(13)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagetotalhb = api
                     .column(7, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagesubtotalhj = api
+                    .column(9, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppnjual = api
+                    .column(10, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskonjual = api
+                    .column(11, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotalhj = api
+                    .column(12, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagelaba = api
+                    .column(13, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(7).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(7).footer().innerHTML = formatAngka(pagetotalhb,'');  
+                api.column(9).footer().innerHTML = formatAngka(pagesubtotalhj,'');  
+                api.column(10).footer().innerHTML = formatAngka(pageppnjual,'');  
+                api.column(11).footer().innerHTML = formatAngka(pagediskonjual,'');  
+                api.column(12).footer().innerHTML = formatAngka(pagetotalhj,'');  
+                api.column(13).footer().innerHTML = formatAngka(pagelaba,''); 
 
             },
 
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.laporan.pembelian_showpembelianpersupplier')}}`,
+            ajax   : `{{route('pos01.laporan.penjualan_showpenjualansajapersupplier')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -1147,8 +1285,14 @@ $(document).ready(function(){
                 { data: 'alamat', name: 'supplier.alamat', className: 'dt-left' },
                 { data: 'jmlrecord', name: 'jmlrecord', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
-                { data: 'harga', name: 'harga', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'hbs', name: 'hbs', className: 'dt-right' },
+                { data: 'totalhb', name: 'totalhb', className: 'dt-right' },
+                { data: 'hjs', name: 'hjs', className: 'dt-right' },
+                { data: 'subtotalhj', name: 'subtotalhj', className: 'dt-right' },
+                { data: 'ppnjual', name: 'ppnjual', className: 'dt-right' },
+                { data: 'diskonjual', name: 'diskonjual', className: 'dt-right' },
+                { data: 'totalhj', name: 'totalhj', className: 'dt-right' },
+                { data: 'laba', name: 'laba', className: 'dt-right' },
             ]
         });
     }
@@ -1179,26 +1323,71 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                totalhb = api
                     .column(6)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                subtotalhj = api
+                    .column(8)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppnjual = api
+                    .column(9)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskonjual = api
+                    .column(10)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                totalhj = api
+                    .column(11)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                laba = api
+                    .column(12)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagetotalhb = api
                     .column(6, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagesubtotalhj = api
+                    .column(8, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppnjual = api
+                    .column(9, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskonjual = api
+                    .column(10, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotalhj = api
+                    .column(11, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagelaba = api
+                    .column(12, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(6).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(6).footer().innerHTML = formatAngka(pagetotalhb,'');  
+                api.column(8).footer().innerHTML = formatAngka(pagesubtotalhj,'');  
+                api.column(9).footer().innerHTML = formatAngka(pageppnjual,'');  
+                api.column(10).footer().innerHTML = formatAngka(pagediskonjual,'');  
+                api.column(11).footer().innerHTML = formatAngka(pagetotalhj,'');  
+                api.column(12).footer().innerHTML = formatAngka(pagelaba,''); 
 
             },
 
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.laporan.pembelian_showpembelianperfaktur')}}`,
+            ajax   : `{{route('pos01.laporan.penjualan_showpenjualansajaperfaktur')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -1210,8 +1399,14 @@ $(document).ready(function(){
                 { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
                 { data: 'jmlrecord', name: 'jmlrecord', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
-                { data: 'harga', name: 'harga', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'hbs', name: 'hbs', className: 'dt-right' },
+                { data: 'totalhb', name: 'totalhb', className: 'dt-right' },
+                { data: 'hjs', name: 'hjs', className: 'dt-right' },
+                { data: 'subtotalhj', name: 'subtotalhj', className: 'dt-right' },
+                { data: 'ppnjual', name: 'ppnjual', className: 'dt-right' },
+                { data: 'diskonjual', name: 'diskonjual', className: 'dt-right' },
+                { data: 'totalhj', name: 'totalhj', className: 'dt-right' },
+                { data: 'laba', name: 'laba', className: 'dt-right' },
             ]
         });
     }
@@ -1242,26 +1437,71 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                totalhb = api
                     .column(6)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                subtotalhj = api
+                    .column(8)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppnjual = api
+                    .column(9)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskonjual = api
+                    .column(10)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                totalhj = api
+                    .column(11)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                laba = api
+                    .column(12)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagetotalhb = api
                     .column(6, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagesubtotalhj = api
+                    .column(8, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppnjual = api
+                    .column(9, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskonjual = api
+                    .column(10, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotalhj = api
+                    .column(11, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagelaba = api
+                    .column(12, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(6).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(6).footer().innerHTML = formatAngka(pagetotalhb,'');  
+                api.column(8).footer().innerHTML = formatAngka(pagesubtotalhj,'');  
+                api.column(9).footer().innerHTML = formatAngka(pageppnjual,'');  
+                api.column(10).footer().innerHTML = formatAngka(pagediskonjual,'');  
+                api.column(11).footer().innerHTML = formatAngka(pagetotalhj,'');  
+                api.column(12).footer().innerHTML = formatAngka(pagelaba,''); 
 
             },
 
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.laporan.pembelian_showpembelianperjenispembayaran')}}`,
+            ajax   : `{{route('pos01.laporan.penjualan_showpenjualansajaperjenispembayaran')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -1273,8 +1513,14 @@ $(document).ready(function(){
                 { data: 'jenispembayaran', name: 'jenispembayaran.jenispembayaran', className: 'dt-left' },
                 { data: 'jmlrecord', name: 'jmlrecord', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
-                { data: 'harga', name: 'harga', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'hbs', name: 'hbs', className: 'dt-right' },
+                { data: 'totalhb', name: 'totalhb', className: 'dt-right' },
+                { data: 'hjs', name: 'hjs', className: 'dt-right' },
+                { data: 'subtotalhj', name: 'subtotalhj', className: 'dt-right' },
+                { data: 'ppnjual', name: 'ppnjual', className: 'dt-right' },
+                { data: 'diskonjual', name: 'diskonjual', className: 'dt-right' },
+                { data: 'totalhj', name: 'totalhj', className: 'dt-right' },
+                { data: 'laba', name: 'laba', className: 'dt-right' },
             ]
         });
     }
@@ -1305,26 +1551,71 @@ $(document).ready(function(){
                 };
         
                 // Total over all pages
-                totalharga = api
+                totalhb = api
                     .column(5)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                subtotalhj = api
+                    .column(7)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                ppnjual = api
+                    .column(8)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                diskonjual = api
+                    .column(9)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                totalhj = api
+                    .column(10)
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                laba = api
+                    .column(11)
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Total over this page
-                pagetotalharga = api
+                pagetotalhb = api
                     .column(5, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagesubtotalhj = api
+                    .column(7, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pageppnjual = api
+                    .column(8, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagediskonjual = api
+                    .column(9, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagetotalhj = api
+                    .column(10, { page: 'current' })
+                    .data()
+                    .reduce((a, b) => intVal(a) + intVal(b), 0);
+                pagelaba = api
+                    .column(11, { page: 'current' })
                     .data()
                     .reduce((a, b) => intVal(a) + intVal(b), 0);
         
                 // Update footer
                 api.column(1).footer().innerHTML = 'SUB TOTAL :';
-                api.column(5).footer().innerHTML = formatAngka(pagetotalharga,'');  
+                api.column(5).footer().innerHTML = formatAngka(pagetotalhb,'');  
+                api.column(7).footer().innerHTML = formatAngka(pagesubtotalhj,'');  
+                api.column(8).footer().innerHTML = formatAngka(pageppnjual,'');  
+                api.column(9).footer().innerHTML = formatAngka(pagediskonjual,'');  
+                api.column(10).footer().innerHTML = formatAngka(pagetotalhj,'');  
+                api.column(11).footer().innerHTML = formatAngka(pagelaba,'');  
 
             },
 
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.laporan.pembelian_showpembelianpertanggal')}}`,
+            ajax   : `{{route('pos01.laporan.penjualan_showpenjualansajapertanggal')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -1335,8 +1626,14 @@ $(document).ready(function(){
                 { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
                 { data: 'jmlrecord', name: 'jmlrecord', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
-                { data: 'harga', name: 'harga', className: 'dt-right' },
-                { data: 'total', name: 'total', className: 'dt-right' },
+                { data: 'hbs', name: 'hbs', className: 'dt-right' },
+                { data: 'totalhb', name: 'totalhb', className: 'dt-right' },
+                { data: 'hjs', name: 'hjs', className: 'dt-right' },
+                { data: 'subtotalhj', name: 'subtotalhj', className: 'dt-right' },
+                { data: 'ppnjual', name: 'ppnjual', className: 'dt-right' },
+                { data: 'diskonjual', name: 'diskonjual', className: 'dt-right' },
+                { data: 'totalhj', name: 'totalhj', className: 'dt-right' },
+                { data: 'laba', name: 'laba', className: 'dt-right' },
             ]
         });
     }
