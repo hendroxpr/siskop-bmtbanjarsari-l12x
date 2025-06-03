@@ -37,6 +37,18 @@ class Supplier extends Model
     {
         return $this->hasMany(Stok::class,'idsupplier','id');
     }
+    public function stokfifo()
+    {
+        return $this->hasMany(Stokfifo::class,'idsupplier','id');
+    }
+    public function stokmova()
+    {
+        return $this->hasMany(Stokmova::class,'idsupplier','id');
+    }
+    public function stoklifo()
+    {
+        return $this->hasMany(Stoklifo::class,'idsupplier','id');
+    }
 
 
 

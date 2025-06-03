@@ -46,6 +46,18 @@ class Anggota extends Model
     {
         return $this->hasMany(Stok::class,'idanggota','id');
     }
+    public function stokfifo()
+    {
+        return $this->hasMany(Stokfifo::class,'idanggota','id');
+    }
+    public function stokmova()
+    {
+        return $this->hasMany(Stokmova::class,'idanggota','id');
+    }
+    public function stoklifo()
+    {
+        return $this->hasMany(Stoklifo::class,'idanggota','id');
+    }
     /**
      * The attributes that are mass assignable.
      */

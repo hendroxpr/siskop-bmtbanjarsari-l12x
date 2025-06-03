@@ -2,6 +2,7 @@
 
 namespace Modules\Pos01\Models;
 
+use App\Models\Users;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Modules\Pos01\Database\Factories\StoklifoFactory;
@@ -30,6 +31,18 @@ class Stoklifo extends Model
     public function jenispembayaran()
     {
         return $this->belongsTo(Jenispembayaran::class,'idjenispembayaran');
+    }
+    public function anggota()
+    {
+        return $this->belongsTo(Anggota::class,'idanggota');
+    }
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class,'idsupplier');
+    }
+    public function users()
+    {
+        return $this->belongsTo(Users::class,'iduser');
     }
    
    

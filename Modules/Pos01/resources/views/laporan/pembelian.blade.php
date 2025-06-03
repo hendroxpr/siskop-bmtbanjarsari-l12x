@@ -471,7 +471,7 @@
 
 
 <script type="text/javascript">
-    var pembeliandetail1Datatable;
+    // var pembeliandetail1Datatable;
     var pembelianperitem1Datatable;
     var pembelianpersupplier1Datatable;
     var pembelianperfaktur1Datatable;
@@ -868,7 +868,7 @@ $(document).ready(function(){
                 .column(11, { page: 'current' })
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
-            pagetotatharga = api
+            pagetotalharga = api
                 .column(12, { page: 'current' })
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);

@@ -164,7 +164,7 @@ class mkeluarController extends Controller
             $iduser1 = $baris->iduser;
             
             //4.stokmamin
-            $qty2 = Stokmamin::where('idmamin','=',$idmamin1)
+            $qty2 = Stokmamin::where('nomorstatus','=',$nomorbuktia1)
                 ->count();
             
                 $data2 = [
@@ -190,7 +190,7 @@ class mkeluarController extends Controller
                 ];
 
             if($qty2<>'0'){
-                // Stokmamin::create($data2);
+                Stokmamin::where('nomorstatus','=',$nomorbuktia1)->update($data2);
             }else{
                 Stokmamin::create($data2);
                 //
