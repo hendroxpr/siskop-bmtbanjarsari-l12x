@@ -126,7 +126,7 @@ class BarangController extends Controller
             'idkategori' => $validatedData['idkategori1'],
             'kode' => $request['kode1'],
             'barcode' => $validatedData['barcode1'],
-            'nabara' => $validatedData['nabara1'],
+            'nabara' => strtoupper($validatedData['nabara1']),
             'slug' => $slug,
             'hbs' => $request['hbs1'],
             'hjs' => $request['hjs1'],

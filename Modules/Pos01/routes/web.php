@@ -2,6 +2,7 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use Modules\Pos01\Http\Controllers\laporan\HutangpiutangController;
 use Modules\Pos01\Http\Controllers\laporan\KartustokController;
 use Modules\Pos01\Http\Controllers\laporan\PembelianController;
 use Modules\Pos01\Http\Controllers\laporan\PenjualanController;
@@ -189,6 +190,7 @@ Route::get('/transaksi/mkeluarshowmamin', [MkeluarController::class, 'showmamin'
 Route::get('/transaksi/mkeluarshowanggota', [MkeluarController::class, 'showanggota'])->name('pos01.transaksi.mkeluar_showanggota')->middleware('auth'); /* menampilkan anggota pada datatable javascript */
 Route::post('/transaksi/mkeluarnomorbukti', [MkeluarController::class, 'nomorbukti'])->name('pos01.transaksi.mkeluar_nomorbukti')->middleware('auth'); /* buat nomorbukti */
 Route::post('/transaksi/mkeluarnomorposting', [MkeluarController::class, 'nomorposting'])->name('pos01.transaksi.mkeluar_nomorposting')->middleware('auth'); /* buat nomorposting */
+Route::get('/transaksi/mkeluarlistruang', [MkeluarController::class, 'listruang'])->name('pos01.transaksi.mkeluar_listruang')->middleware('auth'); /* menampilkan listruang */
 Route::get('/transaksi/mkeluarlistmamin', [MkeluarController::class, 'listmamin'])->name('pos01.transaksi.mkeluar_listmamin')->middleware('auth'); /* menampilkan list mamin */
 Route::get('/transaksi/mkeluarlistanggota', [MkeluarController::class, 'listanggota'])->name('pos01.transaksi.mkeluar_listanggota')->middleware('auth'); /* menampilkan list anggota */
 Route::get('/transaksi/mkeluarlistjenispembayaran', [MkeluarController::class, 'listjenispembayaran'])->name('pos01.transaksi.mkeluar_listjenispembayaran')->middleware('auth'); /* menampilkan list jenispembayaran */
@@ -367,6 +369,25 @@ Route::post('/laporan/penjualankirimsyarat', [PenjualanController::class, 'kirim
 Route::post('/laporan/penjualancekcustomer', [PenjualanController::class, 'cekcustomer'])->name('pos01.laporan.penjualan_cekcustomer')->middleware('auth'); /* cekcustomer */
 Route::get('/laporan/penjualanedit/{id}', [PenjualanController::class, 'edit'])->name('pos01.laporan.penjualan_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
 Route::get('/laporan/penjualandestroy/{id}', [PenjualanController::class, 'destroy'])->name('pos01.laporan.penjualan_destroy')->middleware('auth'); /* hapus data penjualan */
+
+/* laporan - hutangpiutang */
+Route::get('/laporan/hutangpiutang', [HutangpiutangController::class, 'index'])->name('pos01.laporan.hutangpiutang.index')->middleware('auth'); /* halaman hutangpiutang */
+Route::get('/laporan/hutangpiutangshowhutangpiutangcustomer', [HutangpiutangController::class, 'showhutangpiutangcustomer'])->name('pos01.laporan.hutangpiutang_showhutangpiutangcustomer')->middleware('auth'); /* menampilkan data hutangpiutangcustomer pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowhutangpiutangsupplier', [HutangpiutangController::class, 'showhutangpiutangsupplier'])->name('pos01.laporan.hutangpiutang_showhutangpiutangsupplier')->middleware('auth'); /* menampilkan data stokfifo pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowstokmova', [HutangpiutangController::class, 'showstokmova'])->name('pos01.laporan.hutangpiutang_showstokmova')->middleware('auth'); /* menampilkan data stokmova pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowstoklifo', [HutangpiutangController::class, 'showstoklifo'])->name('pos01.laporan.hutangpiutang_showstoklifo')->middleware('auth'); /* menampilkan data stoklifo pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowstokexpired', [HutangpiutangController::class, 'showstokexpired'])->name('pos01.laporan.hutangpiutang_showstokexpired')->middleware('auth'); /* menampilkan data stokexpired pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowstokmin', [HutangpiutangController::class, 'showstokmin'])->name('pos01.laporan.hutangpiutang_showstokmin')->middleware('auth'); /* menampilkan data stokmin pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowstokmax', [HutangpiutangController::class, 'showstokmax'])->name('pos01.laporan.hutangpiutang_showstokmax')->middleware('auth'); /* menampilkan data stokmax pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowstokhabis', [HutangpiutangController::class, 'showstokhabis'])->name('pos01.laporan.hutangpiutang_showstokhabis')->middleware('auth'); /* menampilkan data stokhabis pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowbarang', [HutangpiutangController::class, 'showbarang'])->name('pos01.laporan.hutangpiutang_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di hutangpiutang pada datatable javascript */
+Route::get('/laporan/hutangpiutanglistbarang', [HutangpiutangController::class, 'listbarang'])->name('pos01.laporan.hutangpiutang_listbarang')->middleware('auth'); /* menampilkan list barang */
+Route::get('/laporan/hutangpiutanglistruang', [HutangpiutangController::class, 'listruang'])->name('pos01.laporan.hutangpiutang_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::post('/laporan/hutangpiutangcreate', [HutangpiutangController::class, 'create'])->name('pos01.laporan.hutangpiutang_create')->middleware('auth'); /* menambah hutangpiutang */
+Route::post('/laporan/hutangpiutangkirimsyarat', [HutangpiutangController::class, 'kirimsyarat'])->name('pos01.laporan.hutangpiutang_kirimsyarat')->middleware('auth'); /* kirimsyarat */
+Route::get('/laporan/hutangpiutangedit/{id}', [HutangpiutangController::class, 'edit'])->name('pos01.laporan.hutangpiutang_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/laporan/hutangpiutangdestroy/{id}', [HutangpiutangController::class, 'destroy'])->name('pos01.laporan.hutangpiutang_destroy')->middleware('auth'); /* hapus data hutangpiutang */
+
 
 /* pengaturan - parameter */
 Route::get('/pengaturan/parameter', [ParameterController::class, 'index'])->name('pos01.pengaturan.parameter.index')->middleware('auth'); /* halaman parameter */

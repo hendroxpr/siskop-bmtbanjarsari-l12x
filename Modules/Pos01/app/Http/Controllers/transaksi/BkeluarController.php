@@ -46,11 +46,11 @@ class BkeluarController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Barang Keluar</b>.';
+        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Penjualan Barang</b>.';
         $page = 'pos01::transaksi.bkeluar';
         $link = '/pos01/transaksi/bkeluar';
         $subtitle = 'Transaksi';
-        $caption = 'Barang Keluar';
+        $caption = 'Penjualan Barang';
         $jmlhal = 2;
 
         $menu=Menusub::where('link','=',$link)
@@ -186,14 +186,14 @@ class BkeluarController extends Controller
                     ->where('idruang','=',$idruang1)->update($data2);
             }
 
-            //3.barang gak dipakai
-                // $qty2 = Barang::where('id','=',$idbarang1)->count();
-                // if($qty2==1){                
-                //     $data2 = [
-                //         'hbs' => $hbs1,
-                //     ];
-                //     Barang::where('id','=',$idbarang1)->update($data2);
-                // }
+            //3.barang
+            $qty2 = Barang::where('id','=',$idbarang1)->count();
+            if($qty2==1){                
+                $data2 = [
+                    'hjs' => $hjs1,
+                ];
+                Barang::where('id','=',$idbarang1)->update($data2);
+            }
 
             //4.stok
             $qty2 = Stok::where('idbarang','=',$idbarang1)

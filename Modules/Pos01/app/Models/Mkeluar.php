@@ -24,6 +24,10 @@ class Mkeluar extends Model
     {
         return $this->belongsTo(Anggota::class,'idanggota');
     }
+    public function ruang()
+    {
+        return $this->belongsTo(Ruang::class,'idruang');
+    }
    
     /**
      * The attributes that are mass assignable.

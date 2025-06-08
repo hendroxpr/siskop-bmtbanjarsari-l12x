@@ -3,7 +3,15 @@
 @section('contents')
 
 @php
-    $idruang = session('idruang1');    
+    $idruang = session('idruang1');
+    if($idruang==''){
+        $idruang = '1';
+    }    
+    $tabstok = session('tabhutang1');
+    $tgltransaksi = session('tgltransaksi1');   
+    if($tgltransaksi==''){
+        $tgltransaksi=session('memtanggal');  
+    }    
 @endphp
 
 
@@ -34,14 +42,24 @@
     <div class="box-header mb-3">  
         <div class="row">
             <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-2 mt-2 text-right">
-                        <h6>Ruang</h6>
+                {{-- <div class="row">
+                    <div class="col-md-3 mt-2 text-right">
+                        <h6>Lokasi</h6>
                     </div>
-                    <div class="col-md-7">
-                        <select name="idruang1" id="idruang1" class="w3-input w3-border" value="{{ $idruang }}"></select> 
+                    <div class="col-md-5">
+                        <select name="idruang1" id="idruang1" class="w3-input w3-border" value="{{ $idruang }}"></select>
+                        <input name="tabhutang1" id="tabhutang1" class="" type="hidden" value="{{ $tabstok }}"> 
+                        <input name="event1" id="event1" class="" type="hidden" value="0">
                     </div>
                 </div>
+                <div class="row mt-2">
+                    <div class="col-md-3 text-right">
+                        <h6 class="mt-2">Per Tanggal</h6>
+                    </div>
+                    <div class="col-md-5">
+                        <input name="tgltransaksi1" id="tgltransaksi1" class="w3-input w3-border" maxlength="10" type="text" placeholder="Per Tanggal" autocomplete="off" value="{{ $tgltransaksi }}">                       
+                    </div>
+                </div> --}}
                 <div class="row">
                     <div class="col-md-3">
                         {{--  --}}
@@ -54,39 +72,112 @@
             <div class="col-md-6">
                 <div class="w3-row" align="right"><i class="fa fa-refresh" aria-hidden="true"></i>            
                     <a href="{{ url('/') }}{{ $link }}" class="btn bg-success rounded-0"><i style="font-size:18px" class="fa">&#xf021;</i> Refresh</a>            
-                    <button id="btn_tambah1" name="btn_tambah1" type="button" class="btn bg-primary rounded-0"><i class="fas fa-plus"></i> Tambah</button>	            
+                    <button id="btn_tambah1" name="btn_tambah1" type="button" class="btn bg-primary rounded-0" style="display: none;"><i class="fas fa-plus"></i> Tambah</button>	            
                 </div> 
             </div>
         </div>
 
     </div>
 
+    <ul class="nav nav-tabs" id="tab-hutang" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link" id="tab-hutangsupplier" data-toggle="pill" href="#isi-tab-hutangsupplier" role="tab" aria-controls="tab-hutangsupplier" aria-selected="true">Hutang (Supplier)</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="tab-hutangcustomer" data-toggle="pill" href="#isi-tab-hutangcustomer" role="tab" aria-controls="tab-hutangcustomer" aria-selected="false">Piutang (Customer)</a>
+        </li>
+                 
+    </ul>
+
     <!--awal tabel-->        
     <div class="box-body" id="headerjudul" style="display: block;">
-        <div id="reload" class="table-responsive">
-            <table id="data1" class="table table-bordered table-striped table-hover" style="width: 100%">
-                <thead>
-                    <tr>
-                        <th style="width:10px;">#</th>                            
-                        <th style="width:50px">Kode</th>
-                        <th style="width:50px">Barcode</th>
-                        <th style="width:150px">Nama Barang</th>							
-                        <th style="width:20px">HPP</th>							
-                        <th style="width:20px">Qty</th>							
-                        <th style="width:20px">Stok Min</th>							
-                        <th style="width:20px">Stok Max</th>							
-                        <th style="width:20px">Aktif</th>
-                        <th style="width:50px">Action</th>
-                    </tr>
-                </thead>
-                <tfoot id="show_footer1">
-                    
-                </tfoot>
-                <tbody id="show_data1">
-                
-                </tbody>
-            </table>
+        <div class="tab-content mt-3" id="tab-hutang-tabContent">
+
+            <!--tab-hutangsupplier -->
+            <div class="tab-pane fade" id="isi-tab-hutangsupplier" role="tabpanel" aria-labelledby="tab-hutangsupplier">
+                <div id="reload" class="table-responsive">
+                    <table id="hutangsupplier1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th style="width:10px;">#</th>                            
+                                <th style="width:20px">Faktur</th>							
+                                <th style="width:10px">Tanggal</th>							
+                                <th style="width:10px">Kode</th>
+                                <th style="width:50px">Supplier</th>
+                                <th style="width:50px">Alamat</th>							
+                                <th style="width:10px">X Angs</th>							
+                                <th style="width:20px">@ Angsuran</th>							
+                                <th style="width:20px">Nilai Hutang</th>							
+                                <th style="width:20px">Sudah Bayar</th>							
+                                <th style="width:20px">Saldo</th>							
+                            </tr>
+                        </thead>
+                        <tfoot id="show_footerhutangsupplier1">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>                            
+                        </tfoot>
+                        <tbody id="show_hutangsupplier1">
+                        
+                        </tbody>
+                    </table>            
+                </div>
+            </div>
+            <!--/tab-hutangsupplier -->
             
+            <!--tab-hutangcustomer -->
+            <div class="tab-pane fade" id="isi-tab-hutangcustomer" role="tabpanel" aria-labelledby="tab-hutangcustomer">
+                <div id="reload" class="table-responsive">
+                    <table id="hutangcustomer1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th style="width:10px;">#</th>                            
+                                <th style="width:20px">Faktur</th>							
+                                <th style="width:10px">Tanggal</th>							
+                                <th style="width:10px">NIA</th>
+                                <th style="width:50px">Customer</th>
+                                <th style="width:50px">Lembaga</th>							
+                                <th style="width:10px">X Angs</th>							
+                                <th style="width:20px">@ Angsuran</th>							
+                                <th style="width:20px">Nilai Hutang</th>							
+                                <th style="width:20px">Sudah Bayar</th>							
+                                <th style="width:20px">Saldo</th>							
+                            </tr>
+                        </thead>
+                        <tfoot id="show_footerhutangcustomer1">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="show_hutangcustomer1">
+                        
+                        </tbody>
+                    </table>            
+                </div>
+            </div>
+            <!--/tab-hutangcustomer -->
+            
+
         </div>
     </div>    
 <!--akhir tabel-->
@@ -105,14 +196,7 @@
                     <form class="form-horizontal" id="formSimpan" nama="formSimpan" action="" method="">
                         @csrf	
                         <div class="modal-body" id="bodyAdd" name="bodyAdd">                        
-                            <div class="row">
-                                <div class="col-md-4 mt-1" align="right">									
-                                    <h6 class="mt-2">Ruang</h6>
-                                </div>
-                                <div class="col-md-8">
-                                    <select name="idruangx1" id="idruangx1" class="w3-input w3-border"></select>
-                                </div>								  
-                            </div>
+
                             <div class="row">
                                 <div class="col-md-4" align="right">										
                                     <h6 class="mt-2">Nama Barang *)</h6>
@@ -257,10 +341,95 @@
 
 
 <script type="text/javascript">
-    var data1Datatable, caribarangDatatable;
+    var hutangsupplier1Datatable;
+    var hutangcustomer1Datatable;
 
 $(document).ready(function(){
     
+    function formatRupiah(angka, prefix,desimal){
+			angka1=parseFloat(angka);			
+			angka2=angka1.toFixed(10);
+		    angka3=angka2.substr(0,(angka2.length)-11);			
+			var number_string = angka3.replace(/[^,\d]/g, '').toString(),
+			split   		= number_string.split(','),
+			sisa     		= split[0].length % 3,
+			rupiah     		= split[0].substr(0, sisa),
+			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+		 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+					jmldesimal=parseFloat(desimal);					
+					//a1 = parseFloat(angka);
+					a1 = parseFloat(angka1);
+					b1 = a1.toFixed(0);					
+					b2 = a1.toFixed(parseFloat(jmldesimal));					
+					pos1 = b2.indexOf(".");
+					pos2 = b2.indexOf(",");					
+					if (parseFloat(pos1)<0){
+						pos1=0;
+					}
+					if (parseFloat(pos2)<0){
+						pos2=0;
+					}
+					pos = parseFloat(pos1)+ parseFloat(pos2)+parseFloat(1);
+					
+					koma = ','+b2.substr(parseFloat(pos),parseFloat(jmldesimal));
+					
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah + koma;
+			return prefix == undefined ? rupiah : (rupiah ? ' ' + rupiah : '');
+		}
+		
+		function formatAngka(angka, prefix){
+			angka1=parseFloat(angka);			
+			angka2=angka1.toFixed(10);
+		    angka3=angka2.substr(0,(angka2.length)-11);			
+			var number_string = angka3.replace(/[^,\d]/g, '').toString(),
+			split   		= number_string.split(','),
+			sisa     		= split[0].length % 3,
+			rupiah     		= split[0].substr(0, sisa),
+			ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+		 
+			// tambahkan titik jika yang di input sudah menjadi angka ribuan
+			if(ribuan){
+				separator = sisa ? '.' : '';
+				rupiah += separator + ribuan.join('.');
+			}
+						
+			rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+			return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+		}
+		
+		function cek_angka(angka){	
+			var x='';
+			var validasiAngka = /^[0-9]+$/;
+			//cek validasi
+			if(angka.match(validasiAngka)){
+				x=parseFloat(angka);
+			}else{
+				x=parseFloat(1);
+			}
+			return x;			
+        }
+
+    function tgl_sekarang(){
+        var x = new Date();
+        var tgl = x.getDate();
+        if(tgl<10){
+            tgl='0'+tgl;
+        }
+        var bln = x.getMonth()+1;
+        if(bln<10){
+            bln='0'+bln;
+        }
+        var thn = x.getFullYear();
+
+			return thn+'-'+bln+'-'+tgl;
+
+	}
+
     tglhariini();
     function tglhariini(){
 			var tgl=new Date();
@@ -279,35 +448,81 @@ $(document).ready(function(){
 			var tglsekarang2=tahun2+'-'+bulan+'-'+hari;
 			
 		}
-
-    //menampilkan combo ruang
-    setTimeout(() => {
-        tampil_listruang();
-        tampil_listruangx();
-    }, 500);
     
     setTimeout(() => {
-        $('#idruang1').change();
-        data1Datatable = tampil_data1();    
-    }, 1000);
+        if($('#tabhutang1').val()=='tab-hutangsupplier'){
+            $('#tab-hutangsupplier').click();            
+        }else if($('#tabhutang1').val()=='tab-hutangcustomer'){
+            $('#tab-hutangcustomer').click();            
+        }else{
+            $('#tab-hutangsupplier').click();            
+        }
+    }, 500);
 
-    $('#idruang1').on('change',function(){
+    $('#tab-hutangsupplier').on('click',function(){
+        $('#tabhutang1').val('tab-hutangsupplier');
+        $('#event1').val('0');
         setTimeout(() => {
-            $('#idruangx1').val($('#idruang1').val());
             kirimsyarat();	
         }, 500);
     });
+    $('#tab-hutangcustomer').on('click',function(){
+        $('#tabhutang1').val('tab-hutangcustomer');
+        $('#event1').val('0');
+        setTimeout(() => {
+            kirimsyarat();	
+        }, 500);
+    });
+           
+    //menampilkan combo ruang
+    setTimeout(() => {
+        tampil_listruang();
+    }, 500);
+    
+    koneksi_datatable()
+
+    $('#idruang1').on('change',function(){
+        $('#event1').val('1');
+        setTimeout(() => {
+            kirimsyarat();	
+        }, 500);
+    });
+
+    $("#tgltransaksi1").datepicker({
+           dateFormat  : "yy-mm-dd",
+           changeMonth : true,
+           changeYear  : true         
+    });
+    
+    $('#tgltransaksi1').on('click',function(){   
+        $('#event1').val('1');    
+       setTimeout(() => {
+           kirimsyarat();           
+       }, 500);     				
+    });
+    
+    $('#tgltransaksi1').on('change',function(){
+        $('#event1').val('1');				
+       setTimeout(() => {
+           kirimsyarat();
+       }, 500);					
+    });
     
     function kirimsyarat(){
+        var event1 = $('#event1').val();
         var idruang1=$('#idruang1').val();
+        var tabhutang1=$('#tabhutang1').val();
+        var tgltransaksi1=$('#tgltransaksi1').val();
         
         let formData = new FormData();
             formData.append('idruang1', idruang1);
+            formData.append('tabhutang1', tabhutang1);
+            formData.append('tgltransaksi1', tgltransaksi1);
 
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.master.barangruang_kirimsyarat')}}',
+            url    : '{{route('pos01.laporan.stokbarang_kirimsyarat')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -316,8 +531,10 @@ $(document).ready(function(){
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },				 				
             success : function(formData){ 
-                $("#idruang1").val(idruang1);                                        
-                tampil_dataTable();                   
+                    if(event1=='1'){
+                        $("#idruang1").val(idruang1);                                        
+                        tampil_dataTable();                   
+                    }
                 }
         });
     }
@@ -326,24 +543,11 @@ $(document).ready(function(){
     function tampil_listruang(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.master.barangruang_listruang')}}',
+            url   : '{{route('pos01.laporan.stokbarang_listruang')}}',
             
             success: function(data){				    
                 $("#idruang1").html(data);
                 $("#idruang1").val({{ $idruang }});
-                $("#idruangx1").val({{ $idruang }});
-
-            }
-        })                    
-    }
-    //menampilkan combo ruangx
-    function tampil_listruangx(){				
-        $.ajax({
-            type: 'get',
-            url   : '{{route('pos01.master.barangruang_listruang')}}',
-            
-            success: function(data){				    
-                $("#idruangx1").html(data);
 
             }
         })                    
@@ -380,9 +584,9 @@ $(document).ready(function(){
         $('#aktif1').val("N");						
     });
 
-     function tampil_data1(){
+    function tampil_hutangsupplier1(){
         let i = 1;	
-        return $('#data1').DataTable({
+        return $('#hutangsupplier1').DataTable({
             responsive : true,
             retrieve: true,
             autoWidth : true,
@@ -392,9 +596,56 @@ $(document).ready(function(){
                 [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
                 [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
             ],
+            
+            footerCallback: function (row, data, start, end, display) {
+            let api = this.api();
+    
+            // Remove the formatting to get integer data for summation
+            let intVal = function (i) {
+                return typeof i === 'string'
+                    ? i.replace(/[\$,]/g, '') * 1
+                    : typeof i === 'number'
+                    ? i
+                    : 0;
+            };
+    
+            // Total over all pages
+            totalhutang = api
+                .column(8)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            sudahbayar = api
+                .column(9)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            saldo = api
+                .column(10)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+    
+            // Total over this page
+            pagetotalhutang = api
+                .column(8, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagesudahbayar = api
+                .column(9, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagesaldo = api
+                .column(10, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+    
+            // Update footer
+            api.column(3).footer().innerHTML = 'SUB TOTAL :';
+            api.column(8).footer().innerHTML = formatAngka(pagetotalhutang,'');
+            api.column(9).footer().innerHTML = formatAngka(pagesudahbayar,'');
+            api.column(10).footer().innerHTML = formatAngka(pagesaldo,'');
+            },
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.master.barangruang_show')}}`,
+            ajax   : `{{route('pos01.laporan.hutangpiutang_showhutangpiutangsupplier')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -402,22 +653,114 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'kode', name: 'barang.kode', className: 'dt-center' },
-                { data: 'barcode', name: 'barang.barcode', className: 'dt-center' },
-                { data: 'barang', name: 'barang.barang' },
-                { data: 'hbs', name: 'barang.hbs', className: 'dt-right' },
-                { data: 'qty', name: 'qty', className: 'dt-center' },
-                { data: 'stokmin', name: 'stokmin', className: 'dt-center' },
-                { data: 'stokmax', name: 'stokmax', className: 'dt-center' },
-                { data: 'aktif', name: 'aktif', className: 'dt-center' },
-                { data: 'action', name: 'action', className: 'dt-center' },
+                { data: 'nomorstatus', name: 'nomorstatus', className: 'dt-center' },
+                { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
+                { data: 'kode', name: 'supplier.kode', className: 'dt-center' },
+                { data: 'supplier', name: 'supplier.supplier', className: 'dt-left' },
+                { data: 'alamat', name: 'supplier.alamat', className: 'dt-left' },
+                { data: 'xangsuran', name: 'xangsuran', className: 'dt-center' },
+                { data: 'nilaiangsuran', name: 'nilaiangsuran', className: 'dt-right' },
+                { data: 'asli', name: 'asli', className: 'dt-right' },
+                { data: 'sudahbayar', name: 'sudahbayar', className: 'dt-right' },
+                { data: 'saldo', name: 'saldo', className: 'dt-right' },
             ]
         });
     }
-
-    function tampil_dataTable(){        
-        data1Datatable.draw(null, false);        
+    
+    function tampil_hutangcustomer1(){
+        let i = 1;	
+        return $('#hutangcustomer1').DataTable({
+            responsive : true,
+            retrieve: true,
+            autoWidth : true,
+            buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
+            dom: 'lBfrtip',
+            lengthMenu: [
+                [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
+                [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
+            ],
+            footerCallback: function (row, data, start, end, display) {
+            let api = this.api();
+    
+            // Remove the formatting to get integer data for summation
+            let intVal = function (i) {
+                return typeof i === 'string'
+                    ? i.replace(/[\$,]/g, '') * 1
+                    : typeof i === 'number'
+                    ? i
+                    : 0;
+            };
+    
+            // Total over all pages
+            totalhutang = api
+                .column(8)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            sudahbayar = api
+                .column(9)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            saldo = api
+                .column(10)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+    
+            // Total over this page
+            pagetotalhutang = api
+                .column(8, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagesudahbayar = api
+                .column(9, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagesaldo = api
+                .column(10, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+    
+            // Update footer
+            api.column(3).footer().innerHTML = 'SUB TOTAL :';
+            api.column(8).footer().innerHTML = formatAngka(pagetotalhutang,'');
+            api.column(9).footer().innerHTML = formatAngka(pagesudahbayar,'');
+            api.column(10).footer().innerHTML = formatAngka(pagesaldo,'');
+            },
+            processing: true,
+            serverSide: true,
+            ajax   : `{{route('pos01.laporan.hutangpiutang_showhutangpiutangcustomer')}}`,
+            columns: [
+                // { data: 'no', name:'id', render: function (data, type, row, meta) {
+                //     return meta.row + meta.settings._iDisplayStart + 1;
+                // }},
+                {  "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false },
+                { data: 'nomorstatus', name: 'nomorstatus', className: 'dt-center' },
+                { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
+                { data: 'nia', name: 'anggota.nia', className: 'dt-center' },
+                { data: 'nama', name: 'anggota.nama', className: 'dt-left' },
+                { data: 'lembaga', name: 'anggota.lembaga.lembaga', className: 'dt-left' },
+                { data: 'xangsuran', name: 'xangsuran', className: 'dt-center' },
+                { data: 'nilaiangsuran', name: 'nilaiangsuran', className: 'dt-right' },
+                { data: 'asli', name: 'asli', className: 'dt-right' },
+                { data: 'sudahbayar', name: 'sudahbayar', className: 'dt-right' },
+                { data: 'saldo', name: 'saldo', className: 'dt-right' },
+            ]
+        });
     }
+   
+    function tampil_dataTable(){        
+        hutangsupplier1Datatable.draw(null, false);        
+        hutangcustomer1Datatable.draw(null, false);        
+                      
+    }
+
+    function koneksi_datatable(){
+        hutangsupplier1Datatable = tampil_hutangsupplier1();    
+        hutangcustomer1Datatable = tampil_hutangcustomer1();    
+        
+    }
+
 
     $('#btn_cariid1x').on('click',function(){
         // caribarangDatatable.draw(null, false);
@@ -543,7 +886,7 @@ $(document).ready(function(){
 
     function data_simpan(){
         var id1=$('#id1').val();			
-        var idruang1=$('#idruangx1').val();
+        var idruang1=$('#idruang1').val();
         var idbarang1=$('#idbarang1').val();
         var stokmin1=$('#stokmin1').val();
         var stokmax1=$('#stokmax1').val();
@@ -630,7 +973,6 @@ $(document).ready(function(){
                             $('#id1').val(resultData[i].id);
                             $('#idbarang1').val(resultData[i].idbarang);
                             $('#idbarangx1').val(resultData[i].idbarang);
-                            $('#idruangx1').val(resultData[i].idruang);
 
                             $('#stokmin1').val(resultData[i].stokmin);
                             $('#stokmax1').val(resultData[i].stokmax);

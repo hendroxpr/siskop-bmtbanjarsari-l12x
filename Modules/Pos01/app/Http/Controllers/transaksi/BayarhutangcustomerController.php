@@ -46,11 +46,11 @@ class BayarhutangcustomerController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Bayar Hutang (Customer)</b>.';
+        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Bayar Piutang (Customer)</b>.';
         $page = 'pos01::transaksi.bayarhutangcustomer';
         $link = '/pos01/transaksi/bayarhutangcustomer';
         $subtitle = 'Transaksi';
-        $caption = 'Bayar Hutang (customer)';
+        $caption = 'Bayar Piutang (customer)';
         $jmlhal = 2;
 
         $menu=Menusub::where('link','=',$link)

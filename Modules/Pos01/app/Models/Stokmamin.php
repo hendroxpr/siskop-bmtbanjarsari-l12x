@@ -27,6 +27,10 @@ class Stokmamin extends Model
     {
         return $this->belongsTo(Jenispembayaran::class,'idjenispembayaran');
     }
+    public function ruang()
+    {
+        return $this->belongsTo(Ruang::class,'idruang');
+    }
    
    
     /**

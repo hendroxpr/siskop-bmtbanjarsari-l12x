@@ -24,6 +24,7 @@ use Modules\Pos01\Models\Satuan;
 use Modules\Pos01\Models\Stok;
 use Modules\Pos01\Models\Stokfifo;
 use Modules\Pos01\Models\Stoklifo;
+use Modules\Pos01\Models\Stokmamin;
 use Modules\Pos01\Models\Stokmova;
 use Modules\Pos01\Models\Supplier;
 use PhpOffice\PhpSpreadsheet\Reader\Xml\Style\NumberFormat;
@@ -19300,12 +19301,11 @@ class PenjualanController extends Controller
             ->where('iduser','>=',$iduserawal)
             ->where('iduser','<=',$iduserakhir)
             ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
+                    return $query->where('status','=','keluarmam')
                                  ->orWhere('status','=','returbeli');
                 })
-            ->with('barang','seksi','ruang','jenispembayaran','anggota','supplier')
-            // ->orderBy('tglstatus','asc')
-            // ->orderBy('id','asc')
+            ->with('mamin','ruang','jenispembayaran','anggota')
+            
             ->get();
         $datax = DataTables::of($stok                          
             );
@@ -19324,20 +19324,17 @@ class PenjualanController extends Controller
                 return $users;
             })
 
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
             ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
+                return $row->idmamin ? $row->mamin->kode : '';
             })
             ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
+                return $row->idmamin ? $row->mamin->barcode : '';
             })
-            ->addColumn('nabara', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
+            ->addColumn('namamin', function ($row) {
+                return $row->idmamin ? $row->mamin->namamin : '';
             })
             ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
+                return $row->idmamin ? $row->mamin->satuan->kode : '';
             })
             ->addColumn('jenispembayaran', function ($row) {
                 return $row->idjenispembayaran ? $row->jenispembayaran->jenispembayaran : '';
@@ -19405,15 +19402,6 @@ class PenjualanController extends Controller
 
                 return $totalhj ? Number_Format($totalhj,0) : 0;
             }) 
-            ->addColumn('laba', function ($row) {
-                $hb = $row->hppkeluar;
-                $hj = $row->hppj;
-                $ppn = $row->ppnkeluar;
-                $diskon = $row->diskonkeluar;
-                $totalhj = $hj + $ppn - $diskon;
-                $laba = $totalhj - $hb;
-                return $laba ? Number_Format($laba,0) : 0;
-            }) 
 
             ->addColumn('waktu', function ($row) {
                 $x = date_create($row->created_at);
@@ -19426,8 +19414,7 @@ class PenjualanController extends Controller
             
             ->rawColumns([
                 'users',
-                'totalhj',
-                'laba',
+                'totalhj',                
                 ])
             
 
@@ -19489,7 +19476,7 @@ class PenjualanController extends Controller
             $iduserakhir = $iduserx;
         }
 
-        $stok = Stokmamin::select('idbarang')
+        $stok = Stokmamin::select('idmamin')
             ->where('idruang','>=',$idruangawal)
             ->where('idruang','<=',$idruangakhir)
             ->where('tglstatus','>=',$tglawal)
@@ -19501,11 +19488,11 @@ class PenjualanController extends Controller
             ->where('iduser','>=',$iduserawal)
             ->where('iduser','<=',$iduserakhir)
             ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
-                                 ->orWhere('status','=','returbeli');
+                    return $query->where('status','=','keluarmam')
+                                 ->orWhere('status','=','returmam');
                 })
-            ->with('barang','seksi','ruang','jenispembayaran','anggota','supplier')
-            ->groupBy('idbarang')
+            ->with('mamin','ruang','jenispembayaran','anggota')
+            ->groupBy('idmamin')
             // ->orderBy('tglstatus','asc')
             // ->orderBy('id','asc')
             ->get();
@@ -19515,20 +19502,17 @@ class PenjualanController extends Controller
         $data = $datax
             ->addIndexColumn()
            
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
             ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
+                return $row->idmamin ? $row->mamin->kode : '';
             })
             ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
+                return $row->idmamin ? $row->mamin->barcode : '';
             })
-            ->addColumn('nabara', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
+            ->addColumn('namamin', function ($row) {
+                return $row->idmamin ? $row->mamin->namamin : '';
             })
             ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
+                return $row->idmamin ? $row->mamin->satuan->kode : '';
             })
             ->addColumn('qty', function ($row) {
                 $currentDate = date('Y-m-d');
@@ -19581,7 +19565,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $qty = Stokmamin::where('idbarang','=',$row->idbarang)
+                $qty = Stokmamin::where('idmamin','=',$row->idmamin)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -19593,170 +19577,14 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('keluar');
 
                 return $qty;
             })
-            ->addColumn('hbs', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $qty = Stokmamin::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('keluar');
-                
-                $totalhb = Stokmamin::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-
-                return number_format($totalhb/$qty,0);
-            })
-            ->addColumn('totalhb', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-
-                return number_format($totalhb,0);
-            })
+            
             ->addColumn('hjs', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -19808,7 +19636,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $hjs = Stokmamin::where('idbarang','=',$row->idbarang)
+                $qty = Stokmamin::where('idmamin','=',$row->idmamin)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -19820,10 +19648,29 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
-                    ->sum('hjs');
+                    ->sum('keluar');
+
+                $hppj = Stokmamin::where('idmamin','=',$row->idmamin)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idanggota','>=',$idanggotaawal)
+                    ->where('idanggota','<=',$idanggotaakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where('iduser','>=',$iduserawal)
+                    ->where('iduser','<=',$iduserakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
+                        })
+                    ->sum('hppj');
+
+                    $hjs = $hppj/$qty;
 
                 return number_format($hjs,0);
             })
@@ -19878,7 +19725,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $hppj = Stokmamin::where('idbarang','=',$row->idbarang)
+                $hppj = Stokmamin::where('idmamin','=',$row->idmamin)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -19890,8 +19737,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
 
@@ -19948,7 +19795,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $ppnjual = Stokmamin::where('idbarang','=',$row->idbarang)
+                $ppnjual = Stokmamin::where('idmamin','=',$row->idmamin)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -19960,8 +19807,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('ppnkeluar');
 
@@ -20018,7 +19865,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $diskonjual = Stokmamin::where('idbarang','=',$row->idbarang)
+                $diskonjual = Stokmamin::where('idmamin','=',$row->idmamin)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -20030,8 +19877,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('diskonkeluar');
 
@@ -20088,7 +19935,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $subtotalhj = Stokmamin::where('idbarang','=',$row->idbarang)
+                $subtotalhj = Stokmamin::where('idmamin','=',$row->idmamin)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -20100,11 +19947,11 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
-                $ppnjual = Stokmamin::where('idbarang','=',$row->idbarang)
+                $ppnjual = Stokmamin::where('idmamin','=',$row->idmamin)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -20116,11 +19963,11 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returbelimam');
                         })
                     ->sum('ppnkeluar');
-                $diskonjual = Stokmamin::where('idbarang','=',$row->idbarang)
+                $diskonjual = Stokmamin::where('idmamin','=',$row->idmamin)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -20132,131 +19979,15 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returbelimam');
                         })
                     ->sum('diskonkeluar');
+
                 $totalhj = $subtotalhj + $ppnjual - $diskonjual;
                 return number_format($totalhj,0);
             })
-            ->addColumn('laba', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-                $subtotalhj = Stokmamin::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppj');
-                $ppnjual = Stokmamin::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('ppnkeluar');
-                $diskonjual = Stokmamin::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('diskonkeluar');
-                $totalhj = $subtotalhj + $ppnjual - $diskonjual;
-                return number_format($totalhj - $totalhb,0);
-            })
+            
             ->addColumn('jmlrecord', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -20307,7 +20038,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $jmlrecord = Stokmamin::where('idbarang','=',$row->idbarang)
+                $jmlrecord = Stokmamin::where('idmamin','=',$row->idmamin)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -20319,10 +20050,10 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
-                    ->count('idbarang');
+                    ->count('idmamin');
                 
                 return $jmlrecord;
             })
@@ -20330,7 +20061,7 @@ class PenjualanController extends Controller
             ->rawColumns([
                 'kode',
                 'barcode',
-                'nabara',
+                'namamin',
                 'satuan',
                 'jmlrecord',
                 'qty',
@@ -20414,13 +20145,11 @@ class PenjualanController extends Controller
             ->where('iduser','>=',$iduserawal)
             ->where('iduser','<=',$iduserakhir)
             ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
-                                 ->orWhere('status','=','returbeli');
+                    return $query->where('status','=','keluarmam')
+                                 ->orWhere('status','=','returmam');
                 })
-            ->with('barang','seksi','ruang','jenispembayaran','anggota','supplier')
+            ->with('mamin','ruang','jenispembayaran','anggota')
             ->groupBy('idanggota')
-            // ->orderBy('tglstatus','asc')
-            // ->orderBy('id','asc')
             ->get();
         $datax = DataTables::of($stok                          
             );
@@ -20428,14 +20157,14 @@ class PenjualanController extends Controller
         $data = $datax
             ->addIndexColumn()
            
-            ->addColumn('supplier', function ($row) {
-                return $row->idsupplier ? $row->supplier->supplier : '';
+            ->addColumn('nia', function ($row) {
+                return $row->idanggota ? $row->anggota->nama : '';
             })
-            ->addColumn('kode', function ($row) {
-                return $row->idsupplier ? $row->supplier->kode : '';
+            ->addColumn('nama', function ($row) {
+                return $row->idanggota ? $row->anggota->nama : '';
             })
-            ->addColumn('alamat', function ($row) {
-                return $row->idalamat ? $row->supplier->alamat : '';
+            ->addColumn('lembaga', function ($row) {
+                return $row->idanggota ? $row->anggota->lembaga->lembaga : '';
             })
                         
             ->addColumn('qty', function ($row) {
@@ -20501,14 +20230,14 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returbelimam');
                         })
                     ->sum('keluar');
 
                 return $qty;
             })
-            ->addColumn('hbs', function ($row) {
+            ->addColumn('hjs', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
                 if($tglawal==''||$tglawal=='0'){
@@ -20571,12 +20300,12 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returbelimam');
                         })
                     ->sum('keluar');
                 
-                $totalhb = Stokmamin::where('idanggota','=',$row->idanggota)
+                $subtotalhj = Stokmamin::where('idanggota','=',$row->idanggota)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -20588,153 +20317,16 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returbelimam');
                         })
-                    ->sum('hppkeluar');
+                    ->sum('hppj');
 
-                return number_format($totalhb/$qty,0);
-            })
-            ->addColumn('totalhb', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('idanggota','=',$row->idanggota)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-
-                return number_format($totalhb,0);
-            })
-            ->addColumn('hjs', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $hjs = Stokmamin::where('idanggota','=',$row->idanggota)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hjs');
+                    $hjs = $subtotalhj/$qty;
 
                 return number_format($hjs,0);
             })
+            
             ->addColumn('subtotalhj', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -20786,7 +20378,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $hppj = Stokmamin::where('idanggota','=',$row->idanggota)
+                $subtotalhj = Stokmamin::where('idanggota','=',$row->idanggota)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -20798,12 +20390,12 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
 
-                return number_format($hppj,0);
+                return number_format($subtotalhj,0);
             })
             ->addColumn('ppnjual', function ($row) {
                 $currentDate = date('Y-m-d');
@@ -20868,8 +20460,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('ppnkeluar');
 
@@ -20938,8 +20530,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('diskonkeluar');
 
@@ -21008,8 +20600,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
                 $ppnjual = Stokmamin::where('idanggota','=',$row->idanggota)
@@ -21024,8 +20616,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('ppnkeluar');
                 $diskonjual = Stokmamin::where('idanggota','=',$row->idanggota)
@@ -21040,131 +20632,14 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('diskonkeluar');
                 $totalhj = $subtotalhj + $ppnjual - $diskonjual;
                 return number_format($totalhj,0);
             })
-            ->addColumn('laba', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('idanggota','=',$row->idanggota)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-                $subtotalhj = Stokmamin::where('idanggota','=',$row->idanggota)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppj');
-                $ppnjual = Stokmamin::where('idanggota','=',$row->idanggota)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('ppnkeluar');
-                $diskonjual = Stokmamin::where('idanggota','=',$row->idanggota)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('diskonkeluar');
-                $totalhj = $subtotalhj + $ppnjual - $diskonjual;
-                return number_format($totalhj - $totalhb,0);
-            })
+            
             ->addColumn('jmlrecord', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -21227,28 +20702,25 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
-                    ->count('idsupplier');
+                    ->count('idanggota');
                 
                 return $jmlrecord;
             })
             
             ->rawColumns([
-                'kode',
-                'supplier',
-                'alamat',
+                'nia',
+                'nama',
+                'lembaga',
                 'jmlrecord',
                 'qty',
-                'hbs',
-                'totalhb',
                 'hjs',
                 'subtotalhj',
                 'ppnjual',
                 'diskonjual',
                 'totalhj',
-                'laba',
                 ])
 
             ->make(true);
@@ -21321,13 +20793,11 @@ class PenjualanController extends Controller
             ->where('iduser','>=',$iduserawal)
             ->where('iduser','<=',$iduserakhir)
             ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
-                                 ->orWhere('status','=','returbeli');
+                    return $query->where('status','=','keluarmam')
+                                 ->orWhere('status','=','returmam');
                 })
-            ->with('barang','seksi','ruang','jenispembayaran','anggota','supplier')
+            ->with('mamin','ruang','jenispembayaran','anggota')
             ->groupBy('nomorstatus')
-            // ->orderBy('tglstatus','asc')
-            // ->orderBy('id','asc')
             ->get();
         $datax = DataTables::of($stok                          
             );
@@ -21407,14 +20877,15 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('keluar');
 
                 return $qty;
             })
-            ->addColumn('hbs', function ($row) {
+            
+            ->addColumn('hjs', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
                 if($tglawal==''||$tglawal=='0'){
@@ -21477,12 +20948,12 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('keluar');
-                
-                $totalhb = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
+
+                $subtotalhj = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -21494,150 +20965,12 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
-                    ->sum('hppkeluar');
+                    ->sum('hppj');
 
-                return number_format($totalhb/$qty,0);
-            })
-            ->addColumn('totalhb', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-
-                return number_format($totalhb,0);
-            })
-            ->addColumn('hjs', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $hjs = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hjs');
+                    $hjs = $subtotalhj/$qty;
 
                 return number_format($hjs,0);
             })
@@ -21692,7 +21025,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $hppj = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
+                $subtotalhj = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -21704,12 +21037,12 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
 
-                return number_format($hppj,0);
+                return number_format($subtotalhj,0);
             })
             ->addColumn('ppnjual', function ($row) {
                 $currentDate = date('Y-m-d');
@@ -21774,8 +21107,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('ppnkeluar');
 
@@ -21844,8 +21177,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('diskonkeluar');
 
@@ -21914,8 +21247,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
                 $ppnjual = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
@@ -21930,8 +21263,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('ppnkeluar');
                 $diskonjual = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
@@ -21946,131 +21279,14 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('diskonkeluar');
                 $totalhj = $subtotalhj + $ppnjual - $diskonjual;
                 return number_format($totalhj,0);
             })
-            ->addColumn('laba', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-                $subtotalhj = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppj');
-                $ppnjual = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('ppnkeluar');
-                $diskonjual = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('diskonkeluar');
-                $totalhj = $subtotalhj + $ppnjual - $diskonjual;
-                return number_format($totalhj - $totalhb,0);
-            })
+            
             ->addColumn('jmlrecord', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -22133,10 +21349,10 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
-                    ->count('idsupplier');
+                    ->count('nomorstatus');
                 
                 return $jmlrecord;
             })
@@ -22145,15 +21361,12 @@ class PenjualanController extends Controller
                 'kode',
                 'jmlrecord',
                 'tglstatus',
-                'qty',
-                'hbs',
-                'totalhb',
+                'qty',                
                 'hjs',
                 'subtotalhj',
                 'ppnjual',
                 'diskonjual',
                 'totalhj',
-                'laba',
                 ])
 
             ->make(true);
@@ -22226,13 +21439,11 @@ class PenjualanController extends Controller
             ->where('iduser','>=',$iduserawal)
             ->where('iduser','<=',$iduserakhir)
             ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
-                                 ->orWhere('status','=','returbeli');
+                    return $query->where('status','=','keluarmam')
+                                 ->orWhere('status','=','returmam');
                 })
-            ->with('barang','seksi','ruang','jenispembayaran','anggota','supplier')
+            ->with('mamin','ruang','jenispembayaran','anggota')
             ->groupBy('idjenispembayaran')
-            // ->orderBy('tglstatus','asc')
-            // ->orderBy('id','asc')
             ->get();
         $datax = DataTables::of($stok                          
             );
@@ -22310,14 +21521,15 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('keluar');
 
                 return $qty;
             })
-            ->addColumn('hbs', function ($row) {
+            
+            ->addColumn('hjs', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
                 if($tglawal==''||$tglawal=='0'){
@@ -22380,12 +21592,11 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('keluar');
-                
-                $totalhb = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
+                $subtotalhj = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -22397,150 +21608,12 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
-                    ->sum('hppkeluar');
+                    ->sum('hppj');
 
-                return number_format($totalhb/$qty,0);
-            })
-            ->addColumn('totalhb', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-
-                return number_format($totalhb,0);
-            })
-            ->addColumn('hjs', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $hjs = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hjs');
+                    $hjs = $subtotalhj/$qty;
 
                 return number_format($hjs,0);
             })
@@ -22595,7 +21668,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $hppj = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
+                $subtotalhj = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -22607,12 +21680,12 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
 
-                return number_format($hppj,0);
+                return number_format($subtotalhj,0);
             })
             ->addColumn('ppnjual', function ($row) {
                 $currentDate = date('Y-m-d');
@@ -22677,8 +21750,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('ppnkeluar');
 
@@ -22747,8 +21820,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('diskonkeluar');
 
@@ -22817,8 +21890,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
                 $ppnjual = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
@@ -22833,8 +21906,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('ppnkeluar');
                 $diskonjual = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
@@ -22849,131 +21922,14 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('diskonkeluar');
                 $totalhj = $subtotalhj + $ppnjual - $diskonjual;
                 return number_format($totalhj,0);
             })
-            ->addColumn('laba', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-                $subtotalhj = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppj');
-                $ppnjual = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('ppnkeluar');
-                $diskonjual = Stokmamin::where('idjenispembayaran','=',$row->idjenispembayaran)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('diskonkeluar');
-                $totalhj = $subtotalhj + $ppnjual - $diskonjual;
-                return number_format($totalhj - $totalhb,0);
-            })
+            
             ->addColumn('jmlrecord', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -23036,8 +21992,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->count('idjenispembayaran');
                 
@@ -23049,14 +22005,11 @@ class PenjualanController extends Controller
                 'jmlrecord',
                 'jenispembayaran',
                 'qty',
-                'hbs',
-                'totalhb',
                 'hjs',
                 'subtotalhj',
                 'ppnjual',
                 'diskonjual',
                 'totalhj',
-                'laba',
                 ])
 
             ->make(true);
@@ -23130,13 +22083,11 @@ class PenjualanController extends Controller
             ->where('iduser','>=',$iduserawal)
             ->where('iduser','<=',$iduserakhir)
             ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
-                                ->orWhere('status','=','returbeli');
+                    return $query->where('status','=','keluarmam')
+                                ->orWhere('status','=','returmam');
                 })
-            ->with('barang','seksi','ruang','jenispembayaran','anggota','supplier')
+            ->with('mamin','ruang','jenispembayaran','anggota')
             ->groupBy('tglstatus')
-            // ->orderBy('tglstatus','asc')
-            // ->orderBy('id','asc')
             ->get();
         $datax = DataTables::of($stok                          
             );
@@ -23211,170 +22162,14 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('keluar');
 
                 return $qty;
             })
-            ->addColumn('hbs', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $qty = Stokmamin::where('tglstatus','=',$row->tglstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('keluar');
-                
-                $totalhb = Stokmamin::where('tglstatus','=',$row->tglstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-
-                return number_format($totalhb/$qty,0);
-            })
-            ->addColumn('totalhb', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('tglstatus','=',$row->tglstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-
-                return number_format($totalhb,0);
-            })
+            
             ->addColumn('hjs', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -23426,7 +22221,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $hjs = Stokmamin::where('nomorstatus','=',$row->nomorstatus)
+                $subtotalhj = Stokmamin::where('tglstatus','=',$row->tglstatus)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -23438,10 +22233,28 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
-                    ->sum('hjs');
+                    ->sum('hppj');
+               $qty = Stokmamin::where('tglstatus','=',$row->tglstatus)
+                    ->where('idruang','>=',$idruangawal)
+                    ->where('idruang','<=',$idruangakhir)
+                    ->where('tglstatus','>=',$tglawal)
+                    ->where('tglstatus','<=',$tglakhir)
+                    ->where('idanggota','>=',$idanggotaawal)
+                    ->where('idanggota','<=',$idanggotaakhir)
+                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
+                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
+                    ->where('iduser','>=',$iduserawal)
+                    ->where('iduser','<=',$iduserakhir)
+                    ->where(function (Builder $query) {
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
+                        })
+                    ->sum('keluar');
+                
+                   $hjs = $subtotalhj/$qty; 
 
                 return number_format($hjs,0);
             })
@@ -23496,7 +22309,7 @@ class PenjualanController extends Controller
                     $iduserakhir = $iduserx;
                 }
 
-                $hppj = Stokmamin::where('tglstatus','=',$row->tglstatus)
+                $subtotalhj = Stokmamin::where('tglstatus','=',$row->tglstatus)
                     ->where('idruang','>=',$idruangawal)
                     ->where('idruang','<=',$idruangakhir)
                     ->where('tglstatus','>=',$tglawal)
@@ -23508,12 +22321,12 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
 
-                return number_format($hppj,0);
+                return number_format($subtotalhj,0);
             })
             ->addColumn('ppnjual', function ($row) {
                 $currentDate = date('Y-m-d');
@@ -23578,8 +22391,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('ppnkeluar');
 
@@ -23648,8 +22461,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('diskonkeluar');
 
@@ -23718,8 +22531,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('hppj');
                 $ppnjual = Stokmamin::where('tglstatus','=',$row->tglstatus)
@@ -23734,8 +22547,8 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('ppnkeluar');
                 $diskonjual = Stokmamin::where('tglstatus','=',$row->tglstatus)
@@ -23750,131 +22563,14 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
                     ->sum('diskonkeluar');
                 $totalhj = $subtotalhj + $ppnjual - $diskonjual;
                 return number_format($totalhj,0);
             })
-            ->addColumn('laba', function ($row) {
-                $currentDate = date('Y-m-d');
-                $tglawal = session('tgltransaksi1');
-                if($tglawal==''||$tglawal=='0'){
-                    $tglawal=$currentDate;
-                }else{
-                    $tglawal=session('tgltransaksi1');
-                }
-                $tglakhir = session('tgltransaksi2');
-                if($tglakhir==''||$tglakhir=='0'){
-                    $tglakhir=$currentDate;
-                }else{
-                    $tglakhir=session('tgltransaksi2');
-                }
-
-                $idruangx = session('idruang1');
-                if($idruangx=='-1'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-
-                $idanggotax = session('idcustomer1');
-                if($idanggotax=='-1'||$idanggotax==''){
-                    $idanggotaawal = 0;
-                    $idanggotaakhir = 999999;
-                }else{
-                    $idanggotaawal = $idanggotax;
-                    $idanggotaakhir = $idanggotax;
-                }
-
-                $idjenispembayaranx = session('idjenispembayaran1');
-                if($idjenispembayaranx=='-1'||$idjenispembayaranx==''){
-                    $idjenispembayaranawal = 0;
-                    $idjenispembayaranakhir = 999999;
-                }else{
-                    $idjenispembayaranawal = $idjenispembayaranx;
-                    $idjenispembayaranakhir = $idjenispembayaranx;
-                }
-
-                $iduserx = session('idoperator1');
-                if($iduserx=='-1'||$iduserx==''){
-                    $iduserawal = 0;
-                    $iduserakhir = 999999;
-                }else{
-                    $iduserawal = $iduserx;
-                    $iduserakhir = $iduserx;
-                }
-
-                $totalhb = Stokmamin::where('tglstatus','=',$row->tglstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppkeluar');
-                $subtotalhj = Stokmamin::where('tglstatus','=',$row->tglstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('hppj');
-                $ppnjual = Stokmamin::where('tglstatus','=',$row->tglstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('ppnkeluar');
-                $diskonjual = Stokmamin::where('tglstatus','=',$row->tglstatus)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('tglstatus','>=',$tglawal)
-                    ->where('tglstatus','<=',$tglakhir)
-                    ->where('idanggota','>=',$idanggotaawal)
-                    ->where('idanggota','<=',$idanggotaakhir)
-                    ->where('idjenispembayaran','>=',$idjenispembayaranawal)
-                    ->where('idjenispembayaran','<=',$idjenispembayaranakhir)
-                    ->where('iduser','>=',$iduserawal)
-                    ->where('iduser','<=',$iduserakhir)
-                    ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
-                        })
-                    ->sum('diskonkeluar');
-                $totalhj = $subtotalhj + $ppnjual - $diskonjual;
-                return number_format($totalhj - $totalhb,0);
-            })
+            
             ->addColumn('jmlrecord', function ($row) {
                 $currentDate = date('Y-m-d');
                 $tglawal = session('tgltransaksi1');
@@ -23937,10 +22633,10 @@ class PenjualanController extends Controller
                     ->where('iduser','>=',$iduserawal)
                     ->where('iduser','<=',$iduserakhir)
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','keluar')
-                                        ->orWhere('status','=','returbeli');
+                            return $query->where('status','=','keluarmam')
+                                        ->orWhere('status','=','returmam');
                         })
-                    ->count('idsupplier');
+                    ->count('tglstatus');
                 
                 return $jmlrecord;
             })
@@ -23951,14 +22647,11 @@ class PenjualanController extends Controller
                 'jmlrecord',
                 'tglstatus',
                 'qty',
-                'hbs',
-                'totalhb',
                 'hjs',
                 'subtotalhj',
                 'ppnjual',
                 'diskonjual',
                 'totalhj',
-                'laba',
                 ])
 
             ->make(true);

@@ -32,6 +32,10 @@ class Ruang extends Model
     {
         return $this->hasMany(Bkeluar::class,'idruang','id');
     }
+    public function mkeluar()
+    {
+        return $this->hasMany(Mkeluar::class,'idruang','id');
+    }
     public function stok()
     {
         return $this->hasMany(Stok::class,'idruang','id');
@@ -47,6 +51,10 @@ class Ruang extends Model
     public function stokmova()
     {
         return $this->hasMany(Stokmova::class,'idruang','id');
+    }
+    public function stokmamin()
+    {
+        return $this->hasMany(Stokmamin::class,'idruang','id');
     }
 
 

@@ -11,6 +11,10 @@
     if($nomorbuktia==''){
         $nomorbuktia='';  
     }
+    $idruang = session()->get('idruang1');
+    if($idruang==''){
+        $idruang='1';  
+    }
     
     $jmlitem = session()->get('jmlitem1');
     if($jmlitem=='0'){
@@ -99,6 +103,14 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 mt-2 text-right">
+                        <h6>Lokasi</h6>
+                    </div>
+                    <div class="col-md-7">
+                        <select name="idruang1" id="idruang1" class="w3-input w3-border" value="{{ $idruang }}"></select>  
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mt-2 text-right">
                         <h6>ID</h6>                        
                     </div>
                     <div class="col-md-7 input-group">
@@ -108,6 +120,7 @@
                         </div>
                     </div>
                 </div> 
+                
                 <div class="row">
                     <div class="col-md-4  text-right">
                         <h6 class="mt-2">Nama</h6>
@@ -911,6 +924,7 @@ $(document).ready(function(){
                                              
             success : function(data){
                 var nomorpostingx;
+                var idruangx;
                 var idanggotax;
                 var jumlahy;
                 var hppjx = 0;
@@ -926,6 +940,7 @@ $(document).ready(function(){
                 console.log(resultData);
                 for(i=0; i<resultData.length; i++){
                     nomorpostingx = resultData[i].nomorposting;
+                    idruangx = resultData[i].idruang;
                     idanggotax = resultData[i].idanggota;
                     qtyx = parseInt(qtyx) + parseInt(resultData[i].qty);
                     hppjx = parseInt(hppjx) + parseInt(resultData[i].hppj);
@@ -994,15 +1009,19 @@ $(document).ready(function(){
                 $('#ppns1').val(formatAngka(ppnx,''));
                 $('#diskons1').val(formatAngka(diskonx,''));
                 $('#totals1').val(formatAngka(jumlahx,''));
+                $('#idruang1').val(idruangx);
+                
                 if(i=='0'){
                     $('#btn_tambah1').removeAttr('disabled');
                     $('#btn_posting1').removeAttr('disabled');
                     $( "#cariid1x" ).prop( "disabled", false ); 
                     $( "#btn_carianggota1" ).prop( "disabled", false );
+                    $( "#idruang1" ).prop( "disabled", false );
                     
                 }else{
                     $( "#cariid1x" ).prop( "disabled", true ); 
                     $( "#btn_carianggota1" ).prop( "disabled", true );
+                    $( "#idruang1" ).prop( "disabled", true );
                     setTimeout(() => {
                         customer(idanggotax);
                     }, 100);
@@ -1732,6 +1751,20 @@ $(document).ready(function(){
         });
     }
     
+    //menampilkan combo ruang
+    tampil_listruang();
+    function tampil_listruang(){				
+        $.ajax({
+            type: 'get',
+            url   : '{{route('pos01.transaksi.mkeluar_listruang')}}',
+            
+            success: function(data){				    
+                $("#idruang1").html(data);
+
+            }
+        })                    
+    }
+
     function btn_baru_click(){      
         $('#bodyAdd :input').prop('disabled', false);
         document.getElementById("btn_simpan").style.display='block';        
@@ -1804,6 +1837,7 @@ $(document).ready(function(){
         var id1=$('#id1').val();			
         var tgltransaksi1=$('#tgltransaksi1').val();
         var nomorbuktia1=$('#nomorbuktia1').val();
+        var idruang1=$('#idruang1').val();
         var idbarang1=$('#idbarang1').val();
         var idanggota1=$('#idanggota1').val();
         var qty1=$('#qty1').val().replace(/[^,\d]/g, '').toString();
@@ -1819,6 +1853,7 @@ $(document).ready(function(){
             formData.append('id1', id1);
             formData.append('tgltransaksi1', tgltransaksi1);
             formData.append('nomorbuktia1', nomorbuktia1);
+            formData.append('idruang1', idruang1);
             formData.append('idbarang1', idbarang1);
             formData.append('idanggota1', idanggota1);
             formData.append('hjs1', hjs1);

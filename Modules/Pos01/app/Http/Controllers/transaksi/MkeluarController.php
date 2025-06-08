@@ -49,11 +49,11 @@ class mkeluarController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Mamin Keluar</b>.';
+        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Penjualan Jasa</b>.';
         $page = 'pos01::transaksi.mkeluar';
         $link = '/pos01/transaksi/mkeluar';
         $subtitle = 'Transaksi';
-        $caption = 'Mamin Keluar';
+        $caption = 'Penjualan Jasa';
         $jmlhal = 2;
 
         $menu=Menusub::where('link','=',$link)
@@ -90,6 +90,7 @@ class mkeluarController extends Controller
             'nomorbuktia1' => 'required',
             'tgltransaksi1' => 'required',
             'idanggota1' => 'required',
+            'idruang1' => 'required',
         ]);
 
         $data = [
@@ -98,6 +99,7 @@ class mkeluarController extends Controller
             'nomorba' => $nomorba1,
             'idmamin' => $validatedData['idbarang1'],
             'idanggota' => $validatedData['idanggota1'],
+            'idruang' => $validatedData['idruang1'],
             
             'qty' => $request['qty1'],
             'hjs' => $request['hjs1'],
@@ -140,16 +142,15 @@ class mkeluarController extends Controller
             'nomorposting1' => 'required',
         ]);
 
-        $tampil = mkeluar::with(['mamin','anggota']) 
+        $tampil = mkeluar::with(['mamin','anggota','ruang']) 
             ->where('tgltransaksi','=',  $validatedData['tgltransaksi1'])            
             ->where('nomorbuktia','=',  $validatedData['nomorbuktia1'])
             ->get();
-
-            // SELECT `id`, `idmamin`, `idanggota`, `tgltransaksi`, `nomorba`, `nomorbuktia`, `qty`, `hjs`, `hppj`, 
-            // `ppnpersen`, `diskonpersen`, `ppn`, `diskon`, `tglposting`, `nomorposting`, `keterangan`, `email`, `iduser` FROM `mkeluar` WHERE 1
+            
         foreach ($tampil as $baris) {
             $idmamin1 = $baris->idmamin;
             $idanggota1 = $baris->idanggota;
+            $idruang1 = $baris->idruang1;
             $nama1 = $baris->anggota->nama;
             $idstatus1 = $baris->id;
             $tgltransaksi1 = $baris->tgltransaksi;
@@ -170,6 +171,7 @@ class mkeluarController extends Controller
                 $data2 = [
                     'idmamin' => $idmamin1,
                     'idanggota' => $idanggota1,
+                    'idruang' => $idruang1,
                     'nama' => $nama1,
                     'status' => $status1,
                     'tglstatus' => $tgltransaksi1,
@@ -202,7 +204,7 @@ class mkeluarController extends Controller
                 'nomorposting' => $validatedData['nomorposting1'],                        
             ];
                  
-            mkeluar::with(['mamin','anggota']) 
+            mkeluar::with(['mamin','anggota','ruang']) 
             ->where('tgltransaksi','=', $tgltransaksi1)            
             ->where('nomorbuktia','=', $nomorbuktia1)
             ->update($data);

@@ -43,11 +43,11 @@ class BmasukController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Barang Masuk</b>.';
+        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Pembelian Barang</b>.';
         $page = 'pos01::transaksi.bmasuk';
         $link = '/pos01/transaksi/bmasuk';
         $subtitle = 'Transaksi';
-        $caption = 'Barang Masuk';
+        $caption = 'Pembelian Barang';
         $jmlhal = 2;
 
         $menu=Menusub::where('link','=',$link)
