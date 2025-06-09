@@ -3,6 +3,7 @@
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Modules\Pos01\Http\Controllers\laporan\HutangpiutangController;
+use Modules\Pos01\Http\Controllers\laporan\KartuhutangController;
 use Modules\Pos01\Http\Controllers\laporan\KartustokController;
 use Modules\Pos01\Http\Controllers\laporan\PembelianController;
 use Modules\Pos01\Http\Controllers\laporan\PenjualanController;
@@ -303,6 +304,21 @@ Route::post('/laporan/kartustokkirimsyarat', [KartustokController::class, 'kirim
 Route::get('/laporan/kartustokedit/{id}', [KartustokController::class, 'edit'])->name('pos01.laporan.kartustok_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
 Route::get('/laporan/kartustokdestroy/{id}', [KartustokController::class, 'destroy'])->name('pos01.laporan.kartustok_destroy')->middleware('auth'); /* hapus data kartustok */
 
+/* laporan - kartuhutang */
+Route::get('/laporan/kartuhutang', [KartuhutangController ::class, 'index'])->name('pos01.laporan.kartuhutang.index')->middleware('auth'); /* halaman kartuhutang */
+Route::get('/laporan/kartuhutangshowstokrekap', [KartuhutangController::class, 'showstokrekap'])->name('pos01.laporan.kartuhutang_showstokrekap')->middleware('auth'); /* menampilkan data stokrekap pada datatable javascript */
+Route::get('/laporan/kartuhutangshowstokrekapfifo', [KartuhutangController::class, 'showstokrekapfifo'])->name('pos01.laporan.kartuhutang_showstokrekapfifo')->middleware('auth'); /* menampilkan data stokrekapfifo pada datatable javascript */
+Route::get('/laporan/kartuhutangshowstokrekapmova', [KartuhutangController::class, 'showstokrekapmova'])->name('pos01.laporan.kartuhutang_showstokrekapmova')->middleware('auth'); /* menampilkan data stokrekapmova pada datatable javascript */
+Route::get('/laporan/kartuhutangshowstokrekaplifo', [KartuhutangController::class, 'showstokrekaplifo'])->name('pos01.laporan.kartuhutang_showstokrekaplifo')->middleware('auth'); /* menampilkan data stokrekaplifo pada datatable javascript */
+Route::get('/laporan/kartuhutangshowbarang', [KartuhutangController::class, 'showbarang'])->name('pos01.laporan.kartuhutang_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di kartuhutang pada datatable javascript */
+Route::get('/laporan/kartuhutanglisthutang', [KartuhutangController::class, 'listhutang'])->name('pos01.laporan.kartuhutang_listhutang')->middleware('auth'); /* menampilkan list hutang */
+Route::get('/laporan/kartuhutanglisthutangx', [KartuhutangController::class, 'listhutangx'])->name('pos01.laporan.kartuhutang_listhutangx')->middleware('auth'); /* menampilkan list hutang */
+Route::get('/laporan/kartuhutanglistruang', [KartuhutangController::class, 'listruang'])->name('pos01.laporan.kartuhutang_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::post('/laporan/kartuhutangcreate', [KartuhutangController::class, 'create'])->name('pos01.laporan.kartuhutang_create')->middleware('auth'); /* menambah kartuhutang */
+Route::post('/laporan/kartuhutangkirimsyarat', [KartuhutangController::class, 'kirimsyarat'])->name('pos01.laporan.kartuhutang_kirimsyarat')->middleware('auth'); /* kirimsyarat */
+Route::get('/laporan/kartuhutangedit/{id}', [KartuhutangController::class, 'edit'])->name('pos01.laporan.kartuhutang_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/laporan/kartuhutangdestroy/{id}', [KartuhutangController::class, 'destroy'])->name('pos01.laporan.kartuhutang_destroy')->middleware('auth'); /* hapus data kartuhutang */
+
 /* laporan - pembelian */
 Route::get('/laporan/pembelian', [PembelianController::class, 'index'])->name('pos01.laporan.pembelian.index')->middleware('auth'); /* halaman pembelian */
 Route::get('/laporan/pembelianshowpembeliandetail', [PembelianController::class, 'showpembeliandetail'])->name('pos01.laporan.pembelian_showpembeliandetail')->middleware('auth'); /* menampilkan data pembeliandetail pada datatable javascript */
@@ -323,42 +339,36 @@ Route::get('/laporan/pembeliandestroy/{id}', [PembelianController::class, 'destr
 
 /* laporan - penjualan */
 Route::get('/laporan/penjualan', [PenjualanController::class, 'index'])->name('pos01.laporan.penjualan.index')->middleware('auth'); /* halaman penjualan */
-
 Route::get('/laporan/penjualanshowpenjualansajadetail', [PenjualanController::class, 'showpenjualansajadetail'])->name('pos01.laporan.penjualan_showpenjualansajadetail')->middleware('auth'); /* menampilkan data penjualansajadetail pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualansajaperitem', [PenjualanController::class, 'showpenjualansajaperitem'])->name('pos01.laporan.penjualan_showpenjualansajaperitem')->middleware('auth'); /* menampilkan data showpenjualansajaperitem pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualansajapercustomer', [PenjualanController::class, 'showpenjualansajapercustomer'])->name('pos01.laporan.penjualan_showpenjualansajapercustomer')->middleware('auth'); /* menampilkan data showpenjualansajapercustomer pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualansajaperfaktur', [PenjualanController::class, 'showpenjualansajaperfaktur'])->name('pos01.laporan.penjualan_showpenjualansajaperfaktur')->middleware('auth'); /* menampilkan data showpenjualansajaperfaktur pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualansajaperjenispembayaran', [PenjualanController::class, 'showpenjualansajaperjenispembayaran'])->name('pos01.laporan.penjualan_showpenjualansajaperjenispembayaran')->middleware('auth'); /* menampilkan data showpenjualansajaperjenispembayaran pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualansajapertanggal', [PenjualanController::class, 'showpenjualansajapertanggal'])->name('pos01.laporan.penjualan_showpenjualansajapertanggal')->middleware('auth'); /* menampilkan data showpenjualansajapertanggal pada datatable javascript */
-
 Route::get('/laporan/penjualanshowpenjualanfifodetail', [PenjualanController::class, 'showpenjualanfifodetail'])->name('pos01.laporan.penjualan_showpenjualanfifodetail')->middleware('auth'); /* menampilkan data penjualanfifodetail pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanfifoperitem', [PenjualanController::class, 'showpenjualanfifoperitem'])->name('pos01.laporan.penjualan_showpenjualanfifoperitem')->middleware('auth'); /* menampilkan data showpenjualanfifoperitem pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanfifopercustomer', [PenjualanController::class, 'showpenjualanfifopercustomer'])->name('pos01.laporan.penjualan_showpenjualanfifopercustomer')->middleware('auth'); /* menampilkan data showpenjualanfifopercustomer pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanfifoperfaktur', [PenjualanController::class, 'showpenjualanfifoperfaktur'])->name('pos01.laporan.penjualan_showpenjualanfifoperfaktur')->middleware('auth'); /* menampilkan data showpenjualanfifoperfaktur pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanfifoperjenispembayaran', [PenjualanController::class, 'showpenjualanfifoperjenispembayaran'])->name('pos01.laporan.penjualan_showpenjualanfifoperjenispembayaran')->middleware('auth'); /* menampilkan data showpenjualanfifoperjenispembayaran pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanfifopertanggal', [PenjualanController::class, 'showpenjualanfifopertanggal'])->name('pos01.laporan.penjualan_showpenjualanfifopertanggal')->middleware('auth'); /* menampilkan data showpenjualanfifopertanggal pada datatable javascript */
-
 Route::get('/laporan/penjualanshowpenjualanmovadetail', [PenjualanController::class, 'showpenjualanmovadetail'])->name('pos01.laporan.penjualan_showpenjualanmovadetail')->middleware('auth'); /* menampilkan data penjualanmovadetail pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanmovaperitem', [PenjualanController::class, 'showpenjualanmovaperitem'])->name('pos01.laporan.penjualan_showpenjualanmovaperitem')->middleware('auth'); /* menampilkan data showpenjualanmovaperitem pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanmovapercustomer', [PenjualanController::class, 'showpenjualanmovapercustomer'])->name('pos01.laporan.penjualan_showpenjualanmovapercustomer')->middleware('auth'); /* menampilkan data showpenjualanmovapercustomer pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanmovaperfaktur', [PenjualanController::class, 'showpenjualanmovaperfaktur'])->name('pos01.laporan.penjualan_showpenjualanmovaperfaktur')->middleware('auth'); /* menampilkan data showpenjualanmovaperfaktur pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanmovaperjenispembayaran', [PenjualanController::class, 'showpenjualanmovaperjenispembayaran'])->name('pos01.laporan.penjualan_showpenjualanmovaperjenispembayaran')->middleware('auth'); /* menampilkan data showpenjualanmovaperjenispembayaran pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanmovapertanggal', [PenjualanController::class, 'showpenjualanmovapertanggal'])->name('pos01.laporan.penjualan_showpenjualanmovapertanggal')->middleware('auth'); /* menampilkan data showpenjualanmovapertanggal pada datatable javascript */
-
 Route::get('/laporan/penjualanshowpenjualanlifodetail', [PenjualanController::class, 'showpenjualanlifodetail'])->name('pos01.laporan.penjualan_showpenjualanlifodetail')->middleware('auth'); /* menampilkan data penjualanlifodetail pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlifoperitem', [PenjualanController::class, 'showpenjualanlifoperitem'])->name('pos01.laporan.penjualan_showpenjualanlifoperitem')->middleware('auth'); /* menampilkan data showpenjualanlifoperitem pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlifopercustomer', [PenjualanController::class, 'showpenjualanlifopercustomer'])->name('pos01.laporan.penjualan_showpenjualanlifopercustomer')->middleware('auth'); /* menampilkan data showpenjualanlifopercustomer pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlifoperfaktur', [PenjualanController::class, 'showpenjualanlifoperfaktur'])->name('pos01.laporan.penjualan_showpenjualanlifoperfaktur')->middleware('auth'); /* menampilkan data showpenjualanlifoperfaktur pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlifoperjenispembayaran', [PenjualanController::class, 'showpenjualanlifoperjenispembayaran'])->name('pos01.laporan.penjualan_showpenjualanlifoperjenispembayaran')->middleware('auth'); /* menampilkan data showpenjualanlifoperjenispembayaran pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlifopertanggal', [PenjualanController::class, 'showpenjualanlifopertanggal'])->name('pos01.laporan.penjualan_showpenjualanlifopertanggal')->middleware('auth'); /* menampilkan data showpenjualanlifopertanggal pada datatable javascript */
-
 Route::get('/laporan/penjualanshowpenjualanlaindetail', [PenjualanController::class, 'showpenjualanlaindetail'])->name('pos01.laporan.penjualan_showpenjualanlaindetail')->middleware('auth'); /* menampilkan data penjualanlaindetail pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlainperitem', [PenjualanController::class, 'showpenjualanlainperitem'])->name('pos01.laporan.penjualan_showpenjualanlainperitem')->middleware('auth'); /* menampilkan data showpenjualanlainperitem pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlainpercustomer', [PenjualanController::class, 'showpenjualanlainpercustomer'])->name('pos01.laporan.penjualan_showpenjualanlainpercustomer')->middleware('auth'); /* menampilkan data showpenjualanlainpercustomer pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlainperfaktur', [PenjualanController::class, 'showpenjualanlainperfaktur'])->name('pos01.laporan.penjualan_showpenjualanlainperfaktur')->middleware('auth'); /* menampilkan data showpenjualanlainperfaktur pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlainperjenispembayaran', [PenjualanController::class, 'showpenjualanlainperjenispembayaran'])->name('pos01.laporan.penjualan_showpenjualanlainperjenispembayaran')->middleware('auth'); /* menampilkan data showpenjualanlainperjenispembayaran pada datatable javascript */
 Route::get('/laporan/penjualanshowpenjualanlainpertanggal', [PenjualanController::class, 'showpenjualanlainpertanggal'])->name('pos01.laporan.penjualan_showpenjualanlainpertanggal')->middleware('auth'); /* menampilkan data showpenjualanlainpertanggal pada datatable javascript */
-
 Route::get('/laporan/penjualanshowsupplier', [PenjualanController::class, 'showsupplier'])->name('pos01.laporan.penjualan_showsupplier')->middleware('auth'); /* menampilkan data supplier yg gk ada di penjualan pada datatable javascript */
 Route::get('/laporan/penjualanlistcustomer', [PenjualanController::class, 'listcustomer'])->name('pos01.laporan.penjualan_listcustomer')->middleware('auth'); /* menampilkan list customer/anggota */
 Route::get('/laporan/penjualanlistruang', [PenjualanController::class, 'listruang'])->name('pos01.laporan.penjualan_listruang')->middleware('auth'); /* menampilkan list ruang */
@@ -372,14 +382,10 @@ Route::get('/laporan/penjualandestroy/{id}', [PenjualanController::class, 'destr
 
 /* laporan - hutangpiutang */
 Route::get('/laporan/hutangpiutang', [HutangpiutangController::class, 'index'])->name('pos01.laporan.hutangpiutang.index')->middleware('auth'); /* halaman hutangpiutang */
-Route::get('/laporan/hutangpiutangshowhutangpiutangcustomer', [HutangpiutangController::class, 'showhutangpiutangcustomer'])->name('pos01.laporan.hutangpiutang_showhutangpiutangcustomer')->middleware('auth'); /* menampilkan data hutangpiutangcustomer pada datatable javascript */
-Route::get('/laporan/hutangpiutangshowhutangpiutangsupplier', [HutangpiutangController::class, 'showhutangpiutangsupplier'])->name('pos01.laporan.hutangpiutang_showhutangpiutangsupplier')->middleware('auth'); /* menampilkan data stokfifo pada datatable javascript */
-Route::get('/laporan/hutangpiutangshowstokmova', [HutangpiutangController::class, 'showstokmova'])->name('pos01.laporan.hutangpiutang_showstokmova')->middleware('auth'); /* menampilkan data stokmova pada datatable javascript */
-Route::get('/laporan/hutangpiutangshowstoklifo', [HutangpiutangController::class, 'showstoklifo'])->name('pos01.laporan.hutangpiutang_showstoklifo')->middleware('auth'); /* menampilkan data stoklifo pada datatable javascript */
-Route::get('/laporan/hutangpiutangshowstokexpired', [HutangpiutangController::class, 'showstokexpired'])->name('pos01.laporan.hutangpiutang_showstokexpired')->middleware('auth'); /* menampilkan data stokexpired pada datatable javascript */
-Route::get('/laporan/hutangpiutangshowstokmin', [HutangpiutangController::class, 'showstokmin'])->name('pos01.laporan.hutangpiutang_showstokmin')->middleware('auth'); /* menampilkan data stokmin pada datatable javascript */
-Route::get('/laporan/hutangpiutangshowstokmax', [HutangpiutangController::class, 'showstokmax'])->name('pos01.laporan.hutangpiutang_showstokmax')->middleware('auth'); /* menampilkan data stokmax pada datatable javascript */
-Route::get('/laporan/hutangpiutangshowstokhabis', [HutangpiutangController::class, 'showstokhabis'])->name('pos01.laporan.hutangpiutang_showstokhabis')->middleware('auth'); /* menampilkan data stokhabis pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowhutangpiutangbelumcustomer', [HutangpiutangController::class, 'showhutangpiutangbelumcustomer'])->name('pos01.laporan.hutangpiutang_showhutangpiutangbelumcustomer')->middleware('auth'); /* menampilkan data hutangpiutangbelumcustomer pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowhutangpiutangbelumsupplier', [HutangpiutangController::class, 'showhutangpiutangbelumsupplier'])->name('pos01.laporan.hutangpiutang_showhutangpiutangbelumsupplier')->middleware('auth'); /* menampilkan data hutangpiutangbelumsupplier pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowhutangpiutangsudahcustomer', [HutangpiutangController::class, 'showhutangpiutangsudahcustomer'])->name('pos01.laporan.hutangpiutang_showhutangpiutangsudahcustomer')->middleware('auth'); /* menampilkan data hutangpiutangsudahcustomer pada datatable javascript */
+Route::get('/laporan/hutangpiutangshowhutangpiutangsudahsupplier', [HutangpiutangController::class, 'showhutangpiutangsudahsupplier'])->name('pos01.laporan.hutangpiutang_showhutangpiutangsudahsupplier')->middleware('auth'); /* menampilkan data hutangpiutangsudahsupplier pada datatable javascript */
 Route::get('/laporan/hutangpiutangshowbarang', [HutangpiutangController::class, 'showbarang'])->name('pos01.laporan.hutangpiutang_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di hutangpiutang pada datatable javascript */
 Route::get('/laporan/hutangpiutanglistbarang', [HutangpiutangController::class, 'listbarang'])->name('pos01.laporan.hutangpiutang_listbarang')->middleware('auth'); /* menampilkan list barang */
 Route::get('/laporan/hutangpiutanglistruang', [HutangpiutangController::class, 'listruang'])->name('pos01.laporan.hutangpiutang_listruang')->middleware('auth'); /* menampilkan list ruang */

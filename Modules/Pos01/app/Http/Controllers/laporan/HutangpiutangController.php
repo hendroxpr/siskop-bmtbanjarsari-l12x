@@ -115,7 +115,7 @@ class HutangpiutangController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function showhutangpiutangcustomer()
+    public function showhutangpiutangbelumcustomer()
     {
         
         $hutang = Hutang::select('*')
@@ -213,7 +213,7 @@ class HutangpiutangController extends Controller
             return $data;
 
     }
-    public function showhutangpiutangsupplier()
+    public function showhutangpiutangbelumsupplier()
     {
         
         $hutang = Hutang::select('*')
@@ -312,536 +312,54 @@ class HutangpiutangController extends Controller
 
     }
 
-    public function showstoklifo()
-    {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-        $barangruang = Barangruang::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->with('barang','seksi','ruang')
-            ->get();
-        $datax = DataTables::of($barangruang                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbs', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = Stoklifo::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('kodepokok','=','2')
-                    ->count();
-                if($jml<>0){
-                    $tampil = Stoklifo::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->where('kodepokok','=','2')
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $hbsx = $baris->hbsakhir;
-                        }
-                }else{
-                    $hbsx = $row->idbarang ? $row->barang->hbs : '0';
-                }
-                return number_format($hbsx,0);
-            })
-            ->addColumn('qty', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = Stoklifo::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('kodepokok','=','2')
-                    ->count();
-                if($jml<>0){
-                    $tampil = Stoklifo::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->where('kodepokok','=','2')
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $qtyx = $baris->akhir;
-                        }
-                }else{
-                    $qtyx = $row->qty;
-                }
-                return number_format($qtyx,0);
-            })
-            ->addColumn('totalhpp', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = Stoklifo::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->where('kodepokok','=','2')
-                    ->count();
-                if($jml<>0){
-                    $tampil = Stoklifo::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->where('kodepokok','=','2')
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $totalhppx = $baris->hppakhir;
-                        }
-                }else{
-                    $totalhppx = $row->qty * $row->barang->hbs;
-                }
-                return number_format($totalhppx,0);
-            })
-                        
-            ->rawColumns([
-                'hbs',
-                'qty',
-                'satuan',
-                'totalhpp',
-                ])
-
-            ->make(true);
-
-            return $data;
-    }
-
-    public function showstokmova()
-    {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-        $barangruang = Barangruang::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->with('barang','seksi','ruang')
-            ->get();
-        $datax = DataTables::of($barangruang                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbs', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = Stokmova::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = Stokmova::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $hbsx = $baris->hbsakhir;
-                        }
-                }else{
-                    $hbsx = $row->idbarang ? $row->barang->hbs : '0';
-                }
-                return number_format($hbsx,0);
-            })
-            ->addColumn('qty', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = Stokmova::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = Stokmova::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $qtyx = $baris->akhir;
-                        }
-                }else{
-                    $qtyx = $row->qty;
-                }
-                return number_format($qtyx,0);
-            })
-            ->addColumn('totalhpp', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = Stokmova::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = Stokmova::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $totalhppx = $baris->hppakhir;
-                        }
-                }else{
-                    $totalhppx = $row->qty * $row->barang->hbs;
-                }
-                return number_format($totalhppx,0);
-            })
-                        
-            ->rawColumns([
-                'hbs',
-                'qty',
-                'satuan',
-                'totalhpp',
-                ])
-
-            ->make(true);
-
-            return $data;
-
-    }
-
-    public function showstokexpired()
+    public function showhutangpiutangsudahcustomer()
     {
         
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
-        $tgltransaksix = session('tgltransaksi1');
-        if($tgltransaksix==''||$tgltransaksix=='0'){
-            $tgltransaksi=$currentDate;
-        }else{
-            $tgltransaksi=$tgltransaksix;
-        }
-        
-        $idbarang = Barang::select('id')
-            ->where('expired','<=',$tgltransaksi)
-            ->whereNotNull('expired');
-
-        $barangruang = Barangruang::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->whereIn('idbarang',$idbarang)
-            ->with('barang','seksi','ruang')
+        $hutang = Hutang::select('*')
+            ->where('kodepokok','=','0')
+            ->where('status','=','hutangcus')
+            ->with('anggota','supplier')
             ->get();
-        $datax = DataTables::of($barangruang                          
+        $datax = DataTables::of($hutang                          
             );
 
         $data = $datax
             ->addIndexColumn()
            
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
+            ->addColumn('nama', function ($row) {
+                return $row->idanggota ? $row->anggota->nama : '';
             })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
+            ->addColumn('nia', function ($row) {
+                return $row->idanggota ? $row->anggota->nia : '';
             })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
+            ->addColumn('lembaga', function ($row) {
+                return $row->idanggota ? $row->anggota->lembaga->lembaga : '';
             })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
+            ->addColumn('xangsuran', function ($row) {
+                return $row->angsuranke.'/'.$row->xangsuran;
             })
-            ->addColumn('expired', function ($row) {
-                return $row->idbarang ? $row->barang->expired : '';
+            ->addColumn('nilaiangsuran', function ($row) {
+                return number_format($row->asli/$row->xangsuran,0);
             })
-            ->addColumn('hbs', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $hbsx = $baris->hbsakhir;
-                        }
-                }else{
-                    $hbsx = $row->idbarang ? $row->barang->hbs : '0';
-                }
-                return number_format($hbsx,0);
+            ->addColumn('asli', function ($row) {
+                return number_format($row->asli,0);
             })
-            ->addColumn('qty', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $qtyx = $baris->akhir;
-                        }
-                }else{
-                    $qtyx = $row->qty;
-                }
-                return number_format($qtyx,0);
+            ->addColumn('sudahbayar', function ($row) {
+                $sudahbayar=$row->asli;
+                return number_format($sudahbayar,0);
             })
-            ->addColumn('totalhpp', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $totalhppx = $baris->hppakhir;
-                        }
-                }else{
-                    $totalhppx = $row->qty * $row->barang->hbs;
-                }
-                return number_format($totalhppx,0);
-            })
-                        
-            ->rawColumns([
-                'hbs',
-                'qty',
-                'satuan',
-                'totalhpp',
-                'expired',
-                ])
+            ->addColumn('saldo', function ($row) {
+                $saldo=$row->pokok;
 
-            ->make(true);
-
-            return $data;
-
-    }
-    
-    public function showstokmin()
-    {
-        
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        $barangruang = Barangruang::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('qty','<=','stokmin')
-            ->with('barang','seksi','ruang')
-            ->get();
-        $datax = DataTables::of($barangruang                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
+                return number_format($saldo,0);
             })
             
-            ->addColumn('hbs', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $hbsx = $baris->hbsakhir;
-                        }
-                }else{
-                    $hbsx = $row->idbarang ? $row->barang->hbs : '0';
-                }
-                return number_format($hbsx,0);
-            })
-            ->addColumn('qty', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $qtyx = $baris->akhir;
-                        }
-                }else{
-                    $qtyx = $row->qty;
-                }
-                return number_format($qtyx,0);
-            })
-            ->addColumn('totalhpp', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $totalhppx = $baris->hppakhir;
-                        }
-                }else{
-                    $totalhppx = $row->qty * $row->barang->hbs;
-                }
-                return number_format($totalhppx,0);
-            })
                         
             ->rawColumns([
-                'hbs',
+                'xangsuran',
+                'nilaiangsuran',
+                'sudahbayar',
+                'saldo',
                 'qty',
                 'satuan',
                 'totalhpp',
@@ -852,128 +370,52 @@ class HutangpiutangController extends Controller
             return $data;
 
     }
-  
-    public function showstokmax()
+    public function showhutangpiutangsudahsupplier()
     {
         
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        $barangruang = Barangruang::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('qty','>=','stokmax')
-            ->with('barang','seksi','ruang')
+        $hutang = Hutang::select('*')
+            ->where('kodepokok','=','0')
+            ->where('status','=','hutangsup')
+            ->with('anggota','supplier')
             ->get();
-        $datax = DataTables::of($barangruang                          
+        $datax = DataTables::of($hutang                          
             );
 
         $data = $datax
             ->addIndexColumn()
            
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
+            ->addColumn('supplier', function ($row) {
+                return $row->idsupplier ? $row->supplier->supplier : '';
             })
             ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
+                return $row->idsupplier ? $row->supplier->kode : '';
             })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
+            ->addColumn('alamat', function ($row) {
+                return $row->idsupplier ? $row->supplier->alamat : '';
             })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
+            ->addColumn('xangsuran', function ($row) {
+                return $row->angsuranke.'/'.$row->xangsuran;
             })
-            
-            ->addColumn('hbs', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $hbsx = $baris->hbsakhir;
-                        }
-                }else{
-                    $hbsx = $row->idbarang ? $row->barang->hbs : '0';
-                }
-                return number_format($hbsx,0);
+            ->addColumn('nilaiangsuran', function ($row) {
+                return number_format($row->asli/$row->xangsuran,0);
             })
-            ->addColumn('qty', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $qtyx = $baris->akhir;
-                        }
-                }else{
-                    $qtyx = $row->qty;
-                }
-                return number_format($qtyx,0);
+            ->addColumn('asli', function ($row) {
+                return number_format($row->asli,0);
             })
-            ->addColumn('totalhpp', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $totalhppx = $baris->hppakhir;
-                        }
-                }else{
-                    $totalhppx = $row->qty * $row->barang->hbs;
-                }
-                return number_format($totalhppx,0);
+            ->addColumn('sudahbayar', function ($row) {
+                $sudahbayar=$row->asli;
+                return number_format($sudahbayar,0);
+            })
+            ->addColumn('saldo', function ($row) {
+                $saldo=$row->pokok;
+                return number_format($saldo,0);
             })
                         
             ->rawColumns([
-                'hbs',
+                'xangsuran',
+                'nilaiangsuran',
+                'sudahbayar',
+                'saldo',
                 'qty',
                 'satuan',
                 'totalhpp',
@@ -985,137 +427,6 @@ class HutangpiutangController extends Controller
 
     }
 
-    public function showstokhabis()
-    {
-        
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        $barangruang = Barangruang::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('qty','=','')
-            ->with('barang','seksi','ruang')
-            ->get();
-        $datax = DataTables::of($barangruang                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            
-            ->addColumn('hbs', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $hbsx = $baris->hbsakhir;
-                        }
-                }else{
-                    $hbsx = $row->idbarang ? $row->barang->hbs : '0';
-                }
-                return number_format($hbsx,0);
-            })
-            ->addColumn('qty', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $qtyx = $baris->akhir;
-                        }
-                }else{
-                    $qtyx = $row->qty;
-                }
-                return number_format($qtyx,0);
-            })
-            ->addColumn('totalhpp', function ($row) {
-                $idruangx = session('idruang1');
-                if($idruangx=='0'||$idruangx==''){
-                    $idruangawal = 0;
-                    $idruangakhir = 999999;
-                }else{
-                    $idruangawal = $idruangx;
-                    $idruangakhir = $idruangx;
-                }
-                $jml = stok::where('idbarang','=',$row->idbarang)
-                    ->where('idruang','>=',$idruangawal)
-                    ->where('idruang','<=',$idruangakhir)
-                    ->count();
-                if($jml<>0){
-                    $tampil = stok::limit('1')->where('idbarang','=',$row->idbarang)
-                        ->where('idruang','>=',$idruangawal)
-                        ->where('idruang','<=',$idruangakhir)
-                        ->orderBy('id','desc')
-                        ->get();
-                        foreach ($tampil as $baris) {
-                            $totalhppx = $baris->hppakhir;
-                        }
-                }else{
-                    $totalhppx = $row->qty * $row->barang->hbs;
-                }
-                return number_format($totalhppx,0);
-            })
-                        
-            ->rawColumns([
-                'hbs',
-                'qty',
-                'satuan',
-                'totalhpp',
-                ])
-
-            ->make(true);
-
-            return $data;
-
-    }
     public function edit($id)
     {
         $data = Barangruang::where('id', '=', $id)->get();
@@ -1231,9 +542,7 @@ class HutangpiutangController extends Controller
     public function kirimsyarat(Request $request)
     {
         session([
-            'idruang1' => $request['idruang1'],
-            'tabstok1' => $request['tabstok1'],
-            'tgltransaksi1' => $request['tgltransaksi1'],
+            'tabhutang1' => $request['tabhutang1'],
         ]);
     }
 
