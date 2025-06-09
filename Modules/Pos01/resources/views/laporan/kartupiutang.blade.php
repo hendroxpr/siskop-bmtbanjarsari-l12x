@@ -34,11 +34,11 @@
                         <h6 class="mt-2">No. Faktur</h6>
                     </div>
                     <div class="col-md-7 input-group">
-                        <select  name="idhutang1" id="idhutang1" class=" form-control w3-input w3-border" style="border-radius:0px; border:none; display:block;"></select>
+                        <select  name="idpiutang1" id="idpiutang1" class=" form-control w3-input w3-border" style="border-radius:0px; border:none; display:block;"></select>
                         <div class="input-group-append">
-                            <button id="btn_carihutang1" name="btn_carihutang1" type="button" style="border-radius:0px; border:none;"><i style="font-size:24" class="fas">&#xf002;</i></button>
+                            <button id="btn_caripiutang1" name="btn_caripiutang1" type="button" style="border-radius:0px; border:none;"><i style="font-size:24" class="fas">&#xf002;</i></button>
                         </div>
-                        <select  name="idhutangx1" id="idhutangx1" class="" style="border-radius:0px; border:none; display:none;"></select>
+                        <select  name="idpiutangx1" id="idpiutangx1" class="" style="border-radius:0px; border:none; display:none;"></select>
                         <input name="cek1" id="cek1" class="" type="hidden">                                
                         <input name="id1" id="id1" class="" type="hidden"> 
                     </div>
@@ -46,18 +46,18 @@
 
                 <div class="row mt-2">
                     <div class="col-md-3 text-right">
-                        <h6 class="mt-2">Supplier</h6>
+                        <h6 class="mt-2">Customer</h6>
                     </div>
                     <div class="col-md-7">
-                        <input name="supplier1" id="supplier1" class="w3-input w3-border" type="text" placeholder="Supplier" disabled>                       
+                        <input name="customer1" id="customer1" class="w3-input w3-border" type="text" placeholder="Customer" disabled>                       
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-3 text-right">
-                        <h6 class="mt-2">Alamat</h6>
+                        <h6 class="mt-2">Lembaga</h6>
                     </div>
                     <div class="col-md-7">
-                        <input name="alamat1" id="alamat1" class="w3-input w3-border" type="text" placeholder="Alamat" disabled>                       
+                        <input name="lembaga1" id="lembaga1" class="w3-input w3-border" type="text" placeholder="Lembaga" disabled>                       
                     </div>
                 </div>
                 
@@ -86,23 +86,23 @@
     <div class="box-body" id="headerjudul" style="display: block;">
        
                 <div id="reload" class="table-responsive">
-                    <table id="kartuhutang1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                    <table id="kartupiutang1" class="table table-bordered table-striped table-hover" style="width: 100%">
                         <thead>
                             <tr>
                                 <th style="width:10px;">#</th>                            
                                 <th style="width:30px">Faktur</th>
                                 <th style="width:20px">Tanggal</th>
-                                <th style="width:100px">Supplier</th>
-                                <th style="width:100px">Alamat</th>							
+                                <th style="width:100px">Customer</th>
+                                <th style="width:100px">Lembaga</th>							
                                 <th style="width:10px">x Angs</th>							
                                 <th style="width:20px">Awal</th>							
-                                <th style="width:20px">Hutang</th>							
+                                <th style="width:20px">Piutang</th>							
                                 <th style="width:20px">Bayar</th>							
                                 <th style="width:20px">Saldo</th>							
                                 							
                             </tr>
                         </thead>
-                        <tfoot id="show_footerkartuhutang1">
+                        <tfoot id="show_footerkartupiutang1">
                             <tr>
                                 
                                 <th></th>
@@ -117,7 +117,7 @@
                                 <th></th>
                             </tr>
                         </tfoot>
-                        <tbody id="show_kartuhutang1">
+                        <tbody id="show_kartupiutang1">
                         
                         </tbody>
                     </table>            
@@ -129,13 +129,13 @@
   
 <!--akhir tabel-->
 
-<!-- ModalCariHutang modal fade-->
-	<div class="modal fade" id="ModalCariHutang"  data-backdrop="static">
+<!-- ModalCariPiutang modal fade-->
+	<div class="modal fade" id="ModalCariPiutang"  data-backdrop="static">
 		<div class="modal-dialog modal-lg">  <!-- modal-(sm, lg, xl) ukuran lebar modal -->
 			<div class="modal-content bg-info w3-animate-zoom">
 				
 				<div class="modal-header">
-						<h3 class="modal-title"><i style="font-size:18" class="fas">&#xf002;</i><b> Cari Data Hutang</b></h3>
+						<h3 class="modal-title"><i style="font-size:18" class="fas">&#xf002;</i><b> Cari Data Piutang</b></h3>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span></button>
 						
@@ -146,22 +146,22 @@
 												
 						<div class="row">
 							<div id="reload" class="table-responsive">
-								<table id="carihutang" width="100%" class="table table-bordered table-striped table-hover">
+								<table id="caripiutang" width="100%" class="table table-bordered table-striped table-hover">
 									<thead>
 									<tr>
 										<th width="5px">#</th>
 										<th width="20px">Faktur</th>																									
-										<th width="50px">Supplier</th>																									
-										<th width="100px">Alamat</th>																									
+										<th width="50px">Customet</th>																									
+										<th width="100px">Lembaga</th>																									
 										<th width="10px">x Angs</th>																									
-										<th width="20px">Hutang</th>																									
+										<th width="20px">Piutang</th>																									
 									</tr>
 								</thead>
 								
-								<tfoot id="show_footercarihutang">
+								<tfoot id="show_footercaripiutang">
 									
 								</tfoot>
-								<tbody id="show_datacarihutang">
+								<tbody id="show_datacaripiutang">
 								
 								</tbody>
 								</table>
@@ -190,10 +190,10 @@
 
 
 <script type="text/javascript">
-    var kartuhutang1Datatable;
+    var kartupiutang1Datatable;
 
-    var listhutangDatatable;
-    var carihutangDatatable;
+    var listpiutangDatatable;
+    var caripiutangDatatable;
 $(document).ready(function(){
     
     function formatRupiah(angka, prefix,desimal){
@@ -299,34 +299,34 @@ $(document).ready(function(){
 			
 		}
 
-    //menampilkan combo hutang
-    tampil_listhutang();
-    function tampil_listhutang(){				
+    //menampilkan combo piutang
+    tampil_listpiutang();
+    function tampil_listpiutang(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.laporan.kartuhutang_listhutang')}}',
+            url   : '{{route('pos01.laporan.kartupiutang_listpiutang')}}',
             
             success: function(data){				    
-                $("#idhutang1").html(data);                
+                $("#idpiutang1").html(data);                
             }
         })                    
     }
 
-    //menampilkan combo hutangx
-    tampil_listhutangx1();
-    function tampil_listhutangx1(){				
+    //menampilkan combo piutangx
+    tampil_listpiutangx1();
+    function tampil_listpiutangx1(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.laporan.kartuhutang_listhutangx')}}',
+            url   : '{{route('pos01.laporan.kartupiutang_listpiutangx')}}',
             
             success: function(data){				    
-                $("#idhutangx1").html(data); 
+                $("#idpiutangx1").html(data); 
                 setTimeout(() => {
-                    var b = $('#idhutangx1 option:selected').text();
+                    var b = $('#idpiutangx1 option:selected').text();
                     setTimeout(() => {
                         const bArray = b.split("|");
-                        $('#supplier1').val(bArray[1]);
-                        $('#alamat1').val(bArray[2]);
+                        $('#customer1').val(bArray[1]);
+                        $('#lembaga1').val(bArray[2]);
                     }, 100);
                 }, 100);               
             }
@@ -335,28 +335,28 @@ $(document).ready(function(){
    
     koneksi_datatable();
 
-    $('#idhutang1').on('change',function(){	
-        var a = $('#idhutang1').val();
-        $('#idhutangx1').val(a);
-        var b = $('#idhutangx1 option:selected').text();
+    $('#idpiutang1').on('change',function(){	
+        var a = $('#idpiutang1').val();
+        $('#idpiutangx1').val(a);
+        var b = $('#idpiutangx1 option:selected').text();
         setTimeout(() => {
             const bArray = b.split("|");
-            $('#supplier1').val(bArray[1]);
-            $('#alamat1').val(bArray[2]);
+            $('#customer1').val(bArray[1]);
+            $('#lembaga1').val(bArray[2]);
             kirimsyarat();
         }, 100);
     });
     
     function kirimsyarat(){
-        var idhutang1=$('#idhutang1').val();
+        var idpiutang1=$('#idpiutang1').val();
 
         let formData = new FormData();
-            formData.append('idhutang1', idhutang1);
+            formData.append('idpiutang1', idpiutang1);
 
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.laporan.kartuhutang_kirimsyarat')}}',
+            url    : '{{route('pos01.laporan.kartupiutang_kirimsyarat')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -370,9 +370,9 @@ $(document).ready(function(){
         });
     }
     
-    function tampil_kartuhutang1(){
+    function tampil_kartupiutang1(){
         let i = 1;	
-        return $('#kartuhutang1').DataTable({
+        return $('#kartupiutang1').DataTable({
             responsive : true,
             retrieve: true,
             autoWidth : true,
@@ -396,7 +396,7 @@ $(document).ready(function(){
             };
     
             // Total over all pages
-            hutang = api
+            piutang = api
                 .column(7)
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
@@ -407,7 +407,7 @@ $(document).ready(function(){
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
             
             // Total over this page
-            pagehutang = api
+            pagepiutang = api
                 .column(7, { page: 'current' })
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
@@ -419,13 +419,13 @@ $(document).ready(function(){
     
             // Update footer
             api.column(1).footer().innerHTML = 'SUB TOTAL :';
-            api.column(7).footer().innerHTML = formatAngka(pagehutang,'');
+            api.column(7).footer().innerHTML = formatAngka(pagepiutang,'');
             api.column(8).footer().innerHTML = formatAngka(pagebayar,'');
             },
 
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.laporan.kartuhutang_showkartuhutang')}}`,
+            ajax   : `{{route('pos01.laporan.kartupiutang_showkartupiutang')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -435,8 +435,8 @@ $(document).ready(function(){
                     searchable: false },
                 { data: 'nomorstatus', name: 'nomorstatus', className: 'dt-center' },
                 { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
-                { data: 'supplier', name: 'supplier.supplier', className: 'dt-left' },
-                { data: 'alamat', name: 'supplier.alamat', className: 'dt-center' },
+                { data: 'nama', name: 'anggota.nama', className: 'dt-left' },
+                { data: 'lembaga', name: 'anggota.lembaga.lembaga', className: 'dt-center' },
                 { data: 'xangsuran', name: 'xangsuran', className: 'dt-center' },
                 { data: 'awal', name: 'awal', className: 'dt-right' },
                 { data: 'masuk', name: 'masuk', className: 'dt-right' },
@@ -447,24 +447,24 @@ $(document).ready(function(){
     }
 
     function tampil_dataTable(){        
-        kartuhutang1Datatable.draw(null, false);        
+        kartupiutang1Datatable.draw(null, false);        
             
     }
 
     function koneksi_datatable(){
-        kartuhutang1Datatable = tampil_kartuhutang1();    
+        kartupiutang1Datatable = tampil_kartupiutang1();    
     }
 
-   $('#btn_carihutang1').on('click',function(){
+   $('#btn_caripiutang1').on('click',function(){
         setTimeout(() => {
-            $('#ModalCariHutang').modal('show');						
+            $('#ModalCariPiutang').modal('show');						
         }, 300);
     });
 
-tampil_carihutang();    
-function tampil_carihutang(){
+tampil_caripiutang();    
+function tampil_caripiutang(){
         let i = 1;	
-        return $('#carihutang').DataTable({
+        return $('#caripiutang').DataTable({
             responsive : true,
             retrieve: true,
             autoWidth : true,
@@ -476,7 +476,7 @@ function tampil_carihutang(){
             ],
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.laporan.kartuhutang_showhutang')}}`,
+            ajax   : `{{route('pos01.laporan.kartupiutang_showpiutang')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -485,8 +485,8 @@ function tampil_carihutang(){
                     orderable: false, 
                     searchable: false },
                 { data: 'nomorstatus', name: 'nomorstatus', className: 'dt-center' },
-                { data: 'supplier', name: 'supplier' },
-                { data: 'alamat', name: 'alamat' },
+                { data: 'nama', name: 'anggota.nama' },
+                { data: 'lembaga', name: 'anggota.lembaga.lembaga' },
                 { data: 'xangsuran', name: 'xangsuran', className: 'dt-center' },
                 { data: 'asli', name: 'asli', className: 'dt-right' },
                                
@@ -494,7 +494,7 @@ function tampil_carihutang(){
         });
     }
 
-     $('#show_datacarihutang').on('click','.item_nomorstatus',function(){
+     $('#show_datacaripiutang').on('click','.item_nomorstatus',function(){
         ambilcari(this);        
     });
     
@@ -503,10 +503,10 @@ function tampil_carihutang(){
         var data2 = $(t).attr('data2');
         var data3 = $(t).attr('data3');
         var data4 = $(t).attr('data4');
-        $('#idhutang1').val(data1);
+        $('#idpiutang1').val(data1);
         setTimeout(() => {
-             $('#idhutang1').change();
-            $('#ModalCariHutang').modal('hide');
+             $('#idpiutang1').change();
+            $('#ModalCariPiutang').modal('hide');
         }, 100);
 
     }

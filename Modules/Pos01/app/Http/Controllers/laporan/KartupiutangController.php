@@ -25,7 +25,7 @@ use PhpOffice\PhpSpreadsheet\Reader\Xml\Style\NumberFormat;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class KartuhutangController extends Controller
+class KartupiutangController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -39,11 +39,11 @@ class KartuhutangController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan <b>Kartu Hutang</b>.';
-        $page = 'pos01::laporan.kartuhutang';
-        $link = '/pos01/laporan/kartuhutang';
+        $remark = 'Halaman ini digunakan untuk menampilkan <b>Kartu Piutang</b>.';
+        $page = 'pos01::laporan.kartupiutang';
+        $link = '/pos01/laporan/kartupiutang';
         $subtitle = 'Laporan';
-        $caption = 'Kartu Hutang';
+        $caption = 'Kartu Piutang';
         $jmlhal = 2;
        
         $menu=Menusub::where('link','=',$link)
@@ -116,11 +116,10 @@ class KartuhutangController extends Controller
      * @param int $id
      * @return Renderable
      */
-    
-    public function showkartuhutang()
+    public function showkartupiutang()
     {
 
-        $tampil = Hutang::where('id','=',session('idhutang1'))
+        $tampil = Hutang::where('id','=',session('idpiutang1'))
             ->get();
         foreach ($tampil as $baris) {
             $nomorstatus = $baris->nomorstatus;
@@ -129,12 +128,15 @@ class KartuhutangController extends Controller
         $hutang = Hutang::select('*')
             ->where('kodepokok','=','2')
             ->where(function (Builder $query) {
-                    return $query->where('status','=','hutangsup')
-                                 ->orWhere('status','=','bayarsup')
-                                 ->orWhere('status','=','retursup');
+                    return $query->where('status','=','hutangcus')
+                                 ->orWhere('status','=','bayarcus')
+                                 ->orWhere('status','=','hutangmam')
+                                 ->orWhere('status','=','bayarmam')
+                                 ->orWhere('status','=','returcus')
+                                 ->orWhere('status','=','returmam');
                 })
             ->where(function (Builder $query) {
-                    $tampil = Hutang::where('id','=',session('idhutang1'))
+                    $tampil = Hutang::where('id','=',session('idpiutang1'))
                         ->get();
                     foreach ($tampil as $baris) {
                         $nomorstatus = $baris->nomorstatus;
@@ -151,14 +153,17 @@ class KartuhutangController extends Controller
         $data = $datax
             ->addIndexColumn()
            
-            ->addColumn('supplier', function ($row) {
-                return $row->idsupplier ? $row->supplier->supplier : '';
+            ->addColumn('nia', function ($row) {
+                return $row->idanggota ? $row->anggota->nia : '';
             })
-            ->addColumn('alamat', function ($row) {
-                return $row->idsupplier ? $row->supplier->alamat : '';
+            ->addColumn('nama', function ($row) {
+                return $row->idanggota ? $row->anggota->nama : '';
+            })
+            ->addColumn('lembaga', function ($row) {
+                return $row->idanggota ? $row->anggota->lembaga->lembaga : '';
             })
             ->addColumn('xangsuran', function ($row) {
-                $tampil = Hutang::where('id','=',session('idhutang1'))
+                $tampil = Hutang::where('id','=',session('idpiutang1'))
                     ->get();
                 foreach ($tampil as $baris) {
                     $nomorstatus = $baris->nomorstatus;
@@ -167,12 +172,15 @@ class KartuhutangController extends Controller
                 $jml = Hutang::select('id')
                     ->where('kodepokok','=','2')
                     ->where(function (Builder $query) {
-                            return $query->where('status','=','hutangsup')
-                                        ->orWhere('status','=','bayarsup')
-                                        ->orWhere('status','=','retursup');
+                            return $query->where('status','=','hutangcus')
+                                 ->orWhere('status','=','bayarcus')
+                                 ->orWhere('status','=','hutangmam')
+                                 ->orWhere('status','=','bayarmam')
+                                 ->orWhere('status','=','returcus')
+                                 ->orWhere('status','=','returmam');
                         })
                     ->where(function (Builder $query) {
-                            $tampil = Hutang::where('id','=',session('idhutang1'))
+                            $tampil = Hutang::where('id','=',session('idpiutang1'))
                                 ->get();
                             foreach ($tampil as $baris) {
                                 $nomorstatus = $baris->nomorstatus;
@@ -205,7 +213,7 @@ class KartuhutangController extends Controller
             return $data;
 
     }
-
+    
     public function edit($id)
     {
         $data = Barangruang::where('id', '=', $id)->get();
@@ -231,18 +239,21 @@ class KartuhutangController extends Controller
         return json_encode(array('data' => $data));
     }
 
-    public function showhutang()
+    public function showpiutang()
     {
         $hutang = Hutang::select('*')
             ->where(function (Builder $query) {
-                    return $query->where('status','=','hutangsup')
-                                 ->orWhere('status','=','retursup');
+                    return $query->where('status','=','hutangcus')
+                                 ->orWhere('status','=','hutangmam')
+                                 ->orWhere('status','=','returmam')
+                                 ->orWhere('status','=','returcus');
                 })
             ->where(function (Builder $query) {
                     return $query->where('kodepokok','=','0')
                                  ->orWhere('kodepokok','=','1');
                 })
             ->with('anggota','supplier')
+            ->orderBy('created_at','asc')
             ->get();
         $datax = DataTables::of($hutang                          
             );
@@ -251,16 +262,16 @@ class KartuhutangController extends Controller
             ->addIndexColumn()
            
             ->addColumn('nomorstatus', function ($row) {
-                return '<a href="#" style="color: white;" title="'. $row->nomorstatus .'" class="item_nomorstatus " data1="' . $row->id . '" data2="'. $row->nomorstatus. '" data3="'. $row->supplier->supplier. '" data4="'. $row->supplier->alamat. '">'. $row->nomorstatus .'</a> ';
+                return '<a href="#" style="color: white;" title="'. $row->nomorstatus .'" class="item_nomorstatus " data1="' . $row->id . '" data2="'. $row->nomorstatus. '" data3="'. $row->anggota->nama. '" data4="'. $row->anggota->lembaga->lembaga. '">'. $row->nomorstatus .'</a> ';
             })
-            ->addColumn('supplier', function ($row) {
-                return $row->idsupplier ? $row->supplier->supplier : '';
+            ->addColumn('nama', function ($row) {
+                return $row->idanggota ? $row->anggota->nama : '';
             })
-            ->addColumn('kode', function ($row) {
-                return $row->idsupplier ? $row->supplier->kode : '';
+            ->addColumn('nia', function ($row) {
+                return $row->idanggota ? $row->anggota->nia : '';
             })
-            ->addColumn('alamat', function ($row) {
-                return $row->idsupplier ? $row->supplier->alamat : '';
+            ->addColumn('lembaga', function ($row) {
+                return $row->idanggota ? $row->anggota->lembaga->lembaga : '';
             })
             ->addColumn('xangsuran', function ($row) {
                 return $row->angsuranke.'/'.$row->xangsuran;
@@ -289,12 +300,14 @@ class KartuhutangController extends Controller
 
     }
 
-    function listhutang()
+    function listpiutang()
     {
         $tampil = Hutang::select('*')
             ->where(function (Builder $query) {
-                    return $query->where('status','=','hutangsup')
-                                 ->orWhere('status','=','retursup');
+                    return $query->where('status','=','hutangcus')
+                                 ->orWhere('status','=','hutangmam')
+                                 ->orWhere('status','=','returcus')
+                                 ->orWhere('status','=','returmam');
                 })
             ->where(function (Builder $query) {
                     return $query->where('kodepokok','=','0')
@@ -305,12 +318,14 @@ class KartuhutangController extends Controller
             echo "<option value='" . $baris->id . "'>" . $baris->nomorstatus . "</option>";
         }
     }
-    function listhutangx()
+    function listpiutangx()
     {
         $tampil = Hutang::select('*')
             ->where(function (Builder $query) {
-                    return $query->where('status','=','hutangsup')
-                                 ->orWhere('status','=','retursup');
+                    return $query->where('status','=','hutangcus')
+                                 ->orWhere('status','=','hutangmam')
+                                 ->orWhere('status','=','returcus')
+                                 ->orWhere('status','=','returmam');
                 })
             ->where(function (Builder $query) {
                     return $query->where('kodepokok','=','0')
@@ -321,15 +336,15 @@ class KartuhutangController extends Controller
         foreach ($tampil as $baris) {
             echo "<option value='" . $baris->id . "'>" . 
                 $baris->nomorstatus . '|' .
-                $baris->supplier->supplier . '|' .
-                $baris->supplier->alamat . 
+                $baris->anggota->nama . '|' .
+                $baris->anggota->lembaga->lembaga . 
                  "</option>";
         }
     }
     public function kirimsyarat(Request $request)
     {
         session([
-            'idhutang1' => $request['idhutang1'],
+            'idpiutang1' => $request['idpiutang1'],
         ]);
     }
 

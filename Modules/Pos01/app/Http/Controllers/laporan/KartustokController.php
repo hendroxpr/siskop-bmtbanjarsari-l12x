@@ -634,7 +634,7 @@ class KartustokController extends Controller
     }
 
 
-    public function showbarang()
+    public function showhutang()
     {
         
         $idruangx = session('idruang1');
