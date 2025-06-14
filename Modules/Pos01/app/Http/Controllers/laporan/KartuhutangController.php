@@ -271,6 +271,18 @@ class KartuhutangController extends Controller
             ->addColumn('asli', function ($row) {
                 return number_format($row->asli,0);
             })
+            ->addColumn('keterangan', function ($row) {
+                $x = $row->kodepokok;
+                if($x=='0'){
+                    $keterangan = 'Sudah Lunas';
+                }else if($x=='1'){
+                    $keterangan = 'Belum Lunas';
+                }else{
+                    $keterangan = '';
+                }
+
+                return $keterangan;
+            })
                         
             ->rawColumns([
                 'nomorstatus',
@@ -281,6 +293,7 @@ class KartuhutangController extends Controller
                 'qty',
                 'satuan',
                 'totalhpp',
+                'keterangan',
                 ])
 
             ->make(true);

@@ -49,6 +49,10 @@ class Supplier extends Model
     {
         return $this->hasMany(Stoklifo::class,'idsupplier','id');
     }
+    public function biaya()
+    {
+        return $this->hasMany(Biaya::class,'idsupplier','id');
+    }
 
 
 

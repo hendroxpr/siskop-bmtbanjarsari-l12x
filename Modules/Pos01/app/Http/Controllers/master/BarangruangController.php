@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\Menusub;
 use Modules\Pos01\Models\Barang;
 use Modules\Pos01\Models\Barangruang;
+use Modules\Pos01\Models\Jenisbiaya;
 use Modules\Pos01\Models\Ruang;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -255,6 +256,7 @@ class BarangruangController extends Controller
         foreach ($tampil as $baris) {
             echo "<option value='" . $baris->id . "'>" . $baris->ruang . "</option>";
         }
+        
     }
 
     public function kirimsyarat(Request $request)

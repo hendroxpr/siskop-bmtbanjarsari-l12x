@@ -56,6 +56,10 @@ class Ruang extends Model
     {
         return $this->hasMany(Stokmamin::class,'idruang','id');
     }
+    public function biaya()
+    {
+        return $this->hasMany(Biaya::class,'idruang','id');
+    }
 
 
     /**

@@ -21,6 +21,10 @@ class Satuan extends Model
     {
         return $this->hasMany(Barang::class,'idsatuan','id');
     }
+    public function biaya()
+    {
+        return $this->hasMany(Biaya::class,'idsatuan','id');
+    }
     /**
      * The attributes that are mass assignable.
      */

@@ -26,6 +26,7 @@ use Modules\Pos01\Http\Controllers\master\SupplierController;
 use Modules\Pos01\Http\Controllers\master\LembagaController;
 use Modules\Pos01\Http\Controllers\Pos01Controller;
 use Modules\Pos01\Http\Controllers\transaksi\BayarhutangSupplierController;
+use Modules\Pos01\Http\Controllers\transaksi\BiayaoperasionalController;
 use Modules\Pos01\Http\Controllers\transaksi\BkeluarController;
 use Modules\Pos01\Http\Controllers\transaksi\MkeluarController;
 
@@ -268,6 +269,20 @@ Route::post('/laporan/stokbarangcreate', [StokbarangController::class, 'create']
 Route::post('/laporan/stokbarangkirimsyarat', [StokbarangController::class, 'kirimsyarat'])->name('pos01.laporan.stokbarang_kirimsyarat')->middleware('auth'); /* kirimsyarat */
 Route::get('/laporan/stokbarangedit/{id}', [StokbarangController::class, 'edit'])->name('pos01.laporan.stokbarang_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
 Route::get('/laporan/stokbarangdestroy/{id}', [StokbarangController::class, 'destroy'])->name('pos01.laporan.stokbarang_destroy')->middleware('auth'); /* hapus data stokbarang */
+
+/* transaksi - biayaoperasional */
+Route::get('/transaksi/biayaoperasional', [BiayaoperasionalController::class, 'index'])->name('pos01.transaksi.biayaoperasional.index')->middleware('auth'); /* halaman biayaoperasional */
+Route::get('/transaksi/biayaoperasionalshow', [BiayaoperasionalController::class, 'show'])->name('pos01.transaksi.biayaoperasional_show')->middleware('auth'); /* menampilkan data biayaoperasional pada datatable javascript */
+Route::get('/transaksi/biayaoperasionalshowbarang', [BiayaoperasionalController::class, 'showbarang'])->name('pos01.transaksi.biayaoperasional_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di biayaoperasional pada datatable javascript */
+Route::get('/transaksi/biayaoperasionallistjenisbiaya', [BiayaoperasionalController::class, 'listjenisbiaya'])->name('pos01.transaksi.biayaoperasional_listjenisbiaya')->middleware('auth'); /* menampilkan listjenisbiaya */
+Route::get('/transaksi/biayaoperasionallistjenisbiayax', [BiayaoperasionalController::class, 'listjenisbiayax'])->name('pos01.transaksi.biayaoperasional_listjenisbiayax')->middleware('auth'); /* menampilkan listjenisbiaya */
+Route::get('/transaksi/biayaoperasionallissupplier', [BiayaoperasionalController::class, 'listsupplier'])->name('pos01.transaksi.biayaoperasional_listsupplier')->middleware('auth'); /* menampilkan listsupplier */
+Route::get('/transaksi/biayaoperasionallistruang', [BiayaoperasionalController::class, 'listruang'])->name('pos01.transaksi.biayaoperasional_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::get('/transaksi/biayaoperasionallistsatuan', [BiayaoperasionalController::class, 'listsatuan'])->name('pos01.transaksi.biayaoperasional_listsatuan')->middleware('auth'); /* menampilkan listsatuan */
+Route::post('/transaksi/biayaoperasionalcreate', [BiayaoperasionalController::class, 'create'])->name('pos01.transaksi.biayaoperasional_create')->middleware('auth'); /* menambah biayaoperasional */
+Route::post('/transaksi/biayaoperasionalkirimsyarat', [BiayaoperasionalController::class, 'kirimsyarat'])->name('pos01.transaksi.biayaoperasional_kirimsyarat')->middleware('auth'); /* kirimsyarat */
+Route::get('/transaksi/biayaoperasionaledit/{id}', [BiayaoperasionalController::class, 'edit'])->name('pos01.transaksi.biayaoperasional_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/transaksi/biayaoperasionaldestroy/{id}', [BiayaoperasionalController::class, 'destroy'])->name('pos01.transaksi.biayaoperasional_destroy')->middleware('auth'); /* hapus data biayaoperasional */
 
 /* laporan - stokkeluarmasuk */
 Route::get('/laporan/stokkeluarmasuk', [StokkeluarmasukController::class, 'index'])->name('pos01.laporan.stokkeluarmasuk.index')->middleware('auth'); /* halaman stokkeluarmasuk */

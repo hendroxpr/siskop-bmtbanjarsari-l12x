@@ -155,6 +155,7 @@
 										<th width="100px">Alamat</th>																									
 										<th width="10px">x Angs</th>																									
 										<th width="20px">Hutang</th>																									
+										<th width="20px">Keterangan</th>																									
 									</tr>
 								</thead>
 								
@@ -477,6 +478,12 @@ function tampil_carihutang(){
             processing: true,
             serverSide: true,
             ajax   : `{{route('pos01.laporan.kartuhutang_showhutang')}}`,
+            "createdRow": function(row, data, dataIndex) {
+                if (data["keterangan"] == "Sudah Lunas") {
+                    $(row).css("background-color", "red");
+                    $(row).addClass("warning");
+                }
+            },
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -489,6 +496,7 @@ function tampil_carihutang(){
                 { data: 'alamat', name: 'alamat' },
                 { data: 'xangsuran', name: 'xangsuran', className: 'dt-center' },
                 { data: 'asli', name: 'asli', className: 'dt-right' },
+                { data: 'keterangan', name: 'keterangan', className: 'dt-center' },
                                
             ]
         });
