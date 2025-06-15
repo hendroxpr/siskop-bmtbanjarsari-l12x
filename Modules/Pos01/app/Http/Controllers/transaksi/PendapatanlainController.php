@@ -14,16 +14,16 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Menusub;
 use Modules\Pos01\Models\Barang;
-use Modules\Pos01\Models\Barangruang;
 use Modules\Pos01\Models\Biaya;
 use Modules\Pos01\Models\Jenisbiaya;
+use Modules\Pos01\Models\Pendapatan;
 use Modules\Pos01\Models\Ruang;
 use Modules\Pos01\Models\Satuan;
 use Modules\Pos01\Models\Supplier;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class BiayaoperasionalController extends Controller
+class PendapatanlainController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,11 +37,11 @@ class BiayaoperasionalController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Biaya Operasional</b>.';
-        $page = 'pos01::transaksi.biayaoperasional';
-        $link = '/pos01/transaksi/biayaoperasional';
+        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Pendapatan Lain</b>.';
+        $page = 'pos01::transaksi.pendapatanlain';
+        $link = '/pos01/transaksi/pendapatanlain';
         $subtitle = 'Transaksi';
-        $caption = 'Biaya Operasional';
+        $caption = 'Pendapatan Lain';
         $jmlhal = 2;
        
         $menu=Menusub::where('link','=',$link)
@@ -54,7 +54,7 @@ class BiayaoperasionalController extends Controller
             'link' => $link,
             'remark' => $remark,
             'jmlhal' => $jmlhal,
-            'tabel' => Barangruang::SimplePaginate($jmlhal)->withQueryString(),
+            'tabel' => Pendapatan::SimplePaginate($jmlhal)->withQueryString(),
             'aplikasi' => Aplikasi::get(),
             'menu' => $menu,
         ]);
@@ -74,7 +74,6 @@ class BiayaoperasionalController extends Controller
         $validatedData = $request->validate([
             'tgltransaksi1' => 'required',
             'idruang1' => 'required',
-            'idsupplier1' => 'required',
             'idjenisbiaya1' => 'required',            
         ]);
 
@@ -82,23 +81,22 @@ class BiayaoperasionalController extends Controller
         $data = [            
             'tgltransaksi' => $validatedData['tgltransaksi1'],
             'idruang' => $validatedData['idruang1'],
-            'idsupplier' => $validatedData['idsupplier1'],
             'idjenisbiaya' => $validatedData['idjenisbiaya1'],
 
             'idsatuan' => $request['idsatuan1'],
             'nomorbukti' => $request['nomorbukti1'],
-            'biaya' => $request['biaya1'],
+            'pendapatan' => $request['pendapatan1'],
             'qty' => $request['qty1'],
-            'hbs' => $request['hbs1'],
-            'totalbeli' => $request['totalbeli1'],
+            'hjs' => $request['hjs1'],
+            'totaljual' => $request['totaljual1'],
             'keterangan' => $request['keterangan1'],
             'idusers' => auth()->user()->id,
         ];
 
         if ($id == '0') {
-            Biaya::create($data);
+            Pendapatan::create($data);
         } else {
-            Biaya::where('id', '=', $id)->update($data);
+            Pendapatan::where('id', '=', $id)->update($data);
         }
         return json_encode(array('data' => $data));
     }
@@ -123,15 +121,13 @@ class BiayaoperasionalController extends Controller
         $tgltransaksi = session('tgltransaksi1');     
         $idruang = session('idruangx1');
         $idjenisbiaya = session('idjenisbiayax1');
-        $idsupplier = session('idsupplierx1');
 
-        $biaya = Biaya::where('tgltransaksi','=',$tgltransaksi)
+        $pendapatan = Pendapatan::where('tgltransaksi','=',$tgltransaksi)
             ->where('idruang','=',$idruang)
             ->where('idjenisbiaya','=',$idjenisbiaya)
-            ->where('idsupplier','=',$idsupplier)
-            ->with('jenisbiaya','supplier','ruang')
+            ->with('jenisbiaya','ruang')
             ->get();
-        $datax = DataTables::of($biaya                          
+        $datax = DataTables::of($pendapatan                          
             );
 
         $data = $datax
@@ -140,16 +136,16 @@ class BiayaoperasionalController extends Controller
             ->addColumn('satuan', function ($row) {
                 return $row->idsatuan ? $row->satuan->satuan : '';
             })
-            ->addColumn('hbs', function ($row) {
-                return $row->hbs ? number_format($row->hbs,0) : '';
+            ->addColumn('hjs', function ($row) {
+                return $row->hjs ? number_format($row->hjs,0) : '';
             })
-            ->addColumn('totalbeli', function ($row) {
-                return $row->totalbeli ? number_format($row->totalbeli,0) : '';
+            ->addColumn('totaljual', function ($row) {
+                return $row->totaljual ? number_format($row->totaljual,0) : '';
             })
             
             ->addColumn('action', function ($row) {
-                return '<a href="#" title="Edit Data" class="btn btn-success btn-xs item_edit" data="' . $row->id . '" data2="'. $row->biaya.'" data3="'. $row->qty.'" data4="'. $row->hbs.'"><i style="font-size:18px" class="fa">&#xf044;</i></a> ' .
-                       '<a href="#" title="Hapus Data" class="btn btn-danger btn-xs item_hapus" data="' . $row->id . '" data2="'. $row->biaya.'" data3="'. $row->qty.'" data4="'. $row->hbs.'"><i style="font-size:18px" class="fa">&#xf00d;</i></a>';
+                return '<a href="#" title="Edit Data" class="btn btn-success btn-xs item_edit" data="' . $row->id . '" data2="'. $row->pendapatan.'" data3="'. $row->qty.'" data4="'. $row->hjs.'"><i style="font-size:18px" class="fa">&#xf044;</i></a> ' .
+                       '<a href="#" title="Hapus Data" class="btn btn-danger btn-xs item_hapus" data="' . $row->id . '" data2="'. $row->pendapatan.'" data3="'. $row->qty.'" data4="'. $row->hjs.'"><i style="font-size:18px" class="fa">&#xf00d;</i></a>';
             })
             
             ->rawColumns([
@@ -166,7 +162,7 @@ class BiayaoperasionalController extends Controller
     
     public function edit($id)
     {
-        $data = Biaya::where('id', '=', $id)->get();
+        $data = Pendapatan::where('id', '=', $id)->get();
         return json_encode(array('data' => $data));       
     }
 
@@ -185,7 +181,7 @@ class BiayaoperasionalController extends Controller
     public function destroy($id)
     {
 
-        $data = Biaya::where('id', '=', $id)->delete();
+        $data = Pendapatan::where('id', '=', $id)->delete();
         return json_encode(array('data' => $data));
     }
     function listjenisbiaya()
@@ -205,13 +201,7 @@ class BiayaoperasionalController extends Controller
             echo "<option value='" . $baris->id . "'>" . $baris->jenisbiaya . "</option>";
         }
     }
-    function listsupplier()
-    {
-        $tampil = Supplier::orderBy('id')->get();
-        foreach ($tampil as $baris) {
-            echo "<option value='" . $baris->id . "'>" . $baris->supplier . "</option>";
-        }
-    }
+    
     function listruang()
     {
         $tampil = Ruang::orderBy('ruang', 'asc')->get();
@@ -234,7 +224,6 @@ class BiayaoperasionalController extends Controller
         session([
             'tgltransaksi1' => $request['tgltransaksi1'],
             'idjenisbiayax1' => $request['idjenisbiayax1'],
-            'idsupplierx1' => $request['idsupplierx1'],
             'idruangx1' => $request['idruangx1'],
         ]);
     }

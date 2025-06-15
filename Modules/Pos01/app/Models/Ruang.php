@@ -60,6 +60,10 @@ class Ruang extends Model
     {
         return $this->hasMany(Biaya::class,'idruang','id');
     }
+    public function pendapatan()
+    {
+        return $this->hasMany(Pendapatan::class,'idruang','id');
+    }
 
 
     /**

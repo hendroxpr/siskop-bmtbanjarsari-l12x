@@ -19,6 +19,10 @@ class Jenisbiaya extends Model
     {
         return $this->hasMany(Biaya::class,'idjenisbiaya','id');
     }
+    public function pendapatan()
+    {
+        return $this->hasMany(Pendapatan::class,'idjenisbiaya','id');
+    }
     
    
     /**

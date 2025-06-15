@@ -502,7 +502,7 @@ $(document).ready(function(){
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.biayaoperasional_kirimsyarat')}}',
+            url    : '{{route('pos01.transaksi.biayalain_kirimsyarat')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -524,7 +524,7 @@ $(document).ready(function(){
     function tampil_listruang(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.biayaoperasional_listruang')}}',
+            url   : '{{route('pos01.transaksi.biayalain_listruang')}}',
             
             success: function(data){				    
                 $("#idruangx1").html(data);
@@ -539,7 +539,7 @@ $(document).ready(function(){
     function tampil_listjenisbiaya(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.biayaoperasional_listjenisbiaya')}}',
+            url   : '{{route('pos01.transaksi.biayalain_listjenisbiaya')}}',
             
             success: function(data){				    
                 $("#idjenisbiayax1").html(data);
@@ -554,7 +554,7 @@ $(document).ready(function(){
     function tampil_listsupplier(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.biayaoperasional_listsupplier')}}',
+            url   : '{{route('pos01.transaksi.biayalain_listsupplier')}}',
             
             success: function(data){				    
                 $("#idsupplierx1").html(data);
@@ -569,7 +569,7 @@ $(document).ready(function(){
     function tampil_listsatuan(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.biayaoperasional_listsatuan')}}',
+            url   : '{{route('pos01.transaksi.biayalain_listsatuan')}}',
             
             success: function(data){				    
                 $("#idsatuan1").html(data);
@@ -622,7 +622,7 @@ footerCallback: function (row, data, start, end, display) {
 
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.transaksi.biayaoperasional_show')}}`,
+            ajax   : `{{route('pos01.transaksi.biayalain_show')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -718,7 +718,7 @@ footerCallback: function (row, data, start, end, display) {
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.biayaoperasional_create')}}',
+            url    : '{{route('pos01.transaksi.biayalain_create')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -771,7 +771,7 @@ footerCallback: function (row, data, start, end, display) {
         var id1=idx;			
             $.ajax({
 		        type  : 'get',
-		        url   : `{{ url('pos01/transaksi/biayaoperasionaledit')}}/${id1}`,
+		        url   : `{{ url('pos01/transaksi/biayalainedit')}}/${id1}`,
 		        async : false,
 		        dataType : 'json',	
 				
@@ -840,7 +840,7 @@ footerCallback: function (row, data, start, end, display) {
         var data3b=$('#data3b').val();
         $.ajax({
             type  : 'get',
-            url   : '{{url('pos01/transaksi/biayaoperasionaldestroy')}}/'+id3,
+            url   : '{{url('pos01/transaksi/biayalaindestroy')}}/'+id3,
             async : false,
             dataType : 'json',					
             success : function(data){
