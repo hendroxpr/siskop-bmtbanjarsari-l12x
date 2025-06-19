@@ -274,7 +274,11 @@ class BkeluarController extends Controller
 
                 $totalawaldankeluar = $hppawalx - $hpp1; 
                 $totalqtyawaldankeluar = $awalx - $qty1;
-                $hbsakhirx =  $totalawaldankeluar/$totalqtyawaldankeluar;
+                if($awalx==$qty1){
+                    $hbsakhirx = 0;
+                }else{
+                    $hbsakhirx =  $totalawaldankeluar/$totalqtyawaldankeluar;
+                }
                 
                 $keluarx = $qty1;
                 $hbskeluarx = $hbs1; 
@@ -324,275 +328,241 @@ class BkeluarController extends Controller
             //5.stokfifo
             $qty2 = Stokfifo::where('idbarang','=',$idbarang1)
             ->where('idruang','=',$idruang1)
-            ->where('created_at','<',$created_at1)
             ->where('kodepokok','=','1')
             ->count();
-
             if($qty2<>'0'){
-                //cek data terakhir
-                $tampil2 = Stokfifo::limit(1)
-                ->where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<',$created_at1)
-                ->where('kodepokok','=','2')
-                ->orderBy('created_at','desc')
-                ->get();
-                foreach ($tampil2 as $baris) {
-                    $awalx = $baris->akhir;
-                    $hbsawalx = $baris->hbsakhir;
-                    $hppawalx = $baris->hppakhir;
-                }
-
-                $qty3 = Stokfifo::where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<=',$created_at1)
-                ->where('kodepokok','=','1')
-                ->count();
-                
-                if($qty3<>'0'){
-                    $tampil3 = Stokfifo::where('idbarang','=',$idbarang1)
+                //cek dan update kodepokok 1
+                $ceksf = Stokfifo::where('idbarang','=',$idbarang1)
                     ->where('idruang','=',$idruang1)
-                    ->where('created_at','<=',$created_at1)
                     ->where('kodepokok','=','1')
                     ->orderBy('created_at','asc')
                     ->get();
-                    $pkkx = 0;
-                    $hpppkkx = 0;
-                    $sisax = $qty1;
-                    $totalhppkeluar=0;
-                    $qtyx = 0;
-                    foreach ($tampil3 as $baris) {
-                        $idx = $baris->id;
-                        $pokokx = $baris->pokok;
-                        $pkkx = $pkkx + $pokokx;
-                        $sisax = $qty1 - $pkkx;
-                        $hbspokokx = $baris->hbspokok;    
-                        if($sisax<'0'){
-                            if($qtyx=='0'){
-                                $sisapokok = $pokokx-$qty1;
-                                $totalhppkeluar = $totalhppkeluar + ($qty1 * $hbspokokx);
-                                $sisahpppokok = $sisapokok * $hbspokokx; 
-                                $data1 = [
-                                    'pokok' => $sisapokok,
-                                    'hpppokok' => $sisahpppokok,
-                                ];
-                                Stokfifo::where('id', '=', $idx)->update($data1);                            
-                                
-                            }else{
-                                $sisapokok = $pokokx-$qtyx;
-                                $totalhppkeluar = $totalhppkeluar + ($qtyx * $hbspokokx);
-                                $sisahpppokok = $sisapokok * $hbspokokx;
-                                $data1 = [
-                                    'pokok' => $sisapokok,
-                                    'hpppokok' => $sisahpppokok,
-                                ];
-                                Stokfifo::where('id', '=', $idx)->update($data1);                            
-
-                            }
-                            break;
+                $qtysf = $qty1;
+                foreach ($ceksf as $key => $baris) {
+                    $idx = $baris->id;
+                    $pokokx = $baris->pokok;
+                    $hbspokokx = $baris->hbspokok;
+                    if($pokokx>=$qtysf){
+                        if($pokokx>$qtysf){
+                            $xpokok = $pokokx - $qtysf;
+                            $datasf = [
+                                'pokok' => $pokokx - $qtysf,
+                                'hpppokok' => $xpokok * $hbspokokx,
+                            ];
+                            Stokfifo::where('id', '=', $idx)->update($datasf);
                         }else{
-                            $qtyx = $qty1-$pkkx;
-                            $totalhppkeluar = $totalhppkeluar + ($pokokx * $hbspokokx);
-                            $data1 = [
+                            $datasf = [
                                 'pokok' => 0,
-                                'hbspokok' => 0,
                                 'hpppokok' => 0,
                                 'kodepokok' => 0,
                             ];
-                            Stokfifo::where('id', '=', $idx)->update($data1);
-                            
-                            if($qtyx=='0'){                                                              
-                                break;
-                            }
-
+                            Stokfifo::where('id', '=', $idx)->update($datasf);
                         }
-                        
+                        break;
+                    }else{
+                        $qtysf = $qtysf - $pokokx;
+                        $datasf = [
+                                'pokok' => 0,
+                                'hpppokok' => 0,
+                                'kodepokok' => 0,
+                            ];
+                        Stokfifo::where('id', '=', $idx)->update($datasf);
                     }
-
-                    $akhirx = $awalx - $qty1;
-                    $hppkeluarx = $totalhppkeluar;
-                    $hbskeluarx = $hppkeluarx/$qty1;
-                    $hppakhirx = $hppawalx - $hppkeluarx;
-                    $hbsakhirx = $hppakhirx/$akhirx;
-                    $labajx = $hppj1+$ppn1-$diskon1-$hpp1;  
-                    $data2 = [
-                        'idbarang' => $idbarang1,
-                        'idanggota' => $idanggota1,
-                        'idseksi' => $idseksi1,
-                        'idruang' => $idruang1,
-                        'nama' => $nama1,
-                        'status' => $status1,
-                        'tglstatus' => $tgltransaksi1,
-                        'nomorstatus' => $nomorbuktia1,
-                        'idstatus' => $idstatus1,
-                        'created_at' => $created_at1,
-                        'tglposting' => $validatedData['tglposting1'],
-                        'nomorp' => $nomorp1,
-                        'nomorposting' => $validatedData['nomorposting1'],
-                        'awal' => $awalx,
-                        'hbsawal' => $hbsawalx,
-                        'hppawal' => $hppawalx,
-                        'keluar' => $qty1,
-                        'hbskeluar' => $hbskeluarx,
-                        'hppkeluar' => $hppkeluarx,
-                        'ppnkeluar' => $ppn1,
-                        'diskonkeluar' => $diskon1,
-                        'hjs' => $hjs1,
-                        'hppj' => $hppj1,
-                        'labaj' => $labajx,
-                        'akhir' => $akhirx,
-                        'hbsakhir' => $hbsakhirx,
-                        'hppakhir' => $hppakhirx,
-                        'email' => $email1,
-                        'iduser' => $iduser1,
-                        'keterangan' => $keterangan1,
-                        'kodepokok' => 2,
-                    ];
-                    Stokfifo::create($data2);
-                }else{
-                    //
                 }
-
-            }else{
-                //
-            }
-
-            //5.stoklifo
-            $qty2 = Stoklifo::where('idbarang','=',$idbarang1)
-            ->where('idruang','=',$idruang1)
-            ->where('created_at','<',$created_at1)
-            ->where('kodepokok','=','1')
-            ->count();
-
-            if($qty2<>'0'){
-                //cek data terakhir
-                $tampil2 = Stoklifo::limit(1)
-                ->where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<',$created_at1)
-                ->where('kodepokok','=','2')
-                ->orderBy('created_at','desc')
-                ->get();
-                foreach ($tampil2 as $baris) {
+                //cek dan update dataterakhir kodepokok 2
+                $tampilsf = Stokfifo::limit(1)
+                    ->where('idbarang','=',$idbarang1)
+                    ->where('idruang','=',$idruang1)
+                    ->where('kodepokok','=','2')
+                    ->orderBy('created_at','desc')
+                    ->get();
+                foreach ($tampilsf as $baris) {
                     $awalx = $baris->akhir;
                     $hbsawalx = $baris->hbsakhir;
                     $hppawalx = $baris->hppakhir;
                 }
 
-                $qty3 = Stoklifo::where('idbarang','=',$idbarang1)
-                ->where('idruang','=',$idruang1)
-                ->where('created_at','<=',$created_at1)
-                ->where('kodepokok','=','1')
-                ->count();
-                
-                if($qty3<>'0'){
-                    $tampil3 = Stoklifo::where('idbarang','=',$idbarang1)
+                 $akhirx = Stokfifo::select('pokok')
+                    ->where('idbarang','=',$idbarang1)
                     ->where('idruang','=',$idruang1)
-                    ->where('created_at','<=',$created_at1)
+                    ->where('kodepokok','=','1')
+                    ->sum('pokok');
+                 $hppakhirx = Stokfifo::select('hpppokok')
+                    ->where('idbarang','=',$idbarang1)
+                    ->where('idruang','=',$idruang1)
+                    ->where('kodepokok','=','1')
+                    ->sum('hpppokok');
+                 
+                 if($akhirx=='0'){
+                     $hbsakhirx = $hbsawalx;    
+                 }else{
+                     $hbsakhirx = $hppakhirx / $akhirx;    
+                 }   
+                
+                 $hppkeluarx = $hppawalx - $hppakhirx;
+                 if($qty1=='0'){
+                     $hbskeluarx = $hbsawalx;
+                 }else{
+                     $hbskeluarx = $hppkeluarx / $qty1;
+                 }
+                 $labajx = $hppj1 - $hppkeluarx;
+                    $data2 = [
+                    'idbarang' => $idbarang1,
+                    'idanggota' => $idanggota1,
+                    'idseksi' => $idseksi1,
+                    'idruang' => $idruang1,
+                    'nama' => $nama1,
+                    'status' => $status1,
+                    'tglstatus' => $tgltransaksi1,
+                    'nomorstatus' => $nomorbuktia1,
+                    'idstatus' => $idstatus1,
+                    'created_at' => $created_at1,
+                    'tglposting' => $validatedData['tglposting1'],
+                    'nomorp' => $nomorp1,
+                    'nomorposting' => $validatedData['nomorposting1'],
+                    'awal' => $awalx,
+                    'hbsawal' => $hbsawalx,
+                    'hppawal' => $hppawalx,
+                    'keluar' => $qty1,
+                    'hbskeluar' => $hbskeluarx,
+                    'hppkeluar' => $hppkeluarx,
+                    'ppnkeluar' => $ppn1,
+                    'diskonkeluar' => $diskon1,
+                    'hjs' => $hjs1,
+                    'hppj' => $hppj1,
+                    'labaj' => $labajx,
+                    'akhir' => $akhirx,
+                    'hbsakhir' => $hbsakhirx,
+                    'hppakhir' => $hppakhirx,
+                    'email' => $email1,
+                    'iduser' => $iduser1,
+                    'keterangan' => $keterangan1,
+                    'kodepokok' => 2,
+                ];
+                Stokfifo::create($data2);
+            }else{
+                //  
+            }
+
+            // //5.stoklifo
+            $qty2 = Stoklifo::where('idbarang','=',$idbarang1)
+            ->where('idruang','=',$idruang1)
+            ->where('kodepokok','=','1')
+            ->count();
+            if($qty2<>'0'){
+                //cek dan update kodepokok 1
+                $ceksl = Stoklifo::where('idbarang','=',$idbarang1)
+                    ->where('idruang','=',$idruang1)
                     ->where('kodepokok','=','1')
                     ->orderBy('created_at','desc')
                     ->get();
-                    $pkkx = 0;
-                    $hpppkkx = 0;
-                    $sisax = $qty1;
-                    $totalhppkeluar=0;
-                    $qtyx = 0;
-                    foreach ($tampil3 as $baris) {
-                        $idx = $baris->id;
-                        $pokokx = $baris->pokok;
-                        $pkkx = $pkkx + $pokokx;
-                        $sisax = $qty1 - $pkkx;
-                        $hbspokokx = $baris->hbspokok;    
-                        if($sisax<'0'){
-                            if($qtyx=='0'){
-                                $sisapokok = $pokokx-$qty1;
-                                $totalhppkeluar = $totalhppkeluar + ($qty1 * $hbspokokx);
-                                $sisahpppokok = $sisapokok * $hbspokokx; 
-                                $data1 = [
-                                    'pokok' => $sisapokok,
-                                    'hpppokok' => $sisahpppokok,
-                                ];
-                                Stoklifo::where('id', '=', $idx)->update($data1);                            
-                                
-                            }else{
-                                $sisapokok = $pokokx-$qtyx;
-                                $totalhppkeluar = $totalhppkeluar + ($qtyx * $hbspokokx);
-                                $sisahpppokok = $sisapokok * $hbspokokx;
-                                $data1 = [
-                                    'pokok' => $sisapokok,
-                                    'hpppokok' => $sisahpppokok,
-                                ];
-                                Stoklifo::where('id', '=', $idx)->update($data1);                            
-
-                            }
-                            break;
+                $qtysl = $qty1;
+                foreach ($ceksl as $key => $baris) {
+                    $idx = $baris->id;
+                    $pokokx = $baris->pokok;
+                    $hbspokokx = $baris->hbspokok;
+                    if($pokokx>=$qtysl){
+                        if($pokokx>$qtysl){
+                            $xpokok = $pokokx - $qtysl;
+                            $datasl = [
+                                'pokok' => $pokokx - $qtysl,
+                                'hpppokok' => $xpokok * $hbspokokx,
+                            ];
+                            Stoklifo::where('id', '=', $idx)->update($datasl);
                         }else{
-                            $qtyx = $qty1-$pkkx;
-                            $totalhppkeluar = $totalhppkeluar + ($pokokx * $hbspokokx);
-                            $data1 = [
+                            $datasl = [
                                 'pokok' => 0,
-                                'hbspokok' => 0,
                                 'hpppokok' => 0,
                                 'kodepokok' => 0,
                             ];
-                            Stoklifo::where('id', '=', $idx)->update($data1);
-                            
-                            if($qtyx=='0'){                                                              
-                                break;
-                            }
-
+                            Stoklifo::where('id', '=', $idx)->update($datasl);
                         }
-                        
+                        break;
+                    }else{
+                        $qtysl = $qtysl - $pokokx;
+                        $datasl = [
+                                'pokok' => 0,
+                                'hpppokok' => 0,
+                                'kodepokok' => 0,
+                            ];
+                        Stoklifo::where('id', '=', $idx)->update($datasl);
                     }
-
-                    $akhirx = $awalx - $qty1;
-                    $hppkeluarx = $totalhppkeluar;
-                    $hbskeluarx = $hppkeluarx/$qty1;
-                    $hppakhirx = $hppawalx - $hppkeluarx;
-                    $hbsakhirx = $hppakhirx/$akhirx;  
-                    $labajx = $hppj1+$ppn1-$diskon1-$hpp1;
-
-                    $data2 = [
-                        'idbarang' => $idbarang1,
-                        'idanggota' => $idanggota1,
-                        'idseksi' => $idseksi1,
-                        'idruang' => $idruang1,
-                        'nama' => $nama1,
-                        'status' => $status1,
-                        'tglstatus' => $tgltransaksi1,
-                        'nomorstatus' => $nomorbuktia1,
-                        'idstatus' => $idstatus1,
-                        'created_at' => $created_at1,
-                        'tglposting' => $validatedData['tglposting1'],
-                        'nomorp' => $nomorp1,
-                        'nomorposting' => $validatedData['nomorposting1'],
-                        'awal' => $awalx,
-                        'hbsawal' => $hbsawalx,
-                        'hppawal' => $hppawalx,
-                        'keluar' => $qty1,
-                        'hbskeluar' => $hbskeluarx,
-                        'hppkeluar' => $hppkeluarx,
-                        'ppnkeluar' => $ppn1,
-                        'diskonkeluar' => $diskon1,
-                        'hjs' => $hjs1,
-                        'hppj' => $hppj1,
-                        'labaj' => $labajx,
-                        'akhir' => $akhirx,
-                        'hbsakhir' => $hbsakhirx,
-                        'hppakhir' => $hppakhirx,
-                        'email' => $email1,
-                        'iduser' => $iduser1,
-                        'keterangan' => $keterangan1,
-                        'kodepokok' => 2,
-                    ];
-                    Stoklifo::create($data2);
-                }else{
-                    //
+                }
+                //cek dan update dataterakhir kodepokok 2
+                $tampilsl = Stoklifo::limit(1)
+                    ->where('idbarang','=',$idbarang1)
+                    ->where('idruang','=',$idruang1)
+                    ->where('kodepokok','=','2')
+                    ->orderBy('created_at','desc')
+                    ->get();
+                foreach ($tampilsl as $baris) {
+                    $awalx = $baris->akhir;
+                    $hbsawalx = $baris->hbsakhir;
+                    $hppawalx = $baris->hppakhir;
                 }
 
+                 $akhirx = Stoklifo::select('pokok')
+                    ->where('idbarang','=',$idbarang1)
+                    ->where('idruang','=',$idruang1)
+                    ->where('kodepokok','=','1')
+                    ->sum('pokok');
+                 $hppakhirx = Stoklifo::select('hpppokok')
+                    ->where('idbarang','=',$idbarang1)
+                    ->where('idruang','=',$idruang1)
+                    ->where('kodepokok','=','1')
+                    ->sum('hpppokok');
+                 if($akhirx=='0'){
+                     $hbsakhirx = $hbsawalx;    
+                 }else{
+                     $hbsakhirx = $hppakhirx / $akhirx;    
+                 }
+                
+                 $hppkeluarx = $hppawalx - $hppakhirx;
+                 if($qty1=='0'){
+                     $hbskeluarx = $hbsawalx;
+                 }else{
+                     $hbskeluarx = $hppkeluarx / $qty1;
+                 }
+                 $labajx = $hppj1 - $hppkeluarx;
+                    $data2 = [
+                    'idbarang' => $idbarang1,
+                    'idanggota' => $idanggota1,
+                    'idseksi' => $idseksi1,
+                    'idruang' => $idruang1,
+                    'nama' => $nama1,
+                    'status' => $status1,
+                    'tglstatus' => $tgltransaksi1,
+                    'nomorstatus' => $nomorbuktia1,
+                    'idstatus' => $idstatus1,
+                    'created_at' => $created_at1,
+                    'tglposting' => $validatedData['tglposting1'],
+                    'nomorp' => $nomorp1,
+                    'nomorposting' => $validatedData['nomorposting1'],
+                    'awal' => $awalx,
+                    'hbsawal' => $hbsawalx,
+                    'hppawal' => $hppawalx,
+                    'keluar' => $qty1,
+                    'hbskeluar' => $hbskeluarx,
+                    'hppkeluar' => $hppkeluarx,
+                    'ppnkeluar' => $ppn1,
+                    'diskonkeluar' => $diskon1,
+                    'hjs' => $hjs1,
+                    'hppj' => $hppj1,
+                    'labaj' => $labajx,
+                    'akhir' => $akhirx,
+                    'hbsakhir' => $hbsakhirx,
+                    'hppakhir' => $hppakhirx,
+                    'email' => $email1,
+                    'iduser' => $iduser1,
+                    'keterangan' => $keterangan1,
+                    'kodepokok' => 2,
+                ];
+                Stoklifo::create($data2);
             }else{
-                //
+                //  
             }
+
+
 
             //6.update bmasuk
             $data = [
