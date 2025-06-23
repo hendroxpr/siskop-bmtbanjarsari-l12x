@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 02, 2025 at 05:29 AM
+-- Generation Time: Jun 23, 2025 at 02:20 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.3.20
 
@@ -602,15 +602,15 @@ CREATE TABLE `barang` (
 --
 
 INSERT INTO `barang` (`id`, `idsatuan`, `idkategori`, `kode`, `barcode`, `nabara`, `slug`, `expired`, `hbs`, `hjs`, `diskonbeli`, `ppnbeli`, `diskonjual`, `ppnjual`, `spek`, `image`, `keterangan`) VALUES
-(3, 2, 4, 1001, '1-001', 'SAWAL BANTAL GULING/KATUN', 'sawal-bantal-gulingkatun', '2034-05-01', '20000', '37000', '0.00', '0.00', '0.00', '0.00', NULL, 'pos01-barang-images/DaH2vW1jmJ7XvvkzwT9kqOcrWMGGpexuxOSWf2Fb.png', NULL),
+(3, 2, 4, 1001, '1-001', 'SAWAL BANTAL GULING/KATUN', 'sawal-bantal-gulingkatun', '2034-05-01', '20000', '37000', '3.00', '1.00', '4.00', '2.00', NULL, 'pos01-barang-images/DaH2vW1jmJ7XvvkzwT9kqOcrWMGGpexuxOSWf2Fb.png', NULL),
 (4, 2, 4, 1002, '1-002', 'SAWAL BANTAL CINTA', 'sawal-bantal-cinta', NULL, '30000', '35000', '0.00', '0.00', '0.00', '0.00', NULL, 'pos01-barang-images/ENme83grHPrbBeD1YI66IqS3QyzBIMEsYnXJh5AD.png', NULL),
-(6, 2, 4, 1003, '1-003', 'BANTAL CINTA', 'bantal-cinta', '2025-05-13', '45000', '55000', '0.00', '0.00', '0.00', '0.00', NULL, 'pos01-barang-images/ITzNCRkt9UyfVHA68IBR24tDRLFkgTrMtUpkvvgR.png', NULL),
+(6, 2, 4, 1003, '1-003', 'BANTAL CINTA', 'bantal-cinta', '2025-05-13', '45000', '100000', '0.00', '0.00', '0.00', '0.00', NULL, 'pos01-barang-images/ITzNCRkt9UyfVHA68IBR24tDRLFkgTrMtUpkvvgR.png', NULL),
 (8, 2, 4, 1004, '1-004', 'BANTAL MANA/YOBEL', 'bantal-manayobel', NULL, '28000', '36000', '0.00', '0.00', '0.00', '0.00', 'BARU', 'pos01-barang-images/x0mzUtoz6q2SJiOWaKfG34Ehdccrc9DdINe5TiuS.jpg', NULL),
 (9, 2, 4, 1005, '1-005', 'BANTAL KURSI SILIKON', 'bantal-kursi-silikon', NULL, '80000', '90000', '0.00', '0.00', '0.00', '0.00', 'BARU', 'pos01-barang-images/CSDJp9IXqoGEt0xNRjqmuKv8WAkM4R6vvAXYoxem.png', NULL),
 (10, 2, 4, 1006, '1-006', 'BANTAL JESELIN', 'bantal-jeselin', NULL, '41000', '50000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL),
 (11, 2, 4, 1007, '1-007', 'GULING JESELIN', 'guling-jeselin', NULL, '43000', '50000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL),
 (12, 2, 4, 1008, '1-008', 'HDK MERAH PUTIH TG', 'hdk-merah-putih-tg', NULL, '20000', '25000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL),
-(14, 2, 4, 1009, '1-009', 'HDK BABY BORDIR', 'hdk-baby-bordir', NULL, '16670', '20000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL),
+(14, 2, 4, 1009, '1-009', 'HDK BABY BORDIR', 'hdk-baby-bordir', NULL, '20000', '40000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL),
 (15, 2, 4, 1010, '1-010', 'HDK OSAKA TG', 'hdk-osaka-tg', NULL, '27920', '35000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL),
 (16, 2, 4, 1011, '1-011', 'HDK GOOD MORNING', 'hdk-good-morning', NULL, '3335', '4000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL),
 (17, 2, 4, 1012, '1-012', 'HDK LEKSUS JUMBO', 'hdk-leksus-jumbo', NULL, '93335', '110000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL),
@@ -953,7 +953,7 @@ INSERT INTO `barang` (`id`, `idsatuan`, `idkategori`, `kode`, `barcode`, `nabara
 INSERT INTO `barang` (`id`, `idsatuan`, `idkategori`, `kode`, `barcode`, `nabara`, `slug`, `expired`, `hbs`, `hjs`, `diskonbeli`, `ppnbeli`, `diskonjual`, `ppnjual`, `spek`, `image`, `keterangan`) VALUES
 (827, 2, 10, 4024, '4-024', 'BINDER KLIP VANCO NO 107', 'binder-klip-vanco-no-107', NULL, '300', '360', '0.00', '0.00', '0.00', '0.00', 'BARU', NULL, NULL),
 (828, 2, 10, 4025, '4-025', 'BINDER PANJANG', 'binder-panjang', NULL, '900', '1080', '0.00', '0.00', '0.00', '0.00', 'BARU', NULL, NULL),
-(829, 2, 10, 4026, '4-026', 'BUKU BIG BOS', 'buku-big-bos', NULL, '4500', '5400', '0.00', '0.00', '0.00', '0.00', 'BARU', NULL, NULL),
+(829, 2, 10, 4026, '4-026', 'BUKU BIG BOS', 'buku-big-bos', NULL, '5000', '5400', '0.00', '0.00', '0.00', '0.00', 'BARU', NULL, NULL),
 (830, 2, 10, 4027, '4-027', 'BUKU EKSPEDISI', 'buku-ekspedisi', NULL, '6350', '7620', '0.00', '0.00', '0.00', '0.00', 'BARU', NULL, NULL),
 (831, 2, 10, 4028, '4-028', 'BUKU EKSPEDISI 100', 'buku-ekspedisi-100', NULL, '9000', '10800', '0.00', '0.00', '0.00', '0.00', 'BARU', NULL, NULL),
 (832, 2, 10, 4029, '4-029', 'BUKU FOLIO 1000 GK', 'buku-folio-1000-gk', NULL, '18750', '22500', '0.00', '0.00', '0.00', '0.00', 'BARU', NULL, NULL),
@@ -1095,7 +1095,9 @@ INSERT INTO `barang` (`id`, `idsatuan`, `idkategori`, `kode`, `barcode`, `nabara
 (968, 2, 10, 4165, '4-165', 'TRIGONAL CLIP NO. 3', 'trigonal-clip-no.-3', NULL, '1450', '1740', '0.00', '0.00', '0.00', '0.00', 'BARU', NULL, NULL),
 (969, 2, 10, 4166, '4-166', 'TRIGONAL CLIP NO. 5 (JUMBO SIZE)', 'trigonal-clip-no.-5-(jumbo-size)', NULL, '2400', '2880', '0.00', '0.00', '0.00', '0.00', 'BARU', NULL, NULL),
 (970, 2, 10, 4167, '4-167', 'WATER GLUE DAIMARU', 'water-glue-daimaru', NULL, '9500', '11400', '0.00', '0.00', '0.00', '0.00', 'BARU', 'pos01-barang-images/J1qDB4NFIiswwMSKAWiHBYNwDovafXSrimQZCDWN.png', 'Daimaru Water Glue Stick adalah lem kertas dengan tekstur kental dan lengket yang bisa digunakan untuk kerajinan tangan, amplop,dan lain sebagainya.'),
-(971, 2, 1, 5001, '5-001', 'TEH PUCUK HARUM 350 ML (BOTOL)', 'teh-pucuk-harum-350-ml-botol', NULL, '2583', '3100', '0.00', '0.00', '0.00', '0.00', 'BARU', 'pos01-barang-images/ur8PJTXfY5wf3cIMmoTbeezIxr1SgDVdNjistSKr.png', NULL);
+(971, 2, 1, 5001, '5-001', 'TEH PUCUK HARUM 350 ML (BOTOL)', 'teh-pucuk-harum-350-ml-botol', NULL, '2583', '3100', '0.00', '0.00', '0.00', '0.00', 'BARU', 'pos01-barang-images/ur8PJTXfY5wf3cIMmoTbeezIxr1SgDVdNjistSKr.png', NULL),
+(972, 2, 4, 1116, '1-116', 'HDK SPRAY XXX', 'hdk-spray-xxx', NULL, '16670', '20000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL),
+(973, 2, 4, 1117, '1-117', 'HDK BABY XXX', 'hdk-baby-xxx', NULL, '16670', '20000', '0.00', '0.00', '0.00', '0.00', 'BARU', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -1119,15 +1121,15 @@ CREATE TABLE `barangruang` (
 --
 
 INSERT INTO `barangruang` (`id`, `idbarang`, `idseksi`, `idruang`, `qty`, `stokmin`, `stokmax`, `aktif`) VALUES
-(4, 3, 1, 1, '15', '15', '25', 'Y'),
+(4, 3, 1, 1, '14', '15', '25', 'Y'),
 (5, 4, 1, 1, '20', '20', '30', 'Y'),
-(6, 6, 1, 1, '9', '11', '21', 'Y'),
-(7, 8, 1, 1, '8', '10', '20', 'Y'),
-(8, 9, 1, 1, '3', '4', '14', 'Y'),
-(9, 10, 1, 1, '97', '6', '16', 'Y'),
+(6, 6, 1, 1, '0', '11', '21', 'Y'),
+(7, 8, 1, 1, '7', '10', '20', 'Y'),
+(8, 9, 1, 1, '0', '4', '14', 'Y'),
+(9, 10, 1, 1, '37', '6', '16', 'Y'),
 (11, 11, 1, 1, '97', '23', '33', 'Y'),
-(12, 12, 1, 1, '100', '12', '22', 'Y'),
-(13, 14, 1, 1, '0', '6', '16', 'Y'),
+(12, 12, 1, 1, '99', '12', '22', 'Y'),
+(13, 14, 1, 1, '8', '6', '16', 'Y'),
 (14, 15, 1, 1, '0', '5', '15', 'Y'),
 (15, 16, 1, 1, '0', '10', '20', 'Y'),
 (16, 17, 1, 1, '0', '3', '13', 'Y'),
@@ -1469,7 +1471,7 @@ INSERT INTO `barangruang` (`id`, `idbarang`, `idseksi`, `idruang`, `qty`, `stokm
 (361, 826, 4, 4, '0', '9', '19', 'Y'),
 (362, 827, 4, 4, '0', '144', '154', 'Y'),
 (363, 828, 4, 4, '0', '23', '33', 'Y'),
-(364, 829, 4, 4, '0', '30', '40', 'Y'),
+(364, 829, 4, 4, '6', '30', '40', 'Y'),
 (365, 830, 4, 4, '0', '13', '23', 'Y'),
 (366, 831, 4, 4, '0', '9', '19', 'Y'),
 (367, 832, 4, 4, '0', '7', '17', 'Y'),
@@ -1672,6 +1674,44 @@ INSERT INTO `bayarhutang` (`id`, `idanggota`, `idsupplier`, `idhutang`, `tgltran
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `biaya`
+--
+
+CREATE TABLE `biaya` (
+  `id` bigint NOT NULL,
+  `idjenisbiaya` bigint DEFAULT '1',
+  `idkategoribiaya` bigint DEFAULT '1',
+  `idsupplier` bigint DEFAULT NULL,
+  `idsatuan` bigint DEFAULT '1',
+  `idruang` bigint DEFAULT '1',
+  `tgltransaksi` date DEFAULT NULL,
+  `nomorbukti` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `biaya` varchar(100) DEFAULT NULL,
+  `keterangan` varchar(250) DEFAULT NULL,
+  `qty` int DEFAULT '1',
+  `hbs` decimal(15,0) DEFAULT '0',
+  `subtotal` decimal(15,0) DEFAULT '0',
+  `ppn` decimal(15,0) DEFAULT '0',
+  `diskon` decimal(15,0) DEFAULT '0',
+  `totalbeli` decimal(15,0) DEFAULT '0',
+  `idusers` bigint DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `biaya`
+--
+
+INSERT INTO `biaya` (`id`, `idjenisbiaya`, `idkategoribiaya`, `idsupplier`, `idsatuan`, `idruang`, `tgltransaksi`, `nomorbukti`, `biaya`, `keterangan`, `qty`, `hbs`, `subtotal`, `ppn`, `diskon`, `totalbeli`, `idusers`) VALUES
+(1, 2, 1, 0, 1, 1, '2025-06-14', '-', 'Beli materai', '-', 1, '100000', '100000', '0', '0', '100000', 1),
+(2, 2, 1, 0, 1, 1, '2025-06-14', '-', 'Beli nasi bungkus', '-', 5, '15000', '75000', '0', '0', '75000', 1),
+(3, 2, 1, 0, 1, 1, '2025-06-14', '-', 'Beli kertas f4 dan A4', '-', 5, '55000', '275000', '0', '0', '275000', 1),
+(5, 1, 2, 0, 1, 1, '2025-06-15', '-', 'BELI BERAS DLL', '-', 1, '250000', '250000', '0', '0', '250000', 1),
+(6, 1, 2, 0, 1, 1, '2025-06-22', '-', 'BELI BERAS DLL', '-', 1, '350000', '350000', '0', '0', '350000', 1),
+(7, 1, 2, 0, 1, 1, '2025-06-22', '-', 'BBM', '-', 3, '125000', '375000', '5', '15', '374990', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `bkeluar`
 --
 
@@ -1714,7 +1754,19 @@ INSERT INTO `bkeluar` (`id`, `idbarang`, `idruang`, `idanggota`, `tgltransaksi`,
 (77, 6, 1, 43, '2025-06-01', 1, 1, 'KLR.001.20250601.0001', '1', '10', '45000', '45000', '55000', '55000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
 (78, 10, 1, 43, '2025-06-01', 1, 1, 'KLR.001.20250601.0001', '1', '98', '41000', '41000', '50000', '50000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
 (79, 11, 1, 46, '2025-06-01', 2, 1, 'KLR.001.20250601.0002', '1', '99', '43000', '43000', '50000', '50000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0003', NULL, 'admin@gmail.com', 1),
-(80, 11, 1, 48, '2025-06-01', 3, 1, 'KLR.001.20250601.0003', '1', '98', '43000', '43000', '50000', '50000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0004', NULL, 'admin@gmail.com', 1);
+(80, 11, 1, 48, '2025-06-01', 3, 1, 'KLR.001.20250601.0003', '1', '98', '43000', '43000', '50000', '50000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0004', NULL, 'admin@gmail.com', 1),
+(81, 8, 1, 61, '2025-06-03', 1, 1, 'KLR.001.20250603.0001', '1', '8', '28000', '28000', '36000', '36000', '0.00', '0.00', '0', '0', '2025-06-03', 'POS.001.20250603.0001', NULL, 'admin@gmail.com', 1),
+(82, 12, 1, 64, '2025-06-03', 2, 1, 'KLR.001.20250603.0002', '1', '100', '20000', '20000', '25000', '25000', '0.00', '0.00', '0', '0', '2025-06-03', 'POS.001.20250603.0002', NULL, 'admin@gmail.com', 1),
+(83, 6, 1, 45, '2025-06-06', 1, 1, 'KLR.001.20250606.0001', '1', '9', '45000', '45000', '100000', '100000', '0.00', '0.00', '0', '0', '2025-06-06', 'POS.001.20250606.0002', NULL, 'admin@gmail.com', 1),
+(84, 14, 1, 39, '2025-06-01', 4, 1, 'KLR.001.20250601.0004', '1', '10', '20000', '20000', '40000', '40000', '0.00', '0.00', '0', '0', '2025-06-06', 'POS.001.20250606.0003', NULL, 'admin@gmail.com', 1),
+(85, 14, 1, 39, '2025-06-06', 2, 1, 'KLR.001.20250606.0002', '1', '10', '20000', '20000', '40000', '40000', '0.00', '0.00', '0', '0', '2025-06-06', 'POS.001.20250606.0004', NULL, 'admin@gmail.com', 1),
+(86, 3, 1, 38, '2025-06-15', 1, 1, 'KLR.001.20250615.0001', '3', '17', '20000', '60000', '37000', '111000', '2.00', '4.00', '2220', '4440', '2025-06-15', 'POS.001.20250615.0002', NULL, 'admin@gmail.com', 1),
+(87, 9, 1, 39, '2025-06-18', 1, 1, 'KLR.001.20250618.0001', '3', '3', '80000', '240000', '90000', '270000', '0.00', '0.00', '0', '0', NULL, NULL, NULL, 'admin@gmail.com', 1),
+(88, 9, 1, 46, '2025-06-19', 1, 1, 'KLR.001.20250619.0001', '3', '3', '80000', '240000', '90000', '270000', '0.00', '0.00', '0', '0', '2025-06-19', 'POS.001.20250619.0002', NULL, 'admin@gmail.com', 1),
+(89, 6, 1, 46, '2025-06-19', 2, 1, 'KLR.001.20250619.0002', '8', '8', '45000', '360000', '100000', '800000', '0.00', '0.00', '0', '0', '2025-06-19', 'POS.001.20250619.0003', NULL, 'admin@gmail.com', 1),
+(90, 10, 1, 44, '2025-06-19', 3, 1, 'KLR.001.20250619.0003', '60', '97', '41000', '2460000', '50000', '3000000', '0.00', '0.00', '0', '0', '2025-06-19', 'POS.001.20250619.0004', NULL, 'admin@gmail.com', 1),
+(91, 829, 4, 56, '2025-06-19', 4, 1, 'KLR.001.20250619.0004', '2', '8', '5000', '10000', '5400', '10800', '0.00', '0.00', '0', '0', '2025-06-19', 'POS.001.20250619.0007', NULL, 'admin@gmail.com', 1),
+(92, 829, 4, 59, '2025-06-19', 5, 1, 'KLR.001.20250619.0005', '2', '8', '5000', '10000', '5400', '10800', '0.00', '0.00', '0', '0', '2025-06-19', 'POS.001.20250619.0007', NULL, 'admin@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -1760,7 +1812,11 @@ INSERT INTO `bmasuk` (`id`, `idbarang`, `idruang`, `idsupplier`, `tgltransaksi`,
 (61, 11, 1, 0, '2025-05-25', 1, 1, 'MSK.001.20250525.0001', '-', '50', '43000', '2150000', '0.00', '0.00', '0', '0', '2025-05-25', 'POS.001.20250525.0001', NULL, 'admin@gmail.com', 1),
 (62, 11, 1, 1, '2025-05-25', 2, 1, 'MSK.001.20250525.0002', '-', '50', '43000', '2150000', '0.00', '0.00', '0', '0', '2025-05-25', 'POS.001.20250525.0002', NULL, 'admin@gmail.com', 1),
 (63, 10, 1, 1, '2025-05-25', 2, 1, 'MSK.001.20250525.0002', '-', '50', '41000', '2050000', '0.00', '0.00', '0', '0', '2025-05-25', 'POS.001.20250525.0002', NULL, 'admin@gmail.com', 1),
-(64, 12, 1, 1, '2025-06-01', 1, 1, 'MSK.001.20250601.0001', '-', '100', '20000', '2000000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0005', NULL, 'admin@gmail.com', 1);
+(64, 12, 1, 1, '2025-06-01', 1, 1, 'MSK.001.20250601.0001', '-', '100', '20000', '2000000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0005', NULL, 'admin@gmail.com', 1),
+(65, 14, 1, 0, '2025-06-06', 1, 1, 'MSK.001.20250606.0001', '-', '10', '20000', '200000', '0.00', '0.00', '0', '0', '2025-06-06', 'POS.001.20250606.0001', NULL, 'admin@gmail.com', 1),
+(67, 3, 1, 1, '2025-06-15', 1, 1, 'MSK.001.20250615.0001', '-', '2', '20000', '40000', '1.00', '3.00', '400', '1200', '2025-06-15', 'POS.001.20250615.0001', NULL, 'admin@gmail.com', 1),
+(68, 829, 4, 0, '2025-06-19', 1, 1, 'MSK.001.20250619.0001', '-', '3', '4500', '13500', '0.00', '0.00', '0', '0', '2025-06-19', 'POS.001.20250619.0005', NULL, 'admin@gmail.com', 1),
+(69, 829, 4, 0, '2025-06-19', 2, 1, 'MSK.001.20250619.0002', '-', '5', '5000', '25000', '0.00', '0.00', '0', '0', '2025-06-19', 'POS.001.20250619.0006', NULL, 'admin@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -1853,7 +1909,7 @@ CREATE TABLE `hutang` (
 
 INSERT INTO `hutang` (`id`, `idanggota`, `idsupplier`, `idjenispembayaran`, `tglstatus`, `nomorstatus`, `nomorp`, `status`, `nomorstatusasal`, `created_at`, `idstatus`, `tglposting`, `nomorposting`, `awal`, `masuk`, `keluar`, `akhir`, `xangsuran`, `persenjasa`, `totalori`, `email`, `iduser`, `keterangan`, `asli`, `pokok`, `kodepokok`, `angsuranke`, `subtotals`, `ppns`, `diskons`, `totals`, `bayars`, `vouchers`, `ambilsavings`, `kembalis`, `savings`) VALUES
 (34, 40, 0, 0, '2025-05-13', 'KLR.001.20250513.0003', 4, 'hutangcus', '0', '2025-05-13 18:20:19', 0, '2025-05-13', 'POS.001.20250513.0004', '0', '55000', '0', '55000', 1, '0.00', '55000', 'admin@gmail.com', 1, NULL, '0', '0', 2, 0, '0', '0', '0', '0', '0', '0', '0', '0', '0'),
-(35, 40, 0, 0, '2025-05-13', 'KLR.001.20250513.0003', 4, 'hutangcus', '0', '2025-05-13 18:20:19', 0, '2025-05-13', 'POS.001.20250513.0004', '0', '0', '0', '0', 1, '0.00', '55000', 'admin@gmail.com', 1, NULL, '55000', '5000', 1, 2, '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(35, 40, 0, 0, '2025-05-13', 'KLR.001.20250513.0003', 4, 'hutangcus', '0', '2025-05-13 18:20:19', 0, '2025-05-13', 'POS.001.20250513.0004', '0', '0', '0', '0', 1, '0.00', '55000', 'admin@gmail.com', 1, NULL, '55000', '55000', 1, 2, '0', '0', '0', '0', '0', '0', '0', '0', '0'),
 (38, 0, 2, 0, '2025-05-13', 'MSK.001.20250513.0001', 1, 'hutangsup', '0', '2025-05-25 16:55:45', 0, '2025-05-13', 'POS.001.20250513.0001', '0', '1995000', '0', '1995000', 1, '0.00', '1995000', 'admin@gmail.com', 1, NULL, '0', '0', 2, 0, '0', '0', '0', '0', '0', '0', '0', '0', '0'),
 (39, 0, 2, 0, '2025-05-13', 'MSK.001.20250513.0001', 1, 'hutangsup', '0', '2025-05-25 16:55:45', 0, '2025-05-13', 'POS.001.20250513.0001', '0', '0', '0', '0', 1, '0.00', '1995000', 'admin@gmail.com', 1, NULL, '1995000', '1495000', 1, 2, '0', '0', '0', '0', '0', '0', '0', '0', '0'),
 (40, 0, 1, 0, '2025-05-25', 'MSK.001.20250525.0002', 2, 'hutangsup', '0', '2025-05-25 17:32:23', 0, '2025-05-25', 'POS.001.20250525.0002', '0', '4200000', '0', '4200000', 10, '0.00', '4200000', 'admin@gmail.com', 1, NULL, '0', '0', 2, 0, '0', '0', '0', '0', '0', '0', '0', '0', '0'),
@@ -1864,7 +1920,9 @@ INSERT INTO `hutang` (`id`, `idanggota`, `idsupplier`, `idjenispembayaran`, `tgl
 (45, 38, 0, 0, '2025-05-30', 'KMM.001.20250530.0001', 1, 'hutangmam', '0', '2025-05-30 09:18:04', 0, '2025-05-30', 'POS.001.20250530.0001', '0', '50000', '0', '50000', 1, '0.00', '50000', 'admin@gmail.com', 1, NULL, '0', '0', 2, 0, '0', '0', '0', '0', '0', '0', '0', '0', '0'),
 (46, 38, 0, 0, '2025-05-30', 'KMM.001.20250530.0001', 1, 'hutangmam', '0', '2025-05-30 09:18:04', 0, '2025-05-30', 'POS.001.20250530.0001', '0', '0', '0', '0', 1, '0.00', '50000', 'admin@gmail.com', 1, NULL, '50000', '25000', 1, 1, '0', '0', '0', '0', '0', '0', '0', '0', '0'),
 (47, 40, 0, 1, '2025-05-30', 'BHC.001.20250530.0001', 2, 'bayarcus', 'KLR.001.20250513.0003', '2025-05-30 09:20:31', 13, '2025-05-30', 'POS.001.20250530.0002', '25000', '0', '20000', '5000', 1, '0.00', '20000', 'admin@gmail.com', 1, NULL, '0', '0', 2, 2, '20000', '0', '0', '20000', '20000', '0', '0', '0', '0'),
-(48, 38, 0, 1, '2025-05-30', 'BHC.001.20250530.0002', 3, 'bayarcus', 'KMM.001.20250530.0001', '2025-05-30 09:23:56', 14, '2025-05-30', 'POS.001.20250530.0003', '50000', '0', '25000', '25000', 1, '0.00', '25000', 'admin@gmail.com', 1, NULL, '0', '0', 2, 1, '25000', '0', '0', '25000', '25000', '0', '0', '0', '0');
+(48, 38, 0, 1, '2025-05-30', 'BHC.001.20250530.0002', 3, 'bayarcus', 'KMM.001.20250530.0001', '2025-05-30 09:23:56', 14, '2025-05-30', 'POS.001.20250530.0003', '50000', '0', '25000', '25000', 1, '0.00', '25000', 'admin@gmail.com', 1, NULL, '0', '0', 2, 1, '25000', '0', '0', '25000', '25000', '0', '0', '0', '0'),
+(49, 46, 0, 0, '2025-06-10', 'KMM.001.20250610.0001', 1, 'hutangcus', '0', '2025-06-10 05:44:17', 0, '2025-06-10', 'POS.001.20250610.0001', '0', '40400', '0', '40400', 4, '1.00', '40000', 'admin@gmail.com', 1, NULL, '0', '0', 2, 0, '0', '0', '0', '0', '0', '0', '0', '0', '0'),
+(50, 46, 0, 0, '2025-06-10', 'KMM.001.20250610.0001', 1, 'hutangcus', '0', '2025-06-10 05:44:17', 0, '2025-06-10', 'POS.001.20250610.0001', '0', '0', '0', '0', 4, '1.00', '40000', 'admin@gmail.com', 1, NULL, '40400', '40400', 1, 0, '0', '0', '0', '0', '0', '0', '0', '0', '0');
 
 -- --------------------------------------------------------
 
@@ -1919,6 +1977,25 @@ CREATE TABLE `instansi` (
 
 INSERT INTO `instansi` (`id`, `nama`, `namasingkat`, `alamat`, `desa`, `kecamatan`, `kabupaten`, `propinsi`, `kodepos`, `email`, `facebook`, `instagram`, `twitter`, `whatsapp`, `website`, `kontakperson`, `nomorkontak`, `jabatankontak`, `ketua`, `nipketua`, `fotoketua`, `sambutanketua`, `bendahara`, `nipbendahara`, `kotattd`, `logo`, `motto`, `visi`, `misi`, `tujuan`, `strukturorganisasi`, `videoprofil`, `profil`, `excerptprofil`, `awalanprofil`, `keterangan`, `lokasimap`, `sejarah`) VALUES
 (1, 'KPRI Sinar Abadi', 'KPRISA', 'Jl. Wonosari', 'Sambeng', 'Kasiman', 'Bojonegoro', 'Jawa Timur', '62164', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '(0353) 531392', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin-instansi-logo/KhsB5HbCggy4JVuX8c0hkCBUfA9va8UjuPmJHfak.png', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jenisbiaya`
+--
+
+CREATE TABLE `jenisbiaya` (
+  `id` bigint NOT NULL,
+  `jenisbiaya` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `jenisbiaya`
+--
+
+INSERT INTO `jenisbiaya` (`id`, `jenisbiaya`) VALUES
+(2, 'BIAYA LAIN'),
+(1, 'BIAYA PRODUKSI');
 
 -- --------------------------------------------------------
 
@@ -2024,6 +2101,25 @@ INSERT INTO `kategori` (`id`, `kode`, `kategori`, `keterangan`) VALUES
 (24, 'TDH01', 'Table d’Hôte', 'Table d’hôte adalah menu yang terdiri dari beberapa hidangan dengan harga tetap. Biasanya, hidangan ini disajikan dalam set menu, termasuk appetizer, main course, dan dessert.\r\n\r\nContoh Table d’Hôte : Set menu pernikahan, Paket makan malam di restoran fine dining'),
 (25, 'TME01', 'Tasting Menu', 'Tasting menu adalah cara di mana pelanggan diberikan berbagai hidangan dalam porsi kecil. Tujuannya adalah untuk memberikan pengalaman mencicipi berbagai variasi makanan dalam satu kali makan.\r\n\r\nContoh Tasting Menu : Menu di restoran Michelin star, Paket “chef’s special” dengan beberapa hidangan'),
 (26, 'BUF01', 'Buffet (Prasmanan)', 'Buffet atau prasmanan adalah jenis di mana pelanggan bisa mengambil makanan sesuka hati dari berbagai hidangan yang telah disediakan.\r\n\r\nBiasanya buffet disajikan dalam acara besar atau restoran dengan konsep all-you-can-eat.\r\n\r\nContoh Buffet : Buffet hotel, Prasmanan acara pernikahan, All-you-can-eat BBQ');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kategoribiaya`
+--
+
+CREATE TABLE `kategoribiaya` (
+  `id` bigint NOT NULL,
+  `kategoribiaya` varchar(30) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `kategoribiaya`
+--
+
+INSERT INTO `kategoribiaya` (`id`, `kategoribiaya`) VALUES
+(2, 'JASA'),
+(1, 'TOKO');
 
 -- --------------------------------------------------------
 
@@ -2153,7 +2249,7 @@ CREATE TABLE `mamin` (
 --
 
 INSERT INTO `mamin` (`id`, `idsatuan`, `idkategori`, `barcode`, `kode`, `namamin`, `slug`, `expired`, `hjs`, `diskonjual`, `ppnjual`, `spek`, `image`, `keterangan`) VALUES
-(1, 9, 21, 'LAHAHA0001', 1001, 'LATTE HAZELNUT HARMONY', 'latte-hazelnut-harmony', NULL, '20000', '1.00', '2.00', 'MANIS', 'pos01-barang-images/YLugyn9R6VyHcUcX3dnOk5mSC28brjX6ImewvR97.jpg', 'Nama ini menggambarkan latte dengan rasa hazelnut yang harmonis dan menyatu dengan espresso dan susu, menciptakan keseimbangan rasa yang memuaskan.'),
+(1, 9, 21, 'LAHAHA0001', 1001, 'LATTE HAZELNUT HARMONY', 'latte-hazelnut-harmony', NULL, '20000', '0.00', '0.00', 'MANIS', 'pos01-barang-images/YLugyn9R6VyHcUcX3dnOk5mSC28brjX6ImewvR97.jpg', 'Nama ini menggambarkan latte dengan rasa hazelnut yang harmonis dan menyatu dengan espresso dan susu, menciptakan keseimbangan rasa yang memuaskan.'),
 (2, 9, 21, 'CACRLA0001', 1002, 'CARAMEL CREAM LATTE', 'caramel-cream-latte', NULL, '25000', '0.00', '0.00', 'Manis', '', 'Ini nama yang cocok buat latte yang dilengkapi dengan sirup karamel manis dan krim lembut.'),
 (3, 9, 21, 'MADELA0001', 1003, 'MATCHA DELIGHT LATTE', 'matcha-delight-latte', NULL, '23000', '0.00', '0.00', NULL, '', 'Kalau kamu punya racikan latte dengan matcha, ini nama yang pas. Kata delight menekankan kenikmatan dari rasa matcha yang unik.'),
 (4, 9, 21, 'PIPALA0001', 1004, 'PISTACHIO PASSION LATTE', 'pistachio-passion-latte', NULL, '18000', '0.00', '0.00', NULL, '', 'Nama ini menunjukkan latte dengan rasa pistachio yang khas dan memikat, juga memberikan nuansa eksotis.'),
@@ -2215,6 +2311,7 @@ CREATE TABLE `mkeluar` (
   `id` bigint NOT NULL,
   `idmamin` bigint DEFAULT NULL,
   `idanggota` bigint DEFAULT NULL,
+  `idruang` bigint DEFAULT NULL,
   `tgltransaksi` date DEFAULT NULL,
   `nomorba` int DEFAULT '1',
   `nomorbuktia` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -2236,17 +2333,25 @@ CREATE TABLE `mkeluar` (
 -- Dumping data for table `mkeluar`
 --
 
-INSERT INTO `mkeluar` (`id`, `idmamin`, `idanggota`, `tgltransaksi`, `nomorba`, `nomorbuktia`, `qty`, `hjs`, `hppj`, `ppnpersen`, `diskonpersen`, `ppn`, `diskon`, `tglposting`, `nomorposting`, `keterangan`, `email`, `iduser`) VALUES
-(1, 31, 38, '2025-05-30', 1, 'KMM.001.20250530.0001', '2', '20000', '40000', '0.00', '0.00', '0', '0', '2025-05-30', 'POS.001.20250530.0001', NULL, 'admin@gmail.com', 1),
-(4, 10, 38, '2025-05-30', 1, 'KMM.001.20250530.0001', '1', '10000', '10000', '0.00', '0.00', '0', '0', '2025-05-30', 'POS.001.20250530.0001', NULL, 'admin@gmail.com', 1),
-(5, 31, 39, '2025-05-30', 2, 'KMM.001.20250530.0002', '1', '15000', '15000', '0.00', '0.00', '0', '0', '2025-05-30', 'POS.001.20250530.0001', NULL, 'admin@gmail.com', 1),
-(6, 31, 40, '2025-01-01', 1, 'KMM.001.20250101.0001', '1', '10000', '10000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
-(7, 2, 40, '2025-01-01', 1, 'KMM.001.20250101.0001', '1', '25000', '25000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
-(8, 19, 41, '2025-06-01', 1, 'KMM.001.20250601.0001', '1', '20000', '20000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
-(9, 29, 41, '2025-06-01', 1, 'KMM.001.20250601.0001', '1', '20000', '20000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
-(10, 29, 44, '2025-06-01', 2, 'KMM.001.20250601.0002', '1', '20000', '20000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
-(11, 7, 44, '2025-06-01', 2, 'KMM.001.20250601.0002', '1', '10000', '10000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
-(12, 6, 42, '2025-06-01', 3, 'KMM.001.20250601.0003', '1', '15000', '15000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0004', NULL, 'admin@gmail.com', 1);
+INSERT INTO `mkeluar` (`id`, `idmamin`, `idanggota`, `idruang`, `tgltransaksi`, `nomorba`, `nomorbuktia`, `qty`, `hjs`, `hppj`, `ppnpersen`, `diskonpersen`, `ppn`, `diskon`, `tglposting`, `nomorposting`, `keterangan`, `email`, `iduser`) VALUES
+(1, 31, 38, 1, '2025-05-30', 1, 'KMM.001.20250530.0001', '2', '20000', '40000', '0.00', '0.00', '0', '0', '2025-05-30', 'POS.001.20250530.0001', NULL, 'admin@gmail.com', 1),
+(4, 10, 38, 1, '2025-05-30', 1, 'KMM.001.20250530.0001', '1', '10000', '10000', '0.00', '0.00', '0', '0', '2025-05-30', 'POS.001.20250530.0001', NULL, 'admin@gmail.com', 1),
+(5, 31, 39, 1, '2025-05-30', 2, 'KMM.001.20250530.0002', '1', '15000', '15000', '0.00', '0.00', '0', '0', '2025-05-30', 'POS.001.20250530.0001', NULL, 'admin@gmail.com', 1),
+(6, 31, 40, 1, '2025-01-01', 1, 'KMM.001.20250101.0001', '1', '10000', '10000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
+(7, 2, 40, 1, '2025-01-01', 1, 'KMM.001.20250101.0001', '1', '25000', '25000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
+(8, 19, 41, 1, '2025-06-01', 1, 'KMM.001.20250601.0001', '1', '20000', '20000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
+(9, 29, 41, 1, '2025-06-01', 1, 'KMM.001.20250601.0001', '1', '20000', '20000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
+(10, 29, 44, 1, '2025-06-01', 2, 'KMM.001.20250601.0002', '1', '20000', '20000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
+(11, 7, 44, 1, '2025-06-01', 2, 'KMM.001.20250601.0002', '1', '10000', '10000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0002', NULL, 'admin@gmail.com', 1),
+(12, 6, 42, 1, '2025-06-01', 3, 'KMM.001.20250601.0003', '1', '15000', '15000', '0.00', '0.00', '0', '0', '2025-06-01', 'POS.001.20250601.0004', NULL, 'admin@gmail.com', 1),
+(13, 23, 48, 1, '2025-06-03', 1, 'KMM.001.20250603.0001', '1', '20000', '20000', '0.00', '0.00', '0', '0', '2025-06-03', 'POS.001.20250603.0002', NULL, 'admin@gmail.com', 1),
+(14, 25, 48, 1, '2025-06-03', 1, 'KMM.001.20250603.0001', '1', '20000', '20000', '0.00', '0.00', '0', '0', '2025-06-03', 'POS.001.20250603.0002', NULL, 'admin@gmail.com', 1),
+(15, 25, 49, 1, '2025-06-03', 2, 'KMM.001.20250603.0002', '1', '20000', '20000', '2.00', '1.00', '400', '200', '2025-06-03', 'POS.001.20250603.0003', NULL, 'admin@gmail.com', 1),
+(16, 31, 46, 1, '2025-06-03', 3, 'KMM.001.20250603.0003', '1', '20000', '20000', '2.00', '1.00', '400', '200', '2025-06-03', 'POS.001.20250603.0004', NULL, 'admin@gmail.com', 1),
+(17, 6, 41, 1, '2025-06-05', 1, 'KMM.001.20250605.0001', '1', '15000', '15000', '0.00', '0.00', '0', '0', '2025-06-05', 'POS.001.20250605.0001', NULL, 'admin@gmail.com', 1),
+(18, 22, 46, 1, '2025-06-10', 1, 'KMM.001.20250610.0001', '2', '20000', '40000', '0.00', '0.00', '0', '0', '2025-06-10', 'POS.001.20250610.0001', NULL, 'admin@gmail.com', 1),
+(19, 31, 43, 1, '2025-06-22', 1, 'KMM.001.20250622.0001', '3', '20000', '60000', '0.00', '0.00', '2000', '3000', '2025-06-22', 'POS.001.20250622.0001', NULL, 'admin@gmail.com', 1),
+(20, 31, 42, 1, '2025-06-22', 2, 'KMM.001.20250622.0002', '3', '20000', '60000', '0.00', '0.00', '0', '0', '2025-06-22', 'POS.001.20250622.0002', NULL, 'admin@gmail.com', 1);
 
 -- --------------------------------------------------------
 
@@ -2342,6 +2447,41 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pendapatan`
+--
+
+CREATE TABLE `pendapatan` (
+  `id` bigint NOT NULL,
+  `idkategoribiaya` bigint DEFAULT '1',
+  `idsatuan` bigint DEFAULT '1',
+  `idruang` bigint DEFAULT '1',
+  `tgltransaksi` date DEFAULT NULL,
+  `nomorbukti` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `pendapatan` varchar(100) DEFAULT NULL,
+  `keterangan` varchar(250) DEFAULT NULL,
+  `qty` int DEFAULT '1',
+  `hjs` decimal(15,0) DEFAULT '0',
+  `subtotal` decimal(15,0) DEFAULT '0',
+  `ppn` decimal(15,0) DEFAULT '0',
+  `diskon` decimal(15,0) DEFAULT '0',
+  `totaljual` decimal(15,0) DEFAULT '0',
+  `idusers` bigint DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `pendapatan`
+--
+
+INSERT INTO `pendapatan` (`id`, `idkategoribiaya`, `idsatuan`, `idruang`, `tgltransaksi`, `nomorbukti`, `pendapatan`, `keterangan`, `qty`, `hjs`, `subtotal`, `ppn`, `diskon`, `totaljual`, `idusers`) VALUES
+(1, 2, 10, 1, '2025-06-14', '-', 'Jual kardus bekas kemasan', '-', 20, '15000', '300000', '0', '0', '300000', 1),
+(2, 2, 10, 1, '2025-06-14', '-', 'Jual besi rosok', '-', 15, '11500', '172500', '0', '0', '172500', 1),
+(3, 1, 1, 1, '2025-06-22', '-', 'Jual besi rosok', '-', 1, '50000', '50000', '0', '0', '50000', 1),
+(4, 1, 1, 1, '2025-06-22', '-', 'jual sak sisa gula', NULL, 25, '6000', '150000', '0', '0', '150000', 1),
+(5, 2, 1, 1, '2025-06-22', '-', 'Kardus bekas kemasan', '-', 25, '5500', '137500', '0', '0', '137500', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `personal_access_tokens`
 --
 
@@ -2402,7 +2542,7 @@ CREATE TABLE `satuan` (
 --
 
 INSERT INTO `satuan` (`id`, `kode`, `satuan`, `keterangan`) VALUES
-(1, 'KG', 'KILOGRAM', NULL),
+(1, 'SET', 'SET', NULL),
 (2, 'PCS', 'PIECES', NULL),
 (3, 'UNIT', 'UNIT', NULL),
 (4, 'BOX', 'BOX', NULL),
@@ -2410,7 +2550,8 @@ INSERT INTO `satuan` (`id`, `kode`, `satuan`, `keterangan`) VALUES
 (6, 'BKS', 'BUNGKUS', NULL),
 (7, 'SLOP', 'SLOP', NULL),
 (8, 'ROLL', 'ROLL', NULL),
-(9, 'CUP', 'CUP', NULL);
+(9, 'CUP', 'CUP', NULL),
+(10, 'KG', 'KILOGRAM', NULL);
 
 -- --------------------------------------------------------
 
@@ -2479,7 +2620,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`, `norut`) VALUES
-('dFHk1n5Zn8SmprudOPgqJlv8I1wTySibG3wTozRH', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36 Edg/136.0.0.0', 'YTo0NDp7czo2OiJfdG9rZW4iO3M6NDA6ImtnSTFQYzRybE1LYTlGYkVPbkVGSjdDTDR0cmFMaDJjY2kyMHpOTGYiO3M6NToiYWxlcnQiO2E6MDp7fXM6NjoiX2ZsYXNoIjthOjI6e3M6MzoibmV3IjthOjA6e31zOjM6Im9sZCI7YTowOnt9fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjM0OiJodHRwOi8vcG9zLWtwcmlzYTAxLWwxMngudGVzdDo4MDgwIjt9czo4OiJuYXZpZ2FzaSI7czo0OiJob21lIjtzOjEwOiJtZW10YW5nZ2FsIjtzOjEwOiIyMDI1LTA2LTAyIjtzOjExOiJtZW10YW5nZ2FsMiI7czoxMDoiMjAyNS0wNi0wMiI7czo4OiJtZW10YWh1biI7czo0OiIyMDI1IjtzOjc6Im1lbW5hbWEiO3M6MTY6IktQUkkgU2luYXIgQWJhZGkiO3M6MTQ6Im1lbW5hbWFzaW5na2F0IjtzOjY6IktQUklTQSI7czo5OiJtZW1hbGFtYXQiO3M6MTI6IkpsLiBXb25vc2FyaSI7czo3OiJtZW1kZXNhIjtzOjc6IlNhbWJlbmciO3M6MTI6Im1lbWtlY2FtYXRhbiI7czo3OiJLYXNpbWFuIjtzOjEyOiJtZW1rYWJ1cGF0ZW4iO3M6MTA6IkJvam9uZWdvcm8iO3M6MTE6Im1lbXByb3BpbnNpIjtzOjEwOiJKYXdhIFRpbXVyIjtzOjEwOiJtZW1rb2RlcG9zIjtzOjU6IjYyMTY0IjtzOjg6Im1lbWVtYWlsIjtOO3M6MTE6Im1lbWZhY2Vib29rIjtOO3M6MTI6Im1lbWluc3RhZ3JhbSI7TjtzOjEwOiJtZW10d2l0dGVyIjtOO3M6MTA6Im1lbXdlYnNpdGUiO047czoxNToibWVta29udGFrcGVyc29uIjtOO3M6MTQ6Im1lbW5vbW9ya29udGFrIjtzOjEzOiIoMDM1MykgNTMxMzkyIjtzOjE2OiJtZW1qYWJhdGFua29udGFrIjtOO3M6ODoibWVta2V0dWEiO047czoxMToibWVtbmlwa2V0dWEiO047czoxMjoibWVtZm90b2tldHVhIjtOO3M6MTY6Im1lbXNhbWJ1dGFua2V0dWEiO047czoxMjoibWVtYmVuZGFoYXJhIjtOO3M6MTU6Im1lbW5pcGJlbmRhaGFyYSI7TjtzOjEwOiJtZW1rb3RhdHRkIjtOO3M6NzoibWVtbG9nbyI7czo2NDoiYWRtaW4taW5zdGFuc2ktbG9nby9LaHNCNUhiQ2dneTRKVnVYOGMwaGtDQlVmQTl2YThVanVQbUpIZmFrLnBuZyI7czo4OiJtZW1tb3R0byI7TjtzOjc6Im1lbXZpc2kiO047czo3OiJtZW1taXNpIjtOO3M6OToibWVtdHVqdWFuIjtOO3M6MjE6Im1lbXN0cnVrdHVyb3JnYW5pc2FzaSI7TjtzOjEzOiJtZW1rZXRlcmFuZ2FuIjtOO3M6MTE6InNlc3Npb25zX2lkIjtzOjQwOiJkRkhrMW41Wm44U21wcnVkT1BncUpsdjhJMXdUeVNpYkczd1RvelJIIjtzOjE2OiJzZXNzaW9uc191c2VyX2lkIjtOO3M6MTk6InNlc3Npb25zX2lwX2FkZHJlc3MiO3M6OToiMTI3LjAuMC4xIjtzOjE5OiJzZXNzaW9uc191c2VyX2FnZW50IjtzOjEyNToiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEzNi4wLjAuMCBTYWZhcmkvNTM3LjM2IEVkZy8xMzYuMC4wLjAiO3M6MTY6InNlc3Npb25zX3BheWxvYWQiO3M6MjM4NDoiWVRvME9udHpPalk2SWw5MGIydGxiaUk3Y3pvME1Eb2lhMmRKTVZCak5ISnNUVXRoT1VaaVJVOXVSVVpLTjBOTU5IUnlZVXhvTW1OamFUSXdlazVNWmlJN2N6bzFPaUpoYkdWeWRDSTdZVG94T250ek9qWTZJbU52Ym1acFp5STdjem8wT1RRNkluc2lkR2wwYkdVaU9pSk1iMmR2ZFhRaUxDSjBaWGgwSWpvaVRHOW5iM1YwSUhOMVkyTmxjM05sWkNBdUxpNGlMQ0owYVcxbGNpSTZOVEF3TUN3aVltRmphMmR5YjNWdVpDSTZJaU5tWm1ZaUxDSjNhV1IwYUNJNklqTXljbVZ0SWl3aWFHVnBaMmgwUVhWMGJ5STZkSEoxWlN3aWNHRmtaR2x1WnlJNklqRXVNalZ5WlcwaUxDSnphRzkzUTI5dVptbHliVUoxZEhSdmJpSTZkSEoxWlN3aWMyaHZkME5zYjNObFFuVjBkRzl1SWpwbVlXeHpaU3dpWTI5dVptbHliVUoxZEhSdmJsUmxlSFFpT2lKUFN5SXNJbU5oYm1ObGJFSjFkSFJ2YmxSbGVIUWlPaUpEWVc1alpXd2lMQ0owYVcxbGNsQnliMmR5WlhOelFtRnlJanBtWVd4elpTd2lZM1Z6ZEc5dFEyeGhjM01pT25zaVkyOXVkR0ZwYm1WeUlqcHVkV3hzTENKd2IzQjFjQ0k2Ym5Wc2JDd2lhR1ZoWkdWeUlqcHVkV3hzTENKMGFYUnNaU0k2Ym5Wc2JDd2lZMnh2YzJWQ2RYUjBiMjRpT201MWJHd3NJbWxqYjI0aU9tNTFiR3dzSW1sdFlXZGxJanB1ZFd4c0xDSmpiMjUwWlc1MElqcHVkV3hzTENKcGJuQjFkQ0k2Ym5Wc2JDd2lZV04wYVc5dWN5STZiblZzYkN3aVkyOXVabWx5YlVKMWRIUnZiaUk2Ym5Wc2JDd2lZMkZ1WTJWc1FuVjBkRzl1SWpwdWRXeHNMQ0ptYjI5MFpYSWlPbTUxYkd4OUxDSnBZMjl1SWpvaWMzVmpZMlZ6Y3lKOUlqdDljem8yT2lKZlpteGhjMmdpTzJFNk1qcDdjem96T2lKdVpYY2lPMkU2TURwN2ZYTTZNem9pYjJ4a0lqdGhPak13T250cE9qQTdjem94T0RvaVlXeGxjblF1WTI5dVptbG5MblJwZEd4bElqdHBPakU3Y3pveE56b2lZV3hsY25RdVkyOXVabWxuTG5SbGVIUWlPMms2TWp0ek9qRTRPaUpoYkdWeWRDNWpiMjVtYVdjdWRHbHRaWElpTzJrNk16dHpPakl6T2lKaGJHVnlkQzVqYjI1bWFXY3VZbUZqYTJkeWIzVnVaQ0k3YVRvME8zTTZNVGc2SW1Gc1pYSjBMbU52Ym1acFp5NTNhV1IwYUNJN2FUbzFPM002TWpNNkltRnNaWEowTG1OdmJtWnBaeTVvWldsbmFIUkJkWFJ2SWp0cE9qWTdjem95TURvaVlXeGxjblF1WTI5dVptbG5MbkJoWkdScGJtY2lPMms2Tnp0ek9qTXdPaUpoYkdWeWRDNWpiMjVtYVdjdWMyaHZkME52Ym1acGNtMUNkWFIwYjI0aU8yazZPRHR6T2pJNE9pSmhiR1Z5ZEM1amIyNW1hV2N1YzJodmQwTnNiM05sUW5WMGRHOXVJanRwT2prN2N6b3pNRG9pWVd4bGNuUXVZMjl1Wm1sbkxtTnZibVpwY20xQ2RYUjBiMjVVWlhoMElqdHBPakV3TzNNNk1qazZJbUZzWlhKMExtTnZibVpwWnk1allXNWpaV3hDZFhSMGIyNVVaWGgwSWp0cE9qRXhPM002TWprNkltRnNaWEowTG1OdmJtWnBaeTUwYVcxbGNsQnliMmR5WlhOelFtRnlJanRwT2pFeU8zTTZNalE2SW1Gc1pYSjBMbU52Ym1acFp5NWpkWE4wYjIxRGJHRnpjeUk3YVRveE16dHpPakUzT2lKaGJHVnlkQzVqYjI1bWFXY3VhV052YmlJN2FUb3hORHR6T2pFeU9pSmhiR1Z5ZEM1amIyNW1hV2NpTzJrNk1UVTdjem94T0RvaVlXeGxjblF1WTI5dVptbG5MblJwZEd4bElqdHBPakUyTzNNNk1UYzZJbUZzWlhKMExtTnZibVpwWnk1MFpYaDBJanRwT2pFM08zTTZNVGc2SW1Gc1pYSjBMbU52Ym1acFp5NTBhVzFsY2lJN2FUb3hPRHR6T2pJek9pSmhiR1Z5ZEM1amIyNW1hV2N1WW1GamEyZHliM1Z1WkNJN2FUb3hPVHR6T2pFNE9pSmhiR1Z5ZEM1amIyNW1hV2N1ZDJsa2RHZ2lPMms2TWpBN2N6b3lNem9pWVd4bGNuUXVZMjl1Wm1sbkxtaGxhV2RvZEVGMWRHOGlPMms2TWpFN2N6b3lNRG9pWVd4bGNuUXVZMjl1Wm1sbkxuQmhaR1JwYm1jaU8yazZNakk3Y3pvek1Eb2lZV3hsY25RdVkyOXVabWxuTG5Ob2IzZERiMjVtYVhKdFFuVjBkRzl1SWp0cE9qSXpPM002TWpnNkltRnNaWEowTG1OdmJtWnBaeTV6YUc5M1EyeHZjMlZDZFhSMGIyNGlPMms2TWpRN2N6b3pNRG9pWVd4bGNuUXVZMjl1Wm1sbkxtTnZibVpwY20xQ2RYUjBiMjVVWlhoMElqdHBPakkxTzNNNk1qazZJbUZzWlhKMExtTnZibVpwWnk1allXNWpaV3hDZFhSMGIyNVVaWGgwSWp0cE9qSTJPM002TWprNkltRnNaWEowTG1OdmJtWnBaeTUwYVcxbGNsQnliMmR5WlhOelFtRnlJanRwT2pJM08zTTZNalE2SW1Gc1pYSjBMbU52Ym1acFp5NWpkWE4wYjIxRGJHRnpjeUk3YVRveU9EdHpPakUzT2lKaGJHVnlkQzVqYjI1bWFXY3VhV052YmlJN2FUb3lPVHR6T2pFeU9pSmhiR1Z5ZEM1amIyNW1hV2NpTzMxOWN6bzVPaUpmY0hKbGRtbHZkWE1pTzJFNk1UcDdjem96T2lKMWNtd2lPM002TkRFNkltaDBkSEE2THk5d2IzTXRhM0J5YVhOaE1ERXRiREV5ZUM1MFpYTjBPamd3T0RBdmJHOW5iM1YwSWp0OWZRPT0iO3M6MjI6InNlc3Npb25zX2xhc3RfYWN0aXZpdHkiO2k6MTc0ODg0MTY3Mzt9', 1748841674, 909);
+('AW5FTYoGAThhdTDKuAAvuOnqqN0HtAu9KcLrzvl1', 1, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36 Edg/137.0.0.0', 'YTo0OTp7czo2OiJfdG9rZW4iO3M6NDA6Ikd2bEZ0MURBcWtYZ1VUejNTdmM5OFpQa1JqUlY3TGJ5aG5UaTVaeVIiO3M6ODoibmF2aWdhc2kiO3M6NDoiaG9tZSI7czoxMDoibWVtdGFuZ2dhbCI7czoxMDoiMjAyNS0wNi0yMyI7czoxMToibWVtdGFuZ2dhbDIiO3M6MTA6IjIwMjUtMDYtMjMiO3M6ODoibWVtdGFodW4iO3M6NDoiMjAyNSI7czo3OiJtZW1uYW1hIjtzOjE2OiJLUFJJIFNpbmFyIEFiYWRpIjtzOjE0OiJtZW1uYW1hc2luZ2thdCI7czo2OiJLUFJJU0EiO3M6OToibWVtYWxhbWF0IjtzOjEyOiJKbC4gV29ub3NhcmkiO3M6NzoibWVtZGVzYSI7czo3OiJTYW1iZW5nIjtzOjEyOiJtZW1rZWNhbWF0YW4iO3M6NzoiS2FzaW1hbiI7czoxMjoibWVta2FidXBhdGVuIjtzOjEwOiJCb2pvbmVnb3JvIjtzOjExOiJtZW1wcm9waW5zaSI7czoxMDoiSmF3YSBUaW11ciI7czoxMDoibWVta29kZXBvcyI7czo1OiI2MjE2NCI7czo4OiJtZW1lbWFpbCI7TjtzOjExOiJtZW1mYWNlYm9vayI7TjtzOjEyOiJtZW1pbnN0YWdyYW0iO047czoxMDoibWVtdHdpdHRlciI7TjtzOjEwOiJtZW13ZWJzaXRlIjtOO3M6MTU6Im1lbWtvbnRha3BlcnNvbiI7TjtzOjE0OiJtZW1ub21vcmtvbnRhayI7czoxMzoiKDAzNTMpIDUzMTM5MiI7czoxNjoibWVtamFiYXRhbmtvbnRhayI7TjtzOjg6Im1lbWtldHVhIjtOO3M6MTE6Im1lbW5pcGtldHVhIjtOO3M6MTI6Im1lbWZvdG9rZXR1YSI7TjtzOjE2OiJtZW1zYW1idXRhbmtldHVhIjtOO3M6MTI6Im1lbWJlbmRhaGFyYSI7TjtzOjE1OiJtZW1uaXBiZW5kYWhhcmEiO047czoxMDoibWVta290YXR0ZCI7TjtzOjc6Im1lbWxvZ28iO3M6NjQ6ImFkbWluLWluc3RhbnNpLWxvZ28vS2hzQjVIYkNnZ3k0SlZ1WDhjMGhrQ0JVZkE5dmE4VWp1UG1KSGZhay5wbmciO3M6ODoibWVtbW90dG8iO047czo3OiJtZW12aXNpIjtOO3M6NzoibWVtbWlzaSI7TjtzOjk6Im1lbXR1anVhbiI7TjtzOjIxOiJtZW1zdHJ1a3R1cm9yZ2FuaXNhc2kiO047czoxMzoibWVta2V0ZXJhbmdhbiI7TjtzOjExOiJzZXNzaW9uc19pZCI7czo0MDoidFl1R2lsbG04MjN3ckhNOTZwZFhqUU1wZnB3aWx5d3NTaEhuOXFGRyI7czoxNjoic2Vzc2lvbnNfdXNlcl9pZCI7TjtzOjE5OiJzZXNzaW9uc19pcF9hZGRyZXNzIjtzOjk6IjEyNy4wLjAuMSI7czoxOToic2Vzc2lvbnNfdXNlcl9hZ2VudCI7czoxMjU6Ik1vemlsbGEvNS4wIChXaW5kb3dzIE5UIDEwLjA7IFdpbjY0OyB4NjQpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIENocm9tZS8xMzcuMC4wLjAgU2FmYXJpLzUzNy4zNiBFZGcvMTM3LjAuMC4wIjtzOjE2OiJzZXNzaW9uc19wYXlsb2FkIjtzOjUyMzI6IllUbzBORHA3Y3pvMk9pSmZkRzlyWlc0aU8zTTZOREE2SWxsWGJtUnlTMU5xUkc1TGQyZHpiakJZU0VaR1NHaHFTRTUwY0VaV2FtbHJUWE5xU1RSTWREVWlPM002TlRvaVlXeGxjblFpTzJFNk1EcDdmWE02TmpvaVgyWnNZWE5vSWp0aE9qSTZlM002TXpvaWJtVjNJanRoT2pBNmUzMXpPak02SW05c1pDSTdZVG93T250OWZYTTZPVG9pWDNCeVpYWnBiM1Z6SWp0aE9qRTZlM002TXpvaWRYSnNJanR6T2pNME9pSm9kSFJ3T2k4dmNHOXpMV3R3Y21sellUQXhMV3d4TW5ndWRHVnpkRG80TURnd0lqdDljem80T2lKdVlYWnBaMkZ6YVNJN2N6bzBPaUpvYjIxbElqdHpPakV3T2lKdFpXMTBZVzVuWjJGc0lqdHpPakV3T2lJeU1ESTFMVEEyTFRJeklqdHpPakV4T2lKdFpXMTBZVzVuWjJGc01pSTdjem94TURvaU1qQXlOUzB3TmkweU15STdjem80T2lKdFpXMTBZV2gxYmlJN2N6bzBPaUl5TURJMUlqdHpPamM2SW0xbGJXNWhiV0VpTzNNNk1UWTZJa3RRVWtrZ1UybHVZWElnUVdKaFpHa2lPM002TVRRNkltMWxiVzVoYldGemFXNW5hMkYwSWp0ek9qWTZJa3RRVWtsVFFTSTdjem81T2lKdFpXMWhiR0Z0WVhRaU8zTTZNVEk2SWtwc0xpQlhiMjV2YzJGeWFTSTdjem8zT2lKdFpXMWtaWE5oSWp0ek9qYzZJbE5oYldKbGJtY2lPM002TVRJNkltMWxiV3RsWTJGdFlYUmhiaUk3Y3pvM09pSkxZWE5wYldGdUlqdHpPakV5T2lKdFpXMXJZV0oxY0dGMFpXNGlPM002TVRBNklrSnZhbTl1WldkdmNtOGlPM002TVRFNkltMWxiWEJ5YjNCcGJuTnBJanR6T2pFd09pSktZWGRoSUZScGJYVnlJanR6T2pFd09pSnRaVzFyYjJSbGNHOXpJanR6T2pVNklqWXlNVFkwSWp0ek9qZzZJbTFsYldWdFlXbHNJanRPTzNNNk1URTZJbTFsYldaaFkyVmliMjlySWp0T08zTTZNVEk2SW0xbGJXbHVjM1JoWjNKaGJTSTdUanR6T2pFd09pSnRaVzEwZDJsMGRHVnlJanRPTzNNNk1UQTZJbTFsYlhkbFluTnBkR1VpTzA0N2N6b3hOVG9pYldWdGEyOXVkR0ZyY0dWeWMyOXVJanRPTzNNNk1UUTZJbTFsYlc1dmJXOXlhMjl1ZEdGcklqdHpPakV6T2lJb01ETTFNeWtnTlRNeE16a3lJanR6T2pFMk9pSnRaVzFxWVdKaGRHRnVhMjl1ZEdGcklqdE9PM002T0RvaWJXVnRhMlYwZFdFaU8wNDdjem94TVRvaWJXVnRibWx3YTJWMGRXRWlPMDQ3Y3pveE1qb2liV1Z0Wm05MGIydGxkSFZoSWp0T08zTTZNVFk2SW0xbGJYTmhiV0oxZEdGdWEyVjBkV0VpTzA0N2N6b3hNam9pYldWdFltVnVaR0ZvWVhKaElqdE9PM002TVRVNkltMWxiVzVwY0dKbGJtUmhhR0Z5WVNJN1RqdHpPakV3T2lKdFpXMXJiM1JoZEhSa0lqdE9PM002TnpvaWJXVnRiRzluYnlJN2N6bzJORG9pWVdSdGFXNHRhVzV6ZEdGdWMya3RiRzluYnk5TGFITkNOVWhpUTJkbmVUUktWblZZT0dNd2FHdERRbFZtUVRsMllUaFZhblZRYlVwSVptRnJMbkJ1WnlJN2N6bzRPaUp0WlcxdGIzUjBieUk3VGp0ek9qYzZJbTFsYlhacGMya2lPMDQ3Y3pvM09pSnRaVzF0YVhOcElqdE9PM002T1RvaWJXVnRkSFZxZFdGdUlqdE9PM002TWpFNkltMWxiWE4wY25WcmRIVnliM0puWVc1cGMyRnphU0k3VGp0ek9qRXpPaUp0WlcxclpYUmxjbUZ1WjJGdUlqdE9PM002TVRFNkluTmxjM05wYjI1elgybGtJanR6T2pRd09pSjBXWFZIYVd4c2JUZ3lNM2R5U0UwNU5uQmtXR3BSVFhCbWNIZHBiSGwzYzFOb1NHNDVjVVpISWp0ek9qRTJPaUp6WlhOemFXOXVjMTkxYzJWeVgybGtJanRPTzNNNk1UazZJbk5sYzNOcGIyNXpYMmx3WDJGa1pISmxjM01pTzNNNk9Ub2lNVEkzTGpBdU1DNHhJanR6T2pFNU9pSnpaWE56YVc5dWMxOTFjMlZ5WDJGblpXNTBJanR6T2pFeU5Ub2lUVzk2YVd4c1lTODFMakFnS0ZkcGJtUnZkM01nVGxRZ01UQXVNRHNnVjJsdU5qUTdJSGcyTkNrZ1FYQndiR1ZYWldKTGFYUXZOVE0zTGpNMklDaExTRlJOVEN3Z2JHbHJaU0JIWldOcmJ5a2dRMmh5YjIxbEx6RXpOeTR3TGpBdU1DQlRZV1poY21rdk5UTTNMak0ySUVWa1p5OHhNemN1TUM0d0xqQWlPM002TVRZNkluTmxjM05wYjI1elgzQmhlV3h2WVdRaU8zTTZNak00TkRvaVdWUnZNRTl1ZEhwUGFsazJTV3c1TUdJeWRHeGlhVWszWTNwdk1FMUViMmxYVm1SMVdraEtURlV5Y0VWaWEzUXpXak5PZFUxR2FFbFNhMXBKWVVkd1NWUnVVbmRTYkZweFlWZDBUbU15Y0VwT1JYZ3dUbE5KTjJONmJ6RlBhVXBvWWtkV2VXUkRTVGRaVkc5NFQyNTBlazlxV1RaSmJVNTJZbTFhY0ZwNVNUZGplbTh3VDFSUk5rbHVjMmxrUjJ3d1lrZFZhVTlwU2sxaU1tUjJaRmhSYVV4RFNqQmFXR2d3U1dwdmFWUkhPVzVpTTFZd1NVaE9NVmt5VG14ak0wNXNXa05CZFV4cE5HbE1RMG93WVZjeGJHTnBTVFpPVkVGM1RVTjNhVmx0Um1waE1tUjVZak5XZFZwRFNUWkphVTV0V20xWmFVeERTak5oVjFJd1lVTkpOa2xxVFhsamJWWjBTV2wzYVdGSFZuQmFNbWd3VVZoV01HSjVTVFprU0VveFdsTjNhV05IUm10YVIyeDFXbmxKTmtscVJYVk5hbFo1V2xjd2FVeERTbnBoUnprelVUSTVkVnB0YkhsaVZVb3haRWhTZG1KcFNUWmtTRW94V2xOM2FXTXlhSFprTUU1ellqTk9iRkZ1VmpCa1J6bDFTV3B3YlZsWGVIcGFVM2RwV1RJNWRWcHRiSGxpVlVveFpFaFNkbUpzVW14bFNGRnBUMmxLVUZONVNYTkpiVTVvWW0xT2JHSkZTakZrU0ZKMllteFNiR1ZJVVdsUGFVcEVXVmMxYWxwWGQybE1RMG93WVZjeGJHTnNRbmxpTW1SNVdsaE9lbEZ0Um5sSmFuQnRXVmQ0ZWxwVGQybFpNMVo2WkVjNWRGRXllR2hqTTAxcFQyNXphVmt5T1hWa1IwWndZbTFXZVVscWNIVmtWM2h6VEVOS2QySXpRakZqUTBrMlltNVdjMkpEZDJsaFIxWm9Xa2RXZVVscWNIVmtWM2h6VEVOS01HRllVbk5hVTBrMlltNVdjMkpEZDJsWk1uaDJZekpXUTJSWVVqQmlNalJwVDIwMU1XSkhkM05KYld4cVlqSTBhVTl0TlRGaVIzZHpTVzFzZEZsWFpHeEphbkIxWkZkNGMweERTbXBpTWpVd1dsYzFNRWxxY0hWa1YzaHpURU5LY0dKdVFqRmtRMGsyWW01V2MySkRkMmxaVjA0d1lWYzVkV041U1RaaWJsWnpZa04zYVZreU9YVmFiV3g1WWxWS01XUklVblppYVVrMlltNVdjMkpEZDJsWk1rWjFXVEpXYzFGdVZqQmtSemwxU1dwd2RXUlhlSE5NUTBwdFlqSTVNRnBZU1dsUGJUVXhZa2Q0T1V4RFNuQlpNamwxU1dwdmFXTXpWbXBaTWxaNlkzbEtPVWxxZERsamVtOHlUMmxLWmxwdGVHaGpNbWRwVHpKRk5rMXFjRGRqZW05NlQybEtkVnBZWTJsUE1rVTJUVVJ3TjJaWVRUWk5lbTlwWWpKNGEwbHFkR2hQYWsxM1QyNTBjRTlxUVRkamVtOTRUMFJ2YVZsWGVHeGpibEYxV1RJNWRWcHRiRzVNYmxKd1pFZDRiRWxxZEhCUGFrVTNZM3B2ZUU1NmIybFpWM2hzWTI1UmRWa3lPWFZhYld4dVRHNVNiR1ZJVVdsUE1tczJUV3AwZWs5cVJUUlBhVXBvWWtkV2VXUkROV3BpTWpWdFlWZGpkV1JIYkhSYVdFbHBUekpyTmsxNmRIcFBha2w2VDJsS2FHSkhWbmxrUXpWcVlqSTFiV0ZYWTNWWmJVWnFZVEprZVdJelZuVmFRMGszWVZSdk1FOHpUVFpOVkdjMlNXMUdjMXBZU2pCTWJVNTJZbTFhY0ZwNU5UTmhWMUl3WVVOSk4yRlViekZQTTAwMlRXcE5Oa2x0Um5OYVdFb3dURzFPZG1KdFduQmFlVFZ2V2xkc2JtRklVa0prV0ZKMlNXcDBjRTlxV1RkamVtOTVUVVJ2YVZsWGVHeGpibEYxV1RJNWRWcHRiRzVNYmtKb1drZFNjR0p0WTJsUE1tczJUbnAwZWs5cVRYZFBhVXBvWWtkV2VXUkROV3BpTWpWdFlWZGpkV015YUhaa01FNTJZbTFhY0dOdE1VTmtXRkl3WWpJMGFVOHlhelpQUkhSNlQycEpORTlwU21oaVIxWjVaRU0xYW1JeU5XMWhWMk4xWXpKb2RtUXdUbk5pTTA1c1VXNVdNR1JIT1hWSmFuUndUMnByTjJONmIzcE5SRzlwV1ZkNGJHTnVVWFZaTWpsMVdtMXNia3h0VG5aaWJWcHdZMjB4UTJSWVVqQmlNalZWV2xob01FbHFkSEJQYWtWM1R6Tk5OazFxYXpaSmJVWnpXbGhLTUV4dFRuWmliVnB3V25rMWFsbFhOV3BhVjNoRFpGaFNNR0l5TlZWYVdHZ3dTV3AwY0U5cVJYaFBNMDAyVFdwck5rbHRSbk5hV0Vvd1RHMU9kbUp0V25CYWVUVXdZVmN4YkdOc1FubGlNbVI1V2xoT2VsRnRSbmxKYW5Sd1QycEZlVTh6VFRaTmFsRTJTVzFHYzFwWVNqQk1iVTUyWW0xYWNGcDVOV3BrV0U0d1lqSXhSR0pIUm5wamVVazNZVlJ2ZUUxNmRIcFBha1V6VDJsS2FHSkhWbmxrUXpWcVlqSTFiV0ZYWTNWaFYwNTJZbWxKTjJGVWIzaE9SSFI2VDJwRmVVOXBTbWhpUjFaNVpFTTFhbUl5TlcxaFYyTnBUekpyTmsxVVZUZGplbTk0VDBSdmFWbFhlR3hqYmxGMVdUSTVkVnB0Ykc1TWJsSndaRWQ0YkVscWRIQlBha1V5VHpOTk5rMVVZelpKYlVaeldsaEtNRXh0VG5aaWJWcHdXbmsxTUZwWWFEQkphblJ3VDJwRk0wOHpUVFpOVkdjMlNXMUdjMXBZU2pCTWJVNTJZbTFhY0ZwNU5UQmhWekZzWTJsSk4yRlViM2hQUkhSNlQycEplazlwU21oaVIxWjVaRU0xYW1JeU5XMWhWMk4xV1cxR2FtRXlaSGxpTTFaMVdrTkpOMkZVYjNoUFZIUjZUMnBGTkU5cFNtaGlSMVo1WkVNMWFtSXlOVzFoVjJOMVpESnNhMlJIWjJsUE1tczJUV3BCTjJONmIzbE5lbTlwV1ZkNGJHTnVVWFZaTWpsMVdtMXNia3h0YUd4aFYyUnZaRVZHTVdSSE9HbFBNbXMyVFdwRk4yTjZiM2xOUkc5cFdWZDRiR051VVhWWk1qbDFXbTFzYmt4dVFtaGFSMUp3WW0xamFVOHlhelpOYWtrM1kzcHZlazFFYjJsWlYzaHNZMjVSZFZreU9YVmFiV3h1VEc1T2IySXpaRVJpTWpWdFlWaEtkRkZ1VmpCa1J6bDFTV3AwY0U5cVNYcFBNMDAyVFdwbk5rbHRSbk5hV0Vvd1RHMU9kbUp0V25CYWVUVjZZVWM1TTFFeWVIWmpNbFpEWkZoU01HSXlOR2xQTW1zMlRXcFJOMk42YjNwTlJHOXBXVmQ0YkdOdVVYVlpNamwxV20xc2JreHRUblppYlZwd1kyMHhRMlJZVWpCaU1qVlZXbGhvTUVscWRIQlBha2t4VHpOTk5rMXFhelpKYlVaeldsaEtNRXh0VG5aaWJWcHdXbmsxYWxsWE5XcGFWM2hEWkZoU01HSXlOVlZhV0dnd1NXcDBjRTlxU1RKUE0wMDJUV3ByTmtsdFJuTmFXRW93VEcxT2RtSnRXbkJhZVRVd1lWY3hiR05zUW5saU1tUjVXbGhPZWxGdFJubEphblJ3VDJwSk0wOHpUVFpOYWxFMlNXMUdjMXBZU2pCTWJVNTJZbTFhY0ZwNU5XcGtXRTR3WWpJeFJHSkhSbnBqZVVrM1lWUnZlVTlFZEhwUGFrVXpUMmxLYUdKSFZubGtRelZxWWpJMWJXRlhZM1ZoVjA1MlltbEpOMkZVYjNsUFZIUjZUMnBGZVU5cFNtaGlSMVo1WkVNMWFtSXlOVzFoVjJOcFR6TXhPV042YnpWUGFVcG1ZMGhLYkdSdGJIWmtXRTFwVHpKRk5rMVVjRGRqZW05NlQybEtNV050ZDJsUE0wMDJUa1JGTmtsdGFEQmtTRUUyVEhrNWQySXpUWFJoTTBKNVlWaE9hRTFFUlhSaVJFVjVaVU0xTUZwWVRqQlBhbWQzVDBSQmRtSkhPVzVpTTFZd1NXcDBPV1pSUFQwaU8zTTZNakk2SW5ObGMzTnBiMjV6WDJ4aGMzUmZZV04wYVhacGRIa2lPMms2TVRjMU1EWXhOakl3TVR0OSI7czoyMjoic2Vzc2lvbnNfbGFzdF9hY3Rpdml0eSI7aToxNzUwNjE2MjAyO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ4OiJodHRwOi8vcG9zLWtwcmlzYTAxLWwxMngudGVzdDo4MDgwL2FkbWluL21lbnVzdWIiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6NzoiYXdhbGphbSI7TzoxMzoiQ2FyYm9uXENhcmJvbiI6Mzp7czo0OiJkYXRlIjtzOjI2OiIyMDI1LTA2LTIzIDA5OjA1OjU1LjcxMzg3MCI7czoxMzoidGltZXpvbmVfdHlwZSI7aTozO3M6ODoidGltZXpvbmUiO3M6MTI6IkFzaWEvSmFrYXJ0YSI7fXM6NDoia29kZSI7czo1OiJQT1MwMSI7czo4OiJhcGxpa2FzaSI7czoxOToiUG9pbnQgT2YgU2FsZXMgdi4wMSI7czoxMDoiaWRhcGxpa2FzaSI7czoxOiIxIjtzOjExOiJpZG1lbnV1dGFtYSI7czoxOiI3Ijt9', 1750645249, 1160);
 
 -- --------------------------------------------------------
 
@@ -2549,7 +2690,6 @@ INSERT INTO `stok` (`id`, `idbarang`, `idanggota`, `idsupplier`, `idseksi`, `idr
 (217, 8, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 54, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '10', '28000', '280000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '10', '28000', '280000', 'admin@gmail.com', 1, NULL),
 (218, 9, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 55, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '4', '80000', '320000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '4', '80000', '320000', 'admin@gmail.com', 1, NULL),
 (219, 8, 38, 0, 1, 1, 1, 'RIRIS WURYANINGTYAS', 'keluar', '2025-05-13', 'KLR.001.20250513.0001', 71, '2025-05-13 16:52:38', '2025-05-13', 2, 'POS.001.20250513.0002', '10', '28000', '280000', '0', '0', '0', '0', '0', '2', '28000', '56000', '0', '0', '36000', '72000', '16000', '72000', '0', '0', '72000', '72000', '0', '0', '0', '0', 1, '8', '28000', '224000', 'admin@gmail.com', 1, NULL),
-(220, 9, 39, 0, 1, 1, 1, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-05-13', 'KLR.001.20250513.0002', 73, '2025-05-13 16:54:15', '2025-05-13', 3, 'POS.001.20250513.0003', '4', '80000', '320000', '0', '0', '0', '0', '0', '1', '80000', '80000', '0', '0', '90000', '90000', '10000', '90000', '0', '0', '90000', '90000', '0', '0', '0', '0', 1, '3', '80000', '240000', 'admin@gmail.com', 1, NULL),
 (221, 6, 40, 0, 1, 1, 99, 'MASHUDI A.', 'keluar', '2025-05-13', 'KLR.001.20250513.0003', 74, '2025-05-13 18:18:12', '2025-05-13', 4, 'POS.001.20250513.0004', '11', '45000', '495000', '0', '0', '0', '0', '0', '1', '45000', '45000', '0', '0', '55000', '55000', '10000', '55000', '0', '0', '55000', '55000', '0', '0', '0', '0', 1, '10', '45000', '450000', 'admin@gmail.com', 1, NULL),
 (222, 10, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 60, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '50', '41000', '2050000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '50', '41000', '2050000', 'admin@gmail.com', 1, NULL),
 (223, 11, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 61, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '50', '43000', '2150000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '50', '43000', '2150000', 'admin@gmail.com', 1, NULL),
@@ -2561,7 +2701,21 @@ INSERT INTO `stok` (`id`, `idbarang`, `idanggota`, `idsupplier`, `idseksi`, `idr
 (229, 10, 43, 0, 1, 1, 1, 'ARUMIATI,S.Pd', 'keluar', '2025-06-01', 'KLR.001.20250601.0001', 78, '2025-06-01 18:36:24', '2025-06-01', 2, 'POS.001.20250601.0002', '98', '41000', '4018000', '0', '0', '0', '0', '0', '1', '41000', '41000', '0', '0', '50000', '50000', '9000', '105000', '0', '0', '105000', '105000', '0', '0', '0', '0', 1, '97', '41000', '3977000', 'admin@gmail.com', 1, NULL),
 (230, 11, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-01', 'KLR.001.20250601.0002', 79, '2025-06-01 18:38:00', '2025-06-01', 3, 'POS.001.20250601.0003', '99', '43000', '4257000', '0', '0', '0', '0', '0', '1', '43000', '43000', '0', '0', '50000', '50000', '7000', '50000', '0', '0', '50000', '50000', '0', '0', '0', '0', 1, '98', '43000', '4214000', 'admin@gmail.com', 1, NULL),
 (231, 11, 48, 0, 1, 1, 1, 'EMI YUTATIK, S.Pd.SD', 'keluar', '2025-06-01', 'KLR.001.20250601.0003', 80, '2025-06-01 19:01:27', '2025-06-01', 4, 'POS.001.20250601.0004', '98', '43000', '4214000', '0', '0', '0', '0', '0', '1', '43000', '43000', '0', '0', '50000', '50000', '7000', '50000', '0', '0', '50000', '50000', '0', '0', '0', '0', 1, '97', '43000', '4171000', 'admin@gmail.com', 1, NULL),
-(232, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '100', '20000', '2000000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '100', '20000', '2000000', 'admin@gmail.com', 1, NULL);
+(232, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '100', '20000', '2000000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '100', '20000', '2000000', 'admin@gmail.com', 1, NULL),
+(233, 8, 61, 0, 1, 1, 1, 'SITI MASTUROH MUTHOHHARI,S.Pd.', 'keluar', '2025-06-03', 'KLR.001.20250603.0001', 81, '2025-06-03 08:33:52', '2025-06-03', 1, 'POS.001.20250603.0001', '8', '28000', '224000', '0', '0', '0', '0', '0', '1', '28000', '28000', '0', '0', '36000', '36000', '8000', '36000', '0', '0', '36000', '0', '0', '0', '0', '0', 1, '7', '28000', '196000', 'admin@gmail.com', 1, NULL),
+(234, 12, 64, 0, 1, 1, 1, 'LILIK YULIARTHO, S.Pd.SD', 'keluar', '2025-06-03', 'KLR.001.20250603.0002', 82, '2025-06-03 08:34:54', '2025-06-03', 2, 'POS.001.20250603.0002', '100', '20000', '2000000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '25000', '25000', '5000', '25000', '0', '0', '25000', '25000', '0', '0', '0', '0', 1, '99', '20000', '1980000', 'admin@gmail.com', 1, NULL),
+(235, 14, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-06', 'MSK.001.20250606.0001', 65, '2025-06-06 00:44:35', '2025-06-06', 1, 'POS.001.20250606.0001', '0', '0', '0', '10', '20000', '200000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '200000', '0', '0', '200000', '200000', '0', '0', '0', '0', 1, '10', '20000', '200000', 'admin@gmail.com', 1, NULL),
+(236, 6, 45, 0, 1, 1, 1, 'SRI RAHAYU B', 'keluar', '2025-06-06', 'KLR.001.20250606.0001', 83, '2025-06-06 00:57:35', '2025-06-06', 2, 'POS.001.20250606.0002', '9', '45000', '405000', '0', '0', '0', '0', '0', '1', '45000', '45000', '0', '0', '100000', '100000', '55000', '100000', '0', '0', '100000', '100000', '0', '0', '0', '0', 1, '8', '45000', '360000', 'admin@gmail.com', 1, NULL),
+(237, 14, 39, 0, 1, 1, 0, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-06-01', 'KLR.001.20250601.0004', 84, '2025-06-06 01:01:40', '2025-06-06', 3, 'POS.001.20250606.0003', '10', '20000', '200000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '40000', '40000', '20000', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '9', '20000', '180000', 'admin@gmail.com', 1, NULL),
+(238, 14, 39, 0, 1, 1, 1, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-06-06', 'KLR.001.20250606.0002', 85, '2025-06-06 01:02:54', '2025-06-06', 4, 'POS.001.20250606.0004', '9', '20000', '180000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '40000', '40000', '20000', '40000', '0', '0', '40000', '40000', '0', '0', '0', '0', 1, '8', '20000', '160000', 'admin@gmail.com', 1, NULL),
+(239, 3, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-15', 'MSK.001.20250615.0001', 67, '2025-06-15 12:56:06', '2025-06-15', 1, 'POS.001.20250615.0001', '15', '20000', '300000', '2', '20000', '40000', '400', '1200', '0', '0', '0', '0', '0', '0', '0', '0', '40000', '400', '1200', '39200', '39200', '0', '0', '0', '0', 1, '17', '20000', '340000', 'admin@gmail.com', 1, NULL),
+(240, 3, 38, 0, 1, 1, 1, 'RIRIS WURYANINGTYAS', 'keluar', '2025-06-15', 'KLR.001.20250615.0001', 86, '2025-06-15 12:57:15', '2025-06-15', 2, 'POS.001.20250615.0002', '17', '20000', '340000', '0', '0', '0', '0', '0', '3', '20000', '60000', '2220', '4440', '37000', '111000', '48780', '111000', '2220', '4440', '108780', '108780', '0', '0', '0', '0', 1, '14', '20000', '280000', 'admin@gmail.com', 1, NULL),
+(245, 9, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-19', 'KLR.001.20250619.0001', 88, '2025-06-19 00:57:44', '2025-06-19', 2, 'POS.001.20250619.0002', '4', '80000', '0', '0', '0', '0', '0', '0', '1', '80000', '240000', '0', '0', '90000', '90000', '10000', '90000', '0', '0', '90000', '0', '0', '0', '0', '0', 1, '3', '80000', '-240000', 'admin@gmail.com', 1, NULL),
+(246, 6, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-19', 'KLR.001.20250619.0002', 89, '2025-06-19 01:06:17', '2025-06-19', 3, 'POS.001.20250619.0003', '8', '45000', '360000', '0', '0', '0', '0', '0', '8', '45000', '360000', '0', '0', '100000', '800000', '440000', '800000', '0', '0', '800000', '800000', '0', '0', '0', '0', 1, '0', '45000', '0', 'admin@gmail.com', 1, NULL),
+(247, 10, 44, 0, 1, 1, 1, 'SUNOTO', 'keluar', '2025-06-19', 'KLR.001.20250619.0003', 90, '2025-06-19 01:23:31', '2025-06-19', 4, 'POS.001.20250619.0004', '97', '41000', '3977000', '0', '0', '0', '0', '0', '60', '41000', '2460000', '0', '0', '50000', '3000000', '540000', '3000000', '0', '0', '3000000', '3000000', '0', '0', '0', '0', 1, '37', '41000', '1517000', 'admin@gmail.com', 1, NULL),
+(248, 829, 0, 0, 4, 4, 1, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0001', 68, '2025-06-19 09:12:45', '2025-06-19', 5, 'POS.001.20250619.0005', '0', '0', '0', '3', '4500', '13500', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '13500', '0', '0', '13500', '13500', '0', '0', '0', '0', 1, '3', '4500', '13500', 'admin@gmail.com', 1, NULL),
+(249, 829, 0, 0, 4, 4, 0, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0002', 69, '2025-06-19 09:18:02', '2025-06-19', 6, 'POS.001.20250619.0006', '3', '4500', '13500', '5', '5000', '25000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '8', '5000', '40000', 'admin@gmail.com', 1, NULL),
+(251, 829, 59, 0, 4, 4, 1, 'ROHAYATI', 'keluar', '2025-06-19', 'KLR.001.20250619.0005', 92, '2025-06-19 09:45:10', '2025-06-19', 7, 'POS.001.20250619.0007', '8', '5000', '40000', '0', '0', '0', '0', '0', '2', '5000', '10000', '0', '0', '5400', '10800', '800', '10800', '0', '0', '10800', '10800', '0', '0', '0', '0', 1, '6', '5000', '30000', 'admin@gmail.com', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -2630,24 +2784,24 @@ CREATE TABLE `stokfifo` (
 
 INSERT INTO `stokfifo` (`id`, `idbarang`, `idanggota`, `idsupplier`, `idseksi`, `idruang`, `idjenispembayaran`, `nama`, `status`, `tglstatus`, `nomorstatus`, `idstatus`, `created_at`, `tglposting`, `nomorp`, `nomorposting`, `awal`, `hbsawal`, `hppawal`, `masuk`, `hbsmasuk`, `hppmasuk`, `ppnmasuk`, `diskonmasuk`, `keluar`, `hbskeluar`, `hppkeluar`, `ppnkeluar`, `diskonkeluar`, `hjs`, `hppj`, `labaj`, `subtotals`, `ppns`, `diskons`, `totals`, `bayars`, `vouchers`, `ambilsavings`, `kembalis`, `savings`, `xangsuran`, `akhir`, `hbsakhir`, `hppakhir`, `email`, `iduser`, `keterangan`, `pokok`, `hbspokok`, `hpppokok`, `kodepokok`) VALUES
 (106, 3, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 51, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '15', '20000', '300000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '15', '20000', '300000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(107, 3, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 51, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '15', '20000', '300000', 1),
+(107, 3, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 51, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '12', '20000', '240000', 1),
 (108, 4, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 52, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '20', '30000', '600000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '20', '30000', '600000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (109, 4, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 52, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '20', '30000', '600000', 1),
 (110, 6, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 53, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '11', '45000', '495000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '11', '45000', '495000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(111, 6, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 53, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '9', '45000', '405000', 1),
+(111, 6, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 53, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '45000', '0', 0),
 (112, 8, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 54, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '10', '28000', '280000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '10', '28000', '280000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(113, 8, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 54, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '8', '28000', '224000', 1),
+(113, 8, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 54, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '7', '28000', '196000', 1),
 (114, 9, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 55, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '4', '80000', '320000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '4', '80000', '320000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(115, 9, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 55, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '3', '80000', '240000', 1),
+(115, 9, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 55, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '0', '0', '5000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '80000', '0', 0),
 (116, 8, 38, 0, 1, 1, 1, 'RIRIS WURYANINGTYAS', 'keluar', '2025-05-13', 'KLR.001.20250513.0001', 71, '2025-05-13 16:52:38', '2025-05-13', 2, 'POS.001.20250513.0002', '10', '28000', '280000', '0', '0', '0', '0', '0', '2', '28000', '56000', '0', '0', '36000', '72000', '16000', '72000', '0', '0', '72000', '72000', '0', '0', '0', '0', 1, '8', '28000', '224000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (117, 9, 39, 0, 1, 1, 1, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-05-13', 'KLR.001.20250513.0002', 73, '2025-05-13 16:54:15', '2025-05-13', 3, 'POS.001.20250513.0003', '4', '80000', '320000', '0', '0', '0', '0', '0', '1', '80000', '80000', '0', '0', '90000', '90000', '10000', '90000', '0', '0', '90000', '90000', '0', '0', '0', '0', 1, '3', '80000', '240000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (118, 6, 40, 0, 1, 1, 99, 'MASHUDI A.', 'keluar', '2025-05-13', 'KLR.001.20250513.0003', 74, '2025-05-13 18:18:12', '2025-05-13', 4, 'POS.001.20250513.0004', '11', '45000', '495000', '0', '0', '0', '0', '0', '1', '45000', '45000', '0', '0', '55000', '55000', '10000', '55000', '0', '0', '55000', '55000', '0', '0', '0', '0', 1, '10', '45000', '450000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (119, 10, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 60, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '50', '41000', '2050000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '50', '41000', '2050000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(120, 10, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 60, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '47', '41000', '1927000', 1),
+(120, 10, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 60, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '41000', '0', 0),
 (121, 11, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 61, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '50', '43000', '2150000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '50', '43000', '2150000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (122, 11, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 61, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '47', '43000', '2021000', 1),
 (123, 10, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 63, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '50', '41000', '2050000', '50', '41000', '2050000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '100', '41000', '4100000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(124, 10, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 63, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '0', '0', '0', 'admin@gmail.com', 1, NULL, '50', '41000', '2050000', 1),
+(124, 10, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 63, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '0', '0', '0', 'admin@gmail.com', 1, NULL, '37', '41000', '533000', 1),
 (125, 11, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 62, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '50', '43000', '2150000', '50', '43000', '2150000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '100', '43000', '4300000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (126, 11, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 62, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '0', '0', '0', 'admin@gmail.com', 1, NULL, '50', '43000', '2150000', 1),
 (127, 10, 39, 0, 1, 1, 0, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-01-01', 'KLR.001.20250101.0001', 75, '2025-06-01 18:09:16', '2025-06-01', 1, 'POS.001.20250601.0001', '100', '41000', '4100000', '0', '0', '0', '0', '0', '2', '41000', '82000', '0', '0', '50000', '100000', '18000', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '98', '41000', '4018000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
@@ -2657,7 +2811,25 @@ INSERT INTO `stokfifo` (`id`, `idbarang`, `idanggota`, `idsupplier`, `idseksi`, 
 (131, 11, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-01', 'KLR.001.20250601.0002', 79, '2025-06-01 18:38:00', '2025-06-01', 3, 'POS.001.20250601.0003', '99', '43000', '4257000', '0', '0', '0', '0', '0', '1', '43000', '43000', '0', '0', '50000', '50000', '7000', '50000', '0', '0', '50000', '50000', '0', '0', '0', '0', 1, '98', '43000', '4214000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (132, 11, 48, 0, 1, 1, 1, 'EMI YUTATIK, S.Pd.SD', 'keluar', '2025-06-01', 'KLR.001.20250601.0003', 80, '2025-06-01 19:01:27', '2025-06-01', 4, 'POS.001.20250601.0004', '98', '43000', '4214000', '0', '0', '0', '0', '0', '1', '43000', '43000', '0', '0', '50000', '50000', '7000', '50000', '0', '0', '50000', '50000', '0', '0', '0', '0', 1, '97', '43000', '4171000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (133, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '100', '20000', '2000000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '100', '20000', '2000000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(134, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '100', '20000', '2000000', 1);
+(134, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '99', '20000', '1980000', 1),
+(135, 8, 61, 0, 1, 1, 1, 'SITI MASTUROH MUTHOHHARI,S.Pd.', 'keluar', '2025-06-03', 'KLR.001.20250603.0001', 81, '2025-06-03 08:33:52', '2025-06-03', 1, 'POS.001.20250603.0001', '8', '28000', '224000', '0', '0', '0', '0', '0', '1', '28000', '28000', '0', '0', '36000', '36000', '8000', '36000', '0', '0', '36000', '0', '0', '0', '0', '0', 1, '7', '28000', '196000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(136, 12, 64, 0, 1, 1, 1, 'LILIK YULIARTHO, S.Pd.SD', 'keluar', '2025-06-03', 'KLR.001.20250603.0002', 82, '2025-06-03 08:34:54', '2025-06-03', 2, 'POS.001.20250603.0002', '100', '20000', '2000000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '25000', '25000', '5000', '25000', '0', '0', '25000', '25000', '0', '0', '0', '0', 1, '99', '20000', '1980000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(137, 14, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-06', 'MSK.001.20250606.0001', 65, '2025-06-06 00:44:35', '2025-06-06', 1, 'POS.001.20250606.0001', '0', '0', '0', '10', '20000', '200000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '200000', '0', '0', '200000', '200000', '0', '0', '0', '0', 1, '10', '20000', '200000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(138, 14, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-06', 'MSK.001.20250606.0001', 65, '2025-06-06 00:44:35', '2025-06-06', 1, 'POS.001.20250606.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '200000', '0', '0', '200000', '200000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '8', '20000', '160000', 1),
+(139, 6, 45, 0, 1, 1, 1, 'SRI RAHAYU B', 'keluar', '2025-06-06', 'KLR.001.20250606.0001', 83, '2025-06-06 00:57:35', '2025-06-06', 2, 'POS.001.20250606.0002', '9', '45000', '405000', '0', '0', '0', '0', '0', '1', '45000', '45000', '0', '0', '100000', '100000', '55000', '100000', '0', '0', '100000', '100000', '0', '0', '0', '0', 1, '8', '45000', '360000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(140, 14, 39, 0, 1, 1, 0, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-06-01', 'KLR.001.20250601.0004', 84, '2025-06-06 01:01:40', '2025-06-06', 3, 'POS.001.20250606.0003', '10', '20000', '200000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '40000', '40000', '20000', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '9', '20000', '180000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(141, 14, 39, 0, 1, 1, 1, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-06-06', 'KLR.001.20250606.0002', 85, '2025-06-06 01:02:54', '2025-06-06', 4, 'POS.001.20250606.0004', '9', '20000', '180000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '40000', '40000', '20000', '40000', '0', '0', '40000', '40000', '0', '0', '0', '0', 1, '8', '20000', '160000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(142, 3, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-15', 'MSK.001.20250615.0001', 67, '2025-06-15 12:56:06', '2025-06-15', 1, 'POS.001.20250615.0001', '15', '20000', '300000', '2', '20000', '40000', '400', '1200', '0', '0', '0', '0', '0', '0', '0', '0', '40000', '400', '1200', '39200', '39200', '0', '0', '0', '0', 1, '17', '20000', '340000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(143, 3, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-15', 'MSK.001.20250615.0001', 67, '2025-06-15 12:56:06', '2025-06-15', 1, 'POS.001.20250615.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '40000', '400', '1200', '39200', '39200', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '2', '20000', '40000', 1),
+(144, 3, 38, 0, 1, 1, 1, 'RIRIS WURYANINGTYAS', 'keluar', '2025-06-15', 'KLR.001.20250615.0001', 86, '2025-06-15 12:57:15', '2025-06-15', 2, 'POS.001.20250615.0002', '17', '20000', '340000', '0', '0', '0', '0', '0', '3', '20000', '60000', '2220', '4440', '37000', '111000', '48780', '111000', '2220', '4440', '108780', '108780', '0', '0', '0', '0', 1, '14', '20000', '280000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(145, 9, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-19', 'KLR.001.20250619.0001', 88, '2025-06-19 00:57:44', '2025-06-19', 2, 'POS.001.20250619.0002', '3', '80000', '240000', '0', '0', '0', '0', '0', '3', '80000', '240000', '0', '0', '90000', '270000', '30000', '270000', '0', '0', '270000', '270000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(146, 6, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-19', 'KLR.001.20250619.0002', 89, '2025-06-19 01:06:17', '2025-06-19', 3, 'POS.001.20250619.0003', '8', '45000', '360000', '0', '0', '0', '0', '0', '8', '45000', '360000', '0', '0', '100000', '800000', '440000', '800000', '0', '0', '800000', '800000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(147, 10, 44, 0, 1, 1, 1, 'SUNOTO', 'keluar', '2025-06-19', 'KLR.001.20250619.0003', 90, '2025-06-19 01:23:31', '2025-06-19', 4, 'POS.001.20250619.0004', '97', '41000', '3977000', '0', '0', '0', '0', '0', '60', '57400', '3444000', '0', '0', '50000', '3000000', '-444000', '3000000', '0', '0', '3000000', '3000000', '0', '0', '0', '0', 1, '37', '14405', '533000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(148, 829, 0, 0, 4, 4, 1, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0001', 68, '2025-06-19 09:12:45', '2025-06-19', 5, 'POS.001.20250619.0005', '0', '0', '0', '3', '4500', '13500', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '13500', '0', '0', '13500', '13500', '0', '0', '0', '0', 1, '3', '4500', '13500', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(149, 829, 0, 0, 4, 4, 1, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0001', 68, '2025-06-19 09:12:45', '2025-06-19', 5, 'POS.001.20250619.0005', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '13500', '0', '0', '13500', '13500', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '1', '4500', '4500', 1),
+(150, 829, 0, 0, 4, 4, 0, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0002', 69, '2025-06-19 09:18:02', '2025-06-19', 6, 'POS.001.20250619.0006', '3', '4500', '13500', '5', '5000', '25000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '8', '4813', '38500', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(151, 829, 0, 0, 4, 4, 0, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0002', 69, '2025-06-19 09:18:02', '2025-06-19', 6, 'POS.001.20250619.0006', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '5', '5000', '25000', 1),
+(153, 829, 59, 0, 4, 4, 1, 'ROHAYATI', 'keluar', '2025-06-19', 'KLR.001.20250619.0005', 92, '2025-06-19 09:45:10', '2025-06-19', 7, 'POS.001.20250619.0007', '8', '4813', '38500', '0', '0', '0', '0', '0', '2', '4500', '9000', '0', '0', '5400', '10800', '1800', '10800', '0', '0', '10800', '10800', '0', '0', '0', '0', 1, '6', '4917', '29500', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2);
 
 -- --------------------------------------------------------
 
@@ -2726,24 +2898,24 @@ CREATE TABLE `stoklifo` (
 
 INSERT INTO `stoklifo` (`id`, `idbarang`, `idanggota`, `idsupplier`, `idseksi`, `idruang`, `idjenispembayaran`, `nama`, `status`, `tglstatus`, `nomorstatus`, `idstatus`, `created_at`, `tglposting`, `nomorp`, `nomorposting`, `awal`, `hppawal`, `hbsawal`, `masuk`, `hppmasuk`, `hbsmasuk`, `ppnmasuk`, `diskonmasuk`, `keluar`, `hbskeluar`, `hppkeluar`, `ppnkeluar`, `diskonkeluar`, `hjs`, `hppj`, `labaj`, `subtotals`, `ppns`, `diskons`, `totals`, `bayars`, `kembalis`, `vouchers`, `ambilsavings`, `savings`, `xangsuran`, `akhir`, `hppakhir`, `hbsakhir`, `email`, `iduser`, `keterangan`, `pokok`, `hbspokok`, `hpppokok`, `kodepokok`) VALUES
 (62, 3, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 51, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '15', '300000', '20000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '15', '300000', '20000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(63, 3, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 51, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '15', '20000', '300000', 1),
+(63, 3, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 51, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '14', '20000', '280000', 1),
 (64, 4, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 52, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '20', '600000', '30000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '20', '600000', '30000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (65, 4, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 52, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '20', '30000', '600000', 1),
 (66, 6, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 53, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '11', '495000', '45000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '11', '495000', '45000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(67, 6, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 53, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '9', '45000', '405000', 1),
+(67, 6, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 53, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '45000', '0', 0),
 (68, 8, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 54, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '10', '280000', '28000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '10', '280000', '28000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(69, 8, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 54, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '8', '28000', '224000', 1),
+(69, 8, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 54, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '7', '28000', '196000', 1),
 (70, 9, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 55, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '4', '320000', '80000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '4', '320000', '80000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(71, 9, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 55, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '3', '80000', '240000', 1),
+(71, 9, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-13', 'MSK.001.20250513.0001', 55, '2025-05-13 16:40:58', '2025-05-13', 1, 'POS.001.20250513.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1995000', '0', '0', '1995000', '2000000', '5000', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '80000', '0', 0),
 (72, 8, 38, 0, 1, 1, 1, 'RIRIS WURYANINGTYAS', 'keluar', '2025-05-13', 'KLR.001.20250513.0001', 71, '2025-05-13 16:52:38', '2025-05-13', 2, 'POS.001.20250513.0002', '10', '280000', '28000', '0', '0', '0', '0', '0', '2', '28000', '56000', '0', '0', '36000', '72000', '16000', '72000', '0', '0', '72000', '72000', '0', '0', '0', '0', 1, '8', '224000', '28000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (73, 9, 39, 0, 1, 1, 1, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-05-13', 'KLR.001.20250513.0002', 73, '2025-05-13 16:54:15', '2025-05-13', 3, 'POS.001.20250513.0003', '4', '320000', '80000', '0', '0', '0', '0', '0', '1', '80000', '80000', '0', '0', '90000', '90000', '10000', '90000', '0', '0', '90000', '90000', '0', '0', '0', '0', 1, '3', '240000', '80000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (74, 6, 40, 0, 1, 1, 99, 'MASHUDI A.', 'keluar', '2025-05-13', 'KLR.001.20250513.0003', 74, '2025-05-13 18:18:12', '2025-05-13', 4, 'POS.001.20250513.0004', '11', '495000', '45000', '0', '0', '0', '0', '0', '1', '45000', '45000', '0', '0', '55000', '55000', '10000', '55000', '0', '0', '55000', '55000', '0', '0', '0', '0', 1, '10', '450000', '45000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (75, 10, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 60, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '50', '2050000', '41000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '50', '2050000', '41000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(76, 10, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 60, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '50', '41000', '2050000', 1),
+(76, 10, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 60, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '37', '41000', '533000', 1),
 (77, 11, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 61, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '50', '2150000', '43000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '50', '2150000', '43000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (78, 11, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0001', 61, '2025-05-25 17:30:01', '2025-05-25', 1, 'POS.001.20250525.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '50', '43000', '2150000', 1),
 (79, 10, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 63, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '50', '2050000', '41000', '50', '2050000', '41000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '100', '4100000', '41000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(80, 10, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 63, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '0', '0', '0', 'admin@gmail.com', 1, NULL, '47', '41000', '1927000', 1),
+(80, 10, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 63, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '41000', '0', 0),
 (81, 11, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 62, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '50', '2150000', '43000', '50', '2150000', '43000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '100', '4300000', '43000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (82, 11, 0, 0, 1, 1, 99, 'UMUM', 'masuk', '2025-05-25', 'MSK.001.20250525.0002', 62, '2025-05-25 17:31:46', '2025-05-25', 2, 'POS.001.20250525.0002', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '4200000', '0', '0', '4200000', '4200000', '0', '0', '0', '0', 10, '0', '0', '0', 'admin@gmail.com', 1, NULL, '47', '43000', '2021000', 1),
 (83, 10, 39, 0, 1, 1, 0, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-01-01', 'KLR.001.20250101.0001', 75, '2025-06-01 18:09:16', '2025-06-01', 1, 'POS.001.20250601.0001', '100', '4100000', '41000', '0', '0', '0', '0', '0', '2', '41000', '82000', '0', '0', '50000', '100000', '18000', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '98', '4018000', '41000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
@@ -2753,7 +2925,25 @@ INSERT INTO `stoklifo` (`id`, `idbarang`, `idanggota`, `idsupplier`, `idseksi`, 
 (87, 11, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-01', 'KLR.001.20250601.0002', 79, '2025-06-01 18:38:00', '2025-06-01', 3, 'POS.001.20250601.0003', '99', '4257000', '43000', '0', '0', '0', '0', '0', '1', '43000', '43000', '0', '0', '50000', '50000', '7000', '50000', '0', '0', '50000', '50000', '0', '0', '0', '0', 1, '98', '4214000', '43000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (88, 11, 48, 0, 1, 1, 1, 'EMI YUTATIK, S.Pd.SD', 'keluar', '2025-06-01', 'KLR.001.20250601.0003', 80, '2025-06-01 19:01:27', '2025-06-01', 4, 'POS.001.20250601.0004', '98', '4214000', '43000', '0', '0', '0', '0', '0', '1', '43000', '43000', '0', '0', '50000', '50000', '7000', '50000', '0', '0', '50000', '50000', '0', '0', '0', '0', 1, '97', '4171000', '43000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
 (89, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '100', '2000000', '20000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '100', '2000000', '20000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
-(90, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '100', '20000', '2000000', 1);
+(90, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '99', '20000', '1980000', 1),
+(91, 8, 61, 0, 1, 1, 1, 'SITI MASTUROH MUTHOHHARI,S.Pd.', 'keluar', '2025-06-03', 'KLR.001.20250603.0001', 81, '2025-06-03 08:33:52', '2025-06-03', 1, 'POS.001.20250603.0001', '8', '224000', '28000', '0', '0', '0', '0', '0', '1', '28000', '28000', '0', '0', '36000', '36000', '8000', '36000', '0', '0', '36000', '0', '0', '0', '0', '0', 1, '7', '196000', '28000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(92, 12, 64, 0, 1, 1, 1, 'LILIK YULIARTHO, S.Pd.SD', 'keluar', '2025-06-03', 'KLR.001.20250603.0002', 82, '2025-06-03 08:34:54', '2025-06-03', 2, 'POS.001.20250603.0002', '100', '2000000', '20000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '25000', '25000', '5000', '25000', '0', '0', '25000', '25000', '0', '0', '0', '0', 1, '99', '1980000', '20000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(93, 14, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-06', 'MSK.001.20250606.0001', 65, '2025-06-06 00:44:35', '2025-06-06', 1, 'POS.001.20250606.0001', '0', '0', '0', '10', '200000', '20000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '200000', '0', '0', '200000', '200000', '0', '0', '0', '0', 1, '10', '200000', '20000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(94, 14, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-06', 'MSK.001.20250606.0001', 65, '2025-06-06 00:44:35', '2025-06-06', 1, 'POS.001.20250606.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '200000', '0', '0', '200000', '200000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '8', '20000', '160000', 1),
+(95, 6, 45, 0, 1, 1, 1, 'SRI RAHAYU B', 'keluar', '2025-06-06', 'KLR.001.20250606.0001', 83, '2025-06-06 00:57:35', '2025-06-06', 2, 'POS.001.20250606.0002', '9', '405000', '45000', '0', '0', '0', '0', '0', '1', '45000', '45000', '0', '0', '100000', '100000', '55000', '100000', '0', '0', '100000', '100000', '0', '0', '0', '0', 1, '8', '360000', '45000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(96, 14, 39, 0, 1, 1, 0, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-06-01', 'KLR.001.20250601.0004', 84, '2025-06-06 01:01:40', '2025-06-06', 3, 'POS.001.20250606.0003', '10', '200000', '20000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '40000', '40000', '20000', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '9', '180000', '20000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(97, 14, 39, 0, 1, 1, 1, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-06-06', 'KLR.001.20250606.0002', 85, '2025-06-06 01:02:54', '2025-06-06', 4, 'POS.001.20250606.0004', '9', '180000', '20000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '40000', '40000', '20000', '40000', '0', '0', '40000', '40000', '0', '0', '0', '0', 1, '8', '160000', '20000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(98, 3, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-15', 'MSK.001.20250615.0001', 67, '2025-06-15 12:56:06', '2025-06-15', 1, 'POS.001.20250615.0001', '15', '300000', '20000', '2', '40000', '20000', '400', '1200', '0', '0', '0', '0', '0', '0', '0', '0', '40000', '400', '1200', '39200', '39200', '0', '0', '0', '0', 1, '17', '340000', '20000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(99, 3, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-15', 'MSK.001.20250615.0001', 67, '2025-06-15 12:56:06', '2025-06-15', 1, 'POS.001.20250615.0001', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '40000', '400', '1200', '39200', '39200', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '0', '0', 0),
+(100, 3, 38, 0, 1, 1, 1, 'RIRIS WURYANINGTYAS', 'keluar', '2025-06-15', 'KLR.001.20250615.0001', 86, '2025-06-15 12:57:15', '2025-06-15', 2, 'POS.001.20250615.0002', '17', '340000', '20000', '0', '0', '0', '0', '0', '3', '20000', '60000', '2220', '4440', '37000', '111000', '48780', '111000', '2220', '4440', '108780', '108780', '0', '0', '0', '0', 1, '14', '280000', '20000', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(101, 9, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-19', 'KLR.001.20250619.0001', 88, '2025-06-19 00:57:44', '2025-06-19', 2, 'POS.001.20250619.0002', '3', '240000', '80000', '0', '0', '0', '0', '0', '3', '80000', '240000', '0', '0', '90000', '270000', '30000', '270000', '0', '0', '270000', '270000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(102, 6, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-19', 'KLR.001.20250619.0002', 89, '2025-06-19 01:06:17', '2025-06-19', 3, 'POS.001.20250619.0003', '8', '360000', '45000', '0', '0', '0', '0', '0', '8', '45000', '360000', '0', '0', '100000', '800000', '440000', '800000', '0', '0', '800000', '800000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(103, 10, 44, 0, 1, 1, 1, 'SUNOTO', 'keluar', '2025-06-19', 'KLR.001.20250619.0003', 90, '2025-06-19 01:23:31', '2025-06-19', 4, 'POS.001.20250619.0004', '97', '3977000', '41000', '0', '0', '0', '0', '0', '60', '57400', '3444000', '0', '0', '50000', '3000000', '-444000', '3000000', '0', '0', '3000000', '3000000', '0', '0', '0', '0', 1, '37', '533000', '14405', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(104, 829, 0, 0, 4, 4, 1, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0001', 68, '2025-06-19 09:12:45', '2025-06-19', 5, 'POS.001.20250619.0005', '0', '0', '0', '3', '13500', '4500', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '13500', '0', '0', '13500', '13500', '0', '0', '0', '0', 1, '3', '13500', '4500', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(105, 829, 0, 0, 4, 4, 1, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0001', 68, '2025-06-19 09:12:45', '2025-06-19', 5, 'POS.001.20250619.0005', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '13500', '0', '0', '13500', '13500', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '3', '4500', '13500', 1),
+(106, 829, 0, 0, 4, 4, 0, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0002', 69, '2025-06-19 09:18:02', '2025-06-19', 6, 'POS.001.20250619.0006', '3', '13500', '4500', '5', '25000', '5000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '8', '38500', '4813', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2),
+(107, 829, 0, 0, 4, 4, 0, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0002', 69, '2025-06-19 09:18:02', '2025-06-19', 6, 'POS.001.20250619.0006', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL, '3', '5000', '15000', 1),
+(109, 829, 59, 0, 4, 4, 1, 'ROHAYATI', 'keluar', '2025-06-19', 'KLR.001.20250619.0005', 92, '2025-06-19 09:45:10', '2025-06-19', 7, 'POS.001.20250619.0007', '8', '38500', '4813', '0', '0', '0', '0', '0', '2', '5000', '10000', '0', '0', '5400', '10800', '800', '10800', '0', '0', '10800', '10800', '0', '0', '0', '0', 1, '6', '28500', '4750', 'admin@gmail.com', 1, NULL, '0', '0', '0', 2);
 
 -- --------------------------------------------------------
 
@@ -2766,6 +2956,7 @@ CREATE TABLE `stokmamin` (
   `idmamin` bigint DEFAULT NULL,
   `idanggota` bigint DEFAULT '0',
   `idjenispembayaran` bigint DEFAULT '0',
+  `idruang` bigint DEFAULT '1',
   `nama` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `status` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `tglstatus` date DEFAULT NULL,
@@ -2813,14 +3004,22 @@ CREATE TABLE `stokmamin` (
 -- Dumping data for table `stokmamin`
 --
 
-INSERT INTO `stokmamin` (`id`, `idmamin`, `idanggota`, `idjenispembayaran`, `nama`, `status`, `tglstatus`, `nomorstatus`, `idstatus`, `created_at`, `tglposting`, `nomorp`, `nomorposting`, `awal`, `hbsawal`, `hppawal`, `masuk`, `hbsmasuk`, `hppmasuk`, `ppnmasuk`, `diskonmasuk`, `keluar`, `hbskeluar`, `hppkeluar`, `ppnkeluar`, `diskonkeluar`, `hjs`, `hppj`, `labaj`, `subtotals`, `ppns`, `diskons`, `totals`, `bayars`, `vouchers`, `ambilsavings`, `kembalis`, `savings`, `xangsuran`, `akhir`, `hbsakhir`, `hppakhir`, `email`, `iduser`, `keterangan`) VALUES
-(1, 10, 38, 0, 'RIRIS WURYANINGTYAS', 'keluarmam', '2025-05-30', 'KMM.001.20250530.0001', 4, '2025-05-30 08:43:29', '2025-05-30', 1, 'POS.001.20250530.0001', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '10000', '10000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
-(2, 31, 38, 0, 'RIRIS WURYANINGTYAS', 'keluarmam', '2025-05-30', 'KMM.001.20250530.0001', 1, '2025-05-30 08:43:29', '2025-05-30', 1, 'POS.001.20250530.0001', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '20000', '40000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
-(3, 2, 40, 0, 'MASHUDI A.', 'keluarmam', '2025-01-01', 'KMM.001.20250101.0001', 7, '2025-06-01 18:25:29', '2025-06-01', 2, 'POS.001.20250601.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '25000', '25000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
-(4, 19, 41, 1, 'ROYDES ANTON SUYITNO, S.Pd.', 'keluarmam', '2025-06-01', 'KMM.001.20250601.0001', 8, '2025-06-01 18:31:43', '2025-06-01', 2, 'POS.001.20250601.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '20000', '20000', '0', '40000', '0', '0', '40000', '40000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
-(5, 29, 41, 1, 'ROYDES ANTON SUYITNO, S.Pd.', 'keluarmam', '2025-06-01', 'KMM.001.20250601.0001', 9, '2025-06-01 18:31:43', '2025-06-01', 2, 'POS.001.20250601.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '20000', '20000', '0', '40000', '0', '0', '40000', '40000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
-(6, 7, 44, 1, 'SUNOTO', 'keluarmam', '2025-06-01', 'KMM.001.20250601.0002', 11, '2025-06-01 18:33:30', '2025-06-01', 2, 'POS.001.20250601.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '10000', '10000', '0', '30000', '0', '0', '30000', '30000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
-(7, 6, 42, 1, 'TUTIK SRIWAHYUNINGSIH,S.Pd', 'keluarmam', '2025-06-01', 'KMM.001.20250601.0003', 12, '2025-06-01 18:40:11', '2025-06-01', 4, 'POS.001.20250601.0004', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '15000', '15000', '0', '15000', '0', '0', '15000', '15000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL);
+INSERT INTO `stokmamin` (`id`, `idmamin`, `idanggota`, `idjenispembayaran`, `idruang`, `nama`, `status`, `tglstatus`, `nomorstatus`, `idstatus`, `created_at`, `tglposting`, `nomorp`, `nomorposting`, `awal`, `hbsawal`, `hppawal`, `masuk`, `hbsmasuk`, `hppmasuk`, `ppnmasuk`, `diskonmasuk`, `keluar`, `hbskeluar`, `hppkeluar`, `ppnkeluar`, `diskonkeluar`, `hjs`, `hppj`, `labaj`, `subtotals`, `ppns`, `diskons`, `totals`, `bayars`, `vouchers`, `ambilsavings`, `kembalis`, `savings`, `xangsuran`, `akhir`, `hbsakhir`, `hppakhir`, `email`, `iduser`, `keterangan`) VALUES
+(1, 10, 38, 0, 1, 'RIRIS WURYANINGTYAS', 'keluarmam', '2025-05-30', 'KMM.001.20250530.0001', 4, '2025-05-30 08:43:29', '2025-05-30', 1, 'POS.001.20250530.0001', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '10000', '10000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(2, 31, 38, 0, 1, 'RIRIS WURYANINGTYAS', 'keluarmam', '2025-05-30', 'KMM.001.20250530.0001', 1, '2025-05-30 08:43:29', '2025-05-30', 1, 'POS.001.20250530.0001', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '20000', '40000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(3, 2, 40, 0, 1, 'MASHUDI A.', 'keluarmam', '2025-01-01', 'KMM.001.20250101.0001', 7, '2025-06-01 18:25:29', '2025-06-01', 2, 'POS.001.20250601.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '25000', '25000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(4, 19, 41, 1, 1, 'ROYDES ANTON SUYITNO, S.Pd.', 'keluarmam', '2025-06-01', 'KMM.001.20250601.0001', 8, '2025-06-01 18:31:43', '2025-06-01', 2, 'POS.001.20250601.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '20000', '20000', '0', '40000', '0', '0', '40000', '40000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(5, 29, 41, 1, 1, 'ROYDES ANTON SUYITNO, S.Pd.', 'keluarmam', '2025-06-01', 'KMM.001.20250601.0001', 9, '2025-06-01 18:31:43', '2025-06-01', 2, 'POS.001.20250601.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '20000', '20000', '0', '40000', '0', '0', '40000', '40000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(6, 7, 44, 1, 1, 'SUNOTO', 'keluarmam', '2025-06-01', 'KMM.001.20250601.0002', 11, '2025-06-01 18:33:30', '2025-06-01', 2, 'POS.001.20250601.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '10000', '10000', '0', '30000', '0', '0', '30000', '30000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(7, 6, 42, 1, 1, 'TUTIK SRIWAHYUNINGSIH,S.Pd', 'keluarmam', '2025-06-01', 'KMM.001.20250601.0003', 12, '2025-06-01 18:40:11', '2025-06-01', 4, 'POS.001.20250601.0004', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '15000', '15000', '0', '15000', '0', '0', '15000', '15000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(8, 25, 48, 1, 1, 'EMI YUTATIK, S.Pd.SD', 'keluarmam', '2025-06-03', 'KMM.001.20250603.0001', 14, '2025-06-03 08:49:58', '2025-06-03', 2, 'POS.001.20250603.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '20000', '20000', '0', '40000', '0', '0', '40000', '40000', '40000', '0', '40000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(9, 25, 48, 1, 1, 'EMI YUTATIK, S.Pd.SD', 'keluarmam', '2025-06-03', 'KMM.001.20250603.0001', 14, '2025-06-03 08:49:58', '2025-06-03', 2, 'POS.001.20250603.0002', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '20000', '20000', '0', '40000', '0', '0', '40000', '40000', '40000', '0', '40000', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(10, 25, 49, 1, 1, 'YUSNITA WARDANI,S.Pd.SD', 'keluarmam', '2025-06-03', 'KMM.001.20250603.0002', 15, '2025-06-03 08:50:37', '2025-06-03', 3, 'POS.001.20250603.0003', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '400', '200', '20000', '20000', '0', '20000', '400', '200', '20200', '20200', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(11, 31, 46, 1, 1, 'DIDIEK PARGYANTORO', 'keluarmam', '2025-06-03', 'KMM.001.20250603.0003', 16, '2025-06-03 08:51:10', '2025-06-03', 4, 'POS.001.20250603.0004', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '400', '200', '20000', '20000', '0', '20000', '400', '200', '20200', '20200', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(12, 6, 41, 1, 1, 'ROYDES ANTON SUYITNO, S.Pd.', 'keluarmam', '2025-06-05', 'KMM.001.20250605.0001', 17, '2025-06-05 01:18:54', '2025-06-05', 1, 'POS.001.20250605.0001', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '15000', '15000', '0', '15000', '0', '0', '15000', '15000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(13, 22, 46, 99, 1, 'DIDIEK PARGYANTORO', 'keluarmam', '2025-06-10', 'KMM.001.20250610.0001', 18, '2025-06-10 05:43:42', '2025-06-10', 1, 'POS.001.20250610.0001', '0', '0', '0', '0', '0', '0', '0', '0', '2', '0', '0', '0', '0', '20000', '40000', '0', '40000', '0', '0', '40000', '40000', '0', '0', '0', '0', 4, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(14, 31, 43, 1, 1, 'ARUMIATI,S.Pd', 'keluarmam', '2025-06-22', 'KMM.001.20250622.0001', 19, '2025-06-22 18:20:43', '2025-06-22', 1, 'POS.001.20250622.0001', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '2000', '3000', '20000', '60000', '0', '60000', '2000', '3000', '59000', '59000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(15, 31, 42, 1, 1, 'TUTIK SRIWAHYUNINGSIH,S.Pd', 'keluarmam', '2025-06-22', 'KMM.001.20250622.0002', 20, '2025-06-22 18:26:36', '2025-06-22', 2, 'POS.001.20250622.0002', '0', '0', '0', '0', '0', '0', '0', '0', '3', '0', '0', '0', '0', '20000', '60000', '0', '60000', '0', '0', '60000', '60000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -2902,7 +3101,22 @@ INSERT INTO `stokmova` (`id`, `idbarang`, `idanggota`, `idsupplier`, `idseksi`, 
 (222, 10, 43, 0, 1, 1, 1, 'ARUMIATI,S.Pd', 'keluar', '2025-06-01', 'KLR.001.20250601.0001', 78, '2025-06-01 18:36:24', '2025-06-01', 2, 'POS.001.20250601.0002', '98', '41000', '4018000', '0', '0', '0', '0', '0', '1', '41000', '41000', '0', '0', '50000', '50000', '9000', '105000', '0', '0', '105000', '105000', '0', '0', '0', '0', 1, '97', '41000', '3977000', 'admin@gmail.com', 1, NULL),
 (223, 11, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-01', 'KLR.001.20250601.0002', 79, '2025-06-01 18:38:00', '2025-06-01', 3, 'POS.001.20250601.0003', '99', '43000', '4257000', '0', '0', '0', '0', '0', '1', '43000', '43000', '0', '0', '50000', '50000', '7000', '50000', '0', '0', '50000', '50000', '0', '0', '0', '0', 1, '98', '43000', '4214000', 'admin@gmail.com', 1, NULL),
 (224, 11, 48, 0, 1, 1, 1, 'EMI YUTATIK, S.Pd.SD', 'keluar', '2025-06-01', 'KLR.001.20250601.0003', 80, '2025-06-01 19:01:27', '2025-06-01', 4, 'POS.001.20250601.0004', '98', '43000', '4214000', '0', '0', '0', '0', '0', '1', '43000', '43000', '0', '0', '50000', '50000', '7000', '50000', '0', '0', '50000', '50000', '0', '0', '0', '0', 1, '97', '43000', '4171000', 'admin@gmail.com', 1, NULL),
-(225, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '100', '20000', '2000000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '100', '20000', '2000000', 'admin@gmail.com', 1, NULL);
+(225, 12, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-01', 'MSK.001.20250601.0001', 64, '2025-06-01 22:49:07', '2025-06-01', 5, 'POS.001.20250601.0005', '0', '0', '0', '100', '20000', '2000000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2000000', '0', '0', '2000000', '2000000', '0', '0', '0', '0', 1, '100', '20000', '2000000', 'admin@gmail.com', 1, NULL),
+(226, 8, 61, 0, 1, 1, 1, 'SITI MASTUROH MUTHOHHARI,S.Pd.', 'keluar', '2025-06-03', 'KLR.001.20250603.0001', 81, '2025-06-03 08:33:52', '2025-06-03', 1, 'POS.001.20250603.0001', '8', '28000', '224000', '0', '0', '0', '0', '0', '1', '28000', '28000', '0', '0', '36000', '36000', '8000', '36000', '0', '0', '36000', '0', '0', '0', '0', '0', 1, '7', '28000', '196000', 'admin@gmail.com', 1, NULL),
+(227, 12, 64, 0, 1, 1, 1, 'LILIK YULIARTHO, S.Pd.SD', 'keluar', '2025-06-03', 'KLR.001.20250603.0002', 82, '2025-06-03 08:34:54', '2025-06-03', 2, 'POS.001.20250603.0002', '100', '20000', '2000000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '25000', '25000', '5000', '25000', '0', '0', '25000', '25000', '0', '0', '0', '0', 1, '99', '20000', '1980000', 'admin@gmail.com', 1, NULL),
+(228, 14, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-06', 'MSK.001.20250606.0001', 65, '2025-06-06 00:44:35', '2025-06-06', 1, 'POS.001.20250606.0001', '0', '0', '0', '10', '20000', '200000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '200000', '0', '0', '200000', '200000', '0', '0', '0', '0', 1, '10', '20000', '200000', 'admin@gmail.com', 1, NULL),
+(229, 6, 45, 0, 1, 1, 1, 'SRI RAHAYU B', 'keluar', '2025-06-06', 'KLR.001.20250606.0001', 83, '2025-06-06 00:57:35', '2025-06-06', 2, 'POS.001.20250606.0002', '9', '45000', '405000', '0', '0', '0', '0', '0', '1', '45000', '45000', '0', '0', '100000', '100000', '55000', '100000', '0', '0', '100000', '100000', '0', '0', '0', '0', 1, '8', '45000', '360000', 'admin@gmail.com', 1, NULL),
+(230, 14, 39, 0, 1, 1, 0, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-06-01', 'KLR.001.20250601.0004', 84, '2025-06-06 01:01:40', '2025-06-06', 3, 'POS.001.20250606.0003', '10', '20000', '200000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '40000', '40000', '20000', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '9', '20000', '180000', 'admin@gmail.com', 1, NULL),
+(231, 14, 39, 0, 1, 1, 1, 'CANDRA EKA DWI, S.Pd', 'keluar', '2025-06-06', 'KLR.001.20250606.0002', 85, '2025-06-06 01:02:54', '2025-06-06', 4, 'POS.001.20250606.0004', '9', '20000', '180000', '0', '0', '0', '0', '0', '1', '20000', '20000', '0', '0', '40000', '40000', '20000', '40000', '0', '0', '40000', '40000', '0', '0', '0', '0', 1, '8', '20000', '160000', 'admin@gmail.com', 1, NULL),
+(232, 3, 0, 0, 1, 1, 1, 'UMUM', 'masuk', '2025-06-15', 'MSK.001.20250615.0001', 67, '2025-06-15 12:56:06', '2025-06-15', 1, 'POS.001.20250615.0001', '15', '20000', '300000', '2', '20000', '40000', '400', '1200', '0', '0', '0', '0', '0', '0', '0', '0', '40000', '400', '1200', '39200', '39200', '0', '0', '0', '0', 1, '17', '20000', '340000', 'admin@gmail.com', 1, NULL),
+(233, 3, 38, 0, 1, 1, 1, 'RIRIS WURYANINGTYAS', 'keluar', '2025-06-15', 'KLR.001.20250615.0001', 86, '2025-06-15 12:57:15', '2025-06-15', 2, 'POS.001.20250615.0002', '17', '20000', '340000', '0', '0', '0', '0', '0', '3', '20000', '60000', '2220', '4440', '37000', '111000', '48780', '111000', '2220', '4440', '108780', '108780', '0', '0', '0', '0', 1, '14', '20000', '280000', 'admin@gmail.com', 1, NULL),
+(234, 9, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-19', 'KLR.001.20250619.0001', 88, '2025-06-19 00:39:22', '2025-06-19', 1, 'POS.001.20250619.0001', '3', '80000', '240000', '0', '0', '0', '0', '0', '3', '80000', '240000', '0', '0', '90000', '270000', '30000', '270000', '0', '0', '270000', '270000', '0', '0', '0', '0', 1, '0', '0', '0', 'admin@gmail.com', 1, NULL),
+(235, 9, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-19', 'KLR.001.20250619.0001', 88, '2025-06-19 00:57:44', '2025-06-19', 2, 'POS.001.20250619.0002', '0', '0', '0', '0', '0', '0', '0', '0', '3', '80000', '240000', '0', '0', '90000', '270000', '30000', '270000', '0', '0', '270000', '270000', '0', '0', '0', '0', 1, '-3', '80000', '-240000', 'admin@gmail.com', 1, NULL),
+(236, 6, 46, 0, 1, 1, 1, 'DIDIEK PARGYANTORO', 'keluar', '2025-06-19', 'KLR.001.20250619.0002', 89, '2025-06-19 01:06:17', '2025-06-19', 3, 'POS.001.20250619.0003', '8', '45000', '360000', '0', '0', '0', '0', '0', '8', '45000', '360000', '0', '0', '100000', '800000', '440000', '800000', '0', '0', '800000', '800000', '0', '0', '0', '0', 1, '0', '45000', '0', 'admin@gmail.com', 1, NULL),
+(237, 10, 44, 0, 1, 1, 1, 'SUNOTO', 'keluar', '2025-06-19', 'KLR.001.20250619.0003', 90, '2025-06-19 01:23:31', '2025-06-19', 4, 'POS.001.20250619.0004', '97', '41000', '3977000', '0', '0', '0', '0', '0', '60', '41000', '2460000', '0', '0', '50000', '3000000', '540000', '3000000', '0', '0', '3000000', '3000000', '0', '0', '0', '0', 1, '37', '41000', '1517000', 'admin@gmail.com', 1, NULL),
+(238, 829, 0, 0, 4, 4, 1, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0001', 68, '2025-06-19 09:12:45', '2025-06-19', 5, 'POS.001.20250619.0005', '0', '0', '0', '3', '4500', '13500', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '13500', '0', '0', '13500', '13500', '0', '0', '0', '0', 1, '3', '4500', '13500', 'admin@gmail.com', 1, NULL),
+(239, 829, 0, 0, 4, 4, 0, 'UMUM', 'masuk', '2025-06-19', 'MSK.001.20250619.0002', 69, '2025-06-19 09:18:02', '2025-06-19', 6, 'POS.001.20250619.0006', '3', '4500', '13500', '5', '5000', '25000', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 1, '8', '4813', '38500', 'admin@gmail.com', 1, NULL),
+(241, 829, 59, 0, 4, 4, 1, 'ROHAYATI', 'keluar', '2025-06-19', 'KLR.001.20250619.0005', 92, '2025-06-19 09:45:10', '2025-06-19', 7, 'POS.001.20250619.0007', '8', '4813', '38500', '0', '0', '0', '0', '0', '2', '5000', '10000', '0', '0', '5400', '10800', '800', '10800', '0', '0', '10800', '10800', '0', '0', '0', '0', 1, '6', '4750', '28500', 'admin@gmail.com', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -2943,18 +3157,26 @@ INSERT INTO `submenu` (`id`, `namamenu`, `slug`, `link`, `idmainmenu`, `idaplika
 (95, 'Barcode', '01-03-barcode', '/pos01/master/barcode', 3, 1, 'N', 'Y', 'Y', 'Y', 0),
 (96, 'Barang Ruang', '01-03-barang-ruang', '/pos01/master/barangruang', 3, 1, 'N', 'Y', 'Y', 'Y', 0),
 (97, 'Lembaga', '01-03-lembaga', '/pos01/master/lembaga', 3, 1, 'N', 'Y', 'Y', 'Y', 0),
-(98, 'Barang Masuk', '01-04-barang-masuk', '/pos01/transaksi/bmasuk', 4, 1, 'N', 'Y', 'Y', 'Y', 1),
-(99, 'Barang Keluar', '01-04-barang-keluar', '/pos01/transaksi/bkeluar', 4, 1, 'N', 'Y', 'Y', 'Y', 2),
-(100, 'Bayar Hutang (Customer)', '01-04-bayar-hutang-customer', '/pos01/transaksi/bayarhutangcustomer', 4, 1, 'N', 'Y', 'Y', 'Y', 4),
+(98, 'Pembelian Barang', '01-04-pembelian-barang', '/pos01/transaksi/bmasuk', 4, 1, 'N', 'Y', 'Y', 'Y', 1),
+(99, 'Penjualan Barang', '01-04-penjualan-barang', '/pos01/transaksi/bkeluar', 4, 1, 'N', 'Y', 'Y', 'Y', 2),
+(100, 'Bayar Piutang (Customer)', '01-04-bayar-piutang-customer', '/pos01/transaksi/bayarhutangcustomer', 4, 1, 'N', 'Y', 'Y', 'Y', 4),
 (101, 'Parameter', '01-06-parameter', '/pos01/pengaturan/parameter', 6, 1, 'N', 'Y', 'Y', 'Y', 0),
 (103, 'Stok Keluar-Masuk', '01-05-stok-keluar-masuk', '/pos01/laporan/stokkeluarmasuk', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
 (104, 'Stok Barang', '01-05-stok-barang', '/pos01/laporan/stokbarang', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
 (105, 'Kartu Stok', '01-05-kartu-stok', '/pos01/laporan/kartustok', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
 (106, 'Bayar Hutang (Supplier)', '01-04-bayar-hutang-supplier', '/pos01/transaksi/bayarhutangsupplier', 4, 1, 'N', 'Y', 'Y', 'Y', 5),
 (107, 'Makanan & Minuman', '01-03-makanan-minuman', '/pos01/master/mamin', 3, 1, 'N', 'Y', 'Y', 'Y', 0),
-(108, 'Mamin Keluar', '01-04-mamin-keluar', '/pos01/transaksi/mkeluar', 4, 1, 'N', 'Y', 'Y', 'Y', 3),
+(108, 'Penjualan Jasa', '01-04-penjualan-jasa', '/pos01/transaksi/mkeluar', 4, 1, 'N', 'Y', 'Y', 'Y', 3),
 (110, 'Pembelian', '01-05-pembelian', '/pos01/laporan/pembelian', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
-(111, 'Penjualan', '01-05-penjualan', '/pos01/laporan/penjualan', 5, 1, 'N', 'Y', 'Y', 'Y', 0);
+(111, 'Penjualan', '01-05-penjualan', '/pos01/laporan/penjualan', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
+(112, 'Hutang/Piutang', '01-05-hutangpiutang', '/pos01/laporan/hutangpiutang', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
+(113, 'Kartu Hutang', '01-05-kartu-hutang', '/pos01/laporan/kartuhutang', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
+(114, 'Kartu Piutang', '01-05-kartu-piutang', '/pos01/laporan/kartupiutang', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
+(115, 'Biaya-biaya', '01-04-biaya-biaya', '/pos01/transaksi/biayabiaya', 4, 1, 'N', 'Y', 'Y', 'Y', 0),
+(116, 'Pendapatan Lain', '01-04-pendapatan-lain', '/pos01/transaksi/pendapatanlain', 4, 1, 'N', 'Y', 'Y', 'Y', 0),
+(117, 'Laba Rugi', '01-05-laba-rugi', '/pos01/laporan/labarugi', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
+(118, 'Pendapatan Lain', '01-05-pendapatan-lain', '/pos01/laporan/pendapatanlain2', 5, 1, 'N', 'Y', 'Y', 'Y', 0),
+(119, 'Biaya-biaya', '01-05-biaya-biaya', '/pos01/laporan/biayabiaya2', 5, 1, 'N', 'Y', 'Y', 'Y', 0);
 
 -- --------------------------------------------------------
 
@@ -3021,7 +3243,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `levels`, `kunci1`, `kunci2`, `namadepan`, `namatengah`, `namabelakang`, `slug`, `idsessions`, `blokir`, `countdown`, `jmllogin`, `foto`) VALUES
-(1, 'Admin', 'admin@gmail.com', '2025-06-02 02:23:24', '$2y$12$bl8rERY45Q.KUu.KtGx4.uL6Whr.lpWUx3u0XWsl7qPwIrvjx/SyS', NULL, '2025-03-15 04:57:16', '2025-03-20 10:04:31', 1, 1, 999999, 'admin', 'gmail.com', 'administrator', 'admin', 'XeryxSHkDLok47wYJAYZMiRfwBsBRFJ4CQUpGrV5', 'N', 900, 372, 'admin-users-foto/SdoTuDVLHp5aAyNjmlgrwydUopQ3Lv7MFNfuuw8P.png'),
+(1, 'Admin', 'admin@gmail.com', '2025-06-23 02:05:55', '$2y$12$bl8rERY45Q.KUu.KtGx4.uL6Whr.lpWUx3u0XWsl7qPwIrvjx/SyS', NULL, '2025-03-15 04:57:16', '2025-03-20 10:04:31', 1, 1, 999999, 'admin', 'gmail.com', 'administrator', 'admin', 'tYuGillm823wrHM96pdXjQMpfpwilywsShHn9qFG', 'N', 900, 448, 'admin-users-foto/SdoTuDVLHp5aAyNjmlgrwydUopQ3Lv7MFNfuuw8P.png'),
 (7, 'Admin2', 'admin2@gmail.com', '2025-04-04 03:29:13', '$2y$12$.xqM81O4dB3zabuElIRl..xm0csZq11Pl5HIZixTQcJ.ZaLjl7ArO', NULL, '2025-03-15 14:53:47', '2025-03-15 21:42:52', 3, 1, 1, 'admin', 'admin2@gmail.com', '12345', 'admin2', 'z5VyMBOnFTaTyZX70t96K76Y5jCuQIqOD6NquOpv', 'N', 90, 4, NULL);
 
 --
@@ -3082,6 +3304,17 @@ ALTER TABLE `bayarhutang`
   ADD KEY `fk_bayarhutang_2` (`idsupplier`);
 
 --
+-- Indexes for table `biaya`
+--
+ALTER TABLE `biaya`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_biaya_1` (`idjenisbiaya`),
+  ADD KEY `fk_biaya_2` (`idsatuan`),
+  ADD KEY `fk_biaya_3` (`idsupplier`),
+  ADD KEY `fk_biaya_4` (`idruang`),
+  ADD KEY `fk_biaya_5` (`idkategoribiaya`);
+
+--
 -- Indexes for table `bkeluar`
 --
 ALTER TABLE `bkeluar`
@@ -3136,6 +3369,13 @@ ALTER TABLE `instansi`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `jenisbiaya`
+--
+ALTER TABLE `jenisbiaya`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `jenisbiaya_unq1` (`jenisbiaya`);
+
+--
 -- Indexes for table `jenispembayaran`
 --
 ALTER TABLE `jenispembayaran`
@@ -3163,6 +3403,13 @@ ALTER TABLE `kategori`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unq_kategori01` (`kode`),
   ADD UNIQUE KEY `unq_kategori02` (`kategori`);
+
+--
+-- Indexes for table `kategoribiaya`
+--
+ALTER TABLE `kategoribiaya`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unq1_kategoribiaya` (`kategoribiaya`);
 
 --
 -- Indexes for table `lembaga`
@@ -3203,7 +3450,8 @@ ALTER TABLE `mkeluar`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `unq1_mkeluar` (`nomorbuktia`,`idmamin`),
   ADD KEY `fk_mkeluar_1` (`idmamin`),
-  ADD KEY `fk_mkeluar_3` (`idanggota`);
+  ADD KEY `fk_mkeluar_3` (`idanggota`),
+  ADD KEY `fk_mkeluar_4` (`idruang`);
 
 --
 -- Indexes for table `parameter`
@@ -3217,6 +3465,15 @@ ALTER TABLE `parameter`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
+
+--
+-- Indexes for table `pendapatan`
+--
+ALTER TABLE `pendapatan`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_pendapatan_1` (`idkategoribiaya`),
+  ADD KEY `fk_pendapatan_2` (`idsatuan`),
+  ADD KEY `fk_pendapatan_3` (`idruang`);
 
 --
 -- Indexes for table `personal_access_tokens`
@@ -3288,7 +3545,9 @@ ALTER TABLE `stokfifo`
   ADD KEY `fk_stokfifo_1` (`idbarang`),
   ADD KEY `fk_stokfifo_2` (`idseksi`),
   ADD KEY `fk_stokfifo_3` (`idruang`),
-  ADD KEY `fk_stokfifo_01` (`idjenispembayaran`);
+  ADD KEY `fk_stokfifo_01` (`idjenispembayaran`),
+  ADD KEY `fk_stokfifo_4` (`idanggota`),
+  ADD KEY `fk_stokfifo_5` (`idsupplier`);
 
 --
 -- Indexes for table `stoklifo`
@@ -3307,7 +3566,8 @@ ALTER TABLE `stokmamin`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_stokmamin_1` (`idmamin`),
   ADD KEY `fk_stokmamin_2` (`idanggota`),
-  ADD KEY `fk_stokmamin_3` (`idjenispembayaran`);
+  ADD KEY `fk_stokmamin_3` (`idjenispembayaran`),
+  ADD KEY `fk_stokmamin_4` (`idruang`);
 
 --
 -- Indexes for table `stokmova`
@@ -3363,7 +3623,7 @@ ALTER TABLE `aplikasi`
 -- AUTO_INCREMENT for table `barang`
 --
 ALTER TABLE `barang`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=972;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=974;
 
 --
 -- AUTO_INCREMENT for table `barangruang`
@@ -3384,16 +3644,22 @@ ALTER TABLE `bayarhutang`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `biaya`
+--
+ALTER TABLE `biaya`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `bkeluar`
 --
 ALTER TABLE `bkeluar`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
 
 --
 -- AUTO_INCREMENT for table `bmasuk`
 --
 ALTER TABLE `bmasuk`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -3405,13 +3671,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `hutang`
 --
 ALTER TABLE `hutang`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `instansi`
 --
 ALTER TABLE `instansi`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `jenisbiaya`
+--
+ALTER TABLE `jenisbiaya`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `jenispembayaran`
@@ -3430,6 +3702,12 @@ ALTER TABLE `jobs`
 --
 ALTER TABLE `kategori`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `kategoribiaya`
+--
+ALTER TABLE `kategoribiaya`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lembaga`
@@ -3459,13 +3737,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `mkeluar`
 --
 ALTER TABLE `mkeluar`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `parameter`
 --
 ALTER TABLE `parameter`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+
+--
+-- AUTO_INCREMENT for table `pendapatan`
+--
+ALTER TABLE `pendapatan`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -3483,7 +3767,7 @@ ALTER TABLE `ruang`
 -- AUTO_INCREMENT for table `satuan`
 --
 ALTER TABLE `satuan`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `savings`
@@ -3501,43 +3785,43 @@ ALTER TABLE `seksi`
 -- AUTO_INCREMENT for table `sessions`
 --
 ALTER TABLE `sessions`
-  MODIFY `norut` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=910;
+  MODIFY `norut` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1161;
 
 --
 -- AUTO_INCREMENT for table `stok`
 --
 ALTER TABLE `stok`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=233;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=252;
 
 --
 -- AUTO_INCREMENT for table `stokfifo`
 --
 ALTER TABLE `stokfifo`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=154;
 
 --
 -- AUTO_INCREMENT for table `stoklifo`
 --
 ALTER TABLE `stoklifo`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 
 --
 -- AUTO_INCREMENT for table `stokmamin`
 --
 ALTER TABLE `stokmamin`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `stokmova`
 --
 ALTER TABLE `stokmova`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=242;
 
 --
 -- AUTO_INCREMENT for table `submenu`
 --
 ALTER TABLE `submenu`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
 
 --
 -- AUTO_INCREMENT for table `supplier`
@@ -3584,6 +3868,16 @@ ALTER TABLE `bayarhutang`
   ADD CONSTRAINT `fk_bayarhutang_2` FOREIGN KEY (`idsupplier`) REFERENCES `supplier` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
+-- Constraints for table `biaya`
+--
+ALTER TABLE `biaya`
+  ADD CONSTRAINT `fk_biaya_1` FOREIGN KEY (`idjenisbiaya`) REFERENCES `jenisbiaya` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_biaya_2` FOREIGN KEY (`idsatuan`) REFERENCES `satuan` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_biaya_3` FOREIGN KEY (`idsupplier`) REFERENCES `supplier` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_biaya_4` FOREIGN KEY (`idruang`) REFERENCES `ruang` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_biaya_5` FOREIGN KEY (`idkategoribiaya`) REFERENCES `kategoribiaya` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
 -- Constraints for table `bkeluar`
 --
 ALTER TABLE `bkeluar`
@@ -3618,7 +3912,16 @@ ALTER TABLE `mamin`
 --
 ALTER TABLE `mkeluar`
   ADD CONSTRAINT `fk_mkeluar_1` FOREIGN KEY (`idmamin`) REFERENCES `mamin` (`id`),
-  ADD CONSTRAINT `fk_mkeluar_2` FOREIGN KEY (`idanggota`) REFERENCES `anggota` (`id`);
+  ADD CONSTRAINT `fk_mkeluar_2` FOREIGN KEY (`idanggota`) REFERENCES `anggota` (`id`),
+  ADD CONSTRAINT `fk_mkeluar_4` FOREIGN KEY (`idruang`) REFERENCES `ruang` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Constraints for table `pendapatan`
+--
+ALTER TABLE `pendapatan`
+  ADD CONSTRAINT `fk_pendapatan_1` FOREIGN KEY (`idkategoribiaya`) REFERENCES `kategoribiaya` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_pendapatan_2` FOREIGN KEY (`idsatuan`) REFERENCES `satuan` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_pendapatan_3` FOREIGN KEY (`idruang`) REFERENCES `ruang` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `ruang`
@@ -3650,7 +3953,9 @@ ALTER TABLE `stokfifo`
   ADD CONSTRAINT `fk_stokfifo_01` FOREIGN KEY (`idjenispembayaran`) REFERENCES `jenispembayaran` (`id`),
   ADD CONSTRAINT `fk_stokfifo_1` FOREIGN KEY (`idbarang`) REFERENCES `barang` (`id`),
   ADD CONSTRAINT `fk_stokfifo_2` FOREIGN KEY (`idseksi`) REFERENCES `seksi` (`id`),
-  ADD CONSTRAINT `fk_stokfifo_3` FOREIGN KEY (`idruang`) REFERENCES `ruang` (`id`);
+  ADD CONSTRAINT `fk_stokfifo_3` FOREIGN KEY (`idruang`) REFERENCES `ruang` (`id`),
+  ADD CONSTRAINT `fk_stokfifo_4` FOREIGN KEY (`idanggota`) REFERENCES `anggota` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_stokfifo_5` FOREIGN KEY (`idsupplier`) REFERENCES `supplier` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `stoklifo`
@@ -3667,7 +3972,8 @@ ALTER TABLE `stoklifo`
 ALTER TABLE `stokmamin`
   ADD CONSTRAINT `fk_stokmamin_1` FOREIGN KEY (`idmamin`) REFERENCES `mamin` (`id`),
   ADD CONSTRAINT `fk_stokmamin_2` FOREIGN KEY (`idanggota`) REFERENCES `anggota` (`id`),
-  ADD CONSTRAINT `fk_stokmamin_3` FOREIGN KEY (`idjenispembayaran`) REFERENCES `jenispembayaran` (`id`);
+  ADD CONSTRAINT `fk_stokmamin_3` FOREIGN KEY (`idjenispembayaran`) REFERENCES `jenispembayaran` (`id`),
+  ADD CONSTRAINT `fk_stokmamin_4` FOREIGN KEY (`idruang`) REFERENCES `ruang` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `stokmova`
