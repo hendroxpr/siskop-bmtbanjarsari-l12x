@@ -20,6 +20,10 @@ class Biaya extends Model
     {
         return $this->belongsTo(Jenisbiaya::class,'idjenisbiaya');
     }
+    public function kategoribiaya()
+    {
+        return $this->belongsTo(Kategoribiaya::class,'idkategoribiaya');
+    }
     public function satuan()
     {
         return $this->belongsTo(Satuan::class,'idsatuan');

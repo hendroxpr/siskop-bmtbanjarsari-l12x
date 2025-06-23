@@ -1132,6 +1132,7 @@ $(document).ready(function(){
     }
 
     function koneksi_datatable(){
+        $('#idruang1').change();     
         stokrekap1Datatable = tampil_stokrekap1();    
         stokrekapfifo1Datatable = tampil_stokrekapfifo1();    
         stokrekapmova1Datatable = tampil_stokrekapmova1();    
@@ -1169,8 +1170,8 @@ function tampil_caribarang(){
                 { data: 'kode', name: 'kode' },
                 { data: 'barcode', name: 'barcode' },
                 { data: 'nabara', name: 'nabara' },
-                { data: 'kategori', name: 'kategori' },
-                { data: 'satuan', name: 'satuan' },
+                { data: 'kategori', name: 'kategori,kategori' },
+                { data: 'satuan', name: 'satuan.satuan' },
                 { data: 'image', name: 'image' },
                                
             ]

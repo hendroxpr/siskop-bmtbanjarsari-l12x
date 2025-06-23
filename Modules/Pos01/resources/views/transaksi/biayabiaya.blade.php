@@ -9,6 +9,7 @@
     }
     $idruang = session('idruangx1');    
     $idjenisbiaya = session('idjenisbiayax1');    
+    $idkategoribiaya = session('idkategoribiayax1');    
     $idsupplier = session('idsupplierx1');    
 @endphp
 
@@ -58,6 +59,14 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 mt-2 text-right">
+                        <h6>Kategori Biaya</h6>
+                    </div>
+                    <div class="col-md-6">
+                        <select name="idkategoribiayax1" id="idkategoribiayax1" class="w3-input w3-border" value="{{ $idkategoribiaya }}"></select> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mt-2 text-right">
                         <h6>Jenis Biaya</h6>
                     </div>
                     <div class="col-md-6">
@@ -95,13 +104,19 @@
                         <th style="width:10px">Satuan</th>							
                         <th style="width:10px">Qty</th>							
                         <th style="width:20px">HBS</th>							
-                        <th style="width:20px">Jumlah</th>							
+                        <th style="width:20px">Sub Total</th>							
+                        <th style="width:20px">PPN</th>							
+                        <th style="width:20px">Diskon</th>							
+                        <th style="width:20px">Total Beli</th>							
                         <th style="width:100px">Keterangan</th>							
                         <th style="width:50px">Action</th>
                     </tr>
                 </thead>
                 <tfoot id="show_footer1">
                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -142,6 +157,14 @@
                                 </div>
                                 <div class="col-md-9">
                                     <select name="idruang1" id="idruang1" class="w3-input w3-border"></select>
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mt-1" align="right">									
+                                    <h6 class="mt-2">Kategori Biaya</h6>
+                                </div>
+                                <div class="col-md-9">
+                                    <select name="idkategoribiaya1" id="idkategoribiaya1" class="w3-input w3-border"></select>
                                 </div>								  
                             </div>
                             <div class="row">
@@ -205,10 +228,34 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-3 mt-1" align="right">									
-                                    <h6 class="mt-2">Jumlah</h6>
+                                    <h6 class="mt-2">Sub Total</h6>
                                 </div>
                                 <div class="col-md-9">                                
-                                    <input name="totalbeli1" id="totalbeli1" class="w3-input w3-border" type="search" placeholder="Jumlah" style="text-align: right" value="0" readonly>
+                                    <input name="subtotal1" id="subtotal1" class="w3-input w3-border" type="search" placeholder="Jumlah" style="text-align: right" value="0" readonly>
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mt-1" align="right">									
+                                    <h6 class="mt-2">PPN</h6>
+                                </div>
+                                <div class="col-md-9">   
+                                    <input name="ppn1" id="ppn1" class="w3-input w3-border text-right" type="search" placeholder="ppn" value="0"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">                             
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mt-1" align="right">									
+                                    <h6 class="mt-2">Diskon</h6>
+                                </div>
+                                <div class="col-md-9">   
+                                    <input name="diskon1" id="diskon1" class="w3-input w3-border text-right" type="search" placeholder="diskon" value="0"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">                             
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 mt-1" align="right">									
+                                    <h6 class="mt-2">Total Beli</h6>
+                                </div>
+                                <div class="col-md-9">                                
+                                    <input name="totalbeli1" id="totalbeli1" class="w3-input w3-border" type="search" placeholder="total beli" style="text-align: right" value="0" readonly>
                                 </div>								  
                             </div>
                             <div class="row">
@@ -347,6 +394,7 @@ $(document).ready(function(){
     setTimeout(() => {
         tampil_listruang();
         tampil_listjenisbiaya();
+        tampil_listkategoribiaya();
         tampil_listsupplier();
         tampil_listsatuan();
     }, 500);
@@ -354,6 +402,7 @@ $(document).ready(function(){
     setTimeout(() => {
         $('#idruangx1').change();
         $('#idjenisbiayax1').change();
+        $('#idkategoribiayax1').change();
         $('#idsupplierx1').change();
         data1Datatable = tampil_data1();    
     }, 1000);
@@ -381,6 +430,13 @@ $(document).ready(function(){
             kirimsyarat();	
         }, 500);
     });
+    $('#idkategoribiayax1').on('change',function(){
+        setTimeout(() => {
+            $('#idkategoribiaya1').val($('#idkategoribiayax1').val());
+            kirimsyarat();	
+        }, 500);
+    });
+
     $('#idsupplierx1').on('change',function(){
         setTimeout(() => {
             $('#idsupplier1').val($('#idsupplierx1').val());
@@ -390,52 +446,67 @@ $(document).ready(function(){
 
     $("#qty1").on('change',function(){ 
         var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
-        var k1 = $("#hbs1").val().replace(/[^,\d]/g, '').toString();  
+        var k1 = $("#hbs1").val().replace(/[^,\d]/g, '').toString();
         var j2 = $("#qty1").val().length;
         var k2 = $("#hbs1").val().length;
         if(j2=='0'||k2=='0'){
             if(j2=='0'){
                 $("#qty1").val('0');
             }
-            $("#totalbeli1").val('0');
+            $("#subtotal1").val('0');
         }else{
             var j3 = parseFloat(j1); 
             var k3 = parseFloat(k1); 
-            $("#totalbeli1").val(formatAngka(j3*k3,''));
+            $("#subtotal1").val(formatAngka(j3*k3,''));
 
         }
-            var totalx = $("#totalbeli1").val();
+            var subtotalx = $("#subtotal1").val();
 
-        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+        if(j1==''||j2=='0'||k1==''||k2=='0'||subtotalx=='0'){
             document.getElementById("btn_simpan").disabled = true;
         }else{
             document.getElementById("btn_simpan").disabled = false;
         }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString(); 
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+        $("#totalbeli1").val(formatAngka(tb3,''));
+
     });
 
     $("#qty1").on('keyup',function(){ 
         var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
-        var k1 = $("#hbs1").val().replace(/[^,\d]/g, '').toString();  
+        var k1 = $("#hbs1").val().replace(/[^,\d]/g, '').toString();
         var j2 = $("#qty1").val().length;
         var k2 = $("#hbs1").val().length;
         if(j2=='0'||k2=='0'){
             if(j2=='0'){
                 $("#qty1").val('0');
             }
-            $("#totalbeli1").val('0');
+            $("#subtotal1").val('0');
         }else{
             var j3 = parseFloat(j1); 
             var k3 = parseFloat(k1); 
-            $("#totalbeli1").val(formatAngka(j3*k3,''));
+            $("#subtotal1").val(formatAngka(j3*k3,''));
 
         }
-            var totalx = $("#totalbeli1").val();
+            var subtotalx = $("#subtotal1").val();
 
-        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+        if(j1==''||j2=='0'||k1==''||k2=='0'||subtotalx=='0'){
             document.getElementById("btn_simpan").disabled = true;
         }else{
             document.getElementById("btn_simpan").disabled = false;
         }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString(); 
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totalbeli1").val(formatAngka(tb3,''));
     });
 
     $("#hbs1").on('change',function(){ 
@@ -447,21 +518,29 @@ $(document).ready(function(){
             if(k2=='0'){
                 $("#hbs1").val('0');
             }
-            $("#totalbeli1").val('0');
+            $("#subtotal1").val('0');
         }else{
             var j3 = parseFloat(j1); 
             var k3 = parseFloat(k1); 
-            $("#totalbeli1").val(formatAngka(j3*k3,''));
+            $("#subtotal1").val(formatAngka(j3*k3,''));
 
         }
-            var totalx = $("#totalbeli1").val();
+            var totalx = $("#subtotal1").val();
 
         if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
             document.getElementById("btn_simpan").disabled = true;
         }else{
             document.getElementById("btn_simpan").disabled = false;
         }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString(); 
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totalbeli1").val(formatAngka(tb3,''));
     });
+
     $("#hbs1").on('keyup',function(){ 
         var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
         var k1 = $("#hbs1").val().replace(/[^,\d]/g, '').toString();  
@@ -471,38 +550,218 @@ $(document).ready(function(){
             if(k2=='0'){
                 $("#hbs1").val('0');
             }
-            $("#totalbeli1").val('0');
+            $("#subtotal1").val('0');
         }else{
             var j3 = parseFloat(j1); 
             var k3 = parseFloat(k1); 
-            $("#totalbeli1").val(formatAngka(j3*k3,''));
+            $("#subtotal1").val(formatAngka(j3*k3,''));
 
         }
-            var totalx = $("#totalbeli1").val();
+            var totalx = $("#subtotal1").val();
 
         if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
             document.getElementById("btn_simpan").disabled = true;
         }else{
             document.getElementById("btn_simpan").disabled = false;
         }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString(); 
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totalbeli1").val(formatAngka(tb3,''));
+    });
+
+    $("#ppn1").on('change',function(){ 
+        var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
+        var k1 = $("#hbs1").val().replace(/[^,\d]/g, '').toString();  
+        var j2 = $("#qty1").val().length;
+        var k2 = $("#hbs1").val().length;
+        if(j2=='0'||k2=='0'){
+            if(k2=='0'){
+                $("#hbs1").val('0');
+            }
+            $("#subtotal1").val('0');
+        }else{
+            var j3 = parseFloat(j1); 
+            var k3 = parseFloat(k1); 
+            $("#subtotal1").val(formatAngka(j3*k3,''));
+
+        }
+            var totalx = $("#subtotal1").val();
+
+        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+            document.getElementById("btn_simpan").disabled = true;
+        }else{
+            document.getElementById("btn_simpan").disabled = false;
+        }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString();
+        var x2 = $("#ppn1").val().length;
+        if(x2=='0'){
+            $("#ppn1").val('0');
+            x1 = '0';
+        }
+
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        var y2 = $("#diskon1").val().length;
+        if(y2=='0'){
+            $("#diskon1").val('0');
+            y1 = '0';
+        }
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totalbeli1").val(formatAngka(tb3,''));
+    });
+
+    $("#ppn1").on('keyup',function(){ 
+        var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
+        var k1 = $("#hbs1").val().replace(/[^,\d]/g, '').toString();  
+        var j2 = $("#qty1").val().length;
+        var k2 = $("#hbs1").val().length;
+        if(j2=='0'||k2=='0'){
+            if(k2=='0'){
+                $("#hbs1").val('0');
+            }
+            $("#subtotal1").val('0');
+        }else{
+            var j3 = parseFloat(j1); 
+            var k3 = parseFloat(k1); 
+            $("#subtotal1").val(formatAngka(j3*k3,''));
+
+        }
+            var totalx = $("#subtotal1").val();
+
+        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+            document.getElementById("btn_simpan").disabled = true;
+        }else{
+            document.getElementById("btn_simpan").disabled = false;
+        }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString();
+        var x2 = $("#ppn1").val().length;
+        if(x2=='0'){
+            $("#ppn1").val('0');
+            x1 = '0';
+        }
+
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        var y2 = $("#diskon1").val().length;
+        if(y2=='0'){
+            $("#diskon1").val('0');
+            y1 = '0';
+        }
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totalbeli1").val(formatAngka(tb3,''));
+    });
+
+    $("#diskon1").on('change',function(){ 
+        var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
+        var k1 = $("#hbs1").val().replace(/[^,\d]/g, '').toString();  
+        var j2 = $("#qty1").val().length;
+        var k2 = $("#hbs1").val().length;
+        if(j2=='0'||k2=='0'){
+            if(k2=='0'){
+                $("#hbs1").val('0');
+            }
+            $("#subtotal1").val('0');
+        }else{
+            var j3 = parseFloat(j1); 
+            var k3 = parseFloat(k1); 
+            $("#subtotal1").val(formatAngka(j3*k3,''));
+
+        }
+            var totalx = $("#subtotal1").val();
+
+        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+            document.getElementById("btn_simpan").disabled = true;
+        }else{
+            document.getElementById("btn_simpan").disabled = false;
+        }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString();
+        var x2 = $("#ppn1").val().length;
+        if(x2=='0'){
+            $("#ppn1").val('0');
+            x1 = '0';
+        }
+
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        var y2 = $("#diskon1").val().length;
+        if(y2=='0'){
+            $("#diskon1").val('0');
+            y1 = '0';
+        }
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totalbeli1").val(formatAngka(tb3,''));
+    });
+    $("#diskon1").on('keyup',function(){ 
+        var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
+        var k1 = $("#hbs1").val().replace(/[^,\d]/g, '').toString();  
+        var j2 = $("#qty1").val().length;
+        var k2 = $("#hbs1").val().length;
+        if(j2=='0'||k2=='0'){
+            if(k2=='0'){
+                $("#hbs1").val('0');
+            }
+            $("#subtotal1").val('0');
+        }else{
+            var j3 = parseFloat(j1); 
+            var k3 = parseFloat(k1); 
+            $("#subtotal1").val(formatAngka(j3*k3,''));
+
+        }
+            var totalx = $("#subtotal1").val();
+
+        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+            document.getElementById("btn_simpan").disabled = true;
+        }else{
+            document.getElementById("btn_simpan").disabled = false;
+        }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString();
+        var x2 = $("#ppn1").val().length;
+        if(x2=='0'){
+            $("#ppn1").val('0');
+            x1 = '0';
+        }
+
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        var y2 = $("#diskon1").val().length;
+        if(y2=='0'){
+            $("#diskon1").val('0');
+            y1 = '0';
+        }
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totalbeli1").val(formatAngka(tb3,''));
     });
     
     function kirimsyarat(){
         var idruangx1=$('#idruangx1').val();
         var idjenisbiayax1=$('#idjenisbiayax1').val();
+        var idkategoribiayax1=$('#idkategoribiayax1').val();
         var idsupplierx1=$('#idsupplierx1').val();
         var tgltransaksi1=$('#tgltransaksi1').val();
         
         let formData = new FormData();
             formData.append('idruangx1', idruangx1);
             formData.append('idjenisbiayax1', idjenisbiayax1);
+            formData.append('idkategoribiayax1', idkategoribiayax1);
             formData.append('idsupplierx1', idsupplierx1);
             formData.append('tgltransaksi1', tgltransaksi1);
 
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.biayalain_kirimsyarat')}}',
+            url    : '{{route('pos01.transaksi.biayabiaya_kirimsyarat')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -513,6 +772,7 @@ $(document).ready(function(){
             success : function(formData){ 
                 $("#idruangx1").val(idruangx1);                                        
                 $("#idjenisbiayax1").val(idjenisbiayax1);                                        
+                $("#idkategoribiayax1").val(idkategoribiayax1);                                        
                 $("#idsupplierx1").val(idsupplierx1);                                        
                 $("#tgltransaksi1").val(tgltransaksi1);                                        
                 tampil_dataTable();                   
@@ -524,7 +784,7 @@ $(document).ready(function(){
     function tampil_listruang(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.biayalain_listruang')}}',
+            url   : '{{route('pos01.transaksi.biayabiaya_listruang')}}',
             
             success: function(data){				    
                 $("#idruangx1").html(data);
@@ -539,7 +799,7 @@ $(document).ready(function(){
     function tampil_listjenisbiaya(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.biayalain_listjenisbiaya')}}',
+            url   : '{{route('pos01.transaksi.biayabiaya_listjenisbiaya')}}',
             
             success: function(data){				    
                 $("#idjenisbiayax1").html(data);
@@ -550,11 +810,26 @@ $(document).ready(function(){
             }
         })                    
     }
+    //menampilkan combo kategoribiaya
+    function tampil_listkategoribiaya(){				
+        $.ajax({
+            type: 'get',
+            url   : '{{route('pos01.transaksi.biayabiaya_listkategoribiaya')}}',
+            
+            success: function(data){				    
+                $("#idkategoribiayax1").html(data);
+                $("#idkategoribiaya1").html(data);
+                $("#idkategoribiayax1").val({{ $idkategoribiaya }});
+                $("#idkategoribiaya1").val({{ $idkategoribiaya }});
+
+            }
+        })                    
+    }
     //menampilkan combo supplier
     function tampil_listsupplier(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.biayalain_listsupplier')}}',
+            url   : '{{route('pos01.transaksi.biayabiaya_listsupplier')}}',
             
             success: function(data){				    
                 $("#idsupplierx1").html(data);
@@ -569,7 +844,7 @@ $(document).ready(function(){
     function tampil_listsatuan(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.biayalain_listsatuan')}}',
+            url   : '{{route('pos01.transaksi.biayabiaya_listsatuan')}}',
             
             success: function(data){				    
                 $("#idsatuan1").html(data);
@@ -604,25 +879,34 @@ footerCallback: function (row, data, start, end, display) {
             };
     
             // Total over all pages
-            totalbeli = api
+            subtotal = api
                 .column(6)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            totalbeli = api
+                .column(9)
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
     
             // Total over this page
-            pagetotalbeli = api
+            pagesubtotal = api
                 .column(6, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagetotalbeli = api
+                .column(9, { page: 'current' })
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
     
             // Update footer
             api.column(2).footer().innerHTML = 'SUB TOTAL :';
-            api.column(6).footer().innerHTML = formatAngka(pagetotalbeli,'');            
+            api.column(6).footer().innerHTML = formatAngka(pagesubtotal,'');            
+            api.column(9).footer().innerHTML = formatAngka(pagetotalbeli,'');            
             },
 
             processing: true,
             serverSide: true,
-            ajax   : `{{route('pos01.transaksi.biayalain_show')}}`,
+            ajax   : `{{route('pos01.transaksi.biayabiaya_show')}}`,
             columns: [
                 // { data: 'no', name:'id', render: function (data, type, row, meta) {
                 //     return meta.row + meta.settings._iDisplayStart + 1;
@@ -635,6 +919,9 @@ footerCallback: function (row, data, start, end, display) {
                 { data: 'satuan', name: 'satuan.satuan', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'hbs', name: 'hbs', className: 'dt-right' },
+                { data: 'subtotal', name: 'subtotal', className: 'dt-right' },
+                { data: 'ppn', name: 'ppn', className: 'dt-right' },
+                { data: 'diskon', name: 'diskon', className: 'dt-right' },
                 { data: 'totalbeli', name: 'totalbeli', className: 'dt-right' },
                 { data: 'keterangan', name: 'keterangan', className: 'dt-left' },
                 { data: 'action', name: 'action', className: 'dt-center' },
@@ -693,11 +980,15 @@ footerCallback: function (row, data, start, end, display) {
         var idruang1=$('#idruang1').val();
         var idsupplier1=$('#idsupplier1').val();
         var idjenisbiaya1=$('#idjenisbiaya1').val();
+        var idkategoribiaya1=$('#idkategoribiaya1').val();
         var idsatuan1=$('#idsatuan1').val();
         var nomorbukti1=$('#nomorbukti1').val();
         var biaya1=$('#biaya1').val();
         var qty1=$('#qty1').val().replace(/[^,\d]/g, '').toString();
         var hbs1=$('#hbs1').val().replace(/[^,\d]/g, '').toString();
+        var subtotal1=$('#subtotal1').val().replace(/[^,\d]/g, '').toString();
+        var ppn1=$('#ppn1').val().replace(/[^,\d]/g, '').toString();
+        var diskon1=$('#diskon1').val().replace(/[^,\d]/g, '').toString();
         var totalbeli1=$('#totalbeli1').val().replace(/[^,\d]/g, '').toString();
         var keterangan1=$('#keterangan1').val();
         
@@ -707,18 +998,22 @@ footerCallback: function (row, data, start, end, display) {
             formData.append('idruang1', idruang1);
             formData.append('idsupplier1', idsupplier1);
             formData.append('idjenisbiaya1', idjenisbiaya1);
+            formData.append('idkategoribiaya1', idkategoribiaya1);
             formData.append('idsatuan1', idsatuan1);
             formData.append('nomorbukti1', nomorbukti1);
             formData.append('biaya1', biaya1);
             formData.append('qty1', qty1);
             formData.append('hbs1', hbs1);
+            formData.append('subtotal1', subtotal1);
+            formData.append('ppn1', ppn1);
+            formData.append('diskon1', diskon1);
             formData.append('totalbeli1', totalbeli1);
             formData.append('keterangan1', keterangan1);
           
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.transaksi.biayalain_create')}}',
+            url    : '{{route('pos01.transaksi.biayabiaya_create')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -771,7 +1066,7 @@ footerCallback: function (row, data, start, end, display) {
         var id1=idx;			
             $.ajax({
 		        type  : 'get',
-		        url   : `{{ url('pos01/transaksi/biayalainedit')}}/${id1}`,
+		        url   : `{{ url('pos01/transaksi/biayabiayaedit')}}/${id1}`,
 		        async : false,
 		        dataType : 'json',	
 				
@@ -783,12 +1078,16 @@ footerCallback: function (row, data, start, end, display) {
                             $('#id1').val(resultData[i].id);
                             $('#idruang1').val(resultData[i].idruang);
                             $('#idjenisbiaya1').val(resultData[i].idjenisbiaya);
+                            $('#idkategoribiaya1').val(resultData[i].idkategoribiaya);
                             $('#idsupplier1').val(resultData[i].idsupplier);
                             $('#idsatuan1').val(resultData[i].idsatuan);
                             $('#nomorbukti1').val(resultData[i].nomorbukti);
                             $('#biaya1').val(resultData[i].biaya);
                             $('#qty1').val(resultData[i].qty);
                             $('#hbs1').val(formatAngka(resultData[i].hbs,''));
+                            $('#subtotal1').val(formatAngka(resultData[i].subtotal,''));
+                            $('#ppn1').val(formatAngka(resultData[i].ppn,''));
+                            $('#diskon1').val(formatAngka(resultData[i].diskon,''));
                             $('#totalbeli1').val(formatAngka(resultData[i].totalbeli,''));
                             $('#keterangan1').val(resultData[i].keterangan);
                             
@@ -840,7 +1139,7 @@ footerCallback: function (row, data, start, end, display) {
         var data3b=$('#data3b').val();
         $.ajax({
             type  : 'get',
-            url   : '{{url('pos01/transaksi/biayalaindestroy')}}/'+id3,
+            url   : '{{url('pos01/transaksi/biayabiayadestroy')}}/'+id3,
             async : false,
             dataType : 'json',					
             success : function(data){

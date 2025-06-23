@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Pos01\Http\Controllers\transaksi;
+namespace Modules\Pos01\Http\Controllers\laporan;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -24,7 +24,7 @@ use Modules\Pos01\Models\Supplier;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class PendapatanlainController extends Controller
+class Biayabiaya2Controller extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,11 +38,11 @@ class PendapatanlainController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Pendapatan Lain</b>.';
-        $page = 'pos01::transaksi.pendapatanlain';
-        $link = '/pos01/transaksi/pendapatanlain';
-        $subtitle = 'Transaksi';
-        $caption = 'Pendapatan Lain';
+        $remark = 'Halaman ini digunakan untuk menampilkan <b>Biaya-biaya</b>.';
+        $page = 'pos01::laporan.biayabiaya2';
+        $link = '/pos01/laporan/biayabiaya2';
+        $subtitle = 'Laporan';
+        $caption = 'Biaya-biaya';
         $jmlhal = 2;
        
         $menu=Menusub::where('link','=',$link)
@@ -121,21 +121,65 @@ class PendapatanlainController extends Controller
      */
     public function show()
     {
-        $tgltransaksi = session('tgltransaksi1');     
+        $tgltransaksi1 = session('tgltransaksi1');
+        if($tgltransaksi1==''){
+            $tgltransaksi1 = session('memtanggal');
+        }    
+        $tgltransaksi2 = session('tgltransaksi2');
+        if($tgltransaksi2==''){
+            $tgltransaksi2 = session('memtanggal');
+        }    
         $idruang = session('idruangx1');
+        if($idruang==''||$idruang=='0'){
+            $idruangawal = 0;
+            $idruangakhir = 999999;
+        }else{
+            $idruangawal = $idruang;
+            $idruangakhir = $idruang;
+        }
         $idkategoribiaya = session('idketegoribiayax1');
+        if($idkategoribiaya==''||$idkategoribiaya=='0'){
+            $idkategoribiayaawal = 0;
+            $idkategoribiayaakhir = 999999;
+        }else{
+            $idkategoribiayaawal = $idkategoribiaya;
+            $idkategoribiayaakhir = $idkategoribiaya;
+        }
+        $idjenisbiaya = session('idjenisbiayax1');
+        if($idjenisbiaya==''||$idjenisbiaya=='0'){
+            $idjenisbiayaawal = 0;
+            $idjenisbiayaakhir = 999999;
+        }else{
+            $idjenisbiayaawal = $idjenisbiaya;
+            $idjenisbiayaakhir = $idjenisbiaya;
+        }
 
-        $pendapatan = Pendapatan::where('tgltransaksi','=',$tgltransaksi)
-            ->where('idruang','=',$idruang)
-            ->where('idkategoribiaya','=',$idkategoribiaya)
-            ->with('kategoribiaya','ruang')
+        $biaya = Biaya::select('*')
+            ->where('tgltransaksi','>=',$tgltransaksi1)
+            ->where('tgltransaksi','<=',$tgltransaksi2)
+            ->where('idruang','>=',$idruangawal)
+            ->where('idruang','<=',$idruangakhir)
+            ->where('idkategoribiaya','>=',$idkategoribiayaawal)
+            ->where('idkategoribiaya','<=',$idkategoribiayaakhir)
+            ->where('idjenisbiaya','>=',$idjenisbiayaawal)
+            ->where('idjenisbiaya','<=',$idjenisbiayaakhir)
+            ->with('kategoribiaya','ruang','jenisbiaya')
             ->get();
-        $datax = DataTables::of($pendapatan                          
+        $datax = DataTables::of($biaya                          
             );
 
         $data = $datax
             ->addIndexColumn()
             
+            ->addColumn('jenisbiaya', function ($row) {
+                return $row->idjenisbiaya ? $row->jenisbiaya->jenisbiaya : '';
+            })
+            ->addColumn('kategoribiaya', function ($row) {
+                return $row->idkategoribiaya ? $row->kategoribiaya->kategoribiaya : '';
+            })
+            ->addColumn('ruang', function ($row) {
+                return $row->idruang ? $row->ruang->ruang : '';
+            })
             ->addColumn('satuan', function ($row) {
                 return $row->idsatuan ? $row->satuan->satuan : '';
             })
@@ -151,18 +195,12 @@ class PendapatanlainController extends Controller
             ->addColumn('diskon', function ($row) {
                 return $row->diskon ? number_format($row->diskon,0) : '0';
             })
-            ->addColumn('totaljual', function ($row) {
-                return $row->totaljual ? number_format($row->totaljual,0) : '0';
-            })
-            
-            ->addColumn('action', function ($row) {
-                return '<a href="#" title="Edit Data" class="btn btn-success btn-xs item_edit" data="' . $row->id . '" data2="'. $row->pendapatan.'" data3="'. $row->qty.'" data4="'. $row->hjs.'"><i style="font-size:18px" class="fa">&#xf044;</i></a> ' .
-                       '<a href="#" title="Hapus Data" class="btn btn-danger btn-xs item_hapus" data="' . $row->id . '" data2="'. $row->pendapatan.'" data3="'. $row->qty.'" data4="'. $row->hjs.'"><i style="font-size:18px" class="fa">&#xf00d;</i></a>';
+            ->addColumn('totalbeli', function ($row) {
+                return $row->totalbeli ? number_format($row->totalbeli,0) : '0';
             })
             
             ->rawColumns([
                 'satuan',
-                'action',
                 ])
 
             ->make(true);
@@ -198,7 +236,10 @@ class PendapatanlainController extends Controller
     }
     function listkategoribiaya()
     {
+        $idx='0';
+        $isi='- SEMUA -';
         $tampil = Kategoribiaya::orderBy('id')->get();
+            echo "<option value='" . $idx . "'>" . $isi . "</option>";
         foreach ($tampil as $baris) {
             echo "<option value='" . $baris->id . "'>" . $baris->kategoribiaya . "</option>";
         }
@@ -216,26 +257,35 @@ class PendapatanlainController extends Controller
     
     function listruang()
     {
+        $idx='0';
+        $isi='- SEMUA -';
         $tampil = Ruang::orderBy('ruang', 'asc')->get();
+            echo "<option value='" . $idx . "'>" . $isi . "</option>";
         foreach ($tampil as $baris) {
             echo "<option value='" . $baris->id . "'>" . $baris->ruang . "</option>";
         }
         
     }
-    function listsatuan()
+    function listjenisbiaya()
     {
-        $tampil = Satuan::get();
+        $idx='0';
+        $isi='- SEMUA -';
+        $tampil = Jenisbiaya::get();
+            echo "<option value='" . $idx . "'>" . $isi . "</option>";
         foreach ($tampil as $baris) {
-            echo "<option value='" . $baris->id . "'>" . $baris->satuan . "</option>";
+            echo "<option value='" . $baris->id . "'>" . $baris->jenisbiaya . "</option>";
         }
         
     }
+    
 
     public function kirimsyarat(Request $request)
     {
         session([
             'tgltransaksi1' => $request['tgltransaksi1'],
+            'tgltransaksi2' => $request['tgltransaksi2'],
             'idketegoribiayax1' => $request['idkategoribiayax1'],
+            'idjenisbiayax1' => $request['idjenisbiayax1'],
             'idruangx1' => $request['idruangx1'],
         ]);
     }

@@ -8,7 +8,7 @@
         $tgltransaksi=session('memtanggal');  
     }
     $idruang = session('idruangx1');    
-    $idjenisbiaya = session('idjenisbiayax1');    
+    $idkategoribiaya = session('idketegoribiayax1');    
 @endphp
 
 
@@ -57,10 +57,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-3 mt-2 text-right">
-                        <h6>Jenis Pendapatan</h6>
+                        <h6>Kategori Pendapatan</h6>
                     </div>
                     <div class="col-md-6">
-                        <select name="idjenisbiayax1" id="idjenisbiayax1" class="w3-input w3-border" value="{{ $idjenisbiaya }}"></select> 
+                        <select name="idkategoribiayax1" id="idkategoribiayax1" class="w3-input w3-border" value="{{ $idkategoribiaya }}"></select> 
                     </div>
                 </div>
                 
@@ -87,13 +87,19 @@
                         <th style="width:10px">Satuan</th>							
                         <th style="width:10px">Qty</th>							
                         <th style="width:20px">HJS</th>							
-                        <th style="width:20px">Jumlah</th>							
+                        <th style="width:20px">Sub Total</th>							
+                        <th style="width:20px">PPN</th>							
+                        <th style="width:20px">Diskon</th>							
+                        <th style="width:20px">Total Jual</th>							
                         <th style="width:100px">Keterangan</th>							
                         <th style="width:50px">Action</th>
                     </tr>
                 </thead>
                 <tfoot id="show_footer1">
                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
@@ -141,7 +147,7 @@
                                     <h6 class="mt-2">Jenis Pendapatan</h6>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="idjenisbiaya1" id="idjenisbiaya1" class="w3-input w3-border"></select>
+                                    <select name="idkategoribiaya1" id="idkategoribiaya1" class="w3-input w3-border"></select>
                                 </div>								  
                             </div>
                             
@@ -190,7 +196,31 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4 mt-1" align="right">									
-                                    <h6 class="mt-2">Jumlah</h6>
+                                    <h6 class="mt-2">Sub Total</h6>
+                                </div>
+                                <div class="col-md-8">                                
+                                    <input name="subtotal1" id="subtotal1" class="w3-input w3-border" type="search" placeholder="sub total" style="text-align: right" value="0" readonly>
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">PPN</h6>
+                                </div>
+                                <div class="col-md-8">   
+                                    <input name="ppn1" id="ppn1" class="w3-input w3-border text-right" type="search" placeholder="ppn" value="0"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">                             
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">Diskon</h6>
+                                </div>
+                                <div class="col-md-8">   
+                                    <input name="diskon1" id="diskon1" class="w3-input w3-border text-right" type="search" placeholder="diskon" value="0"  onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">                             
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">Total Jual</h6>
                                 </div>
                                 <div class="col-md-8">                                
                                     <input name="totaljual1" id="totaljual1" class="w3-input w3-border" type="search" placeholder="Jumlah" style="text-align: right" value="0" readonly>
@@ -331,13 +361,13 @@ $(document).ready(function(){
     //menampilkan combo ruang
     setTimeout(() => {
         tampil_listruang();
-        tampil_listjenisbiaya();
+        tampil_listkategoribiaya();
         tampil_listsatuan();
     }, 500);
     
     setTimeout(() => {
         $('#idruangx1').change();
-        $('#idjenisbiayax1').change();
+        $('#idkategoribiayax1').change();
         data1Datatable = tampil_data1();    
     }, 1000);
 
@@ -358,61 +388,76 @@ $(document).ready(function(){
             kirimsyarat();	
         }, 500);
     });
-    $('#idjenisbiayax1').on('change',function(){
+    $('#idkategoribiayax1').on('change',function(){
         setTimeout(() => {
-            $('#idjenisbiaya1').val($('#idjenisbiayax1').val());
+            $('#idkategoribiaya1').val($('#idkategoribiayax1').val());
             kirimsyarat();	
         }, 500);
     });
 
     $("#qty1").on('change',function(){ 
         var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
-        var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();  
+        var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();
         var j2 = $("#qty1").val().length;
         var k2 = $("#hjs1").val().length;
         if(j2=='0'||k2=='0'){
             if(j2=='0'){
                 $("#qty1").val('0');
             }
-            $("#totaljual1").val('0');
+            $("#subtotal1").val('0');
         }else{
             var j3 = parseFloat(j1); 
             var k3 = parseFloat(k1); 
-            $("#totaljual1").val(formatAngka(j3*k3,''));
+            $("#subtotal1").val(formatAngka(j3*k3,''));
 
         }
-            var totalx = $("#totaljual1").val();
+            var subtotalx = $("#subtotal1").val();
 
-        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+        if(j1==''||j2=='0'||k1==''||k2=='0'||subtotalx=='0'){
             document.getElementById("btn_simpan").disabled = true;
         }else{
             document.getElementById("btn_simpan").disabled = false;
         }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString(); 
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+        $("#totaljual1").val(formatAngka(tb3,''));
+
     });
 
     $("#qty1").on('keyup',function(){ 
         var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
-        var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();  
+        var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();
         var j2 = $("#qty1").val().length;
         var k2 = $("#hjs1").val().length;
         if(j2=='0'||k2=='0'){
             if(j2=='0'){
                 $("#qty1").val('0');
             }
-            $("#totaljual1").val('0');
+            $("#subtotal1").val('0');
         }else{
             var j3 = parseFloat(j1); 
             var k3 = parseFloat(k1); 
-            $("#totaljual1").val(formatAngka(j3*k3,''));
+            $("#subtotal1").val(formatAngka(j3*k3,''));
 
         }
-            var totalx = $("#totaljual1").val();
+            var subtotalx = $("#subtotal1").val();
 
-        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+        if(j1==''||j2=='0'||k1==''||k2=='0'||subtotalx=='0'){
             document.getElementById("btn_simpan").disabled = true;
         }else{
             document.getElementById("btn_simpan").disabled = false;
         }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString(); 
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totaljual1").val(formatAngka(tb3,''));
     });
 
     $("#hjs1").on('change',function(){ 
@@ -424,21 +469,29 @@ $(document).ready(function(){
             if(k2=='0'){
                 $("#hjs1").val('0');
             }
-            $("#totaljual1").val('0');
+            $("#subtotal1").val('0');
         }else{
             var j3 = parseFloat(j1); 
             var k3 = parseFloat(k1); 
-            $("#totaljual1").val(formatAngka(j3*k3,''));
+            $("#subtotal1").val(formatAngka(j3*k3,''));
 
         }
-            var totalx = $("#totaljual1").val();
+            var totalx = $("#subtotal1").val();
 
         if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
             document.getElementById("btn_simpan").disabled = true;
         }else{
             document.getElementById("btn_simpan").disabled = false;
         }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString(); 
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totaljual1").val(formatAngka(tb3,''));
     });
+
     $("#hjs1").on('keyup',function(){ 
         var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
         var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();  
@@ -448,30 +501,208 @@ $(document).ready(function(){
             if(k2=='0'){
                 $("#hjs1").val('0');
             }
-            $("#totaljual1").val('0');
+            $("#subtotal1").val('0');
         }else{
             var j3 = parseFloat(j1); 
             var k3 = parseFloat(k1); 
-            $("#totaljual1").val(formatAngka(j3*k3,''));
+            $("#subtotal1").val(formatAngka(j3*k3,''));
 
         }
-            var totalx = $("#totaljual1").val();
+            var totalx = $("#subtotal1").val();
 
         if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
             document.getElementById("btn_simpan").disabled = true;
         }else{
             document.getElementById("btn_simpan").disabled = false;
         }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString(); 
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totaljual1").val(formatAngka(tb3,''));
+    });
+
+    $("#ppn1").on('change',function(){ 
+        var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
+        var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();  
+        var j2 = $("#qty1").val().length;
+        var k2 = $("#hjs1").val().length;
+        if(j2=='0'||k2=='0'){
+            if(k2=='0'){
+                $("#hjs1").val('0');
+            }
+            $("#subtotal1").val('0');
+        }else{
+            var j3 = parseFloat(j1); 
+            var k3 = parseFloat(k1); 
+            $("#subtotal1").val(formatAngka(j3*k3,''));
+
+        }
+            var totalx = $("#subtotal1").val();
+
+        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+            document.getElementById("btn_simpan").disabled = true;
+        }else{
+            document.getElementById("btn_simpan").disabled = false;
+        }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString();
+        var x2 = $("#ppn1").val().length;
+        if(x2=='0'){
+            $("#ppn1").val('0');
+            x1 = '0';
+        }
+
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        var y2 = $("#diskon1").val().length;
+        if(y2=='0'){
+            $("#diskon1").val('0');
+            y1 = '0';
+        }
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totaljual1").val(formatAngka(tb3,''));
+    });
+
+    $("#ppn1").on('keyup',function(){ 
+        var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
+        var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();  
+        var j2 = $("#qty1").val().length;
+        var k2 = $("#hjs1").val().length;
+        if(j2=='0'||k2=='0'){
+            if(k2=='0'){
+                $("#hjs1").val('0');
+            }
+            $("#subtotal1").val('0');
+        }else{
+            var j3 = parseFloat(j1); 
+            var k3 = parseFloat(k1); 
+            $("#subtotal1").val(formatAngka(j3*k3,''));
+
+        }
+            var totalx = $("#subtotal1").val();
+
+        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+            document.getElementById("btn_simpan").disabled = true;
+        }else{
+            document.getElementById("btn_simpan").disabled = false;
+        }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString();
+        var x2 = $("#ppn1").val().length;
+        if(x2=='0'){
+            $("#ppn1").val('0');
+            x1 = '0';
+        }
+
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        var y2 = $("#diskon1").val().length;
+        if(y2=='0'){
+            $("#diskon1").val('0');
+            y1 = '0';
+        }
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totaljual1").val(formatAngka(tb3,''));
+    });
+
+    $("#diskon1").on('change',function(){ 
+        var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
+        var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();  
+        var j2 = $("#qty1").val().length;
+        var k2 = $("#hjs1").val().length;
+        if(j2=='0'||k2=='0'){
+            if(k2=='0'){
+                $("#hjs1").val('0');
+            }
+            $("#subtotal1").val('0');
+        }else{
+            var j3 = parseFloat(j1); 
+            var k3 = parseFloat(k1); 
+            $("#subtotal1").val(formatAngka(j3*k3,''));
+
+        }
+            var totalx = $("#subtotal1").val();
+
+        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+            document.getElementById("btn_simpan").disabled = true;
+        }else{
+            document.getElementById("btn_simpan").disabled = false;
+        }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString();
+        var x2 = $("#ppn1").val().length;
+        if(x2=='0'){
+            $("#ppn1").val('0');
+            x1 = '0';
+        }
+
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        var y2 = $("#diskon1").val().length;
+        if(y2=='0'){
+            $("#diskon1").val('0');
+            y1 = '0';
+        }
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totaljual1").val(formatAngka(tb3,''));
+    });
+    $("#diskon1").on('keyup',function(){ 
+        var j1 = $("#qty1").val().replace(/[^,\d]/g, '').toString();
+        var k1 = $("#hjs1").val().replace(/[^,\d]/g, '').toString();  
+        var j2 = $("#qty1").val().length;
+        var k2 = $("#hjs1").val().length;
+        if(j2=='0'||k2=='0'){
+            if(k2=='0'){
+                $("#hjs1").val('0');
+            }
+            $("#subtotal1").val('0');
+        }else{
+            var j3 = parseFloat(j1); 
+            var k3 = parseFloat(k1); 
+            $("#subtotal1").val(formatAngka(j3*k3,''));
+
+        }
+            var totalx = $("#subtotal1").val();
+
+        if(j1==''||j2=='0'||k1==''||k2=='0'||totalx=='0'){
+            document.getElementById("btn_simpan").disabled = true;
+        }else{
+            document.getElementById("btn_simpan").disabled = false;
+        }
+
+        var w1 = $("#subtotal1").val().replace(/[^,\d]/g, '').toString(); 
+        var x1 = $("#ppn1").val().replace(/[^,\d]/g, '').toString();
+        var x2 = $("#ppn1").val().length;
+        if(x2=='0'){
+            $("#ppn1").val('0');
+            x1 = '0';
+        }
+
+        var y1 = $("#diskon1").val().replace(/[^,\d]/g, '').toString(); 
+        var y2 = $("#diskon1").val().length;
+        if(y2=='0'){
+            $("#diskon1").val('0');
+            y1 = '0';
+        }
+
+        var tb3 = parseFloat(w1) + parseFloat(x1) - parseFloat(y1);
+         $("#totaljual1").val(formatAngka(tb3,''));
     });
     
     function kirimsyarat(){
         var idruangx1=$('#idruangx1').val();
-        var idjenisbiayax1=$('#idjenisbiayax1').val();
+        var idkategoribiayax1=$('#idkategoribiayax1').val();
         var tgltransaksi1=$('#tgltransaksi1').val();
         
         let formData = new FormData();
             formData.append('idruangx1', idruangx1);
-            formData.append('idjenisbiayax1', idjenisbiayax1);
+            formData.append('idkategoribiayax1', idkategoribiayax1);
             formData.append('tgltransaksi1', tgltransaksi1);
 
         $.ajax({
@@ -487,7 +718,7 @@ $(document).ready(function(){
                     },				 				
             success : function(formData){ 
                 $("#idruangx1").val(idruangx1);                                        
-                $("#idjenisbiayax1").val(idjenisbiayax1);                                        
+                $("#idkategoribiayax1").val(idkategoribiayax1);                                        
                 $("#tgltransaksi1").val(tgltransaksi1);                                        
                 tampil_dataTable();                   
                 }
@@ -509,17 +740,17 @@ $(document).ready(function(){
             }
         })                    
     }
-    //menampilkan combo jenisbiaya
-    function tampil_listjenisbiaya(){				
+    //menampilkan combo kategoribiaya
+    function tampil_listkategoribiaya(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('pos01.transaksi.pendapatanlain_listjenisbiaya')}}',
+            url   : '{{route('pos01.transaksi.pendapatanlain_listkategoribiaya')}}',
             
             success: function(data){				    
-                $("#idjenisbiayax1").html(data);
-                $("#idjenisbiaya1").html(data);
-                $("#idjenisbiayax1").val({{ $idjenisbiaya }});
-                $("#idjenisbiaya1").val({{ $idjenisbiaya }});
+                $("#idkategoribiayax1").html(data);
+                $("#idkategoribiaya1").html(data);
+                $("#idkategoribiayax1").val({{ $idkategoribiaya }});
+                $("#idkategoribiaya1").val({{ $idkategoribiaya }});
 
             }
         })                    
@@ -564,20 +795,29 @@ footerCallback: function (row, data, start, end, display) {
             };
     
             // Total over all pages
-            totaljual = api
+            subtotal = api
                 .column(6)
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            totaljual = api
+                .column(9)
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
     
             // Total over this page
-            pagetotaljual = api
+            pagesubtotal = api
                 .column(6, { page: 'current' })
+                .data()
+                .reduce((a, b) => intVal(a) + intVal(b), 0);
+            pagetotaljual = api
+                .column(9, { page: 'current' })
                 .data()
                 .reduce((a, b) => intVal(a) + intVal(b), 0);
     
             // Update footer
             api.column(2).footer().innerHTML = 'SUB TOTAL :';
-            api.column(6).footer().innerHTML = formatAngka(pagetotaljual,'');            
+            api.column(6).footer().innerHTML = formatAngka(pagesubtotal,'');            
+            api.column(9).footer().innerHTML = formatAngka(pagetotaljual,'');            
             },
 
             processing: true,
@@ -595,6 +835,9 @@ footerCallback: function (row, data, start, end, display) {
                 { data: 'satuan', name: 'satuan.satuan', className: 'dt-center' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'hjs', name: 'hjs', className: 'dt-right' },
+                { data: 'subtotal', name: 'subtotal', className: 'dt-right' },
+                { data: 'ppn', name: 'ppn', className: 'dt-right' },
+                { data: 'diskon', name: 'diskon', className: 'dt-right' },
                 { data: 'totaljual', name: 'totaljual', className: 'dt-right' },
                 { data: 'keterangan', name: 'keterangan', className: 'dt-left' },
                 { data: 'action', name: 'action', className: 'dt-center' },
@@ -651,12 +894,15 @@ footerCallback: function (row, data, start, end, display) {
         var id1=$('#id1').val();			
         var tgltransaksi1=$('#tgltransaksi1').val();
         var idruang1=$('#idruang1').val();
-        var idjenisbiaya1=$('#idjenisbiaya1').val();
+        var idkategoribiaya1=$('#idkategoribiaya1').val();
         var idsatuan1=$('#idsatuan1').val();
         var nomorbukti1=$('#nomorbukti1').val();
         var pendapatan1=$('#pendapatan1').val();
         var qty1=$('#qty1').val().replace(/[^,\d]/g, '').toString();
         var hjs1=$('#hjs1').val().replace(/[^,\d]/g, '').toString();
+        var subtotal1=$('#subtotal1').val().replace(/[^,\d]/g, '').toString();
+        var ppn1=$('#ppn1').val().replace(/[^,\d]/g, '').toString();
+        var diskon1=$('#diskon1').val().replace(/[^,\d]/g, '').toString();
         var totaljual1=$('#totaljual1').val().replace(/[^,\d]/g, '').toString();
         var keterangan1=$('#keterangan1').val();
         
@@ -664,12 +910,15 @@ footerCallback: function (row, data, start, end, display) {
             formData.append('id1', id1);
             formData.append('tgltransaksi1', tgltransaksi1);
             formData.append('idruang1', idruang1);
-            formData.append('idjenisbiaya1', idjenisbiaya1);
+            formData.append('idkategoribiaya1', idkategoribiaya1);
             formData.append('idsatuan1', idsatuan1);
             formData.append('nomorbukti1', nomorbukti1);
             formData.append('pendapatan1', pendapatan1);
             formData.append('qty1', qty1);
             formData.append('hjs1', hjs1);
+            formData.append('subtotal1', subtotal1);
+            formData.append('ppn1', ppn1);
+            formData.append('diskon1', diskon1);
             formData.append('totaljual1', totaljual1);
             formData.append('keterangan1', keterangan1);
           
@@ -740,12 +989,15 @@ footerCallback: function (row, data, start, end, display) {
 
                             $('#id1').val(resultData[i].id);
                             $('#idruang1').val(resultData[i].idruang);
-                            $('#idjenisbiaya1').val(resultData[i].idjenisbiaya);
+                            $('#idkategoribiaya1').val(resultData[i].idkategoribiaya);
                             $('#idsatuan1').val(resultData[i].idsatuan);
                             $('#nomorbukti1').val(resultData[i].nomorbukti);
-                            $('#pendapatan1').val(resultData[i].biaya);
+                            $('#pendapatan1').val(resultData[i].pendapatan);
                             $('#qty1').val(resultData[i].qty);
                             $('#hjs1').val(formatAngka(resultData[i].hjs,''));
+                            $('#subtotal1').val(formatAngka(resultData[i].subtotal,''));
+                            $('#ppn1').val(formatAngka(resultData[i].ppn,''));
+                            $('#diskon1').val(formatAngka(resultData[i].diskon,''));
                             $('#totaljual1').val(formatAngka(resultData[i].totaljual,''));
                             $('#keterangan1').val(resultData[i].keterangan);
                             

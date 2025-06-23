@@ -90,19 +90,19 @@
 
     <ul class="nav nav-tabs" id="tab-labarugi" role="tablist">
         <li class="nav-item">
-            <a class="nav-link" id="tab-labarugimasuk" data-toggle="pill" href="#isi-tab-labarugimasuk" role="tab" aria-controls="tab-labarugimasuk" aria-selected="true">Laba Rugi</a>
+            <a class="nav-link" id="tab-labarugisaja" data-toggle="pill" href="#isi-tab-labarugisaja" role="tab" aria-controls="tab-labarugisaja" aria-selected="true">Laba Rugi</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="tab-labarugimasukfifo" data-toggle="pill" href="#isi-tab-labarugimasukfifo" role="tab" aria-controls="tab-labarugimasukfifo" aria-selected="false">Laba Rugi FIFO</a>
+            <a class="nav-link" id="tab-labarugififo" data-toggle="pill" href="#isi-tab-labarugififo" role="tab" aria-controls="tab-labarugififo" aria-selected="false">Laba Rugi FIFO</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="tab-labarugimasukmova" data-toggle="pill" href="#isi-tab-labarugimasukmova" role="tab" aria-controls="tab-labarugimasukmova" aria-selected="false">Laba Rugi Moving Average</a>
+            <a class="nav-link" id="tab-labarugimova" data-toggle="pill" href="#isi-tab-labarugimova" role="tab" aria-controls="tab-labarugimova" aria-selected="false">Laba Rugi Moving Average</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="tab-labarugimasuklifo" data-toggle="pill" href="#isi-tab-labarugimasuklifo" role="tab" aria-controls="tab-labarugimasuklifo" aria-selected="false">Laba Rugi LIFO</a>
+            <a class="nav-link" id="tab-labarugilifo" data-toggle="pill" href="#isi-tab-labarugilifo" role="tab" aria-controls="tab-labarugilifo" aria-selected="false">Laba Rugi LIFO</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="tab-labarugikeluar" data-toggle="pill" href="#isi-tab-labarugikeluar" role="tab" aria-controls="tab-labarugikeluar" aria-selected="false">Laba Rugi Lain</a>
+            <a class="nav-link" id="tab-labarugijasa" data-toggle="pill" href="#isi-tab-labarugijasa" role="tab" aria-controls="tab-labarugijasa" aria-selected="false">Laba Rugi Jasa</a>
         </li>
              
     </ul>
@@ -111,237 +111,130 @@
     <div class="box-body" id="headerjudul" style="display: block;">
         <div class="tab-content mt-3" id="tab-labarugi-tabContent">
 
-            <!--tab-labarugimasuk -->
-            <div class="tab-pane fade" id="isi-tab-labarugimasuk" role="tabpanel" aria-labelledby="tab-labarugimasuk">
+            <!--tab-labarugisaja -->
+            <div class="tab-pane fade" id="isi-tab-labarugisaja" role="tabpanel" aria-labelledby="tab-labarugisaja">
                 <div id="reload" class="table-responsive">
-                   
-                   {{-- <table id="example1" class="table table-bordered table-striped table-hover" style="width: 100%"> --}}
-                   <table id="example1" class="" style="width: 100%;">
-                    <thead>
-                        <tr style="display: none;">
-                            <th style="width:500x; height:1px;">&nbsp;</th>                            
-							<th style="width:200px"></th>							
-							<th style="width:10px"></th>							
-							<th style="width:200px"></th>							
-							<th style="width:10px"></th>							
-                        </tr>
-                        
-                    </thead>
-                    <tfoot id="show_footer">
-                        
-                    </tfoot>
-                    <tbody id="show_data">
-                        
-                    </tbody>
-                </table>
-                   
-                   
-                    {{-- <table id="labarugimasuk1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                   <table id="labarugisaja1" class="" style="width: 100%;">
                         <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:20px">Faktur</th>
-                                <th style="width:20px">Tanggal</th>
-                                <th style="width:50px">Kode</th>
-                                <th style="width:50px">Barcode</th>
-                                <th style="width:300px">Nama Barang</th>							
-                                <th style="width:20px">Satuan</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">HPP</th>							
-                                <th style="width:20px">Total HPP</th>							
-                                <th style="width:50px">Keterangan</th>							
+                            <tr style="display: none;">
+                                <th style="width:500x; height:1px;">&nbsp;</th>                            
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
                             </tr>
+                            
                         </thead>
-                        <tfoot id="show_footerlabarugimasuk1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>                            
+                        <tfoot id="show_footerlabarugisaja1">
+                            
                         </tfoot>
-                        <tbody id="show_labarugimasuk1">
-                        
+                        <tbody id="show_datalabarugisaja1">
+                            
                         </tbody>
-                    </table>             --}}
+                    </table>
                 </div>
             </div>
-            <!--/tab-labarugimasuk -->
+            <!--/tab-labarugisaja -->
             
-            <!--tab-labarugimasukfifo -->
-            <div class="tab-pane fade" id="isi-tab-labarugimasukfifo" role="tabpanel" aria-labelledby="tab-labarugimasukfifo">
+            <!--tab-labarugififo -->
+            <div class="tab-pane fade" id="isi-tab-labarugififo" role="tabpanel" aria-labelledby="tab-labarugififo">
                 <div id="reload" class="table-responsive">
-                    <table id="labarugimasukfifo1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                   <table id="labarugififo1" class="" style="width: 100%;">
                         <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:20px">Faktur</th>
-                                <th style="width:20px">Tanggal</th>
-                                <th style="width:50px">Kode</th>
-                                <th style="width:50px">Barcode</th>
-                                <th style="width:300px">Nama Barang</th>							
-                                <th style="width:20px">Satuan</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">HPP</th>							
-                                <th style="width:20px">Total HPP</th>							
-                                <th style="width:50px">Keterangan</th>							
+                            <tr style="display: none;">
+                                <th style="width:500x; height:1px;">&nbsp;</th>                            
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
                             </tr>
+                            
                         </thead>
-                        <tfoot id="show_footerlabarugimasukfifo1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                        <tfoot id="show_footerlabarugififo1">
+                            
                         </tfoot>
-                        <tbody id="show_labarugimasukfifo1">
-                        
+                        <tbody id="show_datalabarugififo1">
+                            
                         </tbody>
-                    </table>            
+                    </table>
                 </div>
             </div>
-            <!--/tab-labarugimasukfifo -->
+            <!--/tab-labarugififo -->
             
-            <!--tab-labarugimasukmova -->
-            <div class="tab-pane fade" id="isi-tab-labarugimasukmova" role="tabpanel" aria-labelledby="tab-labarugimasukmova">
+            <!--tab-labarugimova -->
+            <div class="tab-pane fade" id="isi-tab-labarugimova" role="tabpanel" aria-labelledby="tab-labarugimova">
                 <div id="reload" class="table-responsive">
-                    <table id="labarugimasukmova1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                    <table id="labarugimova1" class="" style="width: 100%;">
                         <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:20px">Faktur</th>
-                                <th style="width:20px">Tanggal</th>
-                                <th style="width:50px">Kode</th>
-                                <th style="width:50px">Barcode</th>
-                                <th style="width:300px">Nama Barang</th>							
-                                <th style="width:20px">Satuan</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">HPP</th>							
-                                <th style="width:20px">Total HPP</th>							
-                                <th style="width:50px">Keterangan</th>							
+                            <tr style="display: none;">
+                                <th style="width:500x; height:1px;">&nbsp;</th>                            
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
                             </tr>
+                            
                         </thead>
-                        <tfoot id="show_footerlabarugimasukmova1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                        <tfoot id="show_footerlabarugimova1">
+                            
                         </tfoot>
-                        <tbody id="show_labarugimasukmova1">
-                        
+                        <tbody id="show_datalabarugimova1">
+                            
                         </tbody>
                     </table>            
                 </div>
             </div>
-            <!--/tab-labarugimasukmova -->
+            <!--/tab-labarugimova -->
 
-            <!--tab-labarugimasuklifo -->
-            <div class="tab-pane fade" id="isi-tab-labarugimasuklifo" role="tabpanel" aria-labelledby="tab-labarugimasuklifo">
+            <!--tab-labarugilifo -->
+            <div class="tab-pane fade" id="isi-tab-labarugilifo" role="tabpanel" aria-labelledby="tab-labarugilifo">
                 <div id="reload" class="table-responsive">
-                    <table id="labarugimasuklifo1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                    <table id="labarugilifo1" class="" style="width: 100%;">
                         <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:20px">Faktur</th>
-                                <th style="width:20px">Tanggal</th>
-                                <th style="width:50px">Kode</th>
-                                <th style="width:50px">Barcode</th>
-                                <th style="width:300px">Nama Barang</th>							
-                                <th style="width:20px">Satuan</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">HPP</th>							
-                                <th style="width:20px">Total HPP</th>							
-                                <th style="width:50px">Keterangan</th>								
+                            <tr style="display: none;">
+                                <th style="width:500x; height:1px;">&nbsp;</th>                            
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
                             </tr>
+                            
                         </thead>
-                        <tfoot id="show_footerlabarugimasuklifo1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                        <tfoot id="show_footerlabarugilifo1">
+                            
                         </tfoot>
-                        <tbody id="show_labarugimasuklifo1">
-                        
+                        <tbody id="show_datalabarugilifo1">
+                            
                         </tbody>
                     </table>            
                 </div>
             </div>
-            <!--/tab-labarugimasuklifo -->
+            <!--/tab-labarugilifo -->
 
-            <!--tab-labarugikeluar -->
-            <div class="tab-pane fade" id="isi-tab-labarugikeluar" role="tabpanel" aria-labelledby="tab-labarugikeluar">
+            <!--tab-labarugijasa -->
+            <div class="tab-pane fade" id="isi-tab-labarugijasa" role="tabpanel" aria-labelledby="tab-labarugijasa">
                 <div id="reload" class="table-responsive">
-                    <table id="labarugikeluar1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                    <table id="labarugijasa1" class="" style="width: 100%;">
                         <thead>
-                            <tr>
-                                <th style="width:10px;">#</th>                            
-                                <th style="width:20px">Faktur</th>
-                                <th style="width:20px">Tanggal</th>
-                                <th style="width:50px">Kode</th>
-                                <th style="width:50px">Barcode</th>
-                                <th style="width:300px">Nama Barang</th>							
-                                <th style="width:20px">Satuan</th>							
-                                <th style="width:10px">Qty</th>							
-                                <th style="width:20px">HPP</th>							
-                                <th style="width:20px">Total HPP</th>							
-                                <th style="width:50px">Keterangan</th>							
+                            <tr style="display: none;">
+                                <th style="width:500x; height:1px;">&nbsp;</th>                            
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
+                                <th style="width:200px"></th>							
+                                <th style="width:10px"></th>							
                             </tr>
+                            
                         </thead>
-                        <tfoot id="show_footerlabarugikeluar1">
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
+                        <tfoot id="show_footerlabarugijasa1">
+                            
                         </tfoot>
-                        <tbody id="show_labarugikeluar1">
-                        
+                        <tbody id="show_datalabarugijasa1">
+                            
                         </tbody>
                     </table>            
                 </div>
             </div>
-            <!--/tab-labarugikeluar -->
+            <!--/tab-labarugijasa -->
 
         </div>
     </div>    
@@ -357,11 +250,11 @@
 
 
 <script type="text/javascript">
-    var labarugimasuk1Datatable;
-    var labarugimasukfifo1Datatable;
-    var labarugimasukmova1Datatable;
-    var labarugimasuklifo1Datatable;
-    var labarugikeluar1Datatable;
+    var labarugisaja1Datatable;
+    var labarugififo1Datatable;
+    var labarugimova1Datatable;
+    var labarugilifo1Datatable;
+    var labarugijasa1Datatable;
    
 $(document).ready(function(){
     
@@ -469,12 +362,12 @@ $(document).ready(function(){
 		}
 
     
-    tampil_data();  
-    tampil_tombol();
+    $('#idruang1').change(); 
 
-
-    function tampil_tombol(){
-        $('#example1').DataTable( {
+    tampil_labarugisaja1(); 
+    tombol_labarugisaja1();
+    function tombol_labarugisaja1(){
+        $('#labarugisaja1').DataTable( {
             "order": false, 
             "responsive": true, 
             "lengthChange": false, 
@@ -490,13 +383,10 @@ $(document).ready(function(){
                 {extend: 'excel', title: '{{ $caption }}'}, 
                 {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, 
             ],
-		    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');   
+		    }).buttons().container().appendTo('#labarugisaja1_wrapper .col-md-6:eq(0)');   
      } 
-         
-      
-
     //tampilkan dalam tabel ->OK
-    function tampil_data(){	
+    function tampil_labarugisaja1(){	
         $.ajax({
             type  : 'get',
             url   : '{{route('pos01.laporan.labarugi_showlabarugisaja')}}',
@@ -627,67 +517,709 @@ $(document).ready(function(){
                                 '<td align="right"><b>'+ resultData[i].lababersih +'</b></td>'+
                                 '<td></td>'+
                             '</tr>';
-
                 }
 
-                $('#show_data').html(html); 
+                $('#show_datalabarugisaja1').html(html); 
+                                            
+            }
+        }); 
+    
+    }
+    
+    tampil_labarugififo1(); 
+    tombol_labarugififo1();
+    function tombol_labarugififo1(){
+        $('#labarugififo1').DataTable( {
+            "order": false, 
+            "responsive": true, 
+            "lengthChange": false, 
+            "paging": false, 
+            "searching": false, 
+            "autoWidth": false,
+            "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "All"] ],
+            buttons : [ 
+                {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, 
+                {extend:'copy'}, 
+                {extend:'csv'}, 
+                {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, 
+                {extend: 'excel', title: '{{ $caption }}'}, 
+                {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, 
+            ],
+		    }).buttons().container().appendTo('#labarugififo1_wrapper .col-md-6:eq(0)');   
+     } 
+    //tampilkan dalam tabel ->OK
+    function tampil_labarugififo1(){	
+        $.ajax({
+            type  : 'get',
+            url   : '{{route('pos01.laporan.labarugi_showlabarugififo')}}',
+            async : false,
+            dataType : 'json',
+            				 				
+            success : function(data){
+                var html = '';
+                var i;                
+                var resultData = data.data;	                			
+                for(i=0; i<resultData.length; i++){
+                    html += '<tr>'+
+                                '<td style="height:10px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr style="background-color:grey;">'+
+                                '<td style="height: 1px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="height:10px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">PENDAPATAN :</td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PPN PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].ppnjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DISCOUNT PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].discountjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENDAPATAN DARI PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].pendapatanjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HARGA POKOK PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].hpp +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>LABA KOTOR</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].labakotor +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">BEBAN USAHA :</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b></b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENGELUARAN BIAYA</td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pengeluaranbiaya +'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].bebanusaha +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> LABA USAHA</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].labausaha +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">PENDAPATAN DI LUAR USAHA :</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b></b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENDAPATAN LAIN</td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pendapatanlain +'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pendapatandiluarusaha +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> LABA BERSIH</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].lababersih +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>';
+                }
+
+                $('#show_datalabarugififo1').html(html); 
+                                            
+            }
+        }); 
+    
+    }
+    
+    tampil_labarugimova1(); 
+    tombol_labarugimova1();
+    function tombol_labarugimova1(){
+        $('#labarugimova1').DataTable( {
+            "order": false, 
+            "responsive": true, 
+            "lengthChange": false, 
+            "paging": false, 
+            "searching": false, 
+            "autoWidth": false,
+            "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "All"] ],
+            buttons : [ 
+                {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, 
+                {extend:'copy'}, 
+                {extend:'csv'}, 
+                {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, 
+                {extend: 'excel', title: '{{ $caption }}'}, 
+                {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, 
+            ],
+		    }).buttons().container().appendTo('#labarugimova1_wrapper .col-md-6:eq(0)');   
+     } 
+    //tampilkan dalam tabel ->OK
+    function tampil_labarugimova1(){	
+        $.ajax({
+            type  : 'get',
+            url   : '{{route('pos01.laporan.labarugi_showlabarugimova')}}',
+            async : false,
+            dataType : 'json',
+            				 				
+            success : function(data){
+                var html = '';
+                var i;                
+                var resultData = data.data;	                			
+                for(i=0; i<resultData.length; i++){
+                    html += '<tr>'+
+                                '<td style="height:10px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr style="background-color:grey;">'+
+                                '<td style="height: 1px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="height:10px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">PENDAPATAN :</td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PPN PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].ppnjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DISCOUNT PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].discountjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENDAPATAN DARI PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].pendapatanjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HARGA POKOK PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].hpp +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>LABA KOTOR</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].labakotor +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">BEBAN USAHA :</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b></b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENGELUARAN BIAYA</td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pengeluaranbiaya +'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].bebanusaha +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> LABA USAHA</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].labausaha +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">PENDAPATAN DI LUAR USAHA :</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b></b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENDAPATAN LAIN</td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pendapatanlain +'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pendapatandiluarusaha +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> LABA BERSIH</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].lababersih +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>';
+                }
+
+                $('#show_datalabarugimova1').html(html); 
+                                            
+            }
+        }); 
+    
+    }
+    
+    tampil_labarugilifo1(); 
+    tombol_labarugilifo1();
+    function tombol_labarugilifo1(){
+        $('#labarugilifo1').DataTable( {
+            "order": false, 
+            "responsive": true, 
+            "lengthChange": false, 
+            "paging": false, 
+            "searching": false, 
+            "autoWidth": false,
+            "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "All"] ],
+            buttons : [ 
+                {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, 
+                {extend:'copy'}, 
+                {extend:'csv'}, 
+                {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, 
+                {extend: 'excel', title: '{{ $caption }}'}, 
+                {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, 
+            ],
+		    }).buttons().container().appendTo('#labarugilifo1_wrapper .col-md-6:eq(0)');   
+     } 
+    //tampilkan dalam tabel ->OK
+    function tampil_labarugilifo1(){	
+        $.ajax({
+            type  : 'get',
+            url   : '{{route('pos01.laporan.labarugi_showlabarugilifo')}}',
+            async : false,
+            dataType : 'json',
+            				 				
+            success : function(data){
+                var html = '';
+                var i;                
+                var resultData = data.data;	                			
+                for(i=0; i<resultData.length; i++){
+                    html += '<tr>'+
+                                '<td style="height:10px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr style="background-color:grey;">'+
+                                '<td style="height: 1px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="height:10px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">PENDAPATAN :</td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PPN PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].ppnjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DISCOUNT PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].discountjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENDAPATAN DARI PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].pendapatanjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HARGA POKOK PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].hpp +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>LABA KOTOR</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].labakotor +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">BEBAN USAHA :</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b></b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENGELUARAN BIAYA</td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pengeluaranbiaya +'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].bebanusaha +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> LABA USAHA</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].labausaha +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">PENDAPATAN DI LUAR USAHA :</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b></b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENDAPATAN LAIN</td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pendapatanlain +'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pendapatandiluarusaha +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> LABA BERSIH</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].lababersih +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>';
+                }
+
+                $('#show_datalabarugilifo1').html(html); 
+                                            
+            }
+        }); 
+    
+    }
+     
+    tampil_labarugijasa1(); 
+    tombol_labarugijasa1();
+    function tombol_labarugijasa1(){
+        $('#labarugijasa1').DataTable( {
+            "order": false, 
+            "responsive": true, 
+            "lengthChange": false, 
+            "paging": false, 
+            "searching": false, 
+            "autoWidth": false,
+            "lengthMenu": [ [25, 50, 100, -1], [25, 50, 100, "All"] ],
+            buttons : [ 
+                {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, 
+                {extend:'copy'}, 
+                {extend:'csv'}, 
+                {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, 
+                {extend: 'excel', title: '{{ $caption }}'}, 
+                {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, 
+            ],
+		    }).buttons().container().appendTo('#labarugijasa1_wrapper .col-md-6:eq(0)');   
+     } 
+    //tampilkan dalam tabel ->OK
+    function tampil_labarugijasa1(){	
+        $.ajax({
+            type  : 'get',
+            url   : '{{route('pos01.laporan.labarugi_showlabarugijasa')}}',
+            async : false,
+            dataType : 'json',
+            				 				
+            success : function(data){
+                var html = '';
+                var i;                
+                var resultData = data.data;	                			
+                for(i=0; i<resultData.length; i++){
+                    html += '<tr>'+
+                                '<td style="height:10px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr style="background-color:grey;">'+
+                                '<td style="height: 1px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="height:10px;"></td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">PENDAPATAN :</td>'+ 
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PPN PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].ppnjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DISCOUNT PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].discountjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENDAPATAN DARI PENJUALAN</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right">'+ resultData[i].pendapatanjual +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BIAYA PRODUKSI</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].hpp +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>LABA KOTOR</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].labakotor +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">BEBAN USAHA :</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b></b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENGELUARAN BIAYA</td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pengeluaranbiaya +'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].bebanusaha +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> LABA USAHA</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].labausaha +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">PENDAPATAN DI LUAR USAHA :</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b></b></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PENDAPATAN LAIN</td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pendapatanlain +'</td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right" style="border-bottom: 1px solid #111">'+ resultData[i].pendapatandiluarusaha +'</td>'+
+                                '<td></td>'+
+                            '</tr>'+
+                            '<tr>'+
+                                '<td style="padding: 5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b> LABA BERSIH</b></td>'+
+                                '<td></td>'+
+                                '<td></td>'+
+                                '<td align="right"><b>'+ resultData[i].lababersih +'</b></td>'+
+                                '<td></td>'+
+                            '</tr>';
+                }
+
+                $('#show_datalabarugijasa1').html(html); 
                                             
             }
         }); 
     
     }
 
-
-
-
-
-    
     setTimeout(() => {
-        if($('#tablabarugi1').val()=='tab-labarugimasuk'){
-            $('#tab-labarugimasuk').click();            
-        }else if($('#tablabarugi1').val()=='tab-labarugimasukfifo'){
-            $('#tab-labarugimasukfifo').click();            
-        }else if($('#tablabarugi1').val()=='tab-labarugimasukmova'){
-            $('#tab-labarugimasukmova').click();            
-        }else if($('#tablabarugi1').val()=='tab-labarugimasuklifo'){
-            $('#tab-labarugimasuklifo').click();            
-        }else if($('#tablabarugi1').val()=='tab-labarugikeluar'){
-            $('#tab-labarugikeluar').click();            
+        if($('#tablabarugi1').val()=='tab-labarugisaja'){
+            $('#tab-labarugisaja').click();            
+        }else if($('#tablabarugi1').val()=='tab-labarugififo'){
+            $('#tab-labarugififo').click();            
+        }else if($('#tablabarugi1').val()=='tab-labarugimova'){
+            $('#tab-labarugimova').click();            
+        }else if($('#tablabarugi1').val()=='tab-labarugijasa'){
+            $('#tab-labarugijasa').click();            
+        }else if($('#tablabarugi1').val()=='tab-labarugilain'){
+            $('#tab-labarugilain').click();            
         }else{
-            $('#tab-labarugimasuk').click();            
+            $('#tab-labarugisaja').click();            
         }
     }, 100);
 
-    $('#tab-labarugimasuk').on('click',function(){
-        $('#tablabarugi1').val('tab-labarugimasuk');
+    $('#tab-labarugisaja').on('click',function(){
+        $('#tablabarugi1').val('tab-labarugisaja');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 100);
     });
-    $('#tab-labarugimasukfifo').on('click',function(){
-        $('#tablabarugi1').val('tab-labarugimasukfifo');
+    $('#tab-labarugififo').on('click',function(){
+        $('#tablabarugi1').val('tab-labarugififo');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 100);
     });
-    $('#tab-labarugimasukmova').on('click',function(){
-        $('#tablabarugi1').val('tab-labarugimasukmova');
+    $('#tab-labarugimova').on('click',function(){
+        $('#tablabarugi1').val('tab-labarugimova');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 100);
     });
-    $('#tab-labarugimasuklifo').on('click',function(){
-        $('#tablabarugi1').val('tab-labarugimasuklifo');
+    $('#tab-labarugijasa').on('click',function(){
+        $('#tablabarugi1').val('tab-labarugijasa');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 100);
     });
-    $('#tab-labarugikeluar').on('click',function(){
-        $('#tablabarugi1').val('tab-labarugikeluar');
+    $('#tab-labarugilain').on('click',function(){
+        $('#tablabarugi1').val('tab-labarugilain');
         $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
@@ -699,7 +1231,7 @@ $(document).ready(function(){
         tampil_listruang();
     }, 500);
     
-    koneksi_datatable();
+    // koneksi_datatable();
 
     $('#idruang1').on('change',function(){
         $('#event1').val('1');
@@ -773,13 +1305,35 @@ $(document).ready(function(){
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },				 				
             success : function(formData){ 
+                    
                     if(event1=='1'){
-                        $("#idruang1").val(idruang1);                                        
-                        tampil_dataTable();                   
+                        // $("#idruang1").val(idruang1);                                        
+                        // tampil_dataTable(); 
+                        setTimeout(() => {
+                            labarugisaja1Datatable = tampil_labarugisaja1();
+                            labarugififo1Datatable = tampil_labarugififo1();
+                            labarugimova1Datatable = tampil_labarugimova1();
+                            labarugilifo1Datatable = tampil_labarugilifo1();
+                            labarugijasa1Datatable = tampil_labarugijasa1();
+                            setTimeout(() => {
+                                labarugisaja1Datatable.ajax.url('{{route('pos01.laporan.labarugi_showlabarugisaja')}}').load();                
+                                labarugisaja1Datatable.draw(null, false);                                                    
+                                labarugififo1Datatable.ajax.url('{{route('pos01.laporan.labarugi_showlabarugififo')}}').load();                
+                                labarugififo1Datatable.draw(null, false);                                                    
+                                labarugimova1Datatable.ajax.url('{{route('pos01.laporan.labarugi_showlabarugimova')}}').load();                
+                                labarugimova1Datatable.draw(null, false);                                                    
+                                labarugilifo1Datatable.ajax.url('{{route('pos01.laporan.labarugi_showlabarugilifo')}}').load();                
+                                labarugilifo1Datatable.draw(null, false);                                                    
+                                labarugijasa1Datatable.ajax.url('{{route('pos01.laporan.labarugi_showlabarugilifo')}}').load();                
+                                labarugijasa1Datatable.draw(null, false);                                                    
+                            }, 500);            
+                        }, 500);
                     }
-
-
-                }
+                },
+            error : function(formData){
+                 
+            }
+            
         });
     }
  
@@ -821,350 +1375,20 @@ $(document).ready(function(){
         })                    
     }
 
-    function tampil_labarugimasuk1(){
-        let i = 1;	
-        return $('#labarugimasuk1').DataTable({
-            responsive : true,
-            retrieve: true,
-            autoWidth : true,
-            buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
-            dom: 'lBfrtip',
-            lengthMenu: [
-                [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
-                [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
-            ],
-            
-            footerCallback: function (row, data, start, end, display) {
-            let api = this.api();
-    
-            // Remove the formatting to get integer data for summation
-            let intVal = function (i) {
-                return typeof i === 'string'
-                    ? i.replace(/[\$,]/g, '') * 1
-                    : typeof i === 'number'
-                    ? i
-                    : 0;
-            };
-    
-            // Total over all pages
-            totalhpp = api
-                .column(9)
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Total over this page
-            pagetotalhpp = api
-                .column(9, { page: 'current' })
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Update footer
-            api.column(5).footer().innerHTML = 'SUB TOTAL :';
-            api.column(9).footer().innerHTML = formatAngka(pagetotalhpp,'');
-            },
-
-
-            processing: true,
-            serverSide: true,
-            ajax   : `{{route('pos01.laporan.stokkeluarmasuk_showstokmasuk')}}`,
-            columns: [
-                // { data: 'no', name:'id', render: function (data, type, row, meta) {
-                //     return meta.row + meta.settings._iDisplayStart + 1;
-                // }},
-                {  "data": 'DT_RowIndex',
-                    orderable: false, 
-                    searchable: false },
-                { data: 'nomorstatus', name: 'nomorstatus', className: 'dt-center' },
-                { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
-                { data: 'kode', name: 'barang.kode', className: 'dt-center' },
-                { data: 'barcode', name: 'barang.barcode', className: 'dt-center' },
-                { data: 'barang', name: 'barang.barang' },
-                { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
-                { data: 'masuk', name: 'masuk', className: 'dt-center' },
-                { data: 'hbsmasuk', name: 'hbsmasuk', className: 'dt-right' },
-                { data: 'hppmasuk', name: 'hppmasuk', className: 'dt-right' },
-                { data: 'keterangan', name: 'keterangan', className: 'dt-left' },
-            ]
-        });
-    }
-    
-    function tampil_labarugimasukfifo1(){
-        let i = 1;	
-        return $('#labarugimasukfifo1').DataTable({
-            responsive : true,
-            retrieve: true,
-            autoWidth : true,
-            buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
-            dom: 'lBfrtip',
-            lengthMenu: [
-                [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
-                [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
-            ],
-            footerCallback: function (row, data, start, end, display) {
-            let api = this.api();
-    
-            // Remove the formatting to get integer data for summation
-            let intVal = function (i) {
-                return typeof i === 'string'
-                    ? i.replace(/[\$,]/g, '') * 1
-                    : typeof i === 'number'
-                    ? i
-                    : 0;
-            };
-    
-            // Total over all pages
-            totalhpp = api
-                .column(9)
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Total over this page
-            pagetotalhpp = api
-                .column(9, { page: 'current' })
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Update footer
-            api.column(5).footer().innerHTML = 'SUB TOTAL :';
-            api.column(9).footer().innerHTML = formatAngka(pagetotalhpp,'');
-            },
-
-            processing: true,
-            serverSide: true,
-            ajax   : `{{route('pos01.laporan.stokkeluarmasuk_showstokmasukfifo')}}`,
-            columns: [
-                // { data: 'no', name:'id', render: function (data, type, row, meta) {
-                //     return meta.row + meta.settings._iDisplayStart + 1;
-                // }},
-                {  "data": 'DT_RowIndex',
-                    orderable: false, 
-                    searchable: false },
-                { data: 'nomorstatus', name: 'nomorstatus', className: 'dt-center' },
-                { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
-                { data: 'kode', name: 'barang.kode', className: 'dt-center' },
-                { data: 'barcode', name: 'barang.barcode', className: 'dt-center' },
-                { data: 'barang', name: 'barang.barang' },
-                { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
-                { data: 'masuk', name: 'masuk', className: 'dt-center' },
-                { data: 'hbsmasuk', name: 'hbsmasuk', className: 'dt-right' },
-                { data: 'hppmasuk', name: 'hppmasuk', className: 'dt-right' },
-                { data: 'keterangan', name: 'keterangan', className: 'dt-left' },
-            ]
-        });
-    }
-    
-    function tampil_labarugimasukmova1(){
-        let i = 1;	
-        return $('#labarugimasukmova1').DataTable({
-            responsive : true,
-            retrieve: true,
-            autoWidth : true,
-            buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
-            dom: 'lBfrtip',
-            lengthMenu: [
-                [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
-                [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
-            ],
-
-            footerCallback: function (row, data, start, end, display) {
-            let api = this.api();
-    
-            // Remove the formatting to get integer data for summation
-            let intVal = function (i) {
-                return typeof i === 'string'
-                    ? i.replace(/[\$,]/g, '') * 1
-                    : typeof i === 'number'
-                    ? i
-                    : 0;
-            };
-    
-            // Total over all pages
-            totalhpp = api
-                .column(9)
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Total over this page
-            pagetotalhpp = api
-                .column(9, { page: 'current' })
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Update footer
-            api.column(5).footer().innerHTML = 'SUB TOTAL :';
-            api.column(9).footer().innerHTML = formatAngka(pagetotalhpp,'');
-            },
-
-            processing: true,
-            serverSide: true,
-            ajax   : `{{route('pos01.laporan.stokkeluarmasuk_showstokmasukmova')}}`,
-            columns: [
-                // { data: 'no', name:'id', render: function (data, type, row, meta) {
-                //     return meta.row + meta.settings._iDisplayStart + 1;
-                // }},
-                {  "data": 'DT_RowIndex',
-                    orderable: false, 
-                    searchable: false },
-                { data: 'nomorstatus', name: 'nomorstatus', className: 'dt-center' },
-                { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
-                { data: 'kode', name: 'barang.kode', className: 'dt-center' },
-                { data: 'barcode', name: 'barang.barcode', className: 'dt-center' },
-                { data: 'barang', name: 'barang.barang' },
-                { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
-                { data: 'masuk', name: 'masuk', className: 'dt-center' },
-                { data: 'hbsmasuk', name: 'hbsmasuk', className: 'dt-right' },
-                { data: 'hppmasuk', name: 'hppmasuk', className: 'dt-right' },
-                { data: 'keterangan', name: 'keterangan', className: 'dt-left' },
-            ]
-        });
-    }
-    
-    function tampil_labarugimasuklifo1(){
-        let i = 1;	
-        return $('#labarugimasuklifo1').DataTable({
-            responsive : true,
-            retrieve: true,
-            autoWidth : true,
-            buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
-            dom: 'lBfrtip',
-            lengthMenu: [
-                [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
-                [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
-            ],
-
-            footerCallback: function (row, data, start, end, display) {
-            let api = this.api();
-    
-            // Remove the formatting to get integer data for summation
-            let intVal = function (i) {
-                return typeof i === 'string'
-                    ? i.replace(/[\$,]/g, '') * 1
-                    : typeof i === 'number'
-                    ? i
-                    : 0;
-            };
-    
-            // Total over all pages
-            totalhpp = api
-                .column(9)
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Total over this page
-            pagetotalhpp = api
-                .column(9, { page: 'current' })
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Update footer
-            api.column(5).footer().innerHTML = 'SUB TOTAL :';
-            api.column(9).footer().innerHTML = formatAngka(pagetotalhpp,'');
-            },
-
-            processing: true,
-            serverSide: true,
-            ajax   : `{{route('pos01.laporan.stokkeluarmasuk_showstokmasuklifo')}}`,
-            columns: [
-                // { data: 'no', name:'id', render: function (data, type, row, meta) {
-                //     return meta.row + meta.settings._iDisplayStart + 1;
-                // }},
-                {  "data": 'DT_RowIndex',
-                    orderable: false, 
-                    searchable: false },
-                { data: 'nomorstatus', name: 'nomorstatus', className: 'dt-center' },
-                { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
-                { data: 'kode', name: 'barang.kode', className: 'dt-center' },
-                { data: 'barcode', name: 'barang.barcode', className: 'dt-center' },
-                { data: 'barang', name: 'barang.barang' },
-                { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
-                { data: 'masuk', name: 'masuk', className: 'dt-center' },
-                { data: 'hbsmasuk', name: 'hbsmasuk', className: 'dt-right' },
-                { data: 'hppmasuk', name: 'hppmasuk', className: 'dt-right' },
-                { data: 'keterangan', name: 'keterangan', className: 'dt-left' },
-            ]
-        });
-    }
-    
-    function tampil_labarugikeluar1(){
-        let i = 1;	
-        return $('#labarugikeluar1').DataTable({
-            responsive : true,
-            retrieve: true,
-            autoWidth : true,
-            buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
-            dom: 'lBfrtip',
-            lengthMenu: [
-                [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
-                [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
-            ],
-
-            footerCallback: function (row, data, start, end, display) {
-            let api = this.api();
-    
-            // Remove the formatting to get integer data for summation
-            let intVal = function (i) {
-                return typeof i === 'string'
-                    ? i.replace(/[\$,]/g, '') * 1
-                    : typeof i === 'number'
-                    ? i
-                    : 0;
-            };
-    
-            // Total over all pages
-            totalhpp = api
-                .column(9)
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Total over this page
-            pagetotalhpp = api
-                .column(9, { page: 'current' })
-                .data()
-                .reduce((a, b) => intVal(a) + intVal(b), 0);
-    
-            // Update footer
-            api.column(5).footer().innerHTML = 'SUB TOTAL :';
-            api.column(9).footer().innerHTML = formatAngka(pagetotalhpp,'');
-            },
-
-            processing: true,
-            serverSide: true,
-            ajax   : `{{route('pos01.laporan.stokkeluarmasuk_showstokkeluar')}}`,
-            columns: [
-                // { data: 'no', name:'id', render: function (data, type, row, meta) {
-                //     return meta.row + meta.settings._iDisplayStart + 1;
-                // }},
-                {  "data": 'DT_RowIndex',
-                    orderable: false, 
-                    searchable: false },
-                { data: 'nomorstatus', name: 'nomorstatus', className: 'dt-center' },
-                { data: 'tglstatus', name: 'tglstatus', className: 'dt-center' },
-                { data: 'kode', name: 'barang.kode', className: 'dt-center' },
-                { data: 'barcode', name: 'barang.barcode', className: 'dt-center' },
-                { data: 'barang', name: 'barang.barang' },
-                { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-center' },
-                { data: 'keluar', name: 'keluar', className: 'dt-center' },
-                { data: 'hbskeluar', name: 'hbskeluar', className: 'dt-right' },
-                { data: 'hppkeluar', name: 'hppkeluar', className: 'dt-right' },
-                { data: 'keterangan', name: 'keterangan', className: 'dt-left' },
-            ]
-        });
-    }
-   
     function tampil_dataTable(){        
-        labarugimasuk1Datatable.draw(null, false);        
-        labarugimasukfifo1Datatable.draw(null, false);        
-        labarugimasuklifo1Datatable.draw(null, false);        
-        labarugimasukmova1Datatable.draw(null, false);        
-        labarugikeluar1Datatable.draw(null, false);        
+        labarugisaja1Datatable.draw(null, false);        
+        labarugififo1Datatable.draw(null, false);        
+        labarugilifo1Datatable.draw(null, false);        
+        labarugimova1Datatable.draw(null, false);        
+        labarugijasa1Datatable.draw(null, false);        
     }
 
     function koneksi_datatable(){
-        labarugimasuk1Datatable = tampil_labarugimasuk1();    
-        labarugimasukfifo1Datatable = tampil_labarugimasukfifo1();    
-        labarugimasukmova1Datatable = tampil_labarugimasukmova1();    
-        labarugimasuklifo1Datatable = tampil_labarugimasuklifo1();    
-        labarugikeluar1Datatable = tampil_labarugikeluar1();    
+        labarugisaja1Datatable = tampil_labarugisaja1();    
+        labarugififo1Datatable = tampil_labarugififo1();    
+        labarugimova1Datatable = tampil_labarugimova1();    
+        labarugilifo1Datatable = tampil_labarugilifo1();    
+        labarugijasa1Datatable = tampil_labarugijasa1();    
     }
 
     function swaltambah(x){

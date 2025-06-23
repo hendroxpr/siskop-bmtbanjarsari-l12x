@@ -17,13 +17,14 @@ use Modules\Pos01\Models\Barang;
 use Modules\Pos01\Models\Barangruang;
 use Modules\Pos01\Models\Biaya;
 use Modules\Pos01\Models\Jenisbiaya;
+use Modules\Pos01\Models\Kategoribiaya;
 use Modules\Pos01\Models\Ruang;
 use Modules\Pos01\Models\Satuan;
 use Modules\Pos01\Models\Supplier;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class BiayalainController extends Controller
+class BiayabiayaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,11 +38,11 @@ class BiayalainController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Biaya Lain</b>.';
-        $page = 'pos01::transaksi.biayalain';
-        $link = '/pos01/transaksi/biayalain';
+        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Biaya-biaya</b>.';
+        $page = 'pos01::transaksi.biayabiaya';
+        $link = '/pos01/transaksi/biayabiaya';
         $subtitle = 'Transaksi';
-        $caption = 'Biaya Lain';
+        $caption = 'Biaya-biaya';
         $jmlhal = 2;
        
         $menu=Menusub::where('link','=',$link)
@@ -76,6 +77,7 @@ class BiayalainController extends Controller
             'idruang1' => 'required',
             'idsupplier1' => 'required',
             'idjenisbiaya1' => 'required',            
+            'idkategoribiaya1' => 'required',            
         ]);
 
         //untuk input tabel yang asli
@@ -84,12 +86,16 @@ class BiayalainController extends Controller
             'idruang' => $validatedData['idruang1'],
             'idsupplier' => $validatedData['idsupplier1'],
             'idjenisbiaya' => $validatedData['idjenisbiaya1'],
+            'idkategoribiaya' => $validatedData['idkategoribiaya1'],
 
             'idsatuan' => $request['idsatuan1'],
             'nomorbukti' => $request['nomorbukti1'],
             'biaya' => $request['biaya1'],
             'qty' => $request['qty1'],
             'hbs' => $request['hbs1'],
+            'subtotal' => $request['subtotal1'],
+            'ppn' => $request['ppn1'],
+            'diskon' => $request['diskon1'],
             'totalbeli' => $request['totalbeli1'],
             'keterangan' => $request['keterangan1'],
             'idusers' => auth()->user()->id,
@@ -123,13 +129,15 @@ class BiayalainController extends Controller
         $tgltransaksi = session('tgltransaksi1');     
         $idruang = session('idruangx1');
         $idjenisbiaya = session('idjenisbiayax1');
+        $idkategoribiaya = session('idkategoribiayax1');
         $idsupplier = session('idsupplierx1');
 
         $biaya = Biaya::where('tgltransaksi','=',$tgltransaksi)
             ->where('idruang','=',$idruang)
             ->where('idjenisbiaya','=',$idjenisbiaya)
+            ->where('idkategoribiaya','=',$idkategoribiaya)
             ->where('idsupplier','=',$idsupplier)
-            ->with('jenisbiaya','supplier','ruang')
+            ->with('jenisbiaya','supplier','ruang', 'kategoribiaya')
             ->get();
         $datax = DataTables::of($biaya                          
             );
@@ -141,10 +149,19 @@ class BiayalainController extends Controller
                 return $row->idsatuan ? $row->satuan->satuan : '';
             })
             ->addColumn('hbs', function ($row) {
-                return $row->hbs ? number_format($row->hbs,0) : '';
+                return $row->hbs ? number_format($row->hbs,0) : '0';
+            })
+            ->addColumn('subtotal', function ($row) {
+                return $row->subtotal ? number_format($row->subtotal,0) : '0';
+            })
+            ->addColumn('ppn', function ($row) {
+                return $row->ppn ? number_format($row->ppn,0) : '0';
+            })
+            ->addColumn('diskon', function ($row) {
+                return $row->diskon ? number_format($row->diskon,0) : '0';
             })
             ->addColumn('totalbeli', function ($row) {
-                return $row->totalbeli ? number_format($row->totalbeli,0) : '';
+                return $row->totalbeli ? number_format($row->totalbeli,0) : '0';
             })
             
             ->addColumn('action', function ($row) {
@@ -205,6 +222,23 @@ class BiayalainController extends Controller
             echo "<option value='" . $baris->id . "'>" . $baris->jenisbiaya . "</option>";
         }
     }
+    function listkategoribiaya()
+    {
+        $tampil=Kategoribiaya::orderBy('id')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kategoribiaya . "</option>";
+        }
+    }
+    function listkategoribiayax()
+    {
+        $idx='0';
+        $isi='- SEMUA -';        
+        $tampil = Kategoribiaya::get();
+        echo "<option value='" . $idx . "'>" . $isi . "</option>";
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kategoribiaya . "</option>";
+        }
+    }
     function listsupplier()
     {
         $tampil = Supplier::orderBy('id')->get();
@@ -234,6 +268,7 @@ class BiayalainController extends Controller
         session([
             'tgltransaksi1' => $request['tgltransaksi1'],
             'idjenisbiayax1' => $request['idjenisbiayax1'],
+            'idkategoribiayax1' => $request['idkategoribiayax1'],
             'idsupplierx1' => $request['idsupplierx1'],
             'idruangx1' => $request['idruangx1'],
         ]);

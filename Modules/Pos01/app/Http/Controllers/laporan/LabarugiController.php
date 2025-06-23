@@ -23,6 +23,7 @@ use Modules\Pos01\Models\Satuan;
 use Modules\Pos01\Models\Stok;
 use Modules\Pos01\Models\Stokfifo;
 use Modules\Pos01\Models\Stoklifo;
+use Modules\Pos01\Models\Stokmamin;
 use Modules\Pos01\Models\Stokmova;
 use PhpOffice\PhpSpreadsheet\Reader\Xml\Style\NumberFormat;
 use Yajra\DataTables\Facades\DataTables;
@@ -188,7 +189,8 @@ class LabarugiController extends Controller
         $labakotor = $this->formatangka($labakotorx);  
         
         $totalbeli = Biaya::select('totalbeli')
-            ->where('idjenisbiaya','=','1')        
+            ->where('idjenisbiaya','=','2')        
+            ->where('idkategoribiaya','=','1')        
             ->where('tgltransaksi','>=',$tglawal)        
             ->where('tgltransaksi','<=',$tglakhir)        
             ->where('idruang','>=',$idruangawal)        
@@ -204,7 +206,7 @@ class LabarugiController extends Controller
         $labausaha = $this->formatangka($labausahax);  
         
         $totaljual = Pendapatan::select('totaljual')
-            ->where('idjenisbiaya','=','1')        
+            ->where('idkategoribiaya','=','1')        
             ->where('tgltransaksi','>=',$tglawal)        
             ->where('tgltransaksi','<=',$tglakhir)        
             ->where('idruang','>=',$idruangawal)        
@@ -237,961 +239,451 @@ class LabarugiController extends Controller
         return json_encode(array('data' => $data));        
     }
 
-    public function showstokmasuk()
+    public function showlabarugififo()
     {
         
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
+        $idruang = session('idruang1');
+        if($idruang=='0'||$idruang==''){
             $idruangawal = 0;
             $idruangakhir = 999999;
         }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
+            $idruangawal = $idruang;
+            $idruangakhir = $idruang;
         }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
         $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
+        if($tglawal==''){
+            $tglawal=session('memtanggal');
         }
         $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
+        if($tglakhir==''){
+            $tglakhir=session('memtanggal');
         }
 
-        $stok = Stok::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)            
-            ->where(function (Builder $query) {
-                    return $query->where('status','=','masuk')
-                                 ->orWhere('status','=','mutmasuk')
-                                 ->orWhere('status','=','retmasuk')
-                                 ->orWhere('status','=','konmasuk')
-                                 ->orWhere('status','=','kormasuk');
-                })
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
+       $ppnkeluar = Stokfifo::select('ppnkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('ppnkeluar');
+        $ppnjualx = $ppnkeluar;
+        $ppnjual = $this->formatangka($ppnjualx); 
 
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
+        $diskonkeluar = Stokfifo::select('diskonkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('diskonkeluar');
+        $discountjualx = $diskonkeluar * -1;
+        $discountjual = $this->formatangka($discountjualx);  
+        
+        $hppj = Stokfifo::select('hppj')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('hppj');
+        $pendapatanjualx = $hppj;
+        $pendapatanjual = $this->formatangka($pendapatanjualx);  
+        
+        $hppkeluar = Stokfifo::select('hppkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('hppkeluar');
+        $hppx = $hppkeluar * -1;
+        $hpp = $this->formatangka($hppx);  
+        
+        $labakotorx = $ppnjualx + $discountjualx + $pendapatanjualx + $hppx;
+        $labakotor = $this->formatangka($labakotorx);  
+        
+        $totalbeli = Biaya::select('totalbeli')
+            ->where('idjenisbiaya','=','2')        
+            ->where('idkategoribiaya','=','1')        
+            ->where('tgltransaksi','>=',$tglawal)        
+            ->where('tgltransaksi','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('totalbeli');
+        $pengeluaranbiayax = $totalbeli;
+        $pengeluaranbiaya = $this->formatangka($pengeluaranbiayax);  
+        
+        $bebanusahax = ($pengeluaranbiayax)*-1;
+        $bebanusaha = $this->formatangka($bebanusahax);  
+        
+        $labausahax = $labakotorx + $bebanusahax;
+        $labausaha = $this->formatangka($labausahax);  
+        
+        $totaljual = Pendapatan::select('totaljual')
+            ->where('idkategoribiaya','=','1')        
+            ->where('tgltransaksi','>=',$tglawal)        
+            ->where('tgltransaksi','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('totaljual');
+        $pendapatanlainx = $totaljual;
+        $pendapatanlain = $this->formatangka($pendapatanlainx);  
+        
+        $pendapatandiluarusahax = ($pendapatanlainx);
+        $pendapatandiluarusaha = $this->formatangka($pendapatandiluarusahax);  
+        
+        $lababersihx = $labausahax + $pendapatandiluarusahax;
+        $lababersih = $this->formatangka($lababersihx);  
 
-            ->make(true);
-
-            return $data;
-
+        $data = Satuan::limit(1)
+                ->select('*')
+                ->selectRaw("'$ppnjual'" . " as ppnjual")  
+                ->selectRaw("'$discountjual'" . " as discountjual")  
+                ->selectRaw("'$pendapatanjual'" . " as pendapatanjual")  
+                ->selectRaw("'$hpp'" . " as hpp")  
+                ->selectRaw("'$labakotor'" . " as labakotor")  
+                ->selectRaw("'$pengeluaranbiaya'" . " as pengeluaranbiaya")  
+                ->selectRaw("'$bebanusaha'" . " as bebanusaha")  
+                ->selectRaw("'$labausaha'" . " as labausaha")  
+                ->selectRaw("'$pendapatanlain'" . " as pendapatanlain")  
+                ->selectRaw("'$pendapatandiluarusaha'" . " as pendapatandiluarusaha")  
+                ->selectRaw("'$lababersih'" . " as lababersih")  
+                ->get();
+         
+        return json_encode(array('data' => $data));        
     }
-    public function showstokmasukfifo()
+
+    public function showlabarugimova()
     {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
+        $idruang = session('idruang1');
+        if($idruang=='0'||$idruang==''){
             $idruangawal = 0;
             $idruangakhir = 999999;
         }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
+            $idruangawal = $idruang;
+            $idruangakhir = $idruang;
         }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
         $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
+        if($tglawal==''){
+            $tglawal=session('memtanggal');
         }
         $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
+        if($tglakhir==''){
+            $tglakhir=session('memtanggal');
         }
 
-        $stok = Stokfifo::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            ->where(function (Builder $query) {
-                    return $query->where('status','=','masuk')
-                                 ->orWhere('status','=','mutmasuk')
-                                 ->orWhere('status','=','retmasuk')
-                                 ->orWhere('status','=','konmasuk')
-                                 ->orWhere('status','=','kormasuk');
-                })
-            ->where('kodepokok','=','2')
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
+       $ppnkeluar = Stokmova::select('ppnkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('ppnkeluar');
+        $ppnjualx = $ppnkeluar;
+        $ppnjual = $this->formatangka($ppnjualx); 
 
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
+        $diskonkeluar = Stokmova::select('diskonkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('diskonkeluar');
+        $discountjualx = $diskonkeluar * -1;
+        $discountjual = $this->formatangka($discountjualx);  
+        
+        $hppj = Stokmova::select('hppj')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('hppj');
+        $pendapatanjualx = $hppj;
+        $pendapatanjual = $this->formatangka($pendapatanjualx);  
+        
+        $hppkeluar = Stokmova::select('hppkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('hppkeluar');
+        $hppx = $hppkeluar * -1;
+        $hpp = $this->formatangka($hppx);  
+        
+        $labakotorx = $ppnjualx + $discountjualx + $pendapatanjualx + $hppx;
+        $labakotor = $this->formatangka($labakotorx);  
+        
+        $totalbeli = Biaya::select('totalbeli')
+            ->where('idjenisbiaya','=','2')        
+            ->where('idkategoribiaya','=','1')        
+            ->where('tgltransaksi','>=',$tglawal)        
+            ->where('tgltransaksi','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('totalbeli');
+        $pengeluaranbiayax = $totalbeli;
+        $pengeluaranbiaya = $this->formatangka($pengeluaranbiayax);  
+        
+        $bebanusahax = ($pengeluaranbiayax)*-1;
+        $bebanusaha = $this->formatangka($bebanusahax);  
+        
+        $labausahax = $labakotorx + $bebanusahax;
+        $labausaha = $this->formatangka($labausahax);  
+        
+        $totaljual = Pendapatan::select('totaljual')
+            ->where('idkategoribiaya','=','1')        
+            ->where('tgltransaksi','>=',$tglawal)        
+            ->where('tgltransaksi','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('totaljual');
+        $pendapatanlainx = $totaljual;
+        $pendapatanlain = $this->formatangka($pendapatanlainx);  
+        
+        $pendapatandiluarusahax = ($pendapatanlainx);
+        $pendapatandiluarusaha = $this->formatangka($pendapatandiluarusahax);  
+        
+        $lababersihx = $labausahax + $pendapatandiluarusahax;
+        $lababersih = $this->formatangka($lababersihx);  
 
-            ->make(true);
-
-            return $data;
+        $data = Satuan::limit(1)
+                ->select('*')
+                ->selectRaw("'$ppnjual'" . " as ppnjual")  
+                ->selectRaw("'$discountjual'" . " as discountjual")  
+                ->selectRaw("'$pendapatanjual'" . " as pendapatanjual")  
+                ->selectRaw("'$hpp'" . " as hpp")  
+                ->selectRaw("'$labakotor'" . " as labakotor")  
+                ->selectRaw("'$pengeluaranbiaya'" . " as pengeluaranbiaya")  
+                ->selectRaw("'$bebanusaha'" . " as bebanusaha")  
+                ->selectRaw("'$labausaha'" . " as labausaha")  
+                ->selectRaw("'$pendapatanlain'" . " as pendapatanlain")  
+                ->selectRaw("'$pendapatandiluarusaha'" . " as pendapatandiluarusaha")  
+                ->selectRaw("'$lababersih'" . " as lababersih")  
+                ->get();
+         
+        return json_encode(array('data' => $data));        
     }
 
-    public function showstokmasuklifo()
+    public function showlabarugilifo()
     {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
+        $idruang = session('idruang1');
+        if($idruang=='0'||$idruang==''){
             $idruangawal = 0;
             $idruangakhir = 999999;
         }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
+            $idruangawal = $idruang;
+            $idruangakhir = $idruang;
         }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
         $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
+        if($tglawal==''){
+            $tglawal=session('memtanggal');
         }
         $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
+        if($tglakhir==''){
+            $tglakhir=session('memtanggal');
         }
 
-        $stok = Stoklifo::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            ->where(function (Builder $query) {
-                    return $query->where('status','=','masuk')
-                                 ->orWhere('status','=','mutmasuk')
-                                 ->orWhere('status','=','retmasuk')
-                                 ->orWhere('status','=','konmasuk')
-                                 ->orWhere('status','=','kormasuk');
-                })
-            ->where('kodepokok','=','2')
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
+       $ppnkeluar = Stoklifo::select('ppnkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('ppnkeluar');
+        $ppnjualx = $ppnkeluar;
+        $ppnjual = $this->formatangka($ppnjualx); 
 
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
+        $diskonkeluar = Stoklifo::select('diskonkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('diskonkeluar');
+        $discountjualx = $diskonkeluar * -1;
+        $discountjual = $this->formatangka($discountjualx);  
+        
+        $hppj = Stoklifo::select('hppj')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('hppj');
+        $pendapatanjualx = $hppj;
+        $pendapatanjual = $this->formatangka($pendapatanjualx);  
+        
+        $hppkeluar = Stoklifo::select('hppkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('hppkeluar');
+        $hppx = $hppkeluar * -1;
+        $hpp = $this->formatangka($hppx);  
+        
+        $labakotorx = $ppnjualx + $discountjualx + $pendapatanjualx + $hppx;
+        $labakotor = $this->formatangka($labakotorx);  
+        
+        $totalbeli = Biaya::select('totalbeli')
+            ->where('idjenisbiaya','=','2')        
+            ->where('idkategoribiaya','=','1')        
+            ->where('tgltransaksi','>=',$tglawal)        
+            ->where('tgltransaksi','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('totalbeli');
+        $pengeluaranbiayax = $totalbeli;
+        $pengeluaranbiaya = $this->formatangka($pengeluaranbiayax);  
+        
+        $bebanusahax = ($pengeluaranbiayax)*-1;
+        $bebanusaha = $this->formatangka($bebanusahax);  
+        
+        $labausahax = $labakotorx + $bebanusahax;
+        $labausaha = $this->formatangka($labausahax);  
+        
+        $totaljual = Pendapatan::select('totaljual')
+            ->where('idkategoribiaya','=','1')        
+            ->where('tgltransaksi','>=',$tglawal)        
+            ->where('tgltransaksi','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('totaljual');
+        $pendapatanlainx = $totaljual;
+        $pendapatanlain = $this->formatangka($pendapatanlainx);  
+        
+        $pendapatandiluarusahax = ($pendapatanlainx);
+        $pendapatandiluarusaha = $this->formatangka($pendapatandiluarusahax);  
+        
+        $lababersihx = $labausahax + $pendapatandiluarusahax;
+        $lababersih = $this->formatangka($lababersihx);  
 
-            ->make(true);
-
-            return $data;
+        $data = Satuan::limit(1)
+                ->select('*')
+                ->selectRaw("'$ppnjual'" . " as ppnjual")  
+                ->selectRaw("'$discountjual'" . " as discountjual")  
+                ->selectRaw("'$pendapatanjual'" . " as pendapatanjual")  
+                ->selectRaw("'$hpp'" . " as hpp")  
+                ->selectRaw("'$labakotor'" . " as labakotor")  
+                ->selectRaw("'$pengeluaranbiaya'" . " as pengeluaranbiaya")  
+                ->selectRaw("'$bebanusaha'" . " as bebanusaha")  
+                ->selectRaw("'$labausaha'" . " as labausaha")  
+                ->selectRaw("'$pendapatanlain'" . " as pendapatanlain")  
+                ->selectRaw("'$pendapatandiluarusaha'" . " as pendapatandiluarusaha")  
+                ->selectRaw("'$lababersih'" . " as lababersih")  
+                ->get();
+         
+        return json_encode(array('data' => $data));        
     }
 
-    public function showstokmasukmova()
-    {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
-        $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
-        }
-        $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
-        }
-
-        $stok = Stokmova::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            ->where(function (Builder $query) {
-                    return $query->where('status','=','masuk')
-                                 ->orWhere('status','=','mutmasuk')
-                                 ->orWhere('status','=','retmasuk')
-                                 ->orWhere('status','=','konmasuk')
-                                 ->orWhere('status','=','kormasuk');
-                })
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
-
-            ->make(true);
-
-            return $data;
-
-    }
-    public function showstokkeluar()
+    public function showlabarugijasa()
     {
         
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
+        $idruang = session('idruang1');
+        if($idruang=='0'||$idruang==''){
             $idruangawal = 0;
             $idruangakhir = 999999;
         }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
+            $idruangawal = $idruang;
+            $idruangakhir = $idruang;
         }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
         $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
+        if($tglawal==''){
+            $tglawal=session('memtanggal');
         }
         $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
+        if($tglakhir==''){
+            $tglakhir=session('memtanggal');
         }
 
-        $stok = Stok::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
-                                 ->orWhere('status','=','mutkeluar')
-                                 ->orWhere('status','=','retkeluar')
-                                 ->orWhere('status','=','konkeluar')
-                                 ->orWhere('status','=','korkeluar');
-                })
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
+       $ppnkeluar = Stokmamin::select('ppnkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('ppnkeluar');
+        $ppnjualx = $ppnkeluar;
+        $ppnjual = $this->formatangka($ppnjualx); 
 
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
-            ->addColumn('hbskeluar', function ($row) {
-                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : '';
-            })
-            ->addColumn('hppkeluar', function ($row) {
-                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : '';
-            })
-
-            ->make(true);
-
-            return $data;
-
-    }
-    
-    public function showstokkeluarfifo()
-    {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
-        $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
-        }
-        $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
-        }
-
-        $stok = Stokfifo::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
-                                 ->orWhere('status','=','mutkeluar')
-                                 ->orWhere('status','=','retkeluar')
-                                 ->orWhere('status','=','konkeluar')
-                                 ->orWhere('status','=','korkeluar');
-                })
-            ->where('kodepokok','=','2')
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
-            ->addColumn('hbskeluar', function ($row) {
-                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : '';
-            })
-            ->addColumn('hppkeluar', function ($row) {
-                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : '';
-            })
-
-            ->make(true);
-
-            return $data;
-
-    }
-  
-    public function showstokkeluarmova()
-    {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
-        $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
-        }
-        $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
-        }
-
-        $stok = Stokmova::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
-                                 ->orWhere('status','=','mutkeluar')
-                                 ->orWhere('status','=','retkeluar')
-                                 ->orWhere('status','=','konkeluar')
-                                 ->orWhere('status','=','korkeluar');
-                })
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
-            ->addColumn('hbskeluar', function ($row) {
-                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : '';
-            })
-            ->addColumn('hppkeluar', function ($row) {
-                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : '';
-            })
-
-            ->make(true);
-
-            return $data;
-    }
-
-    public function showstokkeluarlifo()
-    {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
-        $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
-        }
-        $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
-        }
-
-        $stok = Stoklifo::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            ->where(function (Builder $query) {
-                    return $query->where('status','=','keluar')
-                                 ->orWhere('status','=','mutkeluar')
-                                 ->orWhere('status','=','retkeluar')
-                                 ->orWhere('status','=','konkeluar')
-                                 ->orWhere('status','=','korkeluar');
-                })
-            ->where('kodepokok','=','2')
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
-            ->addColumn('hbskeluar', function ($row) {
-                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : '';
-            })
-            ->addColumn('hppkeluar', function ($row) {
-                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : '';
-            })
-
-            ->make(true);
-
-            return $data;
-    }
-
-    public function showstokrekap()
-    {
+        $diskonkeluar = Stokmamin::select('diskonkeluar')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('diskonkeluar');
+        $discountjualx = $diskonkeluar * -1;
+        $discountjual = $this->formatangka($discountjualx);  
         
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
+        $hppj = Stokmamin::select('hppj')
+            ->where('tglstatus','>=',$tglawal)        
+            ->where('tglstatus','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('hppj');
+        $pendapatanjualx = $hppj;
+        $pendapatanjual = $this->formatangka($pendapatanjualx);  
 
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
-        $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
-        }
-        $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
-        }
+        $hppkeluar=Biaya::select('totalbeli')
+            ->where('idkategoribiaya','=',2)        
+            ->where('idjenisbiaya','=',1)        
+            ->where('tgltransaksi','>=',$tglawal)        
+            ->where('tgltransaksi','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir) 
+            ->sum('totalbeli');
+        
+        $hppx = $hppkeluar * -1;
+        $hpp = $this->formatangka($hppx);  
+        
+        $labakotorx = $ppnjualx + $discountjualx + $pendapatanjualx + $hppx;
+        $labakotor = $this->formatangka($labakotorx);  
+        
+        $totalbeli = Biaya::select('totalbeli')
+            ->where('idjenisbiaya','=','2')        
+            ->where('idkategoribiaya','=','2')        
+            ->where('tgltransaksi','>=',$tglawal)        
+            ->where('tgltransaksi','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('totalbeli');
+        $pengeluaranbiayax = $totalbeli;
+        $pengeluaranbiaya = $this->formatangka($pengeluaranbiayax);  
+        
+        $bebanusahax = ($pengeluaranbiayax)*-1;
+        $bebanusaha = $this->formatangka($bebanusahax);  
+        
+        $labausahax = $labakotorx + $bebanusahax;
+        $labausaha = $this->formatangka($labausahax);  
+        
+        $totaljual = Pendapatan::select('totaljual')
+            ->where('idkategoribiaya','=','2')        
+            ->where('tgltransaksi','>=',$tglawal)        
+            ->where('tgltransaksi','<=',$tglakhir)        
+            ->where('idruang','>=',$idruangawal)        
+            ->where('idruang','<=',$idruangakhir)        
+            ->sum('totaljual');
+        $pendapatanlainx = $totaljual;
+        $pendapatanlain = $this->formatangka($pendapatanlainx);  
+        
+        $pendapatandiluarusahax = ($pendapatanlainx);
+        $pendapatandiluarusaha = $this->formatangka($pendapatandiluarusahax);  
+        
+        $lababersihx = $labausahax + $pendapatandiluarusahax;
+        $lababersih = $this->formatangka($lababersihx);  
 
-        $stok = Stok::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            // ->where(function (Builder $query) {
-            //         return $query->where('status','=','keluar')
-            //                      ->orWhere('status','=','mutkeluar')
-            //                      ->orWhere('status','=','retkeluar')
-            //                      ->orWhere('status','=','konkeluar')
-            //                      ->orWhere('status','=','korkeluar');
-            //     })
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('masuk', function ($row) {
-                return $row->masuk ? Number_Format($row->masuk,0) : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
-            ->addColumn('keluar', function ($row) {
-                return $row->keluar ? Number_Format($row->keluar,0) : '';
-            })
-            ->addColumn('hbskeluar', function ($row) {
-                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : '';
-            })
-            ->addColumn('hppkeluar', function ($row) {
-                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : '';
-            })            
-
-            ->make(true);
-
-            return $data;
-
+        $data = Satuan::limit(1)
+                ->select('*')
+                ->selectRaw("'$ppnjual'" . " as ppnjual")  
+                ->selectRaw("'$discountjual'" . " as discountjual")  
+                ->selectRaw("'$pendapatanjual'" . " as pendapatanjual")  
+                ->selectRaw("'$hpp'" . " as hpp")  
+                ->selectRaw("'$labakotor'" . " as labakotor")  
+                ->selectRaw("'$pengeluaranbiaya'" . " as pengeluaranbiaya")  
+                ->selectRaw("'$bebanusaha'" . " as bebanusaha")  
+                ->selectRaw("'$labausaha'" . " as labausaha")  
+                ->selectRaw("'$pendapatanlain'" . " as pendapatanlain")  
+                ->selectRaw("'$pendapatandiluarusaha'" . " as pendapatandiluarusaha")  
+                ->selectRaw("'$lababersih'" . " as lababersih")  
+                ->get();
+         
+        return json_encode(array('data' => $data));        
     }
-
-    public function showstokrekapfifo()
-    {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
-        $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
-        }
-        $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
-        }
-
-        $stok = Stokfifo::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            // ->where(function (Builder $query) {
-            //         return $query->where('status','=','keluar')
-            //                      ->orWhere('status','=','mutkeluar')
-            //                      ->orWhere('status','=','retkeluar')
-            //                      ->orWhere('status','=','konkeluar')
-            //                      ->orWhere('status','=','korkeluar');
-            //     })
-            ->where('kodepokok','=','2')
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('masuk', function ($row) {
-                return $row->masuk ? Number_Format($row->masuk,0) : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
-            ->addColumn('keluar', function ($row) {
-                return $row->keluar ? Number_Format($row->keluar,0) : '';
-            })
-            ->addColumn('hbskeluar', function ($row) {
-                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : '';
-            })
-            ->addColumn('hppkeluar', function ($row) {
-                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : '';
-            })
-
-            ->make(true);
-
-            return $data;
-
-    }
-
-    public function showstokrekapmova()
-    {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
-        $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
-        }
-        $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
-        }
-
-        $stok = Stokmova::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            // ->where(function (Builder $query) {
-            //         return $query->where('status','=','keluar')
-            //                      ->orWhere('status','=','mutkeluar')
-            //                      ->orWhere('status','=','retkeluar')
-            //                      ->orWhere('status','=','konkeluar')
-            //                      ->orWhere('status','=','korkeluar');
-            //     })
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('masuk', function ($row) {
-                return $row->masuk ? Number_Format($row->masuk,0) : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
-            ->addColumn('keluar', function ($row) {
-                return $row->keluar ? Number_Format($row->keluar,0) : '';
-            })
-            ->addColumn('hbskeluar', function ($row) {
-                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : '';
-            })
-            ->addColumn('hppkeluar', function ($row) {
-                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : '';
-            })
-
-            ->make(true);
-
-            return $data;
-    }
-
-    public function showstokrekaplifo()
-    {
-        $idruangx = session('idruang1');
-        if($idruangx=='0'||$idruangx==''){
-            $idruangawal = 0;
-            $idruangakhir = 999999;
-        }else{
-            $idruangawal = $idruangx;
-            $idruangakhir = $idruangx;
-        }
-
-        date_default_timezone_set("Asia/Bangkok");
-        $currentDate = date('Y-m-d');
-        $tglawal = session('tgltransaksi1');
-        if($tglawal==''||$tglawal=='0'){
-            $tglawal=$currentDate;
-        }else{
-            $tglawal=session('tgltransaksi1');
-        }
-        $tglakhir = session('tgltransaksi2');
-        if($tglakhir==''||$tglakhir=='0'){
-            $tglakhir=$currentDate;
-        }else{
-            $tglakhir=session('tgltransaksi2');
-        }
-
-        $stok = Stoklifo::select('*')
-            ->where('idruang','>=',$idruangawal)
-            ->where('idruang','<=',$idruangakhir)
-            ->where('tglstatus','>=',$tglawal)
-            ->where('tglstatus','<=',$tglakhir)
-            // ->where(function (Builder $query) {
-            //         return $query->where('status','=','keluar')
-            //                      ->orWhere('status','=','mutkeluar')
-            //                      ->orWhere('status','=','retkeluar')
-            //                      ->orWhere('status','=','konkeluar')
-            //                      ->orWhere('status','=','korkeluar');
-            //     })
-            ->where('kodepokok','=','2')
-            ->with('barang','seksi','ruang')
-            ->orderBy('tglstatus','asc')
-            ->orderBy('id','asc')
-            ->get();
-        $datax = DataTables::of($stok                          
-            );
-
-        $data = $datax
-            ->addIndexColumn()
-           
-            ->addColumn('barang', function ($row) {
-                return $row->idbarang ? $row->barang->nabara : '';
-            })
-            ->addColumn('kode', function ($row) {
-                return $row->idbarang ? $row->barang->kode : '';
-            })
-            ->addColumn('barcode', function ($row) {
-                return $row->idbarang ? $row->barang->barcode : '';
-            })
-            ->addColumn('satuan', function ($row) {
-                return $row->idbarang ? $row->barang->satuan->kode : '';
-            })
-            ->addColumn('masuk', function ($row) {
-                return $row->masuk ? Number_Format($row->masuk,0) : '';
-            })
-            ->addColumn('hbsmasuk', function ($row) {
-                return $row->hbsmasuk ? Number_Format($row->hbsmasuk,0) : '';
-            })
-            ->addColumn('hppmasuk', function ($row) {
-                return $row->hppmasuk ? Number_Format($row->hppmasuk,0) : '';
-            })
-            ->addColumn('keluar', function ($row) {
-                return $row->keluar ? Number_Format($row->keluar,0) : '';
-            })
-            ->addColumn('hbskeluar', function ($row) {
-                return $row->hbskeluar ? Number_Format($row->hbskeluar,0) : '';
-            })
-            ->addColumn('hppkeluar', function ($row) {
-                return $row->hppkeluar ? Number_Format($row->hppkeluar,0) : '';
-            })
-
-            ->make(true);
-
-            return $data;
-    }
-   
     public function edit($id)
     {
         $data = Barangruang::where('id', '=', $id)->get();
         return json_encode(array('data' => $data));       
     }
-
     /**
      * Update the specified resource in storage.
      * @param Request $request
@@ -1297,15 +789,16 @@ class LabarugiController extends Controller
             echo "<option value='" . $baris->id . "'>" . $baris->ruang . "</option>";
         }
     }
-
+    
     public function kirimsyarat(Request $request)
     {
-        session([
+         session([
             'idruang1' => $request['idruang1'],
             'tablabarugi1' => $request['tablabarugi1'],
             'tgltransaksi1' => $request['tgltransaksi1'],
             'tgltransaksi2' => $request['tgltransaksi2'],
         ]);
+        
     }
 
 

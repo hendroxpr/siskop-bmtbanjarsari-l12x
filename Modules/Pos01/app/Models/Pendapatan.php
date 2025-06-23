@@ -16,9 +16,9 @@ class Pendapatan extends Model
     public $timestamps = false;
     public $incrementing = false;
     
-    public function jenisbiaya()
+    public function kategoribiaya()
     {
-        return $this->belongsTo(Jenisbiaya::class,'idjenisbiaya');
+        return $this->belongsTo(Kategoribiaya::class,'idkategoribiaya');
     }
     public function satuan()
     {

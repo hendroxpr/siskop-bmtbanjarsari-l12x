@@ -20158,7 +20158,7 @@ class PenjualanController extends Controller
             ->addIndexColumn()
            
             ->addColumn('nia', function ($row) {
-                return $row->idanggota ? $row->anggota->nama : '';
+                return $row->idanggota ? $row->anggota->nia : '';
             })
             ->addColumn('nama', function ($row) {
                 return $row->idanggota ? $row->anggota->nama : '';

@@ -607,6 +607,58 @@ class KartustokController extends Controller
 
             return $data;
     }
+
+    public function showbarang()
+    {
+        $idruang = session('idruang1');
+        if($idruang==''){
+            $idruang = '1';
+        }
+        $idbarang = Barangruang::select('idbarang')
+            ->where('idruang','=',$idruang);
+
+        $barang = Barang::with('kategori','satuan')
+            ->whereIn('id',$idbarang)
+            ->get();
+        $datax = DataTables::of($barang                          
+            );
+
+        $data = $datax
+            ->addIndexColumn()
+           
+            ->addColumn('kode', function ($row) {
+                return '<a href="#" style="color: white;" title="'. $row->kode .'" class="item_kode " data1="' . $row->id . '" data2="'. $row->kode. '" data3="'. $row->barcode. '" data4="'. $row->nabara. '" data5="'. $row->kategori->kategori. '" data6="'. $row->satuan->satuan . '">'. $row->kode .'</a> ';
+            })
+            ->addColumn('barcode', function ($row) {
+                return '<a href="#" style="color: white;" title="'. $row->barcode .'" class="item_barcode " data1="' . $row->id . '" data2="'. $row->kode. '" data3="'. $row->barcode. '" data4="'. $row->nabara. '" data5="'. $row->kategori->kategori. '" data6="'. $row->satuan->satuan . '">'. $row->barcode .'</a> ';
+            })
+            ->addColumn('nabara', function ($row) {
+                return '<a href="#" style="color: white;" title="'. $row->nabara .'" class="item_nabara " data1="' . $row->id . '" data2="'. $row->kode. '" data3="'. $row->barcode. '" data4="'. $row->nabara. '" data5="'. $row->kategori->kategori. '" data6="'. $row->satuan->satuan . '">'. $row->nabara .'</a> ';
+            })
+            ->addColumn('kategori', function ($row) {
+                return '<a href="#" style="color: white;" title="'. ($row->idkategori ? $row->kategori->kategori : '') .'" class="item_kategori " data1="' . $row->id . '" data2="'. $row->kode. '" data3="'. $row->barcode. '" data4="'. $row->nabara. '" data5="'. $row->kategori->kategori. '" data6="'. $row->satuan->satuan . '">'. ($row->idkategori ? $row->kategori->kategori : '') .'</a> ';
+            })
+            ->addColumn('satuan', function ($row) {
+                return '<a href="#" style="color: white;" title="'. ($row->idsatuan ? $row->satuan->satuan : '') .'" class="item_satuan " data1="' . $row->id . '" data2="'. $row->kode. '" data3="'. $row->barcode. '" data4="'. $row->nabara. '" data5="'. $row->kategori->kategori. '" data6="'. $row->satuan->satuan . '">'. ($row->idsatuan ? $row->satuan->satuan : '') .'</a> ';
+            })
+            ->addColumn('image', function ($row) {
+                return '<a href="#" style="color: white;" title="'. ($row->image ? $row->nabara : '') .'" class="item_image " data1="' . $row->id . '" data2="'. $row->kode. '" data3="'. $row->barcode. '" data4="'. $row->nabara. '" data5="'. $row->kategori->kategori. '" data6="'. $row->satuan->satuan . '">'. ($row->image ? '<img class="mb-4" style="width: 100%" src="'. route('front.index') . '/storage/'. $row->image.'">' : '') .'</a> ';
+            })
+            
+            ->rawColumns([
+                'nabara',
+                'kode',
+                'barcode',                
+                'kategori',                
+                'satuan',
+                'image',
+                ])
+
+            ->make(true);
+
+            return $data;
+
+    }
    
     public function edit($id)
     {

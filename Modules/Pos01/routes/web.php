@@ -2,12 +2,14 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
+use Modules\Pos01\Http\Controllers\laporan\Biayabiaya2Controller;
 use Modules\Pos01\Http\Controllers\laporan\HutangpiutangController;
 use Modules\Pos01\Http\Controllers\laporan\KartuhutangController;
 use Modules\Pos01\Http\Controllers\laporan\KartupiutangController;
 use Modules\Pos01\Http\Controllers\laporan\KartustokController;
 use Modules\Pos01\Http\Controllers\laporan\LabarugiController;
 use Modules\Pos01\Http\Controllers\laporan\PembelianController;
+use Modules\Pos01\Http\Controllers\laporan\Pendapatanlain2Controller;
 use Modules\Pos01\Http\Controllers\laporan\PenjualanController;
 use Modules\Pos01\Http\Controllers\laporan\StokkeluarmasukController;
 use Modules\Pos01\Http\Controllers\laporan\StokbarangController;
@@ -27,7 +29,7 @@ use Modules\Pos01\Http\Controllers\master\SupplierController;
 use Modules\Pos01\Http\Controllers\master\LembagaController;
 use Modules\Pos01\Http\Controllers\Pos01Controller;
 use Modules\Pos01\Http\Controllers\transaksi\BayarhutangSupplierController;
-use Modules\Pos01\Http\Controllers\transaksi\BiayalainController;
+use Modules\Pos01\Http\Controllers\transaksi\BiayabiayaController;
 use Modules\Pos01\Http\Controllers\transaksi\BkeluarController;
 use Modules\Pos01\Http\Controllers\transaksi\MkeluarController;
 use Modules\Pos01\Http\Controllers\transaksi\PendapatanlainController;
@@ -272,26 +274,28 @@ Route::post('/laporan/stokbarangkirimsyarat', [StokbarangController::class, 'kir
 Route::get('/laporan/stokbarangedit/{id}', [StokbarangController::class, 'edit'])->name('pos01.laporan.stokbarang_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
 Route::get('/laporan/stokbarangdestroy/{id}', [StokbarangController::class, 'destroy'])->name('pos01.laporan.stokbarang_destroy')->middleware('auth'); /* hapus data stokbarang */
 
-/* transaksi - biayalain */
-Route::get('/transaksi/biayalain', [BiayalainController::class, 'index'])->name('pos01.transaksi.biayalain.index')->middleware('auth'); /* halaman biayalain */
-Route::get('/transaksi/biayalainshow', [BiayalainController::class, 'show'])->name('pos01.transaksi.biayalain_show')->middleware('auth'); /* menampilkan data biayalain pada datatable javascript */
-Route::get('/transaksi/biayalainshowbarang', [BiayalainController::class, 'showbarang'])->name('pos01.transaksi.biayalain_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di biayalain pada datatable javascript */
-Route::get('/transaksi/biayalainlistjenisbiaya', [BiayalainController::class, 'listjenisbiaya'])->name('pos01.transaksi.biayalain_listjenisbiaya')->middleware('auth'); /* menampilkan listjenisbiaya */
-Route::get('/transaksi/biayalainlistjenisbiayax', [BiayalainController::class, 'listjenisbiayax'])->name('pos01.transaksi.biayalain_listjenisbiayax')->middleware('auth'); /* menampilkan listjenisbiaya */
-Route::get('/transaksi/biayalainlistsupplier', [BiayalainController::class, 'listsupplier'])->name('pos01.transaksi.biayalain_listsupplier')->middleware('auth'); /* menampilkan listsupplier */
-Route::get('/transaksi/biayalainlistruang', [BiayalainController::class, 'listruang'])->name('pos01.transaksi.biayalain_listruang')->middleware('auth'); /* menampilkan list ruang */
-Route::get('/transaksi/biayalainlistsatuan', [BiayalainController::class, 'listsatuan'])->name('pos01.transaksi.biayalain_listsatuan')->middleware('auth'); /* menampilkan listsatuan */
-Route::post('/transaksi/biayalaincreate', [BiayalainController::class, 'create'])->name('pos01.transaksi.biayalain_create')->middleware('auth'); /* menambah biayalain */
-Route::post('/transaksi/biayalainkirimsyarat', [BiayalainController::class, 'kirimsyarat'])->name('pos01.transaksi.biayalain_kirimsyarat')->middleware('auth'); /* kirimsyarat */
-Route::get('/transaksi/biayalainedit/{id}', [BiayalainController::class, 'edit'])->name('pos01.transaksi.biayalain_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
-Route::get('/transaksi/biayalaindestroy/{id}', [BiayalainController::class, 'destroy'])->name('pos01.transaksi.biayalain_destroy')->middleware('auth'); /* hapus data biayalain */
+/* transaksi - biayabiaya */
+Route::get('/transaksi/biayabiaya', [BiayabiayaController::class, 'index'])->name('pos01.transaksi.biayabiaya.index')->middleware('auth'); /* halaman biayabiaya */
+Route::get('/transaksi/biayabiayashow', [BiayabiayaController::class, 'show'])->name('pos01.transaksi.biayabiaya_show')->middleware('auth'); /* menampilkan data biayabiaya pada datatable javascript */
+Route::get('/transaksi/biayabiayashowbarang', [BiayabiayaController::class, 'showbarang'])->name('pos01.transaksi.biayabiaya_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di biayabiaya pada datatable javascript */
+Route::get('/transaksi/biayabiayalistjenisbiaya', [BiayabiayaController::class, 'listjenisbiaya'])->name('pos01.transaksi.biayabiaya_listjenisbiaya')->middleware('auth'); /* menampilkan listjenisbiaya */
+Route::get('/transaksi/biayabiayalistjenisbiayax', [BiayabiayaController::class, 'listjenisbiayax'])->name('pos01.transaksi.biayabiaya_listjenisbiayax')->middleware('auth'); /* menampilkan listjenisbiaya */
+Route::get('/transaksi/biayabiayalistkategoribiaya', [BiayabiayaController::class, 'listkategoribiaya'])->name('pos01.transaksi.biayabiaya_listkategoribiaya')->middleware('auth'); /* menampilkan listkategoribiaya */
+Route::get('/transaksi/biayabiayalistkategoribiayax', [BiayabiayaController::class, 'listkategoribiayax'])->name('pos01.transaksi.biayabiaya_listkategoribiayax')->middleware('auth'); /* menampilkan listkategoribiaya */
+Route::get('/transaksi/biayabiayalistsupplier', [BiayabiayaController::class, 'listsupplier'])->name('pos01.transaksi.biayabiaya_listsupplier')->middleware('auth'); /* menampilkan listsupplier */
+Route::get('/transaksi/biayabiayalistruang', [BiayabiayaController::class, 'listruang'])->name('pos01.transaksi.biayabiaya_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::get('/transaksi/biayabiayalistsatuan', [BiayabiayaController::class, 'listsatuan'])->name('pos01.transaksi.biayabiaya_listsatuan')->middleware('auth'); /* menampilkan listsatuan */
+Route::post('/transaksi/biayabiayacreate', [BiayabiayaController::class, 'create'])->name('pos01.transaksi.biayabiaya_create')->middleware('auth'); /* menambah biayabiaya */
+Route::post('/transaksi/biayabiayakirimsyarat', [BiayabiayaController::class, 'kirimsyarat'])->name('pos01.transaksi.biayabiaya_kirimsyarat')->middleware('auth'); /* kirimsyarat */
+Route::get('/transaksi/biayabiayaedit/{id}', [BiayabiayaController::class, 'edit'])->name('pos01.transaksi.biayabiaya_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/transaksi/biayabiayadestroy/{id}', [BiayabiayaController::class, 'destroy'])->name('pos01.transaksi.biayabiaya_destroy')->middleware('auth'); /* hapus data biayabiaya */
 
 /* transaksi - pendapatanlain */
 Route::get('/transaksi/pendapatanlain', [PendapatanlainController::class, 'index'])->name('pos01.transaksi.pendapatanlain.index')->middleware('auth'); /* halaman pendapatanlain */
 Route::get('/transaksi/pendapatanlainshow', [PendapatanlainController::class, 'show'])->name('pos01.transaksi.pendapatanlain_show')->middleware('auth'); /* menampilkan data pendapatanlain pada datatable javascript */
 Route::get('/transaksi/pendapatanlainshowbarang', [PendapatanlainController::class, 'showbarang'])->name('pos01.transaksi.pendapatanlain_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di pendapatanlain pada datatable javascript */
-Route::get('/transaksi/pendapatanlainlistjenisbiaya', [PendapatanlainController::class, 'listjenisbiaya'])->name('pos01.transaksi.pendapatanlain_listjenisbiaya')->middleware('auth'); /* menampilkan listjenisbiaya */
-Route::get('/transaksi/pendapatanlainlistjenisbiayax', [PendapatanlainController::class, 'listjenisbiayax'])->name('pos01.transaksi.pendapatanlain_listjenisbiayax')->middleware('auth'); /* menampilkan listjenisbiaya */
+Route::get('/transaksi/pendapatanlainlistkategoribiaya', [PendapatanlainController::class, 'listkategoribiaya'])->name('pos01.transaksi.pendapatanlain_listkategoribiaya')->middleware('auth'); /* menampilkan listkategoribiaya */
+Route::get('/transaksi/pendapatanlainlistkategoribiayax', [PendapatanlainController::class, 'listkategoribiayax'])->name('pos01.transaksi.pendapatanlain_listkategoribiayax')->middleware('auth'); /* menampilkan listkategoribiaya */
 Route::get('/transaksi/pendapatanlainlistruang', [PendapatanlainController::class, 'listruang'])->name('pos01.transaksi.pendapatanlain_listruang')->middleware('auth'); /* menampilkan list ruang */
 Route::get('/transaksi/pendapatanlainlistsatuan', [PendapatanlainController::class, 'listsatuan'])->name('pos01.transaksi.pendapatanlain_listsatuan')->middleware('auth'); /* menampilkan listsatuan */
 Route::post('/transaksi/pendapatanlaincreate', [PendapatanlainController::class, 'create'])->name('pos01.transaksi.pendapatanlain_create')->middleware('auth'); /* menambah pendapatanlain */
@@ -435,25 +439,38 @@ Route::get('/laporan/hutangpiutangdestroy/{id}', [HutangpiutangController::class
 /* laporan - labarugi */
 Route::get('/laporan/labarugi', [LabarugiController::class, 'index'])->name('pos01.laporan.labarugi.index')->middleware('auth'); /* halaman labarugi */
 Route::get('/laporan/labarugishowlabarugisaja', [LabarugiController::class, 'showlabarugisaja'])->name('pos01.laporan.labarugi_showlabarugisaja')->middleware('auth'); /* menampilkan showlabarugisaja pada datatable javascript */
-Route::get('/laporan/labarugishowstokmasuk', [LabarugiController::class, 'showstokmasuk'])->name('pos01.laporan.labarugi_showstokmasuk')->middleware('auth'); /* menampilkan data stokmsduk pada datatable javascript */
-Route::get('/laporan/labarugishowstokmasukfifo', [LabarugiController::class, 'showstokmasukfifo'])->name('pos01.laporan.labarugi_showstokmasukfifo')->middleware('auth'); /* menampilkan data stokmasukfifo pada datatable javascript */
-Route::get('/laporan/labarugishowstokmasukmova', [LabarugiController::class, 'showstokmasukmova'])->name('pos01.laporan.labarugi_showstokmasukmova')->middleware('auth'); /* menampilkan data stokmasukmova pada datatable javascript */
-Route::get('/laporan/labarugishowstokmasuklifo', [LabarugiController::class, 'showstokmasuklifo'])->name('pos01.laporan.labarugi_showstokmasuklifo')->middleware('auth'); /* menampilkan data stokmasuklifo pada datatable javascript */
-Route::get('/laporan/labarugishowstokkeluar', [LabarugiController::class, 'showstokkeluar'])->name('pos01.laporan.labarugi_showstokkeluar')->middleware('auth'); /* menampilkan data stokkeluar pada datatable javascript */
-Route::get('/laporan/labarugishowstokkeluarfifo', [LabarugiController::class, 'showstokkeluarfifo'])->name('pos01.laporan.labarugi_showstokkeluarfifo')->middleware('auth'); /* menampilkan data stokkeluarfifo pada datatable javascript */
-Route::get('/laporan/labarugishowstokkeluarmova', [LabarugiController::class, 'showstokkeluarmova'])->name('pos01.laporan.labarugi_showstokkeluarmova')->middleware('auth'); /* menampilkan data stokkeluarmova pada datatable javascript */
-Route::get('/laporan/labarugishowstokkeluarlifo', [LabarugiController::class, 'showstokkeluarlifo'])->name('pos01.laporan.labarugi_showstokkeluarlifo')->middleware('auth'); /* menampilkan data stokkeluarlifo pada datatable javascript */
-Route::get('/laporan/labarugishowstokrekap', [LabarugiController::class, 'showstokrekap'])->name('pos01.laporan.labarugi_showstokrekap')->middleware('auth'); /* menampilkan data stokrekap pada datatable javascript */
-Route::get('/laporan/labarugishowstokrekapfifo', [LabarugiController::class, 'showstokrekapfifo'])->name('pos01.laporan.labarugi_showstokrekapfifo')->middleware('auth'); /* menampilkan data stokrekapfifo pada datatable javascript */
-Route::get('/laporan/labarugishowstokrekapmova', [LabarugiController::class, 'showstokrekapmova'])->name('pos01.laporan.labarugi_showstokrekapmova')->middleware('auth'); /* menampilkan data stokrekapmova pada datatable javascript */
-Route::get('/laporan/labarugishowstokrekaplifo', [LabarugiController::class, 'showstokrekaplifo'])->name('pos01.laporan.labarugi_showstokrekaplifo')->middleware('auth'); /* menampilkan data stokrekaplifo pada datatable javascript */
-Route::get('/laporan/labarugishowbarang', [LabarugiController::class, 'showbarang'])->name('pos01.laporan.labarugi_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di labarugi pada datatable javascript */
-Route::get('/laporan/labarugilistbarang', [LabarugiController::class, 'listbarang'])->name('pos01.laporan.labarugi_listbarang')->middleware('auth'); /* menampilkan list barang */
+Route::get('/laporan/labarugishowlabarugififo', [LabarugiController::class, 'showlabarugififo'])->name('pos01.laporan.labarugi_showlabarugififo')->middleware('auth'); /* menampilkan data labarugififo pada datatable javascript */
+Route::get('/laporan/labarugishowlabarugimova', [LabarugiController::class, 'showlabarugimova'])->name('pos01.laporan.labarugi_showlabarugimova')->middleware('auth'); /* menampilkan data labarugimova pada datatable javascript */
+Route::get('/laporan/labarugishowlabarugilifo', [LabarugiController::class, 'showlabarugilifo'])->name('pos01.laporan.labarugi_showlabarugilifo')->middleware('auth'); /* menampilkan data labarugilifo pada datatable javascript */
+Route::get('/laporan/labarugishowlabarugijasa', [LabarugiController::class, 'showlabarugijasa'])->name('pos01.laporan.labarugi_showlabarugijasa')->middleware('auth'); /* menampilkan data showlabarugijasa pada datatable javascript */
 Route::get('/laporan/labarugilistruang', [LabarugiController::class, 'listruang'])->name('pos01.laporan.labarugi_listruang')->middleware('auth'); /* menampilkan list ruang */
-Route::post('/laporan/labarugicreate', [LabarugiController::class, 'create'])->name('pos01.laporan.labarugi_create')->middleware('auth'); /* menambah labarugi */
 Route::post('/laporan/labarugikirimsyarat', [LabarugiController::class, 'kirimsyarat'])->name('pos01.laporan.labarugi_kirimsyarat')->middleware('auth'); /* kirimsyarat */
-Route::get('/laporan/labarugiedit/{id}', [LabarugiController::class, 'edit'])->name('pos01.laporan.labarugi_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
-Route::get('/laporan/labarugidestroy/{id}', [LabarugiController::class, 'destroy'])->name('pos01.laporan.labarugi_destroy')->middleware('auth'); /* hapus data labarugi */
+
+/* laporan - pendapatanlain2 */
+Route::get('/laporan/pendapatanlain2', [Pendapatanlain2Controller::class, 'index'])->name('pos01.laporan.pendapatanlain2.index')->middleware('auth'); /* halaman pendapatanlain2 */
+Route::get('/laporan/pendapatanlain2show', [Pendapatanlain2Controller::class, 'show'])->name('pos01.laporan.pendapatanlain2_show')->middleware('auth'); /* menampilkan data pendapatanlain2 pada datatable javascript */
+Route::get('/laporan/pendapatanlain2showbarang', [Pendapatanlain2Controller::class, 'showbarang'])->name('pos01.laporan.pendapatanlain2_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di pendapatanlain2 pada datatable javascript */
+Route::get('/laporan/pendapatanlain2listkategoribiaya', [Pendapatanlain2Controller::class, 'listkategoribiaya'])->name('pos01.laporan.pendapatanlain2_listkategoribiaya')->middleware('auth'); /* menampilkan listkategoribiaya */
+Route::get('/laporan/pendapatanlain2listkategoribiayax', [Pendapatanlain2Controller::class, 'listkategoribiayax'])->name('pos01.laporan.pendapatanlain2_listkategoribiayax')->middleware('auth'); /* menampilkan listkategoribiaya */
+Route::get('/laporan/pendapatanlain2listruang', [Pendapatanlain2Controller::class, 'listruang'])->name('pos01.laporan.pendapatanlain2_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::get('/laporan/pendapatanlain2listsatuan', [Pendapatanlain2Controller::class, 'listsatuan'])->name('pos01.laporan.pendapatanlain2_listsatuan')->middleware('auth'); /* menampilkan listsatuan */
+Route::post('/laporan/pendapatanlain2create', [Pendapatanlain2Controller::class, 'create'])->name('pos01.laporan.pendapatanlain2_create')->middleware('auth'); /* menambah pendapatanlain2 */
+Route::post('/laporan/pendapatanlain2kirimsyarat', [Pendapatanlain2Controller::class, 'kirimsyarat'])->name('pos01.laporan.pendapatanlain2_kirimsyarat')->middleware('auth'); /* kirimsyarat */
+Route::get('/laporan/pendapatanlain2edit/{id}', [Pendapatanlain2Controller::class, 'edit'])->name('pos01.laporan.pendapatanlain2_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/laporan/pendapatanlain2destroy/{id}', [Pendapatanlain2Controller::class, 'destroy'])->name('pos01.laporan.pendapatanlain2_destroy')->middleware('auth'); /* hapus data pendapatanlain2 */
+
+/* laporan - biayabiaya2 */
+Route::get('/laporan/biayabiaya2', [Biayabiaya2Controller::class, 'index'])->name('pos01.laporan.biayabiaya2.index')->middleware('auth'); /* halaman biayabiaya2 */
+Route::get('/laporan/biayabiaya2show', [Biayabiaya2Controller::class, 'show'])->name('pos01.laporan.biayabiaya2_show')->middleware('auth'); /* menampilkan data biayabiaya2 pada datatable javascript */
+Route::get('/laporan/biayabiaya2showbarang', [Biayabiaya2Controller::class, 'showbarang'])->name('pos01.laporan.biayabiaya2_showbarang')->middleware('auth'); /* menampilkan data barang yg gk ada di biayabiaya2 pada datatable javascript */
+Route::get('/laporan/biayabiaya2listkategoribiaya', [Biayabiaya2Controller::class, 'listkategoribiaya'])->name('pos01.laporan.biayabiaya2_listkategoribiaya')->middleware('auth'); /* menampilkan listkategoribiaya */
+Route::get('/laporan/biayabiaya2listkategoribiayax', [Biayabiaya2Controller::class, 'listkategoribiayax'])->name('pos01.laporan.biayabiaya2_listkategoribiayax')->middleware('auth'); /* menampilkan listkategoribiaya */
+Route::get('/laporan/biayabiaya2listruang', [Biayabiaya2Controller::class, 'listruang'])->name('pos01.laporan.biayabiaya2_listruang')->middleware('auth'); /* menampilkan list ruang */
+Route::get('/laporan/biayabiaya2listjenisbiaya', [Biayabiaya2Controller::class, 'listjenisbiaya'])->name('pos01.laporan.biayabiaya2_listjenisbiaya')->middleware('auth'); /* menampilkan listjenisbiaya */
+Route::post('/laporan/biayabiaya2create', [Biayabiaya2Controller::class, 'create'])->name('pos01.laporan.biayabiaya2_create')->middleware('auth'); /* menambah biayabiaya2 */
+Route::post('/laporan/biayabiaya2kirimsyarat', [Biayabiaya2Controller::class, 'kirimsyarat'])->name('pos01.laporan.biayabiaya2_kirimsyarat')->middleware('auth'); /* kirimsyarat */
+Route::get('/laporan/biayabiaya2edit/{id}', [Biayabiaya2Controller::class, 'edit'])->name('pos01.laporan.biayabiaya2_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+Route::get('/laporan/biayabiaya2destroy/{id}', [Biayabiaya2Controller::class, 'destroy'])->name('pos01.laporan.biayabiaya2_destroy')->middleware('auth'); /* hapus data biayabiaya2 */
 
 /* pengaturan - parameter */
 Route::get('/pengaturan/parameter', [ParameterController::class, 'index'])->name('pos01.pengaturan.parameter.index')->middleware('auth'); /* halaman parameter */

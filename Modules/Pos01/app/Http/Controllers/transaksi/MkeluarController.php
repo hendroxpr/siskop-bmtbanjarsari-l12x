@@ -150,7 +150,7 @@ class mkeluarController extends Controller
         foreach ($tampil as $baris) {
             $idmamin1 = $baris->idmamin;
             $idanggota1 = $baris->idanggota;
-            $idruang1 = $baris->idruang1;
+            $idruang1 = $baris->idruang;
             $nama1 = $baris->anggota->nama;
             $idstatus1 = $baris->id;
             $tgltransaksi1 = $baris->tgltransaksi;
