@@ -926,7 +926,7 @@ $(document).ready(function(){
                     searchable: false },
                 { data: 'kode', name: 'barang.kode', className: 'dt-center' },
                 { data: 'barcode', name: 'barang.barcode', className: 'dt-center' },
-                { data: 'barang', name: 'barang.barang' },
+                { data: 'barang', name: 'barang.nabara' },
                 { data: 'qty', name: 'qty', className: 'dt-center' },
                 { data: 'satuan', name: 'barang.satuan.kode', className: 'dt-left' },
                 { data: 'hbs', name: 'barang.hbs', className: 'dt-right' },

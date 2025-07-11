@@ -188,22 +188,34 @@ class StokbarangController extends Controller
                     ->sum('keluar');
                 $qtyx = $qtymasuk - $qtykeluar;
                 
-                $hppmasuk = Stok::select('hppmasuk')
-                    ->where('idruang','=',$row->idruang)
-                    ->where('idbarang','=',$row->idbarang)
-                    ->where('tglstatus','<=',$tgltransaksi)
-                    ->sum('hppmasuk');
-                $hppkeluar = Stok::select('hppkeluar')
-                    ->where('idruang','=',$row->idruang)
-                    ->where('idbarang','=',$row->idbarang)
-                    ->where('tglstatus','<=',$tgltransaksi)
-                    ->sum('hppkeluar');
-                $hppx = $hppmasuk - $hppkeluar;
+                // $hppmasuk = Stok::select('hppmasuk')
+                //     ->where('idruang','=',$row->idruang)
+                //     ->where('idbarang','=',$row->idbarang)
+                //     ->where('tglstatus','<=',$tgltransaksi)
+                //     ->sum('hppmasuk');
+                // $hppkeluar = Stok::select('hppkeluar')
+                //     ->where('idruang','=',$row->idruang)
+                //     ->where('idbarang','=',$row->idbarang)
+                //     ->where('tglstatus','<=',$tgltransaksi)
+                //     ->sum('hppkeluar');
+                // $hppx = $hppmasuk - $hppkeluar;
                 
+                $tampil = Stok::limit('1')
+                ->where('idruang','=',$row->idruang)
+                ->where('idbarang','=',$row->idbarang)
+                ->where('tglstatus','<=',$tgltransaksi)
+                ->where('status','=','masuk')
+                ->orderBy('id','desc')
+                ->get();
+                foreach ($tampil as $baris) {
+                    $hbs = $baris->hbsmasuk;
+                }
+
                 if($qtyx=='0'){
                     $hbsx = 0;
                 }else{
-                    $hbsx = $hppx / $qtyx;
+                    // $hbsx = $hppx / $qtyx;
+                    $hbsx = $hbs;
                 }
                 
                 return number_format($hbsx,0);
@@ -228,17 +240,38 @@ class StokbarangController extends Controller
                     ->sum('keluar');
                 $qtyx = $qtymasuk - $qtykeluar;
                 
-                $hppmasuk = Stok::select('hppmasuk')
-                    ->where('idruang','=',$row->idruang)
-                    ->where('idbarang','=',$row->idbarang)
-                    ->where('tglstatus','<=',$tgltransaksi)
-                    ->sum('hppmasuk');
-                $hppkeluar = Stok::select('hppkeluar')
-                    ->where('idruang','=',$row->idruang)
-                    ->where('idbarang','=',$row->idbarang)
-                    ->where('tglstatus','<=',$tgltransaksi)
-                    ->sum('hppkeluar');
-                $hppx = $hppmasuk - $hppkeluar;
+                // $hppmasuk = Stok::select('hppmasuk')
+                //     ->where('idruang','=',$row->idruang)
+                //     ->where('idbarang','=',$row->idbarang)
+                //     ->where('tglstatus','<=',$tgltransaksi)
+                //     ->sum('hppmasuk');
+                // $hppkeluar = Stok::select('hppkeluar')
+                //     ->where('idruang','=',$row->idruang)
+                //     ->where('idbarang','=',$row->idbarang)
+                //     ->where('tglstatus','<=',$tgltransaksi)
+                //     ->sum('hppkeluar');
+                // $hppx = $hppmasuk - $hppkeluar;
+
+                $tampil = Stok::limit('1')
+                ->where('idruang','=',$row->idruang)
+                ->where('idbarang','=',$row->idbarang)
+                ->where('tglstatus','<=',$tgltransaksi)
+                ->where('status','=','masuk')
+                ->orderBy('id','desc')
+                ->get();
+
+                foreach ($tampil as $baris) {
+                    $hbs = $baris->hbsmasuk;
+                }
+
+                if($qtyx=='0'){
+                    $hbsx = 0;
+                }else{
+                    // $hbsx = $hppx / $qtyx;
+                    $hbsx = $hbs;
+                }
+
+                $hppx = $qtyx * $hbsx;
 
                 return number_format($hppx,0);
             })

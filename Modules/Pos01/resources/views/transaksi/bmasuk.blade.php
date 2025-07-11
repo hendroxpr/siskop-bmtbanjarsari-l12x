@@ -1663,7 +1663,7 @@ $(document).ready(function(){
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },				 				
             success : function(formData){                                         
-                tampil_data();
+                    tampil_data();
                     btn_simpan_click();
                     if(id1>0){
                         $('#ModalAdd').modal('hide'); 
