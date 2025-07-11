@@ -200,22 +200,33 @@ class StokbarangController extends Controller
                 //     ->sum('hppkeluar');
                 // $hppx = $hppmasuk - $hppkeluar;
                 
-                $tampil = Stok::limit('1')
-                ->where('idruang','=',$row->idruang)
+                $jml = Stok::where('idruang','=',$row->idruang)
                 ->where('idbarang','=',$row->idbarang)
                 ->where('tglstatus','<=',$tgltransaksi)
                 ->where('status','=','masuk')
-                ->orderBy('id','desc')
-                ->get();
-                foreach ($tampil as $baris) {
-                    $hbs = $baris->hbsmasuk;
+                ->count();
+
+                if($jml=='0'){
+                    $hbsmasuk = 0;
+                }else{
+                    $tampil = Stok::limit('1')
+                    ->where('idruang','=',$row->idruang)
+                    ->where('idbarang','=',$row->idbarang)
+                    ->where('tglstatus','<=',$tgltransaksi)
+                    ->where('status','=','masuk')
+                    ->orderBy('id','desc')
+                    ->get();
+                    foreach ($tampil as $baris) {
+                        $hbsmasuk = $baris->hbsmasuk;
+                    }
                 }
+
 
                 if($qtyx=='0'){
                     $hbsx = 0;
                 }else{
                     // $hbsx = $hppx / $qtyx;
-                    $hbsx = $hbs;
+                    $hbsx = $hbsmasuk;
                 }
                 
                 return number_format($hbsx,0);
@@ -252,23 +263,32 @@ class StokbarangController extends Controller
                 //     ->sum('hppkeluar');
                 // $hppx = $hppmasuk - $hppkeluar;
 
-                $tampil = Stok::limit('1')
-                ->where('idruang','=',$row->idruang)
+                $jml = Stok::where('idruang','=',$row->idruang)
                 ->where('idbarang','=',$row->idbarang)
                 ->where('tglstatus','<=',$tgltransaksi)
                 ->where('status','=','masuk')
-                ->orderBy('id','desc')
-                ->get();
+                ->count();
 
-                foreach ($tampil as $baris) {
-                    $hbs = $baris->hbsmasuk;
+                if($jml=='0'){
+                    $hbsmasuk = 0;
+                }else{
+                    $tampil = Stok::limit('1')
+                    ->where('idruang','=',$row->idruang)
+                    ->where('idbarang','=',$row->idbarang)
+                    ->where('tglstatus','<=',$tgltransaksi)
+                    ->where('status','=','masuk')
+                    ->orderBy('id','desc')
+                    ->get();
+                    foreach ($tampil as $baris) {
+                        $hbsmasuk = $baris->hbsmasuk;
+                    }
                 }
 
                 if($qtyx=='0'){
                     $hbsx = 0;
                 }else{
                     // $hbsx = $hppx / $qtyx;
-                    $hbsx = $hbs;
+                    $hbsx = $hbsmasuk;
                 }
 
                 $hppx = $qtyx * $hbsx;
