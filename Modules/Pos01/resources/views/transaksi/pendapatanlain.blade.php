@@ -46,7 +46,7 @@
                     <div class="col-md-6">
                         <input name="tgltransaksi1" id="tgltransaksi1" class="w3-input w3-border" maxlength="10" type="text" placeholder="Tgl Transaksi" required autocomplete="off" value="{{ $tgltransaksi }}">                       
                     </div>
-                </div>
+                </div>  
                 <div class="row">
                     <div class="col-md-3 mt-2 text-right">
                         <h6>Lokasi</h6>

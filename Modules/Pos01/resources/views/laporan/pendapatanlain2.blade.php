@@ -275,6 +275,7 @@ $(document).ready(function(){
             kirimsyarat();	
         }, 500);
     });
+
     $('#idruangx1').on('change',function(){
         setTimeout(() => {
             kirimsyarat();	
@@ -359,7 +360,7 @@ $(document).ready(function(){
                 [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
             ],
 
-footerCallback: function (row, data, start, end, display) {
+            footerCallback: function (row, data, start, end, display) {
             let api = this.api();
     
             // Remove the formatting to get integer data for summation

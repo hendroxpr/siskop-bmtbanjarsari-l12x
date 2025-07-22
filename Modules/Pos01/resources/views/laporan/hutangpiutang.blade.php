@@ -8,10 +8,16 @@
         $idruang = '1';
     }    
     $tabhutang = session('tabhutang1');
-    $tgltransaksi = session('tgltransaksi1');   
-    if($tgltransaksi==''){
-        $tgltransaksi=session('memtanggal');  
+    $event = session('event1');
+    
+    $tgltransaksi1 = session('tgltransaksi1');   
+    if($tgltransaksi1==''){
+        $tgltransaksi1=session('memtanggal');;  
     }    
+    $tgltransaksi2 = session('tgltransaksi2');   
+    if($tgltransaksi2==''){
+        $tgltransaksi2=session('memtanggal');;  
+    }
 @endphp
 
 
@@ -38,37 +44,26 @@
     @endif
 @endif
 
-
     <div class="box-header mb-3">  
         <div class="row">
             <div class="col-md-6">
-                <input name="tabhutang1" id="tabhutang1" class="" type="hidden" value="{{ $tabhutang }}">
-                {{-- <div class="row">
-                    <div class="col-md-3 mt-2 text-right">
-                        <h6>Lokasi</h6>
-                    </div>
-                    <div class="col-md-5">
-                        <select name="idruang1" id="idruang1" class="w3-input w3-border" value="{{ $idruang }}"></select>
-                        <input name="tabhutang1" id="tabhutang1" class="" type="hidden" value="{{ $tabstok }}"> 
-                        <input name="event1" id="event1" class="" type="hidden" value="0">
-                    </div>
-                </div>
-                <div class="row mt-2">
+               <input name="tabhutang1" id="tabhutang1" class="" type="hidden" value="{{ $tabhutang }}">
+               <input name="event1" id="event1" class="" type="hidden" value="{{ $event }}">
+               <div class="row mt-1">
                     <div class="col-md-3 text-right">
-                        <h6 class="mt-2">Per Tanggal</h6>
+                        <h6 class="mt-2">Periode Tanggal</h6>
                     </div>
-                    <div class="col-md-5">
-                        <input name="tgltransaksi1" id="tgltransaksi1" class="w3-input w3-border" maxlength="10" type="text" placeholder="Per Tanggal" autocomplete="off" value="{{ $tgltransaksi }}">                       
+                    <div class="col-md-2">
+                        <input name="tgltransaksi1" id="tgltransaksi1" class="w3-input w3-border" maxlength="10" type="text" placeholder="Tanggal awal" autocomplete="off" value="{{ $tgltransaksi1 }}">                       
                     </div>
-                </div> --}}
-                <div class="row">
-                    <div class="col-md-3">
-                        {{--  --}}
+                    <div class="col-md-1 text-center">
+                        <h6 class="mt-2">s/d</h6>
                     </div>
-                    <div class="col-md-7">
-                        {{--  --}}
+                    <div class="col-md-2">
+                        <input name="tgltransaksi2" id="tgltransaksi2" class="w3-input w3-border" maxlength="10" type="text" placeholder="Tanggal akhir" autocomplete="off" value="{{ $tgltransaksi2 }}">                       
                     </div>
                 </div>
+                
             </div>
             <div class="col-md-6">
                 <div class="w3-row" align="right"><i class="fa fa-refresh" aria-hidden="true"></i>            
@@ -559,6 +554,7 @@ $(document).ready(function(){
 
     $('#tab-hutangbelumsupplier').on('click',function(){
         $('#tabhutang1').val('tab-hutangbelumsupplier');
+        $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 500);
@@ -572,6 +568,7 @@ $(document).ready(function(){
     });
     $('#tab-hutangsudahsupplier').on('click',function(){
         $('#tabhutang1').val('tab-hutangsudahsupplier');
+        $('#event1').val('0');
         setTimeout(() => {
             kirimsyarat();	
         }, 500);
@@ -586,10 +583,10 @@ $(document).ready(function(){
            
     //menampilkan combo ruang
     setTimeout(() => {
-        tampil_listruang();
+        // tampil_listruang();
+        koneksi_datatable()
     }, 500);
     
-    koneksi_datatable()
 
     $('#idruang1').on('change',function(){
         $('#event1').val('1');
@@ -603,12 +600,11 @@ $(document).ready(function(){
            changeMonth : true,
            changeYear  : true         
     });
-    
-    $('#tgltransaksi1').on('click',function(){   
-        $('#event1').val('1');    
-       setTimeout(() => {
-           kirimsyarat();           
-       }, 500);     				
+
+    $("#tgltransaksi2").datepicker({
+           dateFormat  : "yy-mm-dd",
+           changeMonth : true,
+           changeYear  : true         
     });
     
     $('#tgltransaksi1').on('change',function(){
@@ -618,16 +614,28 @@ $(document).ready(function(){
        }, 500);					
     });
     
+    $('#tgltransaksi2').on('change',function(){
+        $('#event1').val('1');				
+       setTimeout(() => {
+           kirimsyarat();
+       }, 500);					
+    });
+   
     function kirimsyarat(){
         var tabhutang1=$('#tabhutang1').val();
+        var event1=$('#event1').val();
+        var tgltransaksi1=$('#tgltransaksi1').val();
+        var tgltransaksi2=$('#tgltransaksi2').val();
         
         let formData = new FormData();
             formData.append('tabhutang1', tabhutang1);
+            formData.append('tgltransaksi1', tgltransaksi1);
+            formData.append('tgltransaksi2', tgltransaksi2);
 
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',
-            url    : '{{route('pos01.laporan.stokbarang_kirimsyarat')}}',
+            url    : '{{route('pos01.laporan.hutangpiutang_kirimsyarat')}}',
             data: formData,
             cache: false,
             processData: false,
@@ -636,7 +644,9 @@ $(document).ready(function(){
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },				 				
             success : function(formData){ 
-                    if(event1=='1'){
+                if(event1=='1'){
+                        $("#tgltransaksi1").val(tgltransaksi1);                                        
+                        $("#tgltransaksi2").val(tgltransaksi2);
                         tampil_dataTable();                   
                     }
                 }
@@ -1023,7 +1033,7 @@ $(document).ready(function(){
         hutangbelumsupplier1Datatable = tampil_hutangbelumsupplier1();    
         hutangbelumcustomer1Datatable = tampil_hutangbelumcustomer1();    
         hutangsudahsupplier1Datatable = tampil_hutangsudahsupplier1();    
-        hutangsudahcustomer1Datatable = tampil_hutangsudahcustomer1();    
+        hutangsudahcustomer1Datatable = tampil_hutangsudahcustomer1();   
         
     }
 

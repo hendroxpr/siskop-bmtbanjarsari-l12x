@@ -117,8 +117,18 @@ class HutangpiutangController extends Controller
      */
     public function showhutangpiutangbelumcustomer()
     {
+        $tgltransaksi1 = session('tgltransaksi1');
+        if($tgltransaksi1==''){
+            $tgltransaksi1 = session('memtanggal');
+        }    
+        $tgltransaksi2 = session('tgltransaksi2');
+        if($tgltransaksi2==''){
+            $tgltransaksi2 = session('memtanggal');
+        }
         
         $hutang = Hutang::select('*')
+            ->where('tglstatus','>=',$tgltransaksi1)
+            ->where('tglstatus','<=',$tgltransaksi2)
             ->where('kodepokok','=','1')
             ->where('status','=','hutangcus')
             ->with('anggota','supplier')
@@ -215,8 +225,18 @@ class HutangpiutangController extends Controller
     }
     public function showhutangpiutangbelumsupplier()
     {
-        
+        $tgltransaksi1 = session('tgltransaksi1');
+        if($tgltransaksi1==''){
+            $tgltransaksi1 = session('memtanggal');
+        }    
+        $tgltransaksi2 = session('tgltransaksi2');
+        if($tgltransaksi2==''){
+            $tgltransaksi2 = session('memtanggal');
+        }
+
         $hutang = Hutang::select('*')
+            ->where('tglstatus','>=',$tgltransaksi1)
+            ->where('tglstatus','<=',$tgltransaksi2)
             ->where('kodepokok','=','1')
             ->where('status','=','hutangsup')
             ->with('anggota','supplier')
@@ -314,8 +334,18 @@ class HutangpiutangController extends Controller
 
     public function showhutangpiutangsudahcustomer()
     {
-        
+        $tgltransaksi1 = session('tgltransaksi1');
+        if($tgltransaksi1==''){
+            $tgltransaksi1 = session('memtanggal');
+        }    
+        $tgltransaksi2 = session('tgltransaksi2');
+        if($tgltransaksi2==''){
+            $tgltransaksi2 = session('memtanggal');
+        }
+
         $hutang = Hutang::select('*')
+            ->where('tglstatus','>=',$tgltransaksi1)
+            ->where('tglstatus','<=',$tgltransaksi2)
             ->where('kodepokok','=','0')
             ->where('status','=','hutangcus')
             ->with('anggota','supplier')
@@ -372,8 +402,18 @@ class HutangpiutangController extends Controller
     }
     public function showhutangpiutangsudahsupplier()
     {
-        
+        $tgltransaksi1 = session('tgltransaksi1');
+        if($tgltransaksi1==''){
+            $tgltransaksi1 = session('memtanggal');
+        }    
+        $tgltransaksi2 = session('tgltransaksi2');
+        if($tgltransaksi2==''){
+            $tgltransaksi2 = session('memtanggal');
+        }
+
         $hutang = Hutang::select('*')
+            ->where('tglstatus','>=',$tgltransaksi1)
+            ->where('tglstatus','<=',$tgltransaksi2)
             ->where('kodepokok','=','0')
             ->where('status','=','hutangsup')
             ->with('anggota','supplier')
@@ -543,6 +583,9 @@ class HutangpiutangController extends Controller
     {
         session([
             'tabhutang1' => $request['tabhutang1'],
+            'event1' => $request['event1'],
+            'tgltransaksi1' => $request['tgltransaksi1'],
+            'tgltransaksi2' => $request['tgltransaksi2'],
         ]);
     }
 

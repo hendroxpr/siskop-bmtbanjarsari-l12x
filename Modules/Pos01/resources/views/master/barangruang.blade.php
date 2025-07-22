@@ -288,7 +288,7 @@ $(document).ready(function(){
     
     setTimeout(() => {
         $('#idruang1').change();
-        data1Datatable = tampil_data1();    
+        data1Datatable = tampil_data1();   
     }, 1000);
 
     $('#idruang1').on('change',function(){
