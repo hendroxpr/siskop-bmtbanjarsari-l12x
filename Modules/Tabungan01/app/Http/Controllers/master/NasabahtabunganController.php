@@ -3,6 +3,7 @@
 namespace Modules\Tabungan01\Http\Controllers\master;
 use DateTime;
 use Carbon\Carbon;
+use Modules\Tabungan01\Models\Sandi;
 use PDF;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
@@ -75,7 +76,7 @@ class NasabahtabunganController extends Controller
         // //     'file' => 'required|mimes:xls,xlsx'
         // // ]);
         
-
+        $data = Sandi::get();
 
         // if ($request->hasFile('file1')) {
         //     $validateFile = $request->validate([
