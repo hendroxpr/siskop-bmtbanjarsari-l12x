@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/akuntansi01",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Akuntansi01\\": "app/",
+            "Modules\\Akuntansi01\\Database\\Factories\\": "database/factories/",
+            "Modules\\Akuntansi01\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Akuntansi01\\Tests\\": "tests/"
+        }
+    }
+}

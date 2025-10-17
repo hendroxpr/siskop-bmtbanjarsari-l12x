@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <td style="width: 35%">Nama</td>
-                <td style="width: 65%">{{ session('memnamasingkat') }}</td>
+                <td style="width: 65%">{{ session('memnama') }}</td>
             </tr>
             <tr>
                 <td>Alamat</td>
@@ -68,10 +68,10 @@
             </tr>
             <tr>
                 <td style="width: 35%">Nama</td>
-                <td style="width: 65%">Sistem Informasi Koperasi Terpadu (SIKT)</td>
+                <td style="width: 65%">Sistem Informasi BMT Terpadu (SIBT)</td>
             </tr>
             <tr>
-                <td>Aplikasi</td>
+                <td>Unit</td>
                 <td>{{ session('aplikasi') }} ({{ session('kode') }})</td>
             </tr>
             <tr>

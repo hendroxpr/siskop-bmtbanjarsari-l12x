@@ -1,0 +1,11 @@
+{
+    "name": "Akuntansi01",
+    "alias": "akuntansi01",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Akuntansi01\\Providers\\Akuntansi01ServiceProvider"
+    ],
+    "files": []
+}

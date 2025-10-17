@@ -33,6 +33,64 @@
 
     </div>
 
+        <!--awal tabel-->        
+        <div class="card mt-5" style="display: none;">
+            <h3 class="card-header p-3">Laravel 12 Simple Pagination Example - ItSolutionStuff.com</h3>
+            <div class="card-body">
+                
+                <form action="{{ route('admin.menuutama_index') }}" method="GET" class= 'mb-2'>
+                    <input type="search" name="search" id="search" value="{{ $search ?? '' }}" class="w3-input w3-border" placeholder="Cari desa/kelurahan..." autocomplete="off">
+                    <button type="submit" name="btn_cari" id="btn_cari" style="display:none;">Cari</button>
+                </form>
+
+                <table id="" class="table table-bordered table-striped table-hover mb-2" style="width: 100%">
+                    
+                    <thead>
+                        <tr style="background-color:lightblue">
+                            <th style="width:10px;"># </th>                            
+							<th style="width:100px">Desa</th>							
+							<th style="width:100px">Kecamatan</th>							
+							<th style="width:100px">Kabupaten</th>							
+							<th style="width:100px">Propinsi</th>							
+							
+                        </tr>
+                    </thead>
+                    <tfoot id="show_footer">
+                        
+                    </tfoot>
+                    <tbody id="show_datax">
+                        @php
+                            $x=1;
+                            $nomor = $tabelx->firstItem();
+                        @endphp
+                        
+                        @forelse ($tabelx as $item)
+                            <tr>
+                                <td align="center">{{ $nomor++ }}</td>
+                                <td>{{ $item->desa }}</td>
+                                <td>{{ $item->kecamatan->kecamatan }}</td>
+                                <td>{{ $item->kecamatan->kabupaten->kabupaten }}</td>
+                                <td>{{ $item->kecamatan->kabupaten->propinsi->propinsi }}</td>
+                            </tr>
+                         @empty
+                            <tr>
+                                <td colspan="5">Maaf data yang dicari tidak ada..</td>
+                            </tr>
+                            @php
+                                $x++;
+                            @endphp        
+                        @endforelse
+                    </tbody>
+                </table>				
+                {!! $tabelx->withQueryString()->links('pagination::bootstrap-5') !!}
+                
+            </div>
+        </div>    
+    <!--akhir tabel-->
+
+
+
+
     <!--awal tabel-->        
         <div class="box-body" id="headerjudul" style="display: block;">
             <div id="reload" class="table-responsive">
@@ -227,11 +285,10 @@ $(document).ready(function(){
 
     function tampil_tombol(){
         $('#example1').DataTable( {
-            "responsive": true, "lengthChange": false, "autoWidth": false,
+            "responsive": true, "lengthChange": false, "autoWidth": false, "serverSide": false,
             buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],
 		    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');   
      } 
-         
 
     //tampilkan dalam tabel ->OK
     function tampil_data(){	
@@ -293,6 +350,11 @@ $(document).ready(function(){
 
     }
     
+    
+
+     $('#btn_baru').on('click',function(){
+        btn_baru_click();            
+    });
     
     //tambah data -> ok
     $('#btn_baru').on('click',function(){

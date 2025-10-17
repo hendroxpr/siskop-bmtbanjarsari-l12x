@@ -1,0 +1,11 @@
+{
+    "name": "Tabungan01",
+    "alias": "tabungan01",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Tabungan01\\Providers\\Tabungan01ServiceProvider"
+    ],
+    "files": []
+}

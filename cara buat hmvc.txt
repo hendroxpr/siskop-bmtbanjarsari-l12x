@@ -33,7 +33,7 @@ Update your composer.json
 }
 Usage
 Create new module
-php artisan module:create <module-name>
+php artisan module:make <module-name>
 Remove a module
 php artisan module:remove <module-name>
 
@@ -41,7 +41,7 @@ selelah membuat module
 composer dump-autoload
 
 Create a controller
-php artisan module:make:controller <controller-name> <module-name> 
+php artisan module:make-controller <controller-name> <module-name> 
 Create a model
 php artisan module:make-model <model-name> <module-name> 
 Create a scope

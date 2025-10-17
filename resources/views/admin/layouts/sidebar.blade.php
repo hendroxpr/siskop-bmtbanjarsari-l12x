@@ -15,7 +15,7 @@
     <!-- Brand Logo -->
     <a href="{{ url('') }}/admin/" class="brand-link">
       <img src="{{ asset('assets/admin/dist/img/sistlogo.png') }}" alt="SIST Logo" class="brand-image img-circle elevation-3" style="opacity: .8;width:35px; height:35px; overflow:hidden;">
-      <span class="brand-text font-weight-light">SIKT</span>
+      <span class="brand-text font-weight-light">SIBT</span>
     </a>
 
     <!-- Sidebar -->

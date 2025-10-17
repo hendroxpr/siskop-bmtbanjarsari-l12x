@@ -64,7 +64,7 @@
             </form>
 
             <p class="pt-3 text-muted">
-                <a class="text-decoration-none" href="{{ route('front.admin_registerform') }}">Register now?</a> | Back to <a class="text-decoration-none" href="{{ route('front.index') }}">SIKT</a>
+                <a class="text-decoration-none" href="{{ route('front.admin_registerform') }}">Register now?</a> | Back to <a class="text-decoration-none" href="{{ route('front.index') }}">SIBT</a>
             </p>
             
             <p class="pt-3 text-muted">
@@ -72,7 +72,7 @@
                     Developed by team IT {{ session('memnamasingkat') }}
                   </div>
                   <strong> 
-                      Copyright &copy; 2022-<?= date('Y'); ?> {{ session('memnamasingkat') }}
+                      Copyright &copy; 2025-<?= date('Y'); ?> {{ session('memnamasingkat') }}
                   </strong> 
                   All rights reserved. Build v{{ Illuminate\Foundation\Application::VERSION }} 
                   PHP v<?php print phpversion(); ?>               

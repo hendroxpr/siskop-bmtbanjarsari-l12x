@@ -51,6 +51,27 @@ Route::get('/admin/menusublistaplikasi', [MenusubController::class, 'listaplikas
 Route::post('/admin/menusubkirimsyarat', [MenusubController::class, 'kirimsyarat'])->name('admin.menusub_kirimsyarat')->middleware('auth'); /* kirim syarat */
 
 
+/* khusus list */
+Route::get('/admin/listpropinsi10', [AdminController::class, 'listpropinsi10'])->name('admin.listpropinsi10')->middleware('auth'); /* list propinsi ori */
+Route::get('/admin/listpropinsi11', [AdminController::class, 'listpropinsi11'])->name('admin.listpropinsi11')->middleware('auth'); /* list propinsi sort asc */
+Route::get('/admin/listpropinsi12', [AdminController::class, 'listpropinsi12'])->name('admin.listpropinsi12')->middleware('auth'); /* list propinsi sort desc */
+
+Route::get('/admin/listkabupatenx20', [AdminController::class, 'listkabupatenx20'])->name('admin.listkabupatenx20')->middleware('auth'); /* list kabupaten ori */
+Route::get('/admin/listkabupatenx21', [AdminController::class, 'listkabupatenx21'])->name('admin.listkabupatenx21')->middleware('auth'); /* list kabupaten sort asc */
+Route::get('/admin/listkabupatenx22', [AdminController::class, 'listkabupatenx22'])->name('admin.listkabupatenx22')->middleware('auth'); /* list kabupaten sort desc */
+Route::get('/admin/listkabupaten20', [AdminController::class, 'listkabupaten20'])->name('admin.listkabupaten20')->middleware('auth'); /* list kabupaten ori */
+Route::get('/admin/listkabupaten21', [AdminController::class, 'listkabupaten21'])->name('admin.listkabupaten21')->middleware('auth'); /* list kabupaten sort asc */
+Route::get('/admin/listkabupaten22', [AdminController::class, 'listkabupaten22'])->name('admin.listkabupaten22')->middleware('auth'); /* list kabupaten sort desc */
+
+Route::get('/admin/listkecamatanx20', [AdminController::class, 'listkecamatanx20'])->name('admin.listkecamatanx20')->middleware('auth'); /* list kecamatan ori */
+Route::get('/admin/listkecamatanx21', [AdminController::class, 'listkecamatanx21'])->name('admin.listkecamatanx21')->middleware('auth'); /* list kecamatan sort asc */
+Route::get('/admin/listkecamatanx22', [AdminController::class, 'listkecamatanx22'])->name('admin.listkecamatanx22')->middleware('auth'); /* list kecamatan sort desc */
+Route::get('/admin/listkecamatan20', [AdminController::class, 'listkecamatan20'])->name('admin.listkecamatan20')->middleware('auth'); /* list kecamatan ori */
+Route::get('/admin/listkecamatan21', [AdminController::class, 'listkecamatan21'])->name('admin.listkecamatan21')->middleware('auth'); /* list kecamatan sort asc */
+Route::get('/admin/listkecamatan22', [AdminController::class, 'listkecamatan22'])->name('admin.listkecamatan22')->middleware('auth'); /* list kecamatan sort desc */
+
+Route::get('/admin/listdesa109', [AdminController::class, 'listdesa109'])->name('admin.listdesa109')->middleware('auth'); /* list desa ori */
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });

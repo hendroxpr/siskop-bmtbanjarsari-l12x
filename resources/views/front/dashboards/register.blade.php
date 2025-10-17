@@ -99,7 +99,7 @@
             <div class="form-floating">
                 <select class="form-select rounded-0" id="idaplikasi2" name="idaplikasi2" aria-label="Floating label select example">                 
                 </select>
-                <label for="idaplikasi2">Aplikasi</label>
+                <label for="idaplikasi2">Unit</label>
             </div>
             
             <div class="py-0">
@@ -109,8 +109,19 @@
         </form>
 
         <p class="pt-3 text-muted">
-            Already Registered? <a class="text-decoration-none" href="{{ route('front.admin_loginform') }}">Login now</a>  | Back to <a class="text-decoration-none" href="{{ route('front.index') }}">SIKT</a>
+            Already Registered? <a class="text-decoration-none" href="{{ route('front.admin_loginform') }}">Login now</a>  | Back to <a class="text-decoration-none" href="{{ route('front.index') }}">SIBT</a>
          </p>
+
+         <p class="pt-3 text-muted">
+              <div class="float-right d-none d-sm-block">
+                  Developed by team IT {{ session('memnamasingkat') }}
+                </div>
+                <strong> 
+                    Copyright &copy; 2025-<?= date('Y'); ?> {{ session('memnamasingkat') }}
+                </strong> 
+                All rights reserved. Build v{{ Illuminate\Foundation\Application::VERSION }} 
+                PHP v<?php print phpversion(); ?>               
+          </p>
 
     </div>
 

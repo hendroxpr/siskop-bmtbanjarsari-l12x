@@ -1,0 +1,11 @@
+{
+    "name": "Pinjaman01",
+    "alias": "pinjaman01",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Pinjaman01\\Providers\\Pinjaman01ServiceProvider"
+    ],
+    "files": []
+}

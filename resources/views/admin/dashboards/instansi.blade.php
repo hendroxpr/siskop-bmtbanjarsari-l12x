@@ -269,7 +269,7 @@
 
                     <div class="row">
                         <div class="col-md-5 text-right mt-2">
-                        <h6>Logo Sekolah<br>(Mak. 2048 KB)</h6>
+                        <h6>Logo<br>(Mak. 2048 KB)</h6>
                         </div>
                         <div class="col-md-7">
                             <input name="logo1" id="logo1" type="file" class="w3-input w3-border mb-1">

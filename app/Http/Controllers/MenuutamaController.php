@@ -12,12 +12,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
+use Modules\Admin01\Models\Desa;
+use Modules\Admin01\Models\Propinsi;
 use Modules\Sis01\src\Entities\Mainmenu;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class MenuutamaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
 
         $meminstansi = session('memnamasingkat');
@@ -28,6 +30,11 @@ class MenuutamaController extends Controller
         $caption = 'Menu Utama';
         $jmlhal = 2;
 
+        $search = $request->input('search');
+        $desa = Desa::when($search, function($query,$search){
+            $query->where('desa','like','%'. $search . '%');
+        })->paginate(10);
+
         return view($page, [
             'title' => $meminstansi . ' | ' . $subtitle . ' | ' . $caption,
             'subtitle' => $subtitle,
@@ -36,6 +43,7 @@ class MenuutamaController extends Controller
             'remark' => $remark,
             'jmlhal' => $jmlhal,
             'tabel' => Menuutama::SimplePaginate($jmlhal)->withQueryString(),
+            'tabelx' => $desa,
             'aplikasi' => Aplikasi::get()
         ]);
     }
@@ -43,6 +51,7 @@ class MenuutamaController extends Controller
     public function show()
     {
         $data = Menuutama::get();
+
         return json_encode(array('data' => $data));
     }
 

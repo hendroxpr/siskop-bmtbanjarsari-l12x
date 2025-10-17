@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/pinjaman01",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Pinjaman01\\": "app/",
+            "Modules\\Pinjaman01\\Database\\Factories\\": "database/factories/",
+            "Modules\\Pinjaman01\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\Pinjaman01\\Tests\\": "tests/"
+        }
+    }
+}

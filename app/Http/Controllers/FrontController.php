@@ -141,7 +141,7 @@ class FrontController extends Controller
 
         $tglsekarang = $namaharix[$hari] . ', ' . $d . ' ' . $namabulanx[$m] . ' ' . $y;
 
-        //membuat session instansi
+        //membuat session instansi dll
         $instansi = $this->tabelx('instansi');
         foreach ($instansi as $item) {
             session([
@@ -175,6 +175,16 @@ class FrontController extends Controller
                 'memtujuan' => $item->tujuan,
                 'memstrukturorganisasi' => $item->strukturorganisasi,
                 'memketerangan' => $item->keterangan,
+
+                'idpropinsi1' => 15,
+                'idpropinsix1' => 15,
+                'idkabupaten1' => 249,
+                'idkabupatenx1' => 249,
+                'idkecamatan1' => 3737,
+                'idkecamatanx1' => 3737,
+                'iddesa1' => 47780,
+                'iddesax1' => 47780,
+
             ]);
         }
 
