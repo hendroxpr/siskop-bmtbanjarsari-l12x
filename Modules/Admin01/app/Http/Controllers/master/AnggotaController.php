@@ -286,6 +286,7 @@ class AnggotaController extends Controller
             'nama' => $validatedData['nama1'],
             'iddesa' => $validatedData['iddesa1'],
             'niax' => $niax1,
+            'tgllahir' => $request['tgllahir1'],
             'tglkeluar' => $request['tglkeluar1'],
             'alamat' => $request['alamat1'],
             'telp' => $request['telp1'],

@@ -4,6 +4,8 @@ namespace Modules\Admin01\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\Tabungan01\Models\Nasabah;
+
 // use Modules\Pos01\Database\Factories\AnggotaFactory;
 
 class Anggota extends Model
@@ -18,6 +20,11 @@ class Anggota extends Model
     public function desa()
     {
         return $this->belongsTo(Desa::class,'iddesa');
+    }
+
+    public function nasabah()
+    {
+        return $this->hasMany(Nasabah::class,'idanggota','id');
     }
    
     /**

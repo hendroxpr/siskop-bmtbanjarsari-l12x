@@ -40,6 +40,8 @@ class FrontController extends Controller
             'navigasi' => 'home',
             'memtanggal' => $y . '-' . $mm . '-' . $d,
             'memtanggal2' => $y . '-' . $mm . '-' . $d,
+            'tglawalx1' => $y . '-' . $mm . '-' . $d,
+            'tglakhirx1' => $y . '-' . $mm . '-' . $d,
             'memtahun' => $y,        //   
             'tgltransaksi1' => $y . '-' . $mm . '-' . $d,
         ]);
@@ -184,6 +186,16 @@ class FrontController extends Controller
                 'idkecamatanx1' => 3737,
                 'iddesa1' => 47780,
                 'iddesax1' => 47780,
+                'idkelompok1' => 1,
+                'idkelompokx1' => 1,
+                'idkategori1' => 1,
+                'idkategorix1' => 1,
+                'idproduktabungan1' => 1,
+                'idproduktabunganx1' => 1,
+                'desain1' => 'INDIVIDUAL',
+                'desainX1' => 'INDIVIDUAL',
+                'tandapengenal1' => 'KTP (KARTU TANDA PENDUDUK)',
+                'tandapengenalX1' => 'KTP (KARTU TANDA PENDUDUK)',
 
             ]);
         }

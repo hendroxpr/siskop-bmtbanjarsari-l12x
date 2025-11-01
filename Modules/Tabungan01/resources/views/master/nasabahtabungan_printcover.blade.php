@@ -44,7 +44,7 @@
   @php
       use Riskihajar\Terbilang\Terbilang;
       use Modules\Tabungan01\Models\Sandi;
-      use Modules\Akuntansi01\Models\Produk;
+      use Modules\Akuntansi01\Models\Produktabungan;
 
       $username = auth()->user()->name;
       
@@ -60,7 +60,7 @@
             <td style="width: 80%" style="font-size: 1.5em;"><b>{{ session('memnama') }}</b></td>    
         </tr>
         <tr>
-            <td style="width: 80%" style="font-size: 1.2em;">{{ $produk }} - {{ $keterangan }}</td>    
+            <td style="width: 80%" style="font-size: 1.2em;">{{ $produktabungan }} - {{ $keterangan }}</td>    
         </tr>
         <tr>
             <td style="width: 100%" colspan="2"><hr></td>
@@ -92,22 +92,22 @@
         <tr>
             <td style="width: 29%">Nama</td>    
             <td style="width: 1%">:</td>    
-            <td style="width: 70%">{{ $namalengkap }}</td>    
+            <td style="width: 70%">{{ $nama }}</td>    
         </tr>
         <tr>
-            <td style="width: 29%">NIS / NISN</td>    
+            <td style="width: 29%">NIA / NIK</td>    
             <td style="width: 1%">:</td>    
-            <td style="width: 70%">{{ $nis }} / {{ $nisn }}</td>    
+            <td style="width: 70%">{{ $nia }} / {{ $nik }}</td>    
         </tr>        
         <tr>
-            <td style="width: 29%">Kelas</td>    
+            <td style="width: 29%">Desain</td>    
             <td style="width: 1%">:</td>    
-            <td style="width: 70%">{{ $kelas }}</td>    
+            <td style="width: 70%">{{ $desain }}</td>    
         </tr>
         <tr>
             <td style="width: 29%">Tanda Pengenal</td>    
             <td style="width: 1%">:</td>    
-            <td style="width: 70%">KTP</td>    
+            <td style="width: 70%">{{ $tandapengenal }}</td>    
         </tr>
         <tr>
             <td style="width: 29%">Alamat</td>    
@@ -186,14 +186,14 @@
             @php
                 $nox = 1;
                   
-                $produkx = Produk::select('*')            
+                $produkx = Produktabungan::select('*')            
                     ->get();
             @endphp
 
             @foreach ($produkx as $item2)
               <tr>
                 <td align="center">{{ $nox++ }}</td>
-                <td>{{ $item2->produk }}</td>
+                <td>{{ $item2->produktabungan }}</td>
                 <td>{{ $item2->keterangan }}</td>
               </tr>
                 

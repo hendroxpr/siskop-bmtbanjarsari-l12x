@@ -2,16 +2,13 @@
 
 @section('contents')
 
+
 @php
-    $idtp = session('idtp');
-    $a1 = session()->get('memtanggal1');
-    if($a1==''){
-        $a1=session()->get('memtanggal');  
-    }
-    $a2 = session()->get('memtanggal2');
-    if($a2==''){
-        $a2=session()->get('memtanggal');  
-    }
+    
+    $idproduktabungan = session('idproduktabunganx1');
+    $desain1 = session('desain1');
+    $tandapengenal1 = session('tandapengenal1');
+
 @endphp
 
 @php
@@ -41,18 +38,13 @@
     <div class="box-header mb-3">  
         <div class="row">
             <div class="col-md-6">
+                
                 <div class="row">
-                    <div class="col-md-3 mt-2" align="right">									
-                        <label for="tanggalx1"><h6>Tanggal Daftar</h6></label>
+                    <div class="col-md-3 mt-2 text-right">
+                        <h6>Produk Tabungan</h6>
                     </div>
-                    <div class="col-md-3 mb-2">
-                        <input name="tanggalx1" id="tanggalx1" class="w3-input w3-border" type="text"  placeholder="Tanggal Awal" value="{{ $a1 }}">
-                    </div>
-                    <div class="col-md-1 mt-2" align="center">									
-                        <label for="tanggalx2"><h6>s/d</h6></label>
-                    </div>
-                    <div class="col-md-3 mb-2">
-                        <input name="tanggalx2" id="tanggalx2" class="w3-input w3-border" type="text"  placeholder="Tanggal Akhir" value="{{ $a2 }}">
+                    <div class="col-md-5">
+                        <select name="idproduktabunganx1" id="idproduktabunganx1" class="w3-input w3-border" value="{{ $idproduktabungan }}"></select> 
                     </div>
                 </div>
                 
@@ -62,8 +54,8 @@
                 <div class="w3-row" align="right"><i class="fa fa-refresh" aria-hidden="true"></i>            
                     <a id="btn_refresh1" name="btn_refresh1" href="{{ url('/') }}{{ $link }}" class="btn bg-success rounded-0" style="text-decoration: none;"><i style="font-size:18px" class="fa">&#xf021;</i> Refresh</a>            
                     <button id="btn_tambah1" name="btn_tambah1" type="button" class="btn bg-primary rounded-0"><i class="fas fa-plus"></i> Tambah</button>
-                    <button id="btn_importexcel1" name="btn_importexcel1" type="button" class="w3-button w3-orange" style="color:#7FFF00; height:36px;"><i style="font-size:18px" class="fa">&#xf1c3;</i> Import</button>
-                    <button id="btn_update1x" name="btn_update1x" type="button" class="w3-button w3-purple" style="color:#7FFF00; height:36px;"><i style="font-size:18px" class="fa">&#xf56e;</i> Update</button>
+                    <button id="btn_importexcel1" name="btn_importexcel1" type="button" class="w3-button w3-orange" style="color:#7FFF00; height:36px; display: none;"><i style="font-size:18px" class="fa">&#xf1c3;</i> Import</button>
+                    <button id="btn_update1x" name="btn_update1x" type="button" class="w3-button w3-purple" style="color:#7FFF00; height:36px; display: none;"><i style="font-size:18px" class="fa">&#xf56e;</i> Update</button>
                 </div> 
             </div>
         </div>
@@ -78,18 +70,18 @@
                     <tr>
                         <th style="width:10px;">#</th>                            
                         <th style="width:50px">Norek</th>							
+                        <th style="width:50px">NIA</th>
+                        <th style="width:50px">NIK</th>
                         <th style="width:50px">Ecard</th>							
-                        <th style="width:50px">NIS</th>
-                        <th style="width:50px">NISN</th>
-                        <th style="width:150px">Nama Lengkap</th>							
+                        <th style="width:150px">Nama</th>							
                         <th style="width:50px">Tgl Lahir</th>							
-                        <th style="width:50px">Kelas</th>							
+                        <th style="width:50px">Desain</th>							
                         <th style="width:50px">Tgl Daftar</th>							
                         <th style="width:50px">Tgl Keluar</th>							
                         <th style="width:200px">Alamat</th>							
                         <th style="width:50px">Telp</th>							                                    
                         <th style="width:50px">Aktif</th>							                                    
-                        <th style="width:50px">Produk</th>							                                    
+                        <th style="width:50px">Tanda Pengenal</th>							                                    
                         <th style="width:50px">Saldo</th>							                                    
                         <th style="width:50px">Action</th>
                     </tr>
@@ -123,73 +115,88 @@
 
                             <div class="row">
                                 <div class="col-md-4 mt-1" align="right">									
-                                    <h6 class="mt-2">Nama Lengkap *)</h6>
-                                </div>
-                                <div class="col-md-8">                                
-                                    <input name="namalengkap1" id="namalengkap1" class="w3-input w3-border" maxlength="200" type="search" placeholder="Nama Lengkap" autofocus value="{{ old('namalengkap1') }}" required>
-                                    <input name="cek1" id="cek1" class="" type="hidden">                                
-                                    <input name="id1" id="id1" class="" type="hidden">
-                                </div>								  
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mt-1" align="right">
-                                    <h6 class="mt-2">Norek *)</h6>
-                                </div>                                
-                                <div class="col-md-8 input-group">
-                                    <input name="norek1" id="norek1" class="form-control w3-input w3-border rounded-0" maxlength="25" type="search" placeholder="Norek" value="{{ old('norek1') }}" required>
-                                    <div class="input-group-append">
-                                      <button id="btn_norek1" name="norek1" type="button" style="border-radius:0px; border:none;" title="Generate Nomor Rekening" disabled><i style="font-size:24" class="fa">&#xf013;</i></button>
-                                    </div>
-                                </div>								  
-                            </div>                            
-                            <div class="row">
-                                <div class="col-md-4 mt-1" align="right">									
-                                    <h6 class="mt-2">Ecard *)</h6>
-                                </div>
-                                <div class="col-md-8">                                
-                                    <input name="ecard1" id="ecard1" class="w3-input w3-border" maxlength="25" type="search" placeholder="Ecard" value="{{ old('ecard1') }}" required>
-                                </div>								  
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mt-1" align="right">									
-                                    <h6 class="mt-2">NIS *)</h6>
-                                </div>
-                                <div class="col-md-8">                                
-                                    <input name="nis1" id="nis1" class="w3-input w3-border" maxlength="25" type="search" placeholder="NIS" value="{{ old('nis1') }}" required>
-                                </div>								  
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mt-1" align="right">									
-                                    <h6 class="mt-2">NISN *)</h6>
-                                </div>
-                                <div class="col-md-8">                                
-                                    <input name="nisn1" id="nisn1" class="w3-input w3-border" maxlength="25" type="search" placeholder="NISN" value="{{ old('nisn1') }}" required>
-                                </div>								  
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mt-1" align="right">									
-                                    <h6 class="mt-2">Kelas</h6>
-                                </div>
-                                <div class="col-md-8">                                
-                                    <input name="kelas1" id="kelas1" class="w3-input w3-border" maxlength="10" type="search" placeholder="Kelas" value="{{ old('kelas1') }}">
-                                </div>								  
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mt-1" align="right">									
-                                    <h6 class="mt-2">Tgl. Lahir</h6>
-                                </div>
-                                <div class="col-md-8">                                
-                                    <input name="tgllahir1" id="tgllahir1" class="w3-input w3-border" type="search" placeholder="Tanggal Lahir">
-                                </div>								  
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4 mt-1" align="right">									
                                     <h6 class="mt-2">Tgl. Daftar *)</h6>
                                 </div>
                                 <div class="col-md-8">                                
                                     <input name="tgldaftar1" id="tgldaftar1" class="w3-input w3-border" type="search" placeholder="Tanggal Daftar">
                                 </div>								  
                             </div> 
+
+                            <div class="row">
+                                <div class="col-md-4 mt-0" align="right">									
+                                    <h6 class="mt-2">Norek *)</h6>
+                                </div>
+                                <div class="col-md-8 input-group mt-0">
+                                    <input name="norek1" id="norek1" class="form-control w3-input w3-border rounded-0" maxlength="25" type="search" placeholder="Norek"  value="{{ old('norek1') }}" required> 
+                                    <div class="input-group-append">
+                                        <button id="btn_norek1" name="btn_norek1" type="button" style="border-radius:0px; border:none;" title="Generate Nomor Rekening" disabled><i style="font-size:24" class="fa">&#xf013;</i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-0" align="right">									
+                                    <h6 class="mt-2">Nama *)</h6>
+                                </div>
+                                <div class="col-md-8 input-group mt-0">
+                                    <input name="nama1" id="nama1" class="form-control w3-input w3-border rounded-0" maxlength="200" type="search" placeholder="Nama"  value="{{ old('nama1') }}" readonly style="background: white;"> 
+                                    <div class="input-group-append">
+                                        <button id="btn_carianggota1" name="btn_carianggota1" type="button" style="border-radius:0px; border:none;" title="Cari Anggota" disabled><i style="font-size:24" class="fas">&#xf002;</i></button>
+                                        <input name="cek1" id="cek1" class="" type="hidden">                                
+                                        <input name="id1" id="id1" class="" type="hidden">
+                                        <input name="idanggota1" id="idanggota1" class="" type="hidden">
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">Ecard *)</h6>
+                                </div>
+                                <div class="col-md-8">                                
+                                    <input name="ecard1" id="ecard1" class="w3-input w3-border" maxlength="25" type="search" placeholder="Ecard" value="{{ old('ecard1') }}" readonly>
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">NIA *)</h6>
+                                </div>
+                                <div class="col-md-8">                                
+                                    <input name="nia1" id="nia1" class="w3-input w3-border" maxlength="25" type="search" placeholder="NIA" value="{{ old('nia1') }}" readonly>
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">NIK *)</h6>
+                                </div>
+                                <div class="col-md-8">                                
+                                    <input name="nik1" id="nik1" class="w3-input w3-border" maxlength="25" type="search" placeholder="NIK" value="{{ old('nik1') }}" readonly>
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-0" align="right">
+                                    <h6 class="mt-2">Tanda Pengenal</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="tandapengenal1" id="tandapengenal1" class="w3-input w3-border"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-0" align="right">
+                                    <h6 class="mt-2">Desain</h6>
+                                </div>
+                                <div class="col-md-8">
+                                    <select name="desain1" id="desain1" class="w3-input w3-border"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">Tgl. Lahir</h6>
+                                </div>
+                                <div class="col-md-8">                                
+                                    <input name="tgllahir1" id="tgllahir1" class="w3-input w3-border" type="search" placeholder="Tanggal Lahir" readonly>
+                                </div>								  
+                            </div>
+                            
                             <div class="row" id="div-tglkeluar" name="div-tglkeluar">
                                 <div class="col-md-4 mt-1" align="right">									
                                     <h6 class="mt-2">Tgl. Keluar</h6>
@@ -234,16 +241,7 @@
                                     <input name="aktif1" id="aktif1" type="hidden" value="Y">
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-4 mt-1" align="right">
-                                    <h6 class="mt-2">Produk</h6>
-                                </div>
-                                <div class="col-md-8">
-                                    <select name="idproduk1" id="idproduk1" class="w3-input w3-border"></select>
-                                </div>
-                            </div>
-
+                            
                             <div class="row">
                                 <div class="col-md-4 mt-1" align="right">
                                     <h6 class="mt-2">Saldo</h6>
@@ -274,7 +272,7 @@
     </div>  
     <!-- end ModalAdd -->
 
-    <!-- ModalImport modal fade-->
+    {{-- <!-- ModalImport modal fade-->
     <div class="modal fade" id="ModalImport" data-backdrop="static">
         <div class="modal-dialog modal-sm">  <!-- modal-(sm, lg, xl) ukuran lebar modal -->
             <div id="modalx" nama="modalx"  class="modal-content w3-orange w3-animate-zoom">
@@ -315,10 +313,10 @@
                             </div>  
                             <div class="row mt-1 mb-2">
                                 <div class="col-md-5 mt-1" align="right">									
-                                    <h6 class="mt-2">Kelas</h6>
+                                    <h6 class="mt-2">Desain</h6>
                                 </div>
                                 <div class="col-md-7">                                
-                                    <input name="kelasx" id="kelasx" class="w3-input w3-border" type="text" placeholder="Kelas" maxlength="10">
+                                    <input name="desainx" id="desainx" class="w3-input w3-border" type="text" placeholder="Desain" maxlength="10">
                                 </div>								  
                             </div>  
                             
@@ -334,7 +332,64 @@
         </div>
         <!-- /.modal-dialog -->      
     </div>  
-    <!-- end ModalImport -->
+    <!-- end ModalImport --> --}}
+
+    <!-- ModalCariAnggota1 modal fade-->
+	<div class="modal fade" id="ModalCariAnggota1"  data-backdrop="static">
+		<div class="modal-dialog modal-xl">  <!-- modal-(sm, lg, xl) ukuran lebar modal -->
+			<div class="modal-content bg-info w3-animate-zoom">
+				
+				<div class="modal-header">
+						<h3 class="modal-title"><i style="font-size:18" class="fas">&#xf002;</i><b> Cari Data</b></h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span></button>
+						
+				</div>
+
+				<form class="form-horizontal">
+                    @csrf
+					<div class="modal-body">
+												
+						<div class="row">
+							<div id="reloadcarianggota1" class="table-responsive">
+                                <table id="carianggota1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:10px;">#</th>                            
+                                            <th style="width:100px">Nama</th>							
+                                            <th style="width:100px">NIA</th>							
+                                            <th style="width:100px">NIK</th>							
+                                            <th style="width:100px">Ecard</th>							
+                                            <th style="width:100px">Alamat</th>							
+                                            <th style="width:100px">Desa</th>							
+                                            <th style="width:100px">Kecamatan</th>							
+                                            <th style="width:100px">Kabupaten</th>							
+                                            <th style="width:100px">Propinsi</th>							
+                                        </tr>
+                                    </thead>
+                                    <tfoot id="show_footercarianggota1">
+                                        
+                                    </tfoot>
+                                    <tbody id="show_carianggota1">
+                                         
+                                    </tbody>
+                                </table>
+
+                            </div>			
+						</div>
+						
+					</div>
+					<div class="modal-footer justify-content-between" align="right">
+						<button type="button" class="w3-button w3-border w3-border-white" data-dismiss="modal">Tutup</button>
+					</div>
+				</form>
+                
+			</div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+	</div>
+	<!-- end ModalCariAnggota -->
 
     <!-- khusus menyimpan data yang akan dihapus -->
     <input name="id3" id="id3"type="hidden">	
@@ -347,6 +402,7 @@
 
 <script type="text/javascript">
     var data1Datatable;
+    var carianggota1Datatable;
 
 $(document).ready(function(){
     
@@ -434,42 +490,89 @@ $(document).ready(function(){
             var tahun2=parseInt(tahun)-17;
 			var tglsekarang=tahun+'-'+bulan+'-'+hari;
 			var tglsekarang2=tahun2+'-'+bulan+'-'+hari;
-			$('#tgldaftarx').val(tglsekarang);
-			$('#tgllahirx').val(tglsekarang2);
 			$('#tgldaftar1').val(tglsekarang);
 			$('#tgllahir1').val(tglsekarang2);
 		}
-    
-    setTimeout(() => {
-         data1Datatable = tampil_data1();    
-         tampil_listproduk();
-    }, 1000);
+
+    start_persiapan()
+    function start_persiapan(){
+        carianggota1Datatable = tampil_carianggota1();
+        setTimeout(() => {
+             data1Datatable = tampil_data1();    
+             tampil_listdesain1();
+             tampil_listtandapengenal1();
+             tampil_listproduktabunganx()
+        }, 1000);
+    }    
 
     function addZero(i) {
         if (i < 10) {i = "0" + i}
         return i;
     }
     $("#btn_norek1").on('click',function(){
-       
+        
+        var prod = $('#idproduktabunganx1 option:selected').text();
+        var prodx = prod.substr(0,2);
+
+        var tgldaftar=$('#tgldaftar1').val();
+        let tglx = tgldaftar.replace(/[-]/g,'');
+
         const d = new Date();
+        let milidetik ='';
         let tahun = addZero(d.getFullYear());
         let bulan = addZero(d.getMonth());
         let tanggal = addZero(d.getDate());        
         let jam = addZero(d.getHours());
         let menit = addZero(d.getMinutes());
         let detik = addZero(d.getSeconds());        
-        let norek = tahun + bulan + tanggal + jam + menit + detik;
+        let milidetikx = d.getMilliseconds();
+        
+        if(milidetikx<10){
+            milidetik = '00'+milidetikx;
+        }else if(milidetikx<100){
+            milidetik = '0'+milidetikx;
+        }else{
+            milidetik = milidetikx;
+        }
+        
+        let norek = tglx + prodx + jam + menit + detik + milidetik;
         $("#norek1").val(norek);
     });
 
-    //menampilkan combo jenis
-    function tampil_listproduk(){				
+    //menampilkan combo produktabunganx
+    function tampil_listproduktabunganx(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('tabungan01.master.nasabahtabungan_listproduk')}}',
+            url   : '{{route('admin.listproduktabungan11')}}',
             
             success: function(data){				    
-                $("#idproduk1").html(data);
+                $("#idproduktabunganx1").html(data);
+                $("#idproduktabunganx1").val({{ $idproduktabungan }});
+            }
+        })                    
+    }
+
+    //menampilkan combo desain1
+    function tampil_listdesain1(){				
+        $.ajax({
+            type: 'get',
+            url   : '{{route('admin.listdesain10')}}',
+            
+            success: function(data){				    
+                $("#desain1").html(data);
+                $("#desain1").val({{ $desain1 }});
+            }
+        })                    
+    }
+    //menampilkan combo tandapengenal1
+    function tampil_listtandapengenal1(){				
+        $.ajax({
+            type: 'get',
+            url   : '{{route('admin.listtandapengenal10')}}',
+            
+            success: function(data){				    
+                $("#tandapengenal1").html(data);
+                // $("#tandapengenal1").val({{ $desain1 }});
             }
         })                    
     }
@@ -497,44 +600,118 @@ $(document).ready(function(){
                     orderable: false, 
                     searchable: false },
                 { data: 'norek', name: 'norek' },
+                { data: 'nia', name: 'nia'},
+                { data: 'nik', name: 'nik'},
                 { data: 'ecard', name: 'ecard' },
-                { data: 'nis', name: 'nis'},
-                { data: 'nisn', name: 'nisn'},
-                { data: 'namalengkap', name: 'namalengkap'},                
+                { data: 'nama', name: 'nama'},                
                 { data: 'tgllahir', name: 'tgllahir'},                
-                { data: 'kelas', name: 'kelas'},                
+                { data: 'desain', name: 'desain'},                
                 { data: 'tgldaftar', name: 'tgldaftar'},                
                 { data: 'tglkeluar', name: 'tglkeluar'},                
                 { data: 'alamat', name: 'alamat'},                
                 { data: 'telp', name: 'telp'},                
                 { data: 'aktif', name: 'aktif'},                
-                { data: 'produk', name: 'produk.produk', orderable: false},                
+                { data: 'tandapengenal', name: 'tandapengenal', orderable: false},                
                 { data: 'saldo', name: 'saldo', class: 'text-right'},                
                 { data: 'action', name: 'action'},
             ]
         });
     }
 
+    $('#btn_carianggota1').on('click',function(){
+        $('#ModalCariAnggota1').modal('show');
+    });
+
+    function tampil_carianggota1(){
+        let i = 1;	
+        return $('#carianggota1').DataTable({
+            responsive : true,
+            retrieve: true,
+            autoWidth : true,
+            paging : true,
+            buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
+            dom: 'lfrtip',
+            lengthMenu: [
+                [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
+                [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
+            ],
+            processing: true,
+            serverSide: true,
+            ajax   : `{{route('tabungan01.master.nasabahtabungan_showanggota')}}`,
+            columns: [
+                // { data: 'no', name:'id', render: function (data, type, row, meta) {
+                //     return meta.row + meta.settings._iDisplayStart + 1;
+                // }},
+                {  "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false },
+                { data: 'nama', name: 'nama' },
+                { data: 'nia', name: 'nia' },
+                { data: 'nik', name: 'nik' },
+                { data: 'ecard', name: 'ecard' },
+                { data: 'alamat', name: 'alamat' },
+                { data: 'desa', name: 'desa' },
+                { data: 'kecamatan', name: 'desa.kecamatan.kecamatan' },
+                { data: 'kabupaten', name: 'desa.kecamatan.kabupaten.kabupaten' },
+                { data: 'propinsi', name: 'desa.kecamatan.kabupaten.propinsi.propinsi' },
+            ]
+        });
+    }
+
+    $('#show_carianggota1').on('click','.item_nama',function(){ 
+        ambilcarianggota1(this);
+    });
+    $('#show_carianggota1').on('click','.item_nia',function(){ 
+        ambilcarianggota1(this);
+    });
+    $('#show_carianggota1').on('click','.item_nik',function(){ 
+        ambilcarianggota1(this);
+    });
+    $('#show_carianggota1').on('click','.item_ecard',function(){ 
+        ambilcarianggota1(this);
+    });
+
+    function ambilcarianggota1(t){
+
+        var id1 = $(t).attr('data1');
+        var nama1 = $(t).attr('data2');
+        var nia1 = $(t).attr('data3');
+        var nik1 = $(t).attr('data4');
+        var ecard1 = $(t).attr('data5');
+        var alamat1 = $(t).attr('data6');
+        var desa1 = $(t).attr('data7');
+        var kecamatan1 = $(t).attr('data8');
+        var kabupaten1 = $(t).attr('data9');
+        var propinsi1 = $(t).attr('data10');
+        var alamat1 = $(t).attr('data11');
+        var tgllahir1 = $(t).attr('data12');
+        var telp1 = $(t).attr('data13');
+       
+        $('#idanggota1').val(id1);
+        $('#nama1').val(nama1);
+        $('#nia1').val(nia1);
+        $('#nik1').val(nik1);
+        $('#ecard1').val(ecard1);
+        $('#alamat1').val(alamat1);
+        $('#tgllahir1').val(tgllahir1);
+        $('#telp1').val(telp1);
+        
+        $('#ModalCariAnggota1').modal('hide');
+    }
+
+
    
-    $('#btn_importexcel1').on('click',function(){			
-		$('#ModalImport').modal('show');
-    });
-
-    $('#btn_upload1').on('click',function(){
-		data_import();
-    });
-
     function data_import(){
         const file1 = $('#file1').prop('files')[0];        
         var tgldaftarx=$('#tgldaftarx').val();
         var tgllahirx=$('#tgllahirx').val();
-        var kelasx=$('#kelasx').val();
+        var desainx=$('#desainx').val();
         
         let formData = new FormData();
             formData.append('file1', file1);            
             formData.append('tgldaftarx', tgldaftarx);            
             formData.append('tgllahirx', tgllahirx);            
-            formData.append('kelasx', kelasx);            
+            formData.append('desainx', desainx);            
           
         $.ajax({
             enctype: 'multipart/form-data',
@@ -557,36 +734,8 @@ $(document).ready(function(){
                 }
         });        
     }
-
-    $("#tanggalx1").on('change',function(){ 
-        setTimeout(() => {
-            kirimsyarat(); 
-        }, 500);
-        
-        setTimeout(() => {
-            tampil_dataTable();
-        }, 200);
-    });
-
-    $("#tanggalx1").on('keydown',function(){
-        setTimeout(() => {
-            kirimsyarat(); 
-        }, 500);
-        setTimeout(() => {
-            tampil_dataTable();
-        }, 200);
-    });
-
-    $("#tanggalx2").on('change',function(){ 
-        setTimeout(() => {
-            kirimsyarat();
-        }, 500);
-        setTimeout(() => {
-            tampil_dataTable();
-        }, 200);
-    });
-
-    $("#tanggalx2").on('keydown',function(){
+   
+    $("#idproduktabunganx1").on('change',function(){ 
         setTimeout(() => {
             kirimsyarat();
         }, 500);
@@ -600,12 +749,10 @@ $(document).ready(function(){
     }
 
     function kirimsyarat(){
-        var tanggalx1=$('#tanggalx1').val();
-        var tanggalx2=$('#tanggalx2').val();
+        var idproduktabunganx1 = $('#idproduktabunganx1').val(); 
 
         let formData = new FormData();
-            formData.append('tanggalx1', tanggalx1);
-            formData.append('tanggalx2', tanggalx2);
+            formData.append('idproduktabunganx1', idproduktabunganx1);
 
         $.ajax({
             enctype: 'multipart/form-data',
@@ -632,23 +779,7 @@ $(document).ready(function(){
 			changeMonth : true,
 			changeYear  : true         
     });
-
-    $("#tanggalx1").datepicker({
-			dateFormat  : "yy-mm-dd",
-			changeMonth : true,
-			changeYear  : true         
-    });
-
-    $("#tanggalx2").datepicker({
-			dateFormat  : "yy-mm-dd",
-			changeMonth : true,
-			changeYear  : true         
-    });
-    $("#tgllahir1").datepicker({
-			dateFormat  : "yy-mm-dd",
-			changeMonth : true,
-			changeYear  : true         
-    });
+    
     $("#tgldaftar1").datepicker({
 			dateFormat  : "yy-mm-dd",
 			changeMonth : true,
@@ -733,35 +864,39 @@ $(document).ready(function(){
 
     function data_simpan(){
         var id1=$('#id1').val();			
-        var namalengkap1=$('#namalengkap1').val();
+        var idanggota1=$('#idanggota1').val();			
+        var nama1=$('#nama1').val();
         var norek1=$('#norek1').val();
+        var nia1=$('#nia1').val();
+        var nik1=$('#nik1').val();
         var ecard1=$('#ecard1').val();
-        var nis1=$('#nis1').val();
-        var nisn1=$('#nisn1').val();
-        var kelas1=$('#kelas1').val();
+        var desain1=$('#desain1').val();
+        var tandapengenal1=$('#tandapengenal1').val();
         var tgllahir1=$('#tgllahir1').val();
         var tgldaftar1=$('#tgldaftar1').val();
         var tglkeluar1=$('#tglkeluar1').val();
         var alamat1=$('#alamat1').val();
         var telp1=$('#telp1').val();
         var aktif1=$('#aktif1').val();
-        var idproduk1=$('#idproduk1').val();
+        var idproduktabunganx1=$('#idproduktabunganx1').val();
         
         let formData = new FormData();
             formData.append('id1', id1);
-            formData.append('namalengkap1', namalengkap1);
+            formData.append('idanggota1', idanggota1);
+            formData.append('nama1', nama1);
             formData.append('norek1', norek1);
+            formData.append('nia1', nia1);
+            formData.append('nik1', nik1);
             formData.append('ecard1', ecard1);
-            formData.append('nis1', nis1);
-            formData.append('nisn1', nisn1);
             formData.append('tgllahir1', tgllahir1);
             formData.append('tgldaftar1', tgldaftar1);
             formData.append('tglkeluar1', tglkeluar1);
-            formData.append('kelas1', kelas1);
+            formData.append('desain1', desain1);
+            formData.append('tandapengenal1', tandapengenal1);
             formData.append('alamat1', alamat1);
             formData.append('telp1', telp1);
             formData.append('aktif1', aktif1);
-            formData.append('idproduk1', idproduk1);
+            formData.append('idproduktabunganx1', idproduktabunganx1);
           
         $.ajax({
             enctype: 'multipart/form-data',
@@ -782,7 +917,7 @@ $(document).ready(function(){
                     }
                 },
             error : function(formData){                    
-                swalgagaltambah(namalengkap1);                 
+                swalgagaltambah(nama1);                 
                 }
         });
         
@@ -832,18 +967,21 @@ $(document).ready(function(){
                     for(i=0; i<resultData.length; i++){
 
                         $('#id1').val(resultData[i].id);
-                        $('#namalengkap1').val(resultData[i].namalengkap);
+                        $('#idanggota1').val(resultData[i].idanggota);
+                        $('#nama1').val(resultData[i].nama);
                         $('#norek1').val(resultData[i].norek);
                         $('#ecard1').val(resultData[i].ecard);
-                        $('#nis1').val(resultData[i].nis);
-                        $('#nisn1').val(resultData[i].nisn);
-                        $('#kelas1').val(resultData[i].kelas);
+                        $('#nia1').val(resultData[i].nia);
+                        $('#nik1').val(resultData[i].nik);
+                        $('#desain1').val(resultData[i].desain);
+                        $('#tandapengenal1').val(resultData[i].tandapengenal);
                         $('#tgldaftar1').val(resultData[i].tgldaftar);
+                        $('#tglkeluar1').val(resultData[i].tglkeluar);
                         $('#tgllahir1').val(resultData[i].tgllahir);
                         $('#alamat1').val(resultData[i].alamat);
                         $('#telp1').val(resultData[i].telp);
                         $('#aktif1').val(resultData[i].aktif);
-                        $('#idproduk1').val(resultData[i].idproduk);
+                        $('#idproduktabunganx1').val(resultData[i].idproduktabungan);
                         $('#saldo1').val(formatAngka(parseInt(resultData[i].saldo),''));
                         
                         if ($('[name="aktif1"]').val()=='Y'){

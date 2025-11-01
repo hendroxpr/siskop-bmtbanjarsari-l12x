@@ -4,7 +4,8 @@ namespace Modules\Tabungan01\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Modules\Akuntansi01\Models\Produk;
+use Modules\Admin01\Models\Anggota;
+use Modules\Akuntansi01\Models\Produktabungan;
 
 // use Modules\Tabungan01\Database\Factories\NasabahFactory;
 
@@ -19,10 +20,15 @@ class Nasabah extends Model
     public $timestamps = false;
     public $incrementing = false;
 
-    public function produk()
+    public function produktabungan()
     {
-        return $this->belongsTo(Produk::class,'idproduk');
+        return $this->belongsTo(Produktabungan::class,'idproduktabungan');
     }
+    public function anggota()
+    {
+        return $this->belongsTo(Anggota::class,'idanggota');
+    }
+    
     public function nasabah()
     {
         return $this->hasMany(Nasabah::class,'idnasabah','id');

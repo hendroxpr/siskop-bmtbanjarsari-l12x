@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Modules\Akuntansi01\Models\Coa;
 use Modules\Akuntansi01\Models\Jenisjurnal;
 use Modules\Akuntansi01\Models\Produk;
+use Modules\Akuntansi01\Models\Produktabungan;
 use rawilk\Printing\Contracts\Printer;
 use Rawilk\Printing\Facades\Printing;
 use Yajra\DataTables\Facades\DataTables;
@@ -53,7 +54,7 @@ class ProduktabunganController extends Controller
             'link' => $link,
             'remark' => $remark,
             'jmlhal' => $jmlhal,
-            'tabel' => Produk::SimplePaginate($jmlhal)->withQueryString(),
+            'tabel' => Produktabungan::SimplePaginate($jmlhal)->withQueryString(),
             'aplikasi' => Aplikasi::get(),
             'menu' => $menu,
         ]);
@@ -70,7 +71,8 @@ class ProduktabunganController extends Controller
         $id = $request['id1'];
 
         $validatedData = $request->validate([
-            'produk1' => 'required',
+            'kode1' => 'required',
+            'produktabungan1' => 'required',
             'idcoasetord1' => 'required',
             'idcoasetork1' => 'required',
             'idcoatarikd1' => 'required',
@@ -92,7 +94,8 @@ class ProduktabunganController extends Controller
           
         //untuk input tabel yang asli
         $data = [            
-            'produk' => $validatedData['produk1'],
+            'kode' => $validatedData['kode1'],
+            'produktabungan' => $validatedData['produktabungan1'],
             'idcoasetord' => $validatedData['idcoasetord1'],
             'idcoasetork' => $validatedData['idcoasetork1'],
             'idcoatarikd' => $validatedData['idcoatarikd1'],
@@ -115,9 +118,9 @@ class ProduktabunganController extends Controller
         ];
 
         if ($id == '0') {
-            Produk::create($data);
+            Produktabungan::create($data);
         } else {
-            Produk::where('id', '=', $id)->update($data);
+            Produktabungan::where('id', '=', $id)->update($data);
         }
         return json_encode('data');
     }
@@ -141,7 +144,7 @@ class ProduktabunganController extends Controller
     {
 
         $datax = DataTables::of(
-            Produk::with([
+            Produktabungan::with([
                 'coasetord','coasetork','coatarikd','coatarikk',
                 'coatfkeluard','coatfkeluark',
                 'coatfmasukd','coatfmasukk',
@@ -212,7 +215,7 @@ class ProduktabunganController extends Controller
     
     public function edit($id)
     {
-        $data = Produk::where('id', '=', $id)->get();
+        $data = Produktabungan::where('id', '=', $id)->get();
         return json_encode(array('data' => $data));      
 
     }
@@ -235,7 +238,7 @@ class ProduktabunganController extends Controller
      */
     public function destroy($id)
     {
-        $data = Produk::where('id', '=', $id)->delete();
+        $data = Produktabungan::where('id', '=', $id)->delete();
         return json_encode(array('data' => $data));
     }
     

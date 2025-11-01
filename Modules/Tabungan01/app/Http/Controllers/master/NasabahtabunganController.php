@@ -18,15 +18,9 @@ use App\Imports\ImportDatasiswa;
 use App\Models\Menusub;
 use Maatwebsite\Excel\Excel as ExcelExcel;
 use Maatwebsite\Excel\Facades\Excel;
-use Modules\Akuntansi01\Models\Produk;
+use Modules\Admin01\Models\Anggota;
+use Modules\Akuntansi01\Models\Produktabungan;
 use Modules\Tabungan01\Models\Nasabah;
-// use Modules\Sibm01\Entities\Nasabah;
-// use Modules\Sibm01\Entities\Produk;
-// use Modules\Sibm01\Entities\Sandi;
-// use Modules\SIPS01\Entities\Datasiswa;
-// use Modules\SIPS01\Entities\Mem_datasiswa;
-// use Modules\SIPS01\Entities\Siswakelas;
-// use Modules\SIPS01\Entities\Tp;
 use Yajra\DataTables\Facades\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -150,10 +144,6 @@ class NasabahtabunganController extends Controller
         // }  
         // return redirect()->back();
 
-        
-
-
-
 
         // // Mem_datasiswa::delete();
         // // return json_encode(array('data' => $data));
@@ -169,25 +159,28 @@ class NasabahtabunganController extends Controller
         $id = $request['id1'];
 
         $validatedData = $request->validate([
-            'namalengkap1' => 'required',
+            'nama1' => 'required',
+            'idanggota1' => 'required',
             'norek1' => 'required',
             'ecard1' => 'required',
-            'nis1' => 'required',
-            'nisn1' => 'required',
+            'nia1' => 'required',
+            'nik1' => 'required',
             'tgldaftar1' => 'required',
-            'idproduk1' => 'required',
+            'idproduktabunganx1' => 'required',
         ]);
           
         //untuk input tabel yang asli
         
         $data = [            
-            'idproduk' => $validatedData['idproduk1'],
-            'namalengkap' => $validatedData['namalengkap1'],
+            'idproduktabungan' => $validatedData['idproduktabunganx1'],
+            'idanggota' => $validatedData['idanggota1'],
+            'nama' => $validatedData['nama1'],
             'norek' => $validatedData['norek1'],
             'ecard' => $validatedData['ecard1'],
-            'nis' => $validatedData['nis1'],
-            'nisn' => $validatedData['nisn1'],
-            'kelas' => $request['kelas1'],
+            'nia' => $validatedData['nia1'],
+            'nik' => $validatedData['nik1'],
+            'desain' => $request['desain1'],
+            'tandapengenal' => $request['tandapengenal1'],
             'tgllahir' => $request['tgllahir1'],
             'tgldaftar' => $validatedData['tgldaftar1'],
             'tglkeluar' => $request['tglkeluar1'],
@@ -221,26 +214,18 @@ class NasabahtabunganController extends Controller
      */
     public function show()
     {
-        $a1 = session()->get('memtanggal1');
-        if($a1==''){
-            $a1=session()->get('memtanggal');  
-        }
-        $a2 = session()->get('memtanggal2');
-        if($a2==''){
-            $a2=session()->get('memtanggal');  
-        }
+        $a1 = session()->get('idproduktabunganx1');
 
         $datax = DataTables::of(
-            Nasabah::with(['produk'])
-            ->where('tgldaftar','>=',$a1)
-            ->where('tgldaftar','<=',$a2)
+            Nasabah::with(['produktabungan'])
+            ->where('idproduktabungan','=',$a1)
             // ->orderBy('namalengkap','asc')                
             );
 
         $data = $datax
             ->addIndexColumn()
-            ->addColumn('produk', function ($row) {
-                return $row->idproduk ? $row->produk->produk : '';
+            ->addColumn('produktabungan', function ($row) {
+                return $row->idproduktabungan ? $row->produktabungan->produktabungan : '';
             })
             ->addColumn('kelas', function ($row) {
                 return $row->kelas ? $row->kelas : '';
@@ -268,7 +253,7 @@ class NasabahtabunganController extends Controller
                        '<a href="#" title="Print Header" class="btn btn-info btn-xs item_printheader" data="' . $row->id . '" data2="'. $row->nis.'" data3="'. $row->namalengkap.'" data4="'. $row->nisn.'" data5="'. $row->norek.'"><i style="font-size:18px" class="fa">&#xf02f;</i></a>';
             })
             
-            ->rawColumns(['produk','action'])
+            ->rawColumns(['produktabungan','action'])
 
 
             ->make(true);
@@ -277,6 +262,111 @@ class NasabahtabunganController extends Controller
 
     }
 
+    public function showanggota()
+    {
+        $datax = Anggota::with(['desa'])->get();
+        
+        $data = DataTables::of($datax)
+            ->addIndexColumn()
+           
+            ->addColumn('nama', function ($row) {
+                return '<a href="#" style="color: white;" title="'. ($row->nama ? $row->nama : '-') .'" class="item_nama" 
+                    data1="' . $row->id . '" 
+                    data2="'. $row->nama . '" 
+                    data3="'. $row->nia . '" 
+                    data4="'. $row->nik . '" 
+                    data5="'. $row->ecard . '" 
+                    data6="'. $row->alamat . '" 
+                    data7="'. $row->desa->desa . '" 
+                    data8="'. $row->desa->kecamatan->kecamatan . '" 
+                    data9="'. $row->desa->kecamatan->kabupaten->kabupaten . '" 
+                    data10="'. $row->desa->kecamatan->kabupaten->propinsi->propinsi . '"
+                    data11="'. $row->alamat . '"
+                    data12="'. $row->tgllahir . '"
+                    data13="'. $row->telp . '"
+                    >'.($row->nama ? $row->nama : '-').'</a> ';
+            })
+            ->addColumn('nia', function ($row) {
+                return '<a href="#" style="color: white;" title="'. ($row->nia ? $row->nia : '-') .'" class="item_nia" 
+                    data1="' . $row->id . '" 
+                    data2="'. $row->nama . '" 
+                    data3="'. $row->nia . '" 
+                    data4="'. $row->nik . '" 
+                    data5="'. $row->ecard . '" 
+                    data6="'. $row->alamat . '" 
+                    data7="'. $row->desa->desa . '" 
+                    data8="'. $row->desa->kecamatan->kecamatan . '" 
+                    data9="'. $row->desa->kecamatan->kabupaten->kabupaten . '" 
+                    data10="'. $row->desa->kecamatan->kabupaten->propinsi->propinsi . '"
+                    data11="'. $row->alamat . '"
+                    data12="'. $row->tgllahir . '"
+                    data13="'. $row->telp . '"
+                    >'.($row->nia ? $row->nia : '-').'</a> ';
+            })
+            ->addColumn('nik', function ($row) {
+                return '<a href="#" style="color: white;" title="'. ($row->nik ? $row->nik : '-') .'" class="item_nik" 
+                    data1="' . $row->id . '" 
+                    data2="'. $row->nama . '" 
+                    data3="'. $row->nia . '" 
+                    data4="'. $row->nik . '" 
+                    data5="'. $row->ecard . '" 
+                    data6="'. $row->alamat . '" 
+                    data7="'. $row->desa->desa . '" 
+                    data8="'. $row->desa->kecamatan->kecamatan . '" 
+                    data9="'. $row->desa->kecamatan->kabupaten->kabupaten . '" 
+                    data10="'. $row->desa->kecamatan->kabupaten->propinsi->propinsi . '"
+                    data11="'. $row->alamat . '"
+                    data12="'. $row->tgllahir . '"
+                    data13="'. $row->telp . '"
+                    >'.($row->nik ? $row->nik : '-').'</a> ';
+            })
+            ->addColumn('ecard', function ($row) {
+                return '<a href="#" style="color: white;" title="'. ($row->ecard ? $row->ecard : '-') .'" class="item_ecard" 
+                    data1="' . $row->id . '" 
+                    data2="'. $row->nama . '" 
+                    data3="'. $row->nia . '" 
+                    data4="'. $row->nik . '" 
+                    data5="'. $row->ecard . '" 
+                    data6="'. $row->alamat . '" 
+                    data7="'. $row->desa->desa . '" 
+                    data8="'. $row->desa->kecamatan->kecamatan . '" 
+                    data9="'. $row->desa->kecamatan->kabupaten->kabupaten . '" 
+                    data10="'. $row->desa->kecamatan->kabupaten->propinsi->propinsi . '"
+                    data11="'. $row->alamat . '"
+                    data12="'. $row->tgllahir . '"
+                    data13="'. $row->telp . '"
+                    >'.($row->ecard ? $row->ecard : '-').'</a> ';
+            })
+            
+            ->addColumn('desa', function ($row) {
+                return $row->iddesa ? $row->desa->desa : '';
+            })
+            ->addColumn('kecamatan', function ($row) {
+                return $row->iddesa ? $row->desa->kecamatan->kecamatan : '';
+            })
+            ->addColumn('kabupaten', function ($row) {
+                return $row->iddesa ? $row->desa->kecamatan->kabupaten->kabupaten : '';
+            })
+            ->addColumn('propinsi', function ($row) {
+                return $row->iddesa ? $row->desa->kecamatan->kabupaten->propinsi->propinsi : '';
+            })
+            
+            ->rawColumns([
+                'nama',                
+                'nia',                
+                'nik',                
+                'ecard',                
+                'desa',                
+                'kecamatan',
+                'kabupaten',
+                'propinsi',
+                'action'])
+
+            ->make(true);
+
+            return $data;
+
+    }
     
     public function edit($id)
     {
@@ -399,37 +489,35 @@ class NasabahtabunganController extends Controller
     public function kirimsyarat(Request $request)
     {
         session([
-            'memtanggal1' => $request['tanggalx1'],
-            'memtanggal2' => $request['tanggalx2'],
+            'idproduktabungan1' => $request['idproduktabunganx1'],
+            'idproduktabunganx1' => $request['idproduktabunganx1'],
         ]);
     }
 
-    function listproduk()
+    function listproduktabungan()
     {        
-        $tampil = Produk::select('*')            
+        $tampil = Produktabungan::select('*')            
             ->get();           
         foreach ($tampil as $baris) {
-            echo "<option value='" . $baris->id . "'>" . $baris->produk . "</option>";
+            echo "<option value='" . $baris->id . "'>" . $baris->produktabungan . "</option>";
         }
     }
 
-
-
-
     public function printcover($norek)
     {
-        $tampil = Nasabah::with(['produk'])
+        $tampil = Nasabah::with(['produktabungan'])
             ->where('norek','=', $norek)
             ->get();
         
         foreach ($tampil as $baris) {
-            $produk = $baris->produk->produk;
-            $keterangan = $baris->produk->keterangan;
-            $namalengkap = $baris->namalengkap;
+            $produktabungan = $baris->produktabungan->produktabungan;
+            $keterangan = $baris->produktabungan->keterangan;
+            $nama = $baris->nama;
             $norek = $baris->norek;
-            $nis = $baris->nis;
-            $nisn = $baris->nisn;
-            $kelas = $baris->kelas;
+            $nia = $baris->nia;
+            $nik = $baris->nik;
+            $desain = $baris->desain;
+            $tandapengenal = $baris->tandapengenal;
             $alamat = $baris->alamat;
         }
             
@@ -438,13 +526,14 @@ class NasabahtabunganController extends Controller
 
         $pdf = PDF::loadView($page, [            
                        
-            'produk' => $produk,
+            'produktabungan' => $produktabungan,
             'keterangan' => $keterangan,
-            'namalengkap' => $namalengkap,
+            'nama' => $nama,
             'norek' => $norek,
-            'nis' => $nis,
-            'nisn' => $nisn,
-            'kelas' => $kelas,
+            'nia' => $nia,
+            'nik' => $nik,
+            'desain' => $desain,
+            'tandapengenal' => $tandapengenal,
             'alamat' => $alamat,
 
         ])->setOptions(['defaultFont' => 'sans-serif', 'defaultFont' => 'sans-serif' ])->set_option('isHtml5ParserEnabled', true); 
@@ -514,12 +603,12 @@ class NasabahtabunganController extends Controller
     }
     public function printheader($norek)
     {
-        $tampil = Nasabah::with(['produk'])
+        $tampil = Nasabah::with(['produktabungan'])
             ->where('norek','=', $norek)
             ->get();
         
         foreach ($tampil as $baris) {
-            $produk = $baris->produk->produk;
+            $produktabungan = $baris->produktabungan->produktabungan;
             $namalengkap = $baris->namalengkap;
             $norek = $baris->norek;
             $nis = $baris->nis;
@@ -536,7 +625,7 @@ class NasabahtabunganController extends Controller
 
         $pdf = PDF::loadView($page, [            
                        
-            'produk' => $produk,
+            'produktabungan' => $produktabungan,
             'namalengkap' => $namalengkap,
             'norek' => $norek,
             'nis' => $nis,

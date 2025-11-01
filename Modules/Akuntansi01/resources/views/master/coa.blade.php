@@ -3,8 +3,8 @@
 @section('contents')
 
 @php
-    $idkelompok = session('idkelompok1');    
-    $idkategori = session('idkategori1');    
+    $idkelompok1 = session('idkelompok1');    
+    $idkategori1 = session('idkategori1');    
 @endphp
 
 @php
@@ -378,7 +378,7 @@
                                     <h6 class="mt-2">Kelompok</h6>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="idkelompok1" id="idkelompok1" class="w3-input w3-border"></select>
+                                    <select name="idkelompok1" id="idkelompok1" class="w3-input w3-border" value="{{ $idkelompok1 }}"></select>
                                 </div>
                             </div>
 
@@ -387,7 +387,7 @@
                                     <h6 class="mt-2">Kategori</h6>
                                 </div>
                                 <div class="col-md-8">
-                                    <select name="idkategori1" id="idkategori1" class="w3-input w3-border"></select>
+                                    <select name="idkategori1" id="idkategori1" class="w3-input w3-border" value="{{ $idkategori1 }}"></select>
                                 </div>
                             </div>
 
@@ -467,6 +467,7 @@
 
 
 <script type="text/javascript">
+    var listkategori1Datatable;
     var allDatatable;
     var assetsDatatable;
     var liabilityDatatable;
@@ -647,19 +648,32 @@ $(document).ready(function(){
         }, 500);
     });
     
-    //menampilkan combo kelompok
-    function tampil_listkelompok(){				
+    //menampilkan combo kelompok1
+    function tampil_listkelompok1(){				
         $.ajax({
             type: 'get',
-            url   : '{{route('akuntansi01.master.coa_listkelompok')}}',
+            url   : '{{route('admin.listkelompok11')}}',
             
             success: function(data){				    
                 $("#idkelompok1").html(data);
-                $("#idkelompok1").val({{ $idkelompok }});
+                $("#idkelompok1").val({{ $idkelompok1 }});
             }
         })                    
     }
 
+    //menampilkan combo kategori1
+    function tampil_listkategori1(){				
+        $.ajax({
+            type: 'get',
+            url   : '{{route('admin.listkategori21')}}',
+            
+            success: function(data){				    
+                $("#idkategori1").html(data);
+                $("#idkategori1").val({{ $idkategori1 }});
+            }
+        })                    
+    }
+    
     //menampilkan combo kategori
     function tampil_listkategori(idx){
         var id1=idx;			
@@ -679,7 +693,7 @@ $(document).ready(function(){
                 }
 
                 $('#idkategori1').html(html); 
-                $("#idkategori1").val({{ $idkategori }});
+                $("#idkategori1").val({{ $idkategori1 }});
                                             
             },
                 error : function(data){
@@ -700,7 +714,33 @@ $(document).ready(function(){
         })                    
     }
 
-    $('#idkelompok1').on('click',function(){
+     $('#idkelompok1').on('click',function(){
+        setTimeout(() => {
+            kirimsyarat();            	
+            setTimeout(() => {
+                listkategori1Datatable = tampil_listkategori1();
+                setTimeout(() => {
+                    listkategori1Datatable.ajax.url('{{route('admin.listkelompok11')}}').load();                
+                    listkategori1Datatable.draw(null, false);
+                }, 500);            
+            }, 500);
+        }, 500);
+        setTimeout(() => {
+            var x = $('#idkelompok1 option:selected').text();        
+            const xArray = x.split(" ");
+            var x1 = xArray[0];
+    
+            var y = $('#idkategori1 option:selected').text();
+            const yArray = y.split(" ");
+            var y1x = yArray[0];
+            var y1 = y1x.substring(1,3);
+    
+            $('#kode1').val(x1+y1);
+        }, 1000);        
+    });
+
+
+    $('#idkelompok1xxx').on('click',function(){
         setTimeout(() => {
             kirimsyarat();	
         }, 500);
@@ -717,7 +757,8 @@ $(document).ready(function(){
     
             var y = $('#idkategori1 option:selected').text();
             const yArray = y.split(" ");
-            var y1 = yArray[0];
+            var y1x = yArray[0];
+            var y1 = y1x.substring(1,3);
     
             $('#kode1').val(x1+y1);
         }, 1000);
@@ -735,7 +776,8 @@ $(document).ready(function(){
     
             var y = $('#idkategori1 option:selected').text();
             const yArray = y.split(" ");
-            var y1 = yArray[0];
+            var y1x = yArray[0];
+            var y1 = y1x.substring(1,3);
     
             $('#kode1').val(x1+y1);
         }, 1000);
@@ -763,13 +805,13 @@ $(document).ready(function(){
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },				 				
             success : function(formData){ 
-                tampil_data();                   
+                //                   
                 }
         });
     }
 
     setTimeout(() => {
-        tampil_listkelompok();
+        tampil_listkelompok1();
 
         setTimeout(() => {
             $('#idkelompok1').click();
@@ -1286,7 +1328,30 @@ $(document).ready(function(){
     }   
 
     $("#btn_simpan").on('click',function(){
-        data_simpan();	
+        var x = $('#idkelompok1 option:selected').text();        
+        const xArray = x.split(" ");
+        var x1 = xArray[0];
+
+        var y = $('#idkategori1 option:selected').text();
+        const yArray = y.split(" ");
+        var y1x = yArray[0];
+        var y1 = y1x.substring(1,3);
+        var xy = x1+y1;
+
+        var kodex = $('#kode1').val();
+        var kode = kodex.substring(0,3);
+        
+        var pj = kodex.length;
+        if (pj==7){
+            if(xy==kode){
+                data_simpan();
+            }else{
+                swalgagalkategori('kategori/kode akun salah...');
+            }
+        }else{
+            swalgagalkategori('Kode akun harus 7 karakter...');
+        }
+
     });
 
     $('#show_all').on('click','.item_edit',function(){        
@@ -1398,11 +1463,6 @@ $(document).ready(function(){
 
         $('#ModalAdd').modal('show'); 
     }
-
-
-    $("#btn_update").on('click',function(){	        
-        data_simpan();
-    });                                         
     
     function data_edit(idx){
         var id1=idx;		
@@ -1449,7 +1509,8 @@ $(document).ready(function(){
                 error : function(data){
                     alert(id1);
                 }
-		    }); 
+		    });
+        
     }
         
     $('#show_all').on('click','.item_hapus',function(){
@@ -1551,6 +1612,15 @@ $(document).ready(function(){
     function swalgagaltambah(x){
         Swal.fire({
             icon: 'error',
+            title: 'Oops...failed to add/update record',
+            text: x,
+            timer:1000
+        })
+    }
+    
+    function swalgagalkategori(x){
+        Swal.fire({
+            icon: 'info',
             title: 'Oops...failed to add/update record',
             text: x,
             timer:1000

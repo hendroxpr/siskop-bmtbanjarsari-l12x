@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 // use Modules\Tabungan01\Database\Factories\TfkeluarFactory;
 
-class Tfkeluar extends Model
+class Tfmasuk extends Model
 {
     use HasFactory;
 
@@ -23,7 +23,11 @@ class Tfkeluar extends Model
     }
     public function nasabahs()
     {
-        return $this->belongsTo(Nasabah::class,'idnasabah');
+        return $this->belongsTo(Nasabah::class,'idnasabahs');
+    }
+    public function tfkeluar()
+    {
+        return $this->belongsTo(Tfkeluar::class,'idtfkeluar');
     }
 
     /**

@@ -9,6 +9,9 @@ use Modules\Admin01\Models\Desa;
 use Modules\Admin01\Models\Kabupaten;
 use Modules\Admin01\Models\Kecamatan;
 use Modules\Admin01\Models\Propinsi;
+use Modules\Akuntansi01\Models\Kategori;
+use Modules\Akuntansi01\Models\Kelompok;
+use Modules\Akuntansi01\Models\Produktabungan;
 
 class AdminController extends Controller
 {
@@ -36,6 +39,7 @@ class AdminController extends Controller
     // list propinsi
     function listpropinsi10()
     {
+        // ori
         $tampil = Propinsi::get();
         foreach ($tampil as $baris) {
             echo "<option value='" . $baris->id . "'>" . $baris->propinsi . "</option>";
@@ -43,6 +47,7 @@ class AdminController extends Controller
     }
     function listpropinsi11()
     {
+        // asc        
         $tampil = Propinsi::orderBy('propinsi', 'asc')->get();
         foreach ($tampil as $baris) {
             echo "<option value='" . $baris->id . "'>" . $baris->propinsi . "</option>";
@@ -173,6 +178,104 @@ class AdminController extends Controller
             "</option>";
         }
     }
+    // list kelompok
+    function listkelompok10()
+    {
+        // ori
+        $tampil = Kelompok::get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->kelompok . "</option>";
+        }
+    }
+    function listkelompok11()
+    {
+        // asc
+        $tampil = Kelompok::orderBy('kode', 'asc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->kelompok . "</option>";
+        }
+    }
+    function listkelompok12()
+    {
+        // asc
+        $tampil = Kelompok::orderBy('kode', 'desc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->kelompok . "</option>";
+        }
+    }
+    // list kategori
+    function listkategori20()
+    {
+        $idkelompok1 = session('idkelompok1');
+        $tampil = Kategori::where('idkelompok','=',$idkelompok1)->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->kategori . "</option>";
+        }
+    }
+    function listkategori21()
+    {
+        $idkelompok1 = session('idkelompok1');
+        $tampil = Kategori::where('idkelompok','=',$idkelompok1)->orderBy('kode', 'asc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->kategori . "</option>";
+        }
+    }
+    function listkategori22()
+    {
+        $idkelompok1 = session('idkelompok1');
+        $tampil = Kategori::where('idkelompok','=',$idkelompok1)->orderBy('kode', 'desc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->kategori . "</option>";
+        }
+    }
+    // list produktabungan
+    function listproduktabungan10()
+    {
+        // ori
+        $tampil = Produktabungan::get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->produktabungan . "</option>";
+        }
+    }
+    function listproduktabungan11()
+    {
+        // asc
+        $tampil = Produktabungan::orderBy('kode', 'asc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->produktabungan . "</option>";
+        }
+    }
+    function listproduktabungan12()
+    {
+        // asc
+        $tampil = Produktabungan::orderBy('kode', 'desc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->produktabungan . "</option>";
+        }
+    }
+    // list desain
+    function listdesain10()
+    {
+        echo "<option value='" ."INDIVIDUAL" . "'>" . "INDIVIDUAL" . "</option>";
+        echo "<option value='" ."COMPANY" . "'>" . "COMPANY" . "</option>";
+    }
+    // list desain
+    function listtandapengenal10()
+    {
+        echo "<option value='" ."KTP (KARTU TANDA PENDUDUK)" . "'>" . "KTP (KARTU TANDA PENDUDUK)" . "</option>";
+        echo "<option value='" ."SIM (SURAT IZIN MENGEMUDI)" . "'>" . "SIM (SURAT IZIN MENGEMUDI)" . "</option>";
+        echo "<option value='" ."PASPOR" . "'>" . "PASPOR" . "</option>";
+        echo "<option value='" ."BUKU NIKAH" . "'>" . "BUKU NIKAH" . "</option>";
+        echo "<option value='" ."KK (KARTU KELUARGA)" . "'>" . "KK (KARTU KELUARGA)" . "</option>";
+        echo "<option value='" ."KIA (KARTU IDENTITAS ANAK)" . "'>" . "KIA (KARTU IDENTITAS ANAK)" . "</option>";
+        echo "<option value='" ."KARTU PELAJAR" . "'>" . "KARTU PELAJAR" . "</option>";
+        echo "<option value='" ."KARTU MAHASISWA" . "'>" . "KARTU MAHASISWA" . "</option>";
+        echo "<option value='" ."KARTU PEGAWAI" . "'>" . "KARTU PEGAWAI" . "</option>";
+    }
+
+
+
+
 
 
 }

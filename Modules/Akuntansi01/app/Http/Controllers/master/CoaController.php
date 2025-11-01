@@ -684,7 +684,9 @@ class CoaController extends Controller
     {
         session([
             'idkelompok1' => $request['idkelompok1'],
+            'idkelompokx1' => $request['idkelompok1'],
             'idkategori1' => $request['idkategori1'],
+            'idkategorix1' => $request['idkategori1'],
             'idtab1' => $request['idtab1'],
         ]);
     }

@@ -53,6 +53,7 @@
                 <thead>
                     <tr>
                         <th style="width:10px;">#</th>                            
+                        <th style="width:10px;">Kode</th>                            
                         <th style="width:50px">Produk Tabungan</th>							
                         <th style="width:50px">Setor-D</th>
                         <th style="width:50px">Setor-K</th>
@@ -106,16 +107,24 @@
 
                             <div class="row">
                                 <div class="col-md-2 mt-1" align="right">									
-                                    <h6 class="mt-2">Produk Tabungan *)</h6>
+                                    <h6 class="mt-2">Kode *)</h6>
                                 </div>
                                 <div class="col-md-5">                                
-                                    <input name="produk1" id="produk1" class="w3-input w3-border" maxlength="30" type="search" placeholder="Produk" autofocus value="{{ old('produk1') }}" required>
+                                    <input name="kode1" id="kode1" class="w3-input w3-border" maxlength="2" type="search" placeholder="kode" autofocus value="{{ old('kode1') }}" required>
                                     <input name="cek1" id="cek1" class="" type="hidden">                                
                                     <input name="id1" id="id1" class="" type="hidden">
-                                </div>								  
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 mt-1" align="right">									
+                                    <h6 class="mt-2">Produk Tab. *)</h6>
+                                </div>
+                                <div class="col-md-5">                                
+                                    <input name="produktabungan1" id="produktabungan1" class="w3-input w3-border" maxlength="30" type="search" placeholder="Produktabungan"  value="{{ old('produktabungan1') }}" required>
+                                </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row mt-2">
                                 <div class="col-md-2 mt-1" align="right">
                                     <h6 class="mt-2">Setor-D</h6>
                                 </div>
@@ -138,7 +147,7 @@
                                 </div>
                             </div>
                             
-                            <div class="row">
+                            <div class="row mt-2">
                                 <div class="col-md-2 mt-1" align="right">
                                     <h6 class="mt-2">Tarik-D</h6>
                                 </div>
@@ -161,9 +170,9 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row mt-2">
                                 <div class="col-md-2 mt-1" align="right">
-                                    <h6 class="mt-2">Transfer Masuk-D</h6>
+                                    <h6 class="mt-2">Transf.Masuk-D</h6>
                                 </div>
                                 <div class="col-md-5">
                                     <select name="idcoatfmasukd1" id="idcoatfmasukd1" class="w3-input w3-border"></select>
@@ -174,7 +183,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2 mt-1" align="right">
-                                    <h6 class="mt-2">Transfer Masuk-K</h6>
+                                    <h6 class="mt-2">Transf.Masuk-K</h6>
                                 </div>
                                 <div class="col-md-5">
                                     <select name="idcoatfmasukk1" id="idcoatfmasukk1" class="w3-input w3-border"></select>
@@ -184,9 +193,9 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row mt-2">
                                 <div class="col-md-2 mt-1" align="right">
-                                    <h6 class="mt-2">Transfer Keluar-D</h6>
+                                    <h6 class="mt-2">Transf.Keluar-D</h6>
                                 </div>
                                 <div class="col-md-5">
                                     <select name="idcoatfkeluard1" id="idcoatfkeluard1" class="w3-input w3-border"></select>
@@ -197,7 +206,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2 mt-1" align="right">
-                                    <h6 class="mt-2">Transfer Keluar-K</h6>
+                                    <h6 class="mt-2">Transf.Keluar-K</h6>
                                 </div>
                                 <div class="col-md-5">
                                     <select name="idcoatfkeluark1" id="idcoatfkeluark1" class="w3-input w3-border"></select>
@@ -207,7 +216,53 @@
                                 </div>
                             </div>
 
+                            <div class="row mt-2">
+                                <div class="col-md-2 mt-1" align="right">
+                                    <h6 class="mt-2">Admin-D</h6>
+                                </div>
+                                <div class="col-md-5">
+                                    <select name="idcoaadmind1" id="idcoaadmind1" class="w3-input w3-border"></select>
+                                </div>
+                                <div class="col-md-5">
+                                    <select name="idjenisjurnaladmind1" id="idjenisjurnaladmind1" class="w3-input w3-border"></select>
+                                </div>
+                            </div>
                             <div class="row">
+                                <div class="col-md-2 mt-1" align="right">
+                                    <h6 class="mt-2">Admin-K</h6>
+                                </div>
+                                <div class="col-md-5">
+                                    <select name="idcoaadmink1" id="idcoaadmink1" class="w3-input w3-border"></select>
+                                </div>
+                                <div class="col-md-5">
+                                    <select name="idjenisjurnaladmink1" id="idjenisjurnaladmink1" class="w3-input w3-border"></select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col-md-2 mt-1" align="right">
+                                    <h6 class="mt-2">Ujrah-D</h6>
+                                </div>
+                                <div class="col-md-5">
+                                    <select name="idcoaujrahd1" id="idcoaujrahd1" class="w3-input w3-border"></select>
+                                </div>
+                                <div class="col-md-5">
+                                    <select name="idjenisjurnalujrahd1" id="idjenisjurnalujrahd1" class="w3-input w3-border"></select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 mt-1" align="right">
+                                    <h6 class="mt-2">Ujrah-K</h6>
+                                </div>
+                                <div class="col-md-5">
+                                    <select name="idcoaujrahk1" id="idcoaujrahk1" class="w3-input w3-border"></select>
+                                </div>
+                                <div class="col-md-5">
+                                    <select name="idjenisjurnalujrahk1" id="idjenisjurnalujrahk1" class="w3-input w3-border"></select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
                                 <div class="col-md-2 mt-1" align="right">									
                                     <h6 class="mt-2">Keterangan</h6>
                                 </div>
@@ -403,7 +458,8 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'produk', name: 'produk',  },
+                { data: 'kode', name: 'kode', class: 'text-center', },
+                { data: 'produktabungan', name: 'produktabungan',  },
                 { data: 'coasetord', name: 'coasetord', orderable: false },
                 { data: 'coasetork', name: 'coasetork', orderable: false },
                 { data: 'coatarikd', name: 'coatarikd', orderable: false },
@@ -465,7 +521,8 @@ $(document).ready(function(){
     function data_simpan(){
         
         var id1=$('#id1').val();        		
-        var produk1=$('#produk1').val();
+        var kode1=$('#kode1').val();
+        var produktabungan1=$('#produktabungan1').val();
         var idcoasetord1=$('#idcoasetord1').val();
         var idcoasetork1=$('#idcoasetork1').val();
         var idcoatarikd1=$('#idcoatarikd1').val();
@@ -488,7 +545,8 @@ $(document).ready(function(){
         
         let formData = new FormData();
             formData.append('id1', id1);
-            formData.append('produk1', produk1);
+            formData.append('kode1', kode1);
+            formData.append('produktabungan1', produktabungan1);
             formData.append('idcoasetord1', idcoasetord1);
             formData.append('idcoasetork1', idcoasetork1);
             formData.append('idcoatarikd1', idcoatarikd1);
@@ -529,7 +587,7 @@ $(document).ready(function(){
                 },
             error : function(formData){ 
                                   
-                swalgagaltambah(produk1);                 
+                swalgagaltambah(produktabungan1);                 
                 }
         });
         
@@ -560,11 +618,6 @@ $(document).ready(function(){
 
         $('#ModalAdd').modal('show'); 
     }
-
-
-    $("#btn_update").on('click',function(){	        
-        data_simpan();
-    });                                         
     
     function data_edit(idx){
         var id1=idx;			
@@ -580,7 +633,8 @@ $(document).ready(function(){
                     for(i=0; i<resultData.length; i++){
 
                         $('#id1').val(resultData[i].id);
-                        $('#produk1').val(resultData[i].produk);
+                        $('#kode1').val(resultData[i].kode);
+                        $('#produktabungan1').val(resultData[i].produktabungan);
                         $('#idcoasetord1').val(resultData[i].idcoasetord);
                         $('#idcoasetork1').val(resultData[i].idcoasetork);
                         $('#idcoatarikd1').val(resultData[i].idcoatarikd);

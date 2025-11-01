@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Admin01\Models\Propinsi;
 use Modules\Tabungan01\Models\Nasabah;
 
-// use Modules\Akuntansi01\Database\Factories\ProdukFactory;
+// use Modules\Akuntansi01\Database\Factories\ProduktabunganFactory;
 
-class Produk extends Model
+class Produktabungan extends Model
 {
     use HasFactory;
 
     protected $connection = 'mysql_01';
-    protected $table = 'produk';
+    protected $table = 'produktabungan';
     protected $primaryKey = 'id';
     protected $guarded = [];
     public $timestamps = false;
@@ -22,7 +22,7 @@ class Produk extends Model
 
 public function nasabah()
     {
-        return $this->hasMany(Nasabah::class,'idproduk','id');
+        return $this->hasMany(Nasabah::class,'idproduktabungan','id');
     }
 
     public function coasetord()
@@ -95,9 +95,9 @@ public function nasabah()
     {
         return $this->belongsTo(Jenisjurnal::class,'idjenisjurnaltfkeluark');
     }
-    public function produk()
+    public function produktabungan()
     {
-        return $this->hasMany(Nasabah::class,'idproduk','id');
+        return $this->hasMany(Nasabah::class,'idproduktabungan','id');
     }
 
 
@@ -106,8 +106,8 @@ public function nasabah()
      */
     // protected $fillable = [];
 
-    // protected static function newFactory(): ProdukFactory
+    // protected static function newFactory(): ProduktabunganFactory
     // {
-    //     // return ProdukFactory::new();
+    //     // return ProduktabunganFactory::new();
     // }
 }

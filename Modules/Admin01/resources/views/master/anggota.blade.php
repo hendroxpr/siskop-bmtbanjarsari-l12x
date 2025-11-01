@@ -102,6 +102,7 @@
                         <thead>
                             <tr>
                                 <th style="width:10px;">#</th>                            
+                                <th style="width:20px">Tgl.Daftar</th>							
                                 <th style="width:20px">NIA</th>							
                                 <th style="width:20px">NIK</th>							
                                 <th style="width:20px">Ecard</th>							
@@ -113,8 +114,8 @@
                                 <th style="width:50px">Propinsi</th>							
                                 <th style="width:50px">Telp.</th>							
                                 <th style="width:50px">Email</th>							
-                                <th style="width:50px">Tgl.Daftar</th>							
-                                <th style="width:50px">Tgl.Keluar</th>							
+                                <th style="width:20px">Tgl.Lahir</th>							
+                                <th style="width:2S0px">Tgl.Keluar</th>							
                                 <th style="width:10px">Aktif</th>							
                                 <th style="width:10px">Action</th>
                             </tr>
@@ -191,151 +192,160 @@
                                 <!--tab-identitas2 -->
                                 <div class="tab-pane fade" id="isi-tab-identitas2" role="tabpanel" aria-labelledby="tab-identitas2">
 
-                                        <div class="row">
-                                            <div class="col-md-4" align="right">									
-                                                <h6 class="mt-2">Tgl.Daftar *)</h6>
-                                            </div>
-
-                                            <div class="col-md-8">                                
-                                                <input name="tgldaftar1" id="tgldaftar1" class="w3-input w3-border" type="text" maxlength="10" placeholder="tgl daftar" value="{{ old('tgldaftar1') }}" required>
-                                                <input name="cek1" id="cek1" class="" type="hidden">                                
-                                                <input name="id1" id="id1" class="" type="hidden">
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 mt-0" align="right">									
-                                                <h6 class="mt-2">NIA *)</h6>
-                                            </div>
-                                            <div class="col-md-8 input-group mt-0">
-                                                <input name="nia1" id="nia1" class="form-control w3-input w3-border rounded-0" type="search" placeholder="20250905001"  value="{{ old('nia1') }}">                        
-                                                <div class="input-group-append">
-                                                    <button id="btn_nia1" name="btn_nia1" type="button" style="border-radius:0px; border:none;" title="Generate NIA" ><i style="font-size:24" class="fa">&#xf013;</i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 mt-1" align="right">									
-                                                <h6 class="mt-2">NIK *)</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="nik1" id="nik1" class="w3-input w3-border" type="text" maxlength="30" placeholder="NIK" value="{{ old('nik1') }}" required>
-                                            </div>								  
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 mt-1" align="right">									
-                                                <h6 class="mt-2">Ecard *)</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="ecard1" id="ecard1" class="w3-input w3-border" type="text" maxlength="30" placeholder="ecard" value="{{ old('ecard1') }}" required>
-                                            </div>								  
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 mt-1" align="right">									
-                                                <h6 class="mt-2">Nama *)</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="nama1" id="nama1" class="w3-input w3-border" type="text" maxlength="200" placeholder="nama" value="{{ old('nama1') }}" required>
-                                            </div>								  
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 mt-1" align="right">									
-                                                <h6 class="mt-2">Alamat</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="alamat1" id="alamat1" class="w3-input w3-border" type="text" maxlength="100" placeholder="alamat" value="{{ old('alamat1') }}">
-                                            </div>								  
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 mt-0" align="right">									
-                                                <h6 class="mt-2">Desa *)</h6>
-                                            </div>
-                                            <select name="iddesa1" id="iddesa1" class="js-select-auto__select form-control" style="border-radius:0px; height:40px; display: none;" autocomplete="false">
-                                                </select>
-                                            <div class="col-md-8 input-group mt-0">
-                                                <input name="desa1" id="desa1" class="form-control w3-input w3-border rounded-0" type="text" placeholder="desa"  value="{{ old('desa1') }}">                        
-                                                <div class="input-group-append">
-                                                    <button id="btn_caridesa1" name="btn_caridesa1" type="button" style="border-radius:0px; border:none;" title="Cari desa" ><i style="font-size:24" class="fas">&#xf002;</i></button>
-                                                </div>
-                                            </div>
-                                        </div>                                    
-                                        <div class="row">
-                                            <div class="col-md-4 mt-1" align="right">									
-                                                <h6 class="mt-2">Kecamatan</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="kecamatan1" id="kecamatan1" class="w3-input w3-border" type="text" maxlength="50" placeholder="kecamatan" value="{{ old('kecamatan1') }}" readonly>
-                                            </div>								  
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4 mt-1" align="right">									
-                                                <h6 class="mt-2">Kabupaten</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="kabupaten1" id="kabupaten1" class="w3-input w3-border" type="text" maxlength="50" placeholder="kabupaten" value="{{ old('kabupaten1') }}" readonly>
-                                            </div>								  
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4" align="right">									
-                                                <h6 class="mt-2">Propinsi</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="propinsi1" id="propinsi1" class="w3-input w3-border" type="text" maxlength="50" placeholder="Propinsi" value="{{ old('propinsi1') }}" readonly>
-                                            </div>
-                                        </div> 
-                                        
-                                        <div class="row">
-                                            <div class="col-md-4" align="right">										
-                                                <h6 class="mt-2">Telp</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="telp1" id="telp1" class="w3-input w3-border" type="text" maxlength="20" placeholder="telp" value="{{ old('telp1') }}">
-                                            </div>								  
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-4" align="right">										
-                                                <h6 class="mt-2">Email</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="email1" id="email1" class="w3-input w3-border" type="email" maxlength="50" placeholder="email" value="{{ old('email1') }}">
-                                            </div>								  
+                                    <div class="row">
+                                        <div class="col-md-4" align="right">									
+                                            <h6 class="mt-2">Tgl.Daftar *)</h6>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-md-4" align="right">										
-                                                <h6 class="mt-2">Tgl.Keluar</h6>
-                                            </div>
-                                            <div class="col-md-8">                                
-                                                <input name="tglkeluar1" id="tglkeluar1" class="w3-input w3-border" type="text" maxlength="50" placeholder="tgl keluar" value="{{ old('tglkeluar1') }}">
-                                            </div>								  
+                                        <div class="col-md-8">                                
+                                            <input name="tgldaftar1" id="tgldaftar1" class="w3-input w3-border" type="text" maxlength="10" placeholder="tgl daftar" value="{{ old('tgldaftar1') }}" required>
+                                            <input name="cek1" id="cek1" class="" type="hidden">                                
+                                            <input name="id1" id="id1" class="" type="hidden">
                                         </div>
-                                        <div class="row">
-                                            
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mt-0" align="right">									
+                                            <h6 class="mt-2">NIA *)</h6>
+                                        </div>
+                                        <div class="col-md-8 input-group mt-0">
+                                            <input name="nia1" id="nia1" class="form-control w3-input w3-border rounded-0" type="search" placeholder="202509050001"  value="{{ old('nia1') }}">                        
+                                            <div class="input-group-append">
+                                                <button id="btn_nia1" name="btn_nia1" type="button" style="border-radius:0px; border:none;" title="Generate NIA" ><i style="font-size:24" class="fa">&#xf013;</i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mt-1" align="right">									
+                                            <h6 class="mt-2">NIK *)</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="nik1" id="nik1" class="w3-input w3-border" type="text" maxlength="30" placeholder="NIK" value="{{ old('nik1') }}" required>
+                                        </div>								  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mt-1" align="right">									
+                                            <h6 class="mt-2">Ecard *)</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="ecard1" id="ecard1" class="w3-input w3-border" type="text" maxlength="30" placeholder="ecard" value="{{ old('ecard1') }}" required>
+                                        </div>								  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mt-1" align="right">									
+                                            <h6 class="mt-2">Nama *)</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="nama1" id="nama1" class="w3-input w3-border" type="text" maxlength="200" placeholder="nama" value="{{ old('nama1') }}" required>
+                                        </div>								  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mt-1" align="right">									
+                                            <h6 class="mt-2">Alamat</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="alamat1" id="alamat1" class="w3-input w3-border" type="text" maxlength="100" placeholder="alamat" value="{{ old('alamat1') }}">
+                                        </div>								  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mt-0" align="right">									
+                                            <h6 class="mt-2">Desa *)</h6>
+                                        </div>
+                                        <select name="iddesa1" id="iddesa1" class="js-select-auto__select form-control" style="border-radius:0px; height:40px; display: none;" autocomplete="false">
+                                            </select>
+                                        <div class="col-md-8 input-group mt-0">
+                                            <input name="desa1" id="desa1" class="form-control w3-input w3-border rounded-0" type="text" placeholder="desa"  value="{{ old('desa1') }}">                        
+                                            <div class="input-group-append">
+                                                <button id="btn_caridesa1" name="btn_caridesa1" type="button" style="border-radius:0px; border:none;" title="Cari desa" ><i style="font-size:24" class="fas">&#xf002;</i></button>
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                    <div class="row">
+                                        <div class="col-md-4 mt-1" align="right">									
+                                            <h6 class="mt-2">Kecamatan</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="kecamatan1" id="kecamatan1" class="w3-input w3-border" type="text" maxlength="50" placeholder="kecamatan" value="{{ old('kecamatan1') }}" readonly>
+                                        </div>								  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mt-1" align="right">									
+                                            <h6 class="mt-2">Kabupaten</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="kabupaten1" id="kabupaten1" class="w3-input w3-border" type="text" maxlength="50" placeholder="kabupaten" value="{{ old('kabupaten1') }}" readonly>
+                                        </div>								  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4" align="right">									
+                                            <h6 class="mt-2">Propinsi</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="propinsi1" id="propinsi1" class="w3-input w3-border" type="text" maxlength="50" placeholder="Propinsi" value="{{ old('propinsi1') }}" readonly>
+                                        </div>
+                                    </div> 
+                                    
+                                    <div class="row">
+                                        <div class="col-md-4" align="right">										
+                                            <h6 class="mt-2">Telp</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="telp1" id="telp1" class="w3-input w3-border" type="text" maxlength="20" placeholder="telp" value="{{ old('telp1') }}">
+                                        </div>								  
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4" align="right">										
+                                            <h6 class="mt-2">Email</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="email1" id="email1" class="w3-input w3-border" type="email" maxlength="50" placeholder="email" value="{{ old('email1') }}">
+                                        </div>								  
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4" align="right">										
+                                            <h6 class="mt-2">Tgl.Lahir</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="tgllahir1" id="tgllahir1" class="w3-input w3-border" type="search" maxlength="10" placeholder="tgl lahir" value="{{ old('tgllahir1') }}">
+                                        </div>								  
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4" align="right">										
+                                            <h6 class="mt-2">Tgl.Keluar</h6>
+                                        </div>
+                                        <div class="col-md-8">                                
+                                            <input name="tglkeluar1" id="tglkeluar1" class="w3-input w3-border" type="search" maxlength="10" placeholder="tgl keluar" value="{{ old('tglkeluar1') }}">
+                                        </div>								  
+                                    </div>
+
+                                    <div class="row">
                                         <div class="col-md-4" align="right">									
                                             <h6 class="mt-2">Aktif</h6>
                                         </div>            
                                         <div class="col-md-8 mt-1" style="padding-left: 20px;">
                                             <div class="icheck-primary-white d-inline">
-                                            <input type="radio" value='Y' id="aktif1xy" name="aktif1x" checked>
-                                            <label for="aktif1xy">
-                                                <span class="text" style="padding-left: 2px; padding-right: 15px;">Y</span>
-                                            </label>
+                                                <input type="radio" value='Y' id="aktif1xy" name="aktif1x" checked>
+                                                <label for="aktif1xy">
+                                                    <span class="text" style="padding-left: 2px; padding-right: 15px;">Y</span>
+                                                </label>
                                             </div>
                                             <div class="icheck-primary-white d-inline text-white">
-                                            <input type="radio" value='N' id="aktif1xn" name="aktif1x">
-                                            <label for="aktif1xn">
-                                                <span class="text" style="padding-left: 2px; padding-right: 15px;">N</span>
-                                            </label>
+                                                <input type="radio" value='N' id="aktif1xn" name="aktif1x">
+                                                <label for="aktif1xn">
+                                                    <span class="text" style="padding-left: 2px; padding-right: 15px;">N</span>
+                                                </label>
                                             </div>
                                             <input name="aktif1" id="aktif1" type="hidden" value="Y">
                                         </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12" align="left" style="color: yellow;">									
-                                                <h6 class="mt-2"><b>*) Wajib diisi</b></h6>
-                                            </div>                                                        
-                                        </div>
-                                        
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12" align="left" style="color: yellow;">									
+                                            <h6 class="mt-2"><b>*) Wajib diisi</b></h6>
+                                        </div>                                                        
+                                    </div>
+                                        
                                 </div>
                                 <!--/tab-identitas2 -->
 
@@ -356,7 +366,7 @@
                                                         <div class="row">
                                                             <div class="col-md-12 mb-0">
                                                                 <input name="uangdaftar1" id="uangdaftar1" class="w3-input w3-border text-right" type="search" maxlength="15" placeholder="uang pendaftaran" value="0" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);" required>
-                                                                <p id="terbilang1" name="terbilang1" style="color: yellow">nol</p>
+                                                                <span id="terbilang1" name="terbilang1" style="color: yellow">nol</span>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -866,6 +876,11 @@ $(document).ready(function(){
            changeMonth : true,
            changeYear  : true         
     });
+    $("#tgllahir1").datepicker({
+           dateFormat  : "yy-mm-dd",
+           changeMonth : true,
+           changeYear  : true         
+    });
     
     $("#tglkeluar1").datepicker({
            dateFormat  : "yy-mm-dd",
@@ -1100,6 +1115,7 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
+                { data: 'tgldaftar', name: 'tgldaftar' },
                 { data: 'nia', name: 'nia', className: 'dt-center' },
                 { data: 'nik', name: 'nik', className: 'dt-center' },
                 { data: 'ecard', name: 'ecard', className: 'dt-center' },
@@ -1111,7 +1127,7 @@ $(document).ready(function(){
                 { data: 'propinsi', name: 'desa.kecamatan.kabupaten.propinsi.propinsi' },
                 { data: 'telp', name: 'telp' },
                 { data: 'email', name: 'email' },
-                { data: 'tgldaftar', name: 'tgldaftar' },
+                { data: 'tgllahir', name: 'tgllahir' },
                 { data: 'tglkeluar', name: 'tglkeluar' },
                 { data: 'aktif', name: 'aktif' },
                 { data: 'action', name: 'action', className: 'dt-center' },
@@ -1242,6 +1258,7 @@ $(document).ready(function(){
     function data_simpan(){
         var id1=$('#id1').val();
         var tgldaftar1=$('#tgldaftar1').val();
+        var tgllahir1=$('#tgllahir1').val();
         var tglkeluar1=$('#tglkeluar1').val();
         var nama1=$('#nama1').val();
         var nia1=$('#nia1').val();
@@ -1264,6 +1281,7 @@ $(document).ready(function(){
 
             formData.append('id1', id1);
             formData.append('tgldaftar1', tgldaftar1);
+            formData.append('tgllahir1', tgllahir1);
             formData.append('tglkeluar1', tglkeluar1);
             formData.append('nama1', nama1);
             formData.append('nia1', nia1);
@@ -1360,6 +1378,7 @@ $(document).ready(function(){
 
                         $('#id1').val(resultData[i].id);
                         $('#tgldaftar1').val(resultData[i].tgldaftar);
+                        $('#tgllahir1').val(resultData[i].tgllahir);
                         $('#tglkeluar1').val(resultData[i].tglkeluar);
                         $('#nama1').val(resultData[i].nama);
                         $('#nia1').val(resultData[i].nia);
