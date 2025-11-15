@@ -349,7 +349,7 @@ class  JurnalpinjamanController extends Controller
 
         $datax = DataTables::of(
             Anggota::with(['desa'])
-                ->whereNotIn('id',$idanggota) 
+                // ->whereNotIn('id',$idanggota) 
                 ->where('aktif','=','Y')                              
                 ->orderBy('nama','asc')
             );

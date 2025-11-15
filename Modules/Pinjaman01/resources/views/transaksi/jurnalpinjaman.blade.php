@@ -1502,6 +1502,11 @@ $(document).ready(function(){
         let hasilx = formatAngka(dx/xax,'');
         $("#nilaiangsuran1").val(hasilx);
         $("#terbilangnilaiangsuran1").html(terbilang(hasilx)); 
+
+        let tipe = $('#tipe1').val().replace(/[^,\d]/g, '').toString();
+        let tipex = parseFloat(tipe);
+        let x = jatuhtempo($('#tgltransaksix1').val(),30*tipex);
+         $('#jatuhtempo1').val(x);
                     
     });
 
