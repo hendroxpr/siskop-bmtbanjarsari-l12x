@@ -54,7 +54,7 @@
                     <tr>
                         <th style="width:10px;">#</th>                            
                         <th style="width:10px;">Kode</th>                            
-                        <th style="width:50px">Produk Tabungan</th>							
+                        <th style="width:50px">Produk Simpanan</th>							
                         <th style="width:50px">Setor-D</th>
                         <th style="width:50px">Setor-K</th>
                         <th style="width:50px">Tarik-D</th>
@@ -117,7 +117,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-2 mt-1" align="right">									
-                                    <h6 class="mt-2">Produk Tab. *)</h6>
+                                    <h6 class="mt-2">Produk Simp.*)</h6>
                                 </div>
                                 <div class="col-md-5">                                
                                     <input name="produktabungan1" id="produktabungan1" class="w3-input w3-border" maxlength="30" type="search" placeholder="Produktabungan"  value="{{ old('produktabungan1') }}" required>

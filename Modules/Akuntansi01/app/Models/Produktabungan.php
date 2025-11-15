@@ -5,7 +5,7 @@ namespace Modules\Akuntansi01\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\Admin01\Models\Propinsi;
-use Modules\Tabungan01\Models\Nasabah;
+use Modules\simpanan01\Models\Nasabah;
 
 // use Modules\Akuntansi01\Database\Factories\ProduktabunganFactory;
 

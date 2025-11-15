@@ -1,0 +1,1474 @@
+@extends('admin.layouts.main')
+
+@section('contents')
+
+@php
+    $tgltransaksix1 = session('tgltransaksix1');   
+    if($tgltransaksix1==''){
+        $tgltransaksix1='';  
+    }
+    $nomorbuktix1 = session()->get('nomorbuktix1');
+    if($nomorbuktix1==''){
+        $nomorbuktix1='';  
+    }
+    
+    $jmlitem = session()->get('jmlitem1');
+    if($jmlitem=='0'){
+        $jmlitem='0';  
+    }
+
+@endphp
+
+@php
+    $kunci1 = auth()->user()->kunci1;
+    $kunci2 = auth()->user()->kunci2;    
+    $level = auth()->user()->levels;
+    foreach ($menu as $item) {
+        $idaplikasi = $item->idaplikasi;
+    }
+@endphp
+
+@if($kunci1==1)
+    <div class="container-fluid px-0" style="display:block"> 
+@else
+    @if($idaplikasi<>$kunci1)
+        <div>
+            @include('admin.layouts.forbidden')
+        </div>
+
+        <div class="container-fluid px-0" style="display:none"> 
+    @else
+        <div class="container-fluid px-0" style="display:block">
+    @endif
+@endif
+
+    <div class="box-header mb-3">  
+        <div class="row">
+            
+            <div class="col-md-4">
+                
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <h6 class="mt-2">Tanggal Transaksi</h6>
+                        
+                    </div>
+                    <div class="col-md-7">
+                        <input name="tgltransaksix1" id="tgltransaksix1" class="w3-input w3-border" maxlength="10" type="text" placeholder="Tgl Transaksi" required autocomplete="off" value="{{ session('tgltransaksix1') }}" required>                       
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 text-right">
+                        <h6 class="mt-2">Nomor Bukti</h6>
+                    </div>
+                    <div class="col-md-7 input-group">
+                        <input name="nomorbuktix1" id="nomorbuktix1" class="form-control w3-input w3-border rounded-0" type="search" placeholder="UMM.001.20230131.0001" disabled value="{{ session('nomorbuktix1') }}">                        
+                        <div class="input-group-append">
+                            <button id="btn_nomorbuktix1" name="btn_nomorbuktix1" type="button" style="border-radius:0px; border:none;" title="Generate Nomor Bukti" disabled><i style="font-size:24" class="fa">&#xf013;</i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                {{--  --}}
+                
+            </div>
+
+            <div class="col-md-4">
+                <div class="w3-row" align="right"><i class="fa fa-refresh" aria-hidden="true"></i>            
+                    <a href="{{ url('/') }}{{ $link }}" class="btn bg-success rounded-0"><i style="font-size:18px" class="fa">&#xf021;</i> Refresh</a>            
+                    <button id="btn_tambah1" name="btn_tambah1" type="button" class="btn bg-primary rounded-0"><i class="fas fa-plus"></i> Tambah</button>
+                    <button id="btn_posting1" name="btn_posting1" type="button" class="btn bg-warning rounded-0"><i class="fa fa-upload"></i> Posting</button>	            
+                </div> 
+            </div>
+        </div>
+
+    </div>
+
+    <!--awal tabel-->        
+        <div class="box-body" id="headerjudul" style="display: block;">
+            <div id="reload" class="table-responsive">
+                
+                <table id="data1" class="table table-bordered table-striped table-hover" style="width: 100%">
+                    <thead>
+                        <tr>
+                            <th style="width:10px;">#</th>                            
+							<th style="width:50px">Tanggal Transaksi</th>
+							<th style="width:50px">Nomor Bukti</th>
+							<th style="width:50px">Sandi</th>
+							<th style="width:50px">Coa</th>
+							<th style="width:50px">Debet</th>
+							<th style="width:50px">Kredit</th>
+							<th style="width:50px">Tanggal Posting</th>
+							<th style="width:50px">Nomor Posting</th>
+							<th style="width:100px">Keterangan</th>							
+                            <th style="width:10px">Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot id="show_footerdata1">
+                        <tr>
+                            <th></th>                            
+                            <th></th>                            
+                            <th style="align-items: center;">TOTAL :</th>                            
+                            <th></th>                            
+                            <th></th>                            
+                            <th id="totaldebet1" name="totaldebet1"></th>                            
+                            <th id="totalkredit1" name="totalkredit1"></th>                            
+                            <th colspan="4"></th>                            
+                                                        
+                        </tr>
+                    </tfoot>
+                    <tbody id="show_data1">
+                    
+                    </tbody>
+                </table>				
+                
+            </div>
+        </div>    
+        <!--akhir tabel-->
+
+    <!-- ModalAdd modal fade-->
+    <div class="modal fade" id="ModalAdd" data-backdrop="static">
+        <div class="modal-dialog modal-default">  <!-- modal-(sm, lg, xl) ukuran lebar modal -->
+            <div id="modalx" nama="modalx"  class="modal-content bg-primary w3-animate-zoom">
+            
+                <div class="modal-header">
+                <h3 class="modal-title"><i id="iconx" name="iconx" class="fas fa-plus-square"></i><b><span id="judulx" name="judulx">Tambah Data</span></b></h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="form-group">
+                    <form class="form-horizontal" id="formSimpan" nama="formSimpan" action="" method="">
+                        @csrf	
+                        <div class="modal-body" id="bodyAdd" name="bodyAdd">                        
+
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">Sandi</h6>
+                                </div>
+                                <div class="col-md-8">  
+                                    <input name="cek1" id="cek1" class="" type="hidden">                               
+                                    <input name="id1" id="id1" class="" type="hidden">
+                                    <select name="idsandi1" id="idsandi1" class="js-select-auto__select form-control" style="border-radius:0px; height:40px; display: block;" autocomplete="off"></select>                              
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">COA</h6>
+                                </div>
+                                <div class="col-md-8">  
+                                    <select name="idcoa1" id="idcoa1" class="js-select-auto__select form-control" style="border-radius:0px; height:40px; display: block;" autocomplete="off"></select> 
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">Jenis Jurnal</h6>
+                                </div>
+                                <div class="col-md-8">  
+                                    <input name="cek1" id="cek1" class="" type="hidden">                                
+                                    <input name="id1" id="id1" class="" type="hidden">
+                                    <select name="idjenisjurnal1" id="idjenisjurnal1" class="js-select-auto__select form-control" style="border-radius:0px; height:40px; display: block;" autocomplete="off"></select>                              
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">Debet</h6>
+                                </div>
+                                <div class="col-md-8">  
+                                    <input name="debet1" id="debet1" class="w3-input w3-border text-right" type="search" placeholder="Debet" value="0" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+                                    <span id="terbilangd1" name="terbilangd1" style="color: yellow">nol</span>
+                                </div>								  
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4 mt-1" align="right">									
+                                    <h6 class="mt-2">Kredit</h6>
+                                </div>
+                                <div class="col-md-8">  
+                                    <input name="kredit1" id="kredit1" class="w3-input w3-border text-right" type="search" placeholder="Kredit" value="0" onkeydown="return numbersonly(this, event);" onkeyup="javascript:tandaPemisahTitik(this);">
+                                    <span id="terbilangk1" name="terbilangk1" style="color: yellow">nol</span>
+                                </div>								  
+                            </div>
+                            
+                            
+                            <div class="row">
+                                <div class="col-md-4" align="right">										
+                                    <h6 class="mt-2">Pemberi</h6>
+                                </div>
+                                <div class="col-md-8">                                
+                                    <input name="pemberi1" id="pemberi1" maxlength="40" class="w3-input w3-border" type="search" placeholder="instansi pemberi" autocomplete="off">
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" align="right">										
+                                    <h6 class="mt-2">Penerima</h6>
+                                </div>
+                                <div class="col-md-8">                                
+                                    <input name="penerima1" id="penerima1" maxlength="40" class="w3-input w3-border" type="search" placeholder="instansi penerima" autocomplete="off">
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" align="right">										
+                                    <h6 class="mt-2">Nama Penerima</h6>
+                                </div>
+                                <div class="col-md-8">                                
+                                    <input name="namapenerima1" id="namapenerima1" maxlength="40" class="w3-input w3-border" type="search" placeholder="nama penerima" autocomplete="off">
+                                </div>								  
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" align="right">										
+                                    <h6 class="mt-2">Keterangan</h6>
+                                </div>
+                                <div class="col-md-8">                                
+                                    <input name="keterangan1" id="keterangan1" maxlength="100" class="w3-input w3-border" type="search" placeholder="Keterangan" autocomplete="off">
+                                </div>								  
+                            </div>
+                        
+                        </div>
+                        <div class="modal-footer justify-content-between" style="padding-bottom: 0px">
+                            <button type="button" class="w3-button w3-border w3-border-white" data-dismiss="modal">Tutup</button>
+                            <button id="btn_simpan" name="btn_simpan" type="button" class="w3-button w3-border w3-border-white"><i style="font-size:18px" class="fa">&#xf0c7;</i> Simpan</button>
+                            <button id="btn_baru" name="btn_baru" type="button" class="w3-button w3-border w3-border-white"><i style="font-size:18px" class="fas fa-plus"></i> Baru</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->      
+    </div>  
+    <!-- end ModalAdd -->
+
+
+<!-- ModalPosting modal fade-->
+<div class="modal fade" id="ModalPosting"  data-backdrop="static">
+    <div class="modal-dialog modal-default">  <!-- modal-(sm, lg, xl) ukuran lebar modal -->
+        <div class="modal-content bg-warning w3-animate-zoom">
+            
+            <div class="modal-header">
+                    <h3 class="modal-title"><i style="font-size:18" class="fa">&#xf093;</i><b> Posting</b></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                    
+            </div>
+            <form class="form-horizontal">
+                @csrf
+                <div class="modal-body">
+                    
+                        <div class="row">
+                            <div class="col-md-4" align="right">										
+                                <h4 class="mt-2">Tgl. Transaksi</h4>
+                            </div>
+                            <div class="col-md-1" align="center">                                
+                                <h4 class="mt-2">:</h4>
+                            </div>								  
+                            <div class="col-md-7">                                
+                                <h4 class="mt-2"></h4>
+                                <h4 class="mt-2">
+                                    <span  id="tgltransaksi5" name="tgltransaksi5" style="display: block"></span>
+                                    <span  id="tgltransaksi5x" name="tgltransaksi5x" style="display: none"></span>
+                                </h4>
+                            </div>								  
+                        </div> 			
+                        <div class="row">
+                            <div class="col-md-4" align="right">										
+                                <h4 class="mt-2">No. Bukti</h4>
+                            </div>
+                            <div class="col-md-1" align="center">                                
+                                <h4 class="mt-2">:</h4>
+                            </div>								  
+                            <div class="col-md-7">                                
+                                <h4 class="mt-2"><span  id="nomorbukti5" name="nomorbukti5"></span></h4>
+                            </div>								  
+                        </div> 			
+                        <div class="row">
+                            <div class="col-md-4" align="right">										
+                                <h4 class="mt-2">Tgl. Posting</h4>
+                            </div>
+                            <div class="col-md-1" align="center">                                
+                                <h4 class="mt-2">:</h4>
+                            </div>								  
+                            <div class="col-md-7"> 
+                                <h4 class="mt-2"><span  id="tglposting5" name="tglposting5"></span></h4> 
+                            </div>								  
+                        </div>  			
+                        <div class="row">
+                            <div class="col-md-4" align="right">										
+                                <h4 class="mt-2">No. Posting</h4>
+                            </div>
+                            <div class="col-md-1" align="center">                                
+                                <h4 class="mt-2">:</h4>
+                            </div>								  
+                            <div class="col-md-7">
+                                <h4 class="mt-2"><span  id="nomorposting5" name="nomorposting5"></span></h4>
+                            </div>								  
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4" align="right">										
+                                <h4 class="mt-2">Debet</h4>
+                            </div>
+                            <div class="col-md-1" align="center">                                
+                                <h4 class="mt-2">:</h4>
+                            </div>								  
+                            <div class="col-md-7">
+                                <h4 class="mt-2"><span  id="debet5" name="debet5"></span></h4>                                                                
+                            </div>								  
+                        </div>                        			
+                        <div class="row">
+                            <div class="col-md-4" align="right">										
+                                <h4 class="mt-2">Kredit</h4>
+                            </div>
+                            <div class="col-md-1" align="center">                                
+                                <h4 class="mt-2">:</h4>
+                            </div>								  
+                            <div class="col-md-7">
+                                <h4 class="mt-2"><span  id="kredit5" name="kredit5"></span></h4>                                                                
+                            </div>								  
+                        </div>                        			
+                    
+                </div>
+                <div class="modal-footer justify-content-between" align="right">
+                    <button type="button" class="w3-button w3-border w3-border-white" data-dismiss="modal">Tutup</button>
+                    <button id="btn_posting5" name="btn_posting5" type="button" class="w3-button w3-border w3-border-white"><i style="font-size:18px" class="fa">&#xf093;</i> Posting</button>
+                </div>
+            </form>
+        </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- end ModalPosting -->
+
+    <!-- khusus menyimpan data yang akan sementara -->
+    <input name="id3" id="id3" type="hidden">	
+    <input name="data3a" id="data3a" type="hidden">	
+    <input name="data3b" id="data3b" type="hidden">	
+    <input name="data3c" id="data3c" type="hidden">	
+    <input name="data3d" id="data3d" type="hidden">	
+    <input name="data3e" id="data3e" type="hidden">	
+    <input name="data3f" id="data3f" type="hidden">	
+    <input name="data3g" id="data3g" type="hidden">	
+    <input name="data3h" id="data3h" type="hidden">	
+    <input name="data3i" id="data3i" type="hidden">	
+    <input name="data3j" id="data3j" type="hidden">	
+    <input name="data3k" id="data3k" type="hidden">	
+    <input name="data3l" id="data3l" type="hidden">	
+    <input name="data3m" id="data3m" type="hidden">	
+    <input name="data3o" id="data3o" type="hidden">	
+    <input name="data3p" id="data3p" type="hidden">	
+    <input name="data3q" id="data3q" type="hidden">	
+    <input name="data3r" id="data3r" type="hidden">
+    <input name="data3s" id="data3s" type="hidden">	
+    <input name="data3t" id="data3t" type="hidden">	
+    <input name="data3u" id="data3u" type="hidden">	
+    <input name="data3v" id="data3v" type="hidden">	
+    <input name="data3w" id="data3w" type="hidden">	
+    <input name="data3x" id="data3x" type="hidden">	
+    <input name="data3y" id="data3y" type="hidden">	
+    <input name="data3z" id="data3z" type="hidden">	
+
+</div>
+
+
+<script type="text/javascript">
+   var data1Datatable;
+$(document).ready(function(){
+
+    // tglhariini();        
+    function tglhariini(){
+        var tgl=new Date();
+        var hari=tgl.getDate();
+        if(hari<10){
+            var hari='0'+hari;
+        }
+        
+        var bulan=tgl.getMonth()+1;
+        if(bulan<10){
+            var bulan='0'+bulan;
+        }
+        var tahun=tgl.getFullYear();
+        var tahun2=parseInt(tahun)-17;
+        var tglsekarang=tahun+'-'+bulan+'-'+hari;
+        var tglsekarang2=tahun2+'-'+bulan+'-'+hari;
+        $('#tglposting5').text(tglsekarang);        
+        $('#tgltransaksix1').val(tglsekarang);
+    }
+    
+    function formatRupiah(angka, prefix,desimal){
+        angka1=parseFloat(angka);			
+        angka2=angka1.toFixed(10);
+        angka3=angka2.substr(0,(angka2.length)-11);			
+        var number_string = angka3.replace(/[^,\d]/g, '').toString(),
+        split   		= number_string.split(','),
+        sisa     		= split[0].length % 3,
+        rupiah     		= split[0].substr(0, sisa),
+        ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+        
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if(ribuan){
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+                jmldesimal=parseFloat(desimal);					
+                //a1 = parseFloat(angka);
+                a1 = parseFloat(angka1);
+                b1 = a1.toFixed(0);					
+                b2 = a1.toFixed(parseFloat(jmldesimal));					
+                pos1 = b2.indexOf(".");
+                pos2 = b2.indexOf(",");					
+                if (parseFloat(pos1)<0){
+                    pos1=0;
+                }
+                if (parseFloat(pos2)<0){
+                    pos2=0;
+                }
+                pos = parseFloat(pos1)+ parseFloat(pos2)+parseFloat(1);
+                
+                koma = ','+b2.substr(parseFloat(pos),parseFloat(jmldesimal));
+                
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah + koma;
+        return prefix == undefined ? rupiah : (rupiah ? ' ' + rupiah : '');
+    }
+    
+    function formatAngka(angka, prefix){
+        angka1=parseFloat(angka);			
+        angka2=angka1.toFixed(10);
+        angka3=angka2.substr(0,(angka2.length)-11);			
+        var number_string = angka3.replace(/[^,\d]/g, '').toString(),
+        split   		= number_string.split(','),
+        sisa     		= split[0].length % 3,
+        rupiah     		= split[0].substr(0, sisa),
+        ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+        
+        // tambahkan titik jika yang di input sudah menjadi angka ribuan
+        if(ribuan){
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+                    
+        rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+        return prefix == undefined ? rupiah : (rupiah ? '' + rupiah : '');
+    }
+    
+    function cek_angka(angka){	
+        var x='';
+        var validasiAngka = /^[0-9]+$/;
+        //cek validasi
+        if(angka.match(validasiAngka)){
+            x=parseFloat(angka);
+        }else{
+            x=parseFloat(1);
+        }
+        return x;			
+    }
+
+    function terbilang(bilangan) {
+			 bilangan    = String(bilangan);
+			 var angka   = new Array('0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0');
+			 var kata    = new Array('','Satu','Dua','Tiga','Empat','Lima','Enam','Tujuh','Delapan','Sembilan');
+			 var tingkat = new Array('','Ribu','Juta','Milyar','Triliun');
+
+			 var panjang_bilangan = bilangan.length;
+
+			//pengujian panjang bilangan
+			 if (panjang_bilangan > 15) {
+			   kaLimat = "Diluar Batas";
+			   return kaLimat;
+			 }
+
+			 //mengambil angka-angka yang ada dalam bilangan, dimasukkan ke dalam array
+			 for (i = 1; i <= panjang_bilangan; i++) {
+			   angka[i] = bilangan.substr(-(i),1);
+			 }
+
+			 i = 1;
+			 j = 0;
+			 kaLimat = "";
+
+			//mulai proses iterasi terhadap array angka
+			 while (i <= panjang_bilangan) {
+
+			   subkaLimat = "";
+			   kata1 = "";
+			   kata2 = "";
+			   kata3 = "";
+
+			   //untuk Ratusan
+			   if (angka[i+2] != "0") {
+				 if (angka[i+2] == "1") {
+				   kata1 = "Seratus";
+				 } else {
+				   kata1 = kata[angka[i+2]] + " Ratus";
+				 }
+			   }
+
+			   //untuk Puluhan atau Belasan
+			   if (angka[i+1] != "0") {
+				 if (angka[i+1] == "1") {
+				   if (angka[i] == "0") {
+					 kata2 = "Sepuluh";
+				   } else if (angka[i] == "1") {
+					 kata2 = "Sebelas";
+				   } else {
+					 kata2 = kata[angka[i]] + " Belas";
+				   }
+				 } else {
+				   kata2 = kata[angka[i+1]] + " Puluh";
+				 }
+			   }
+
+			   //untuk Satuan
+			   if (angka[i] != "0") {
+				 if (angka[i+1] != "1") {
+				   kata3 = kata[angka[i]];
+				 }
+			   }
+
+			   //pengujian angka apakah tidak nol semua, lalu ditambahkan tingkat
+			   if ((angka[i] != "0") || (angka[i+1] != "0") || (angka[i+2] != "0")) {
+				 subkaLimat = kata1+" "+kata2+" "+kata3+" "+tingkat[j]+" ";
+			   }
+
+			   //gabungkan variabe sub kaLimat (untuk Satu blok 3 angka) ke variabel kaLimat
+			   kaLimat = subkaLimat + kaLimat;
+			   i = i + 3;
+			   j = j + 1;
+
+			 }
+
+			//mengganti Satu Ribu jadi Seribu jika diperlukan
+			 if ((angka[5] == "0") && (angka[6] == "0")) {
+			   kaLimat = kaLimat.replace("Satu Ribu","Seribu");
+			 }
+
+			 return kaLimat;
+		}
+
+    data1Datatable = tampil_data1();    
+     function tampil_data1(){
+        let i = 1;	
+        return $('#data1').DataTable({
+            responsive : true,
+            retrieve: true,
+            autoWidth : true,
+            // buttons : [ {extend: 'colvis', postfixButtons: [ 'colvisRestore' ] }, {extend:'copy'}, {extend:'csv'}, {extend: 'pdf', orientation: 'portrait', pageSize: 'A4', title:'{{ $caption }}'}, {extend: 'excel', title: '{{ $caption }}'}, {extend:'print', orientation: 'portrait', pageSize: 'A4', title: '{{ $caption }}'}, ],        
+            dom: 'lBfrtip',
+            lengthMenu: [
+                [ 10, 25, 50, 100, 500, 1000, 5000, -1 ],
+                [ '10', '25', '50', '100', '500','1000','5000', 'All' ]
+            ],
+
+            "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+           
+            // converting to interger to find total
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };
+ 
+            // computing column Total of the complete result 
+           
+            var totd1 = api
+                .column(5)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                    }, 0 );
+                    
+            var totk1 = api
+                .column(6)
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+           
+                    
+                // Update footer by showing the total with the reference of the column index
+                
+                if(totd1!=totk1){
+                    document.getElementById("totaldebet1").style.backgroundColor="red"; 
+                    document.getElementById("totalkredit1").style.backgroundColor="red"; 
+                }else{
+                   document.getElementById("totaldebet1").style.backgroundColor=""; 
+                    document.getElementById("totalkredit1").style.backgroundColor="";  
+                }
+                
+                $( api.column(5).footer() ).html(formatAngka(totd1,''));
+                $( api.column(6).footer() ).html(formatAngka(totk1,''));
+                var jml = totd1 + totk1;
+                if(jml==0){
+                    $( api.column(7).footer() ).html('');
+                }else{
+                    $( api.column(7).footer() ).html('<marquee style="color:red;">Pastikan debet dan kredit harus balance sebelum posting...</marquee>');
+                }
+                
+            },
+
+            processing: true,
+            serverSide: true,
+            ajax   : `{{route('akuntansi01.transaksi.jurnalumum_show')}}`,
+            columns: [
+                // { data: 'no', name:'id', render: function (data, type, row, meta) {
+                //     return meta.row + meta.settings._iDisplayStart + 1;
+                // }},
+                {  "data": 'DT_RowIndex',
+                    orderable: false, 
+                    searchable: false },
+                { data: 'updated_at', name: 'updated_at' },
+                { data: 'nomorbukti', name: 'nomorbukti' },
+                { data: 'sandi', name: 'sandi.sandi' },
+                { data: 'coa', name: 'coa.coa' },
+                { data: 'debet', name: 'debet', class: 'text-right'},
+                { data: 'kredit', name: 'kredit', class: 'text-right'},
+                { data: 'tglposting', name: 'tglposting' },
+                { data: 'nomorposting', name: 'nomorposting' },
+                { data: 'keterangan', name: 'keterangan' },
+                { data: 'action', name: 'action', class: 'text-center' },
+            ],
+                "createdRow": function( row, data, dataIndex){
+                    $("#cek1").val(data['nomorposting']);                                                        
+                    if( data['nomorposting']== null){                        
+                        $(row).css('background-color', 'pink');
+                    }else{
+                        // $("#cek1").val('isi');
+                    }
+                }
+        });
+    }
+
+    //menampilkan combo idsandi1
+    tampil_listsandi1();
+    function tampil_listsandi1(){				
+        $.ajax({
+            type: 'get',
+            url   : '{{route('admin.listsandi11')}}',
+            
+            success: function(data){				    
+                $("#idsandi1").html(data);
+            }
+        })                    
+    }
+    //menampilkan combo idcoa1
+    tampil_listcoa1();
+    function tampil_listcoa1(){				
+        $.ajax({
+            type: 'get',
+            url   : '{{route('admin.listcoa11')}}',
+            
+            success: function(data){				    
+                $("#idcoa1").html(data);
+            }
+        })                    
+    }
+
+    //menampilkan combo idjenisjurnal1
+    tampil_listjenisjurnal1();
+    function tampil_listjenisjurnal1(){				
+        $.ajax({
+            type: 'get',
+            url   : '{{route('admin.listjenisjurnal11')}}',
+            
+            success: function(data){				    
+                $("#idjenisjurnal1").html(data);
+            }
+        })                    
+    }
+
+    $('#btn_posting1').on('click',function(){
+        let cek = $('#cek1').val();
+        if(cek==''){
+            var totd1=$('#totaldebet1').text().replace(/[^,\d]/g, '').toString();
+            var totk1=$('#totalkredit1').text().replace(/[^,\d]/g, '').toString();
+            var totdx=parseFloat(totd1);
+            var totkx=parseFloat(totk1);
+            var jmlx = totdx + totkx;
+           
+            if(jmlx==0){
+               swalpraposting('','Maaf, data belum ada...');
+            }else{
+               if(totdx!=totkx){
+                   swalpraposting('','Maaf, Nilai debet dan kredit tidak sama...');
+               }else{
+                   setTimeout(() => {
+                       nomorposting();
+                       setTimeout(() => {
+                           $('#tgltransaksi5').text($('#tgltransaksix1').val());        		
+                           $('#tgltransaksi5x').text($('#tgltransaksix1').val());        		
+                           $('#nomorbukti5').text($('#nomorbuktix1').val());        		
+                           $('#tglposting5').text($('#tgltransaksix1').val());        		
+                           $('#debet5').text($('#totaldebet1').text());        		
+                           $('#kredit5').text($('#totalkredit1').text());        		
+                       }, 100);
+                   }, 200);
+                   $('#ModalPosting').modal('show');
+               }
+            }
+        }else{
+            swalpraposting('','Maaf, data sudah diposting.....');
+        }
+
+    });
+
+    $('#btn_posting5').on('click',function(){
+        modal_posting();
+    });
+    
+    $("#tgltransaksix1").datepicker({
+           dateFormat  : "yy-mm-dd",
+           changeMonth : true,
+           changeYear  : true         
+    });
+    
+    $('#tgltransaksix1').on('click',function(){
+        $('#cek1').val('');
+       var x = $('#tgltransaksix1').val().length;
+       if(x>=10){
+           $( "#nomorbuktix1" ).prop( "disabled", false ); 
+           $( "#btn_nomorbuktix1" ).prop( "disabled", false );         
+       }else{
+           $( "#nomorbuktix1" ).prop( "disabled", true ); 
+           $( "#btn_nomorbuktix1" ).prop( "disabled", true );         
+       }
+       setTimeout(() => {
+           kirimsyarat();
+           setTimeout(() => {
+                    tampil_datatable();    
+                }, 200);
+       }, 200);     				
+    });
+    
+    $('#tgltransaksix1').on('change',function(){
+       $('#cek1').val('');				
+       var x = $('#tgltransaksix1').val().length;
+       if(x>=10){           
+           $( "#nomorbuktix1" ).prop( "disabled", false ); 
+           $( "#btn_nomorbuktix1" ).prop( "disabled", false );         
+       }else{
+           $( "#nomorbuktix1" ).prop( "disabled", true ); 
+           $( "#btn_nomorbuktix1" ).prop( "disabled", true );         
+       }  	
+       setTimeout(() => {
+           kirimsyarat();
+           setTimeout(() => {
+                    tampil_datatable();    
+                }, 200);
+       }, 200);					
+    });
+    
+    $("#btn_nomorbuktix1").on('click',function(){ 
+        $('#cek1').val('');
+        nomorbukti();
+        setTimeout(() => {
+           kirimsyarat();
+           setTimeout(() => {
+                tampil_datatable();    
+            }, 200);
+       }, 200);              
+    });
+    
+    $("#nomorbuktix1").on('keyup',function(){
+        $('#cek1').val('');  
+       setTimeout(() => {
+           kirimsyarat();
+           setTimeout(() => {                            
+               setTimeout(() => {
+                    tampil_datatable();    
+                }, 200);
+           }, 100);        
+       }, 100);
+    });
+    $("#nomorbuktix1").on('change',function(){  
+        $('#cek1').val('');
+       setTimeout(() => {
+           kirimsyarat();
+           setTimeout(() => {           
+               setTimeout(() => {
+                    tampil_datatable();    
+                }, 200);               
+           }, 100);        
+       }, 100);
+    });
+
+    setTimeout(() => {
+        var x = $('#tgltransaksix1').val().length;
+        if(x>=10){
+            $( "#nomorbuktix1" ).prop( "disabled", false ); 
+            $( "#btn_nomorbuktix1" ).prop( "disabled", false );         
+        }else{
+            $( "#nomorbuktix1" ).prop( "disabled", true ); 
+            $( "#btn_nomorbuktix1" ).prop( "disabled", true );         
+        } 
+    }, 1000);
+    
+    function tampil_datatable(){        
+        data1Datatable.draw(null, false);               
+    }
+
+    function kirimsyarat(){        
+        var tgltransaksix1=$('#tgltransaksix1').val();
+        var nomorbuktix1=$('#nomorbuktix1').val();
+
+        let formData = new FormData();
+            formData.append('tgltransaksix1', tgltransaksix1);
+            formData.append('nomorbuktix1', nomorbuktix1);
+    
+        $.ajax({
+            enctype: 'multipart/form-data',
+            type   : 'post',
+            url    : '{{route('akuntansi01.transaksi.jurnalumum_kirimsyarat')}}',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },				 				
+            success : function(formData){                                                       
+                tampil_datatable();                
+                    
+
+                },
+            error : function(formData){                                                       
+                // alert('error');
+                }
+        });
+    }
+    
+    function btn_baru_click(){      
+        $('#bodyAdd :input').prop('disabled', false);
+        document.getElementById("btn_simpan").style.display='block';        
+        document.getElementById("btn_baru").style.display='none';
+    }
+    
+    function btn_simpan_click(){      
+        $('#bodyAdd :input').prop('disabled', true);
+        document.getElementById("btn_simpan").style.display='none';        
+        document.getElementById("btn_baru").style.display='block';
+    
+        swaltambah();
+    }
+    
+    function btn_edit_click(){      
+        $('#bodyAdd :input').prop('disabled', false);
+        document.getElementById("btn_simpan").style.display='block';        
+        document.getElementById("btn_baru").style.display='none';
+    
+    }
+    
+    
+    //tambah data -> ok
+    $('#btn_baru').on('click',function(){
+        btn_baru_click();            
+    });
+    
+    $('#btn_tambah1').on('click',function(){
+        let cek = $('#cek1').val();
+        if(cek==''){
+
+            let x = $('#nomorbuktix1').val();         
+    
+            if(x==''){
+                let comp = 'Please complete the data...!';             
+                swaltidaklengkap(comp);
+            }else{
+                btn_baru_click();
+                $("#iconx").removeClass("fas fa-edit");
+                $("#iconx").addClass("fas fa-plus-square");
+                $("#modalx").removeClass("modal-content bg-success w3-animate-zoom");
+                $("#modalx").addClass("modal-content bg-primary w3-animate-zoom");
+                document.getElementById("btn_simpan").disabled = false;
+                $('#ModalAdd').modal('show');
+                $('#id1').val('0');
+                $('#judulx').html(' Tambah Data');
+            }
+        }else{
+           swalpraposting('','Maaf, data sudah diposting.....'); 
+        }
+
+        
+    }); 
+
+    $("#debet1").on('change',function(){
+        var x = $('#debet1').val().replace(/[^,\d]/g, '').toString();
+        if (x==''){
+            $("#debet1").val('0');
+        }
+        var y = parseFloat(x);
+        if (y>=999999999999999){
+            $("#debet1").val(y);
+        }
+        if (y>0){
+            $("#kredit1").val('0');
+            $("#terbilangk1").html('Nol');
+        } 
+        var x1 = terbilang(x);
+        $("#terbilangd1").html(x1);       
+    });
+    $("#debet1").on('keydown',function(){
+        var x = $('#debet1').val().replace(/[^,\d]/g, '').toString();
+        if (x==''){
+            $("#debet1").val('0');
+        }
+        var y = parseFloat(x);
+        if (y>=999999999999999){
+            $("#debet1").val(y);
+        } 
+        if (y>0){
+            $("#kredit1").val('0');
+            $("#terbilangk1").html('Nol');
+        }
+        var x1 = terbilang(x);
+        $("#terbilangd1").html(x1);       
+    });
+
+    $("#kredit1").on('change',function(){
+        var x = $('#kredit1').val().replace(/[^,\d]/g, '').toString();
+        if (x==''){
+            $("#kredit1").val('0');
+        }
+        var y = parseFloat(x);
+        if (y>=999999999999999){
+            $("#kredit1").val(y);
+        } 
+        if (y>0){
+            $("#debet1").val('0');
+            $("#terbilangd1").html('Nol');
+        }
+        var x1 = terbilang(x);
+        $("#terbilangk1").html(x1);       
+    });
+    $("#kredit1").on('keydown',function(){
+        var x = $('#kredit1').val().replace(/[^,\d]/g, '').toString();
+        if (x==''){
+            $("#kredit1").val('0');
+        }
+        var y = parseFloat(x);
+        if (y>=999999999999999){
+            $("#kredit1").val(y);
+        } 
+         if (y>0){
+            $("#debet1").val('0');
+            $("#terbilangd1").html('Nol');
+        }
+        var x1 = terbilang(x);
+        $("#terbilangk1").html(x1);       
+    });
+    
+    function data_simpan(){
+        
+        var id1=$('#id1').val();			
+        var tgltransaksix1=$('#tgltransaksix1').val();
+        var nomorbuktix1=$('#nomorbuktix1').val();
+        var idsandi1=$('#idsandi1').val();
+        var idcoa1=$('#idcoa1').val();
+        var idjenisjurnal1=$('#idjenisjurnal1').val();
+        var debet1=$('#debet1').val().replace(/[^,\d]/g, '').toString();
+        var kredit1=$('#kredit1').val().replace(/[^,\d]/g, '').toString();
+        var pemberi1=$('#pemberi1').val();
+        var penerima1=$('#penerima1').val();
+        var namapenerima1=$('#namapenerima1').val();
+        var keterangan1=$('#keterangan1').val();
+        
+        let formData = new FormData();
+            formData.append('id1', id1);
+            formData.append('tgltransaksix1', tgltransaksix1);
+            formData.append('nomorbuktix1', nomorbuktix1);
+            formData.append('idsandi1', idsandi1);
+            formData.append('idcoa1', idcoa1);
+            formData.append('idjenisjurnal1', idjenisjurnal1);
+            formData.append('debet1', debet1);
+            formData.append('kredit1', kredit1);
+            formData.append('pemberi1', pemberi1);            
+            formData.append('penerima1', penerima1);            
+            formData.append('namapenerima1', namapenerima1);            
+            formData.append('keterangan1', keterangan1);            
+          
+        $.ajax({
+            enctype: 'multipart/form-data',
+            type   : 'post',
+            url    : '{{route('akuntansi01.transaksi.jurnalumum_create')}}',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },				 				
+            success : function(formData){                                         
+                    tampil_datatable();
+                    btn_simpan_click();
+                    if(id1>0){
+                        $('#ModalAdd').modal('hide'); 
+                    }
+                },
+            error : function(formData){                    
+                swalgagaltambah(nomorbuktix1);                 
+                }
+        });
+
+    }   
+
+    $("#btn_simpan").on('click',function(){
+        
+        let a = $('#tgltransaksix1').val();
+        const aArray = a.split("-");
+        let thn = aArray[0];
+        let bln = aArray[1];
+        let tgl = aArray[2];
+        let b = thn+bln+tgl;
+
+        let x = $('#nomorbuktix1').val();
+        const xArray = x.split(".");
+        let y = xArray[0];
+        let z = xArray[2];
+        let j = xArray[3];
+        let k = j.length;
+
+        if(y=='UMM'&&b==z&&k=='4'){            
+            data_simpan();
+            setTimeout(() => {
+                tampil_datatable();
+            }, 300); 
+        }else{            
+            swalnomorbuktisalah(x);            
+        }
+       	
+    });
+
+    function nomorbukti(){        
+        var tgltransaksix1=$('#tgltransaksix1').val();
+
+        $.ajax({
+            enctype: 'multipart/form-data',
+            type   : 'post',
+            url    : '{{route('akuntansi01.transaksi.jurnalumum_nomorbukti')}}',
+            async : false,
+            dataType : 'json',
+            // data : FormData,
+            data : {tgltransaksix1:tgltransaksix1},
+            // cache: false,
+            // processData: false,
+            // contentType: false,
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },				 				
+            success : function(data){ 
+                
+                var resultData = data.data;	                
+                    $('#nomorbuktix1').val(resultData[0].nomorbukti); 
+                                                          
+                },
+            error : function(data){ 
+                    
+                }
+
+        });
+    }
+
+    function nomorposting(){        
+        var tglposting1=$('#tglposting5').text();
+
+        $.ajax({
+            enctype: 'multipart/form-data',
+            type   : 'post',
+            url    : '{{route('akuntansi01.transaksi.jurnalumum_nomorposting')}}',
+            async : false,
+            dataType : 'json',
+            // data : FormData,
+            data : {tglposting1:tglposting1},
+            // cache: false,
+            // processData: false,
+            // contentType: false,
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+            				 				
+            success : function(data){ 
+                var resultData = data.data;	                
+                    $('#nomorposting5').text(resultData[0].nomorposting);                                                            
+                },
+            error : function(data){ 
+                
+                }
+
+        });
+    }
+
+    $('#show_data1').on('click','.item_edit',function(){
+        $("#iconx").removeClass("fas fa-plus-square");
+        $("#iconx").addClass("fas fa-edit");
+        $("#modalx").removeClass("modal-content bg-primary w3-animate-zoom");
+        $("#modalx").addClass("modal-content bg-success w3-animate-zoom");
+        $('#judulx').html(' Edit Data');
+        btn_edit_click();
+
+        var id1=$(this).attr('data');
+
+        $('#id1').val(id1);
+        data_edit(id1);
+
+        $('#ModalAdd').modal('show');         
+    });
+
+    $('#show_data1').on('click','.item_posting',function(){
+        var id1 = $(this).attr('data'); 
+        var tgltransaksi5 = $(this).attr('data3'); 
+        var tgltransaksi5x = $(this).attr('data4'); 
+        var nomorbukti5 = $(this).attr('data5'); 
+        var jml5 = formatAngka(parseFloat($(this).attr('data6')),'');
+
+        setTimeout(() => {
+            nomorposting();
+            setTimeout(() => {
+                $('#id1').val(id1);        		
+                $('#tgltransaksi5').text(tgltransaksi5);        		
+                $('#tgltransaksi5x').text(tgltransaksi5x);        		
+                $('#nomorbukti5').text(nomorbukti5);        		                       		
+                $('#jml5').text(jml5);        		                       		
+                $('#ModalPosting').modal('show');						                
+            }, 10);
+        }, 200);
+    });
+
+    $("#btn_update").on('click',function(){	        
+        data_simpan();
+    });                                         
+
+    function data_edit(idx){
+        var id1=idx;			
+            $.ajax({
+                type  : 'get',
+                url   : `{{ url('akuntansi01/transaksi/jurnalumumedit')}}/${id1}`,
+                async : false,
+                dataType : 'json',	
+                
+                success : function(data){
+                    var i;                
+                    var resultData = data.data;	                			
+                    for(i=0; i<resultData.length; i++){
+    
+                        $('#tgltransaksix1').val(resultData[i].tgltransaksi);
+                        $('#nomorbuktix1').val(resultData[i].nomorbukti);
+                        $('#idsandi1').val(resultData[i].idsandi);
+                        $('#idcoa1').val(resultData[i].idcoa);
+                        $('#idjenisjurnal1').val(resultData[i].idjenisjurnal);
+                        $('#debet1').val(formatAngka(resultData[i].debet,''));
+                        $('#kredit1').val(formatAngka(resultData[i].kredit,''));
+                        
+                        var x = $('#debet1').val().replace(/[^,\d]/g, '').toString();
+                        if (x==''){
+                            $("#debet1").val('0');
+                        }
+                        var y = parseFloat(x);
+                        if (y>=999999999999999){
+                            $("#debet1").val(y);
+                        } 
+                        if(y==0){
+                            $("#terbilangd1").html('Nol');
+                        }else{
+                            $("#terbilangd1").html(terbilang(x));
+                        }
+
+                        var x = $('#kredit1').val().replace(/[^,\d]/g, '').toString();
+                        if (x==''){
+                            $("#kredit1").val('0');
+                        }
+                        var y = parseFloat(x);
+                        if (y>=999999999999999){
+                            $("#kredit1").val(y);
+                        } 
+                        
+                        if(y==0){
+                            $("#terbilangk1").html('Nol');
+                        }else{
+                            $("#terbilangk1").html(terbilang(x));
+                        }
+
+                        $('#pemberi1').val(resultData[i].pemberi);    
+                        $('#penerima1').val(resultData[i].penerima);    
+                        $('#namapenerima1').val(resultData[i].namapenerima);    
+                        $('#keterangan1').val(resultData[i].keterangan);    
+                    }
+                    
+                },
+                error : function(data){
+                    alert(id1);
+                }
+            }); 
+    }
+    
+    //modal sweet art posting		
+    function modal_posting(){
+        Swal.fire({
+        title: 'Are you sure posting',
+        text: $('#nomorposting5').text(),
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "Yes, posting !",
+        cancelButtonText: "No, cancel !",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                data_posting();                           
+            }
+        })
+    } 
+    
+    function data_posting(){
+        var tgltransaksi1=$('#tgltransaksi5').text();
+        var nomorbukti1=$('#nomorbukti5').text();
+        var tglposting1=$('#tglposting5').text();
+        var nomorposting1=$('#nomorposting5').text();        
+    
+        let formData = new FormData();
+            formData.append('tgltransaksi1', tgltransaksi1);            
+            formData.append('nomorbukti1', nomorbukti1);            
+            formData.append('tglposting1', tglposting1);
+            formData.append('nomorposting1', nomorposting1);            
+          
+        $.ajax({
+            enctype: 'multipart/form-data',
+            type   : 'post',
+            url    : '{{route('akuntansi01.transaksi.jurnalumum_posting')}}',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },				 				
+            success : function(formData){ 
+                    tampil_datatable();                                        
+                    swalposting(nomorposting1);
+                    $('#ModalPosting').modal('hide');
+                },
+            error : function(formData){ 
+                    swalgagalposting(nomorposting1);                                                        
+                }
+        });
+    }
+
+    $('#show_data1').on('click','.item_hapus',function(){
+        var id3=$(this).attr('data');
+        var data3a=$(this).attr('data2');
+        var data3b=$(this).attr('data3');
+        var data3c=$(this).attr('data4');
+        
+        $('#id3').val(id3);
+        $('#data3a').val(data3a + ' (' + data3c + ')');
+        $('#data3b').val(data3b);
+        $('#data3c').val(data3c);
+        modal_hapus();
+    });
+
+    //modal sweet art hapus		
+    function modal_hapus(){
+        Swal.fire({
+        title: 'Are you sure delete?',
+        text: $('#data3a').val(),
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: "Yes, delete !",
+		cancelButtonText: "No, cancel !",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                data_hapus();
+                setTimeout(() => {
+                    tampil_datatable();
+                }, 300);            
+            }
+        })
+    } 
+
+    function data_hapus(){			
+        var id3=$('#id3').val();       
+        var data3a=$('#data3a').val();
+        
+        $.ajax({
+            type  : 'get',
+            url   : '{{url('akuntansi01/transaksi/jurnalumumdestroy')}}/'+id3,
+            async : false,
+            dataType : 'json',					
+            success : function(data){
+                tampil_data();
+                swalhapus(data3a); 
+            },
+            error : function(data){
+                swalgagalhapus(data3a); 
+            }
+        }); 
+
+    }
+
+    $('#show_data1').on('click','.item_print',function(){ 
+        $('#cekprint').val("1");
+        var tglposting=$(this).attr('data7');
+        $('#data3z').val(tglposting);
+        var id1=$(this).attr('data');
+        $('#id1').val(id1);
+        kirimsyarat();
+        setTimeout(() => {
+            window.open('{{ route('akuntansi01.transaksi.jurnalumum_printkwitansi') }}');
+        }, 100);
+    });
+
+    $('#show_data1').on('click','.item_printxxx',function(){
+        var id=$(this).attr('data');
+        var nomorstatus=$(this).attr('data2');
+        $('#id6').val(id);
+        $('#cekprint6').val('1');
+        $('#nomorstatus6').text(nomorstatus);
+
+        // kirimsyarat();
+        setTimeout(() => {
+            $('#ModalPrintdetail').modal('show');
+        }, 200);
+    });
+
+    $("#noprint6").on('click',function(){
+        var x = $("#noprint6").val();
+        if(x<='0'){
+            $("#noprint6").val('1')
+        }
+        $('#cekprint6').val('1');
+        kirimsyarat();
+    });
+
+    $("#noprint6").on('keyup',function(){
+        var x = $("#noprint6").val();
+        if(x<='0'){
+            $("#noprint6").val('1')
+        }
+        $('#cekprint6').val('1');
+        kirimsyarat();
+    });
+
+    $("#btn_print6").on('click',function(){ 
+        $('#ModalPrintdetail').modal('hide');
+        window.open('{{ route('simpanan01.laporan.rekeningkoran_printdetail') }}');
+    });
+
+    function swalgagalnorek(x){
+        Swal.fire({
+            icon: 'info',
+            title: 'Oops...not found record',
+            text: x,
+            timer:1000
+        })
+    }
+
+
+    function swalposting(x){
+        Swal.fire({
+            icon: 'success',
+            title: 'Posting successfully',
+            text: x,
+            timer:1000
+        })
+    }
+
+    function swalgagalposting(x){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...failed to posting record',
+            text: x,
+            timer:1000
+        })
+    }
+
+    function swalpraposting(x,y){
+        Swal.fire({
+            icon: 'info',
+            title: y,
+            text: x,
+            timer:1000
+        })
+    }
+
+    function swaltambah(x){
+        Swal.fire({
+            icon: 'success',
+            title: 'Save successfully',
+            text: x,
+            timer:1000
+        })
+    }
+
+    function swalgagaltambah(x){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...failed to add/update record',
+            text: x,
+            timer:1000
+        })
+    }
+
+    function swalupdate(x){
+        Swal.fire({
+            icon: 'success',
+            title: 'Update successfully',
+            text: x,
+            timer:1000
+        })
+    }
+
+    function swalgagalupdate(x){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...failed to update',
+            text: x,
+            timer:1000
+        })
+    }
+
+    function swalhapus(x){
+        Swal.fire({
+            icon: 'success',
+            title: 'Delete successfully',
+            text: x,
+            timer:1000
+        })
+    }
+
+    function swalgagalhapus(x){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...failed to delete',
+            text: x,
+            timer:1000
+        })
+    }
+
+    function swaltidaklengkap(x){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...incomplete data',
+            text: x,
+            timer:5000
+        })
+    }
+
+    function swalnomorbuktisalah(x){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...Nomor Bukti "' + x + '" ilegal !',
+            text: 'Klik Generate Nomor Bukti (icon gear)',
+            timer:5000
+        })
+    }
+
+   
+
+});
+
+</script>	
+
+
+
+@endsection

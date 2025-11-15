@@ -37,11 +37,11 @@ class ProduktabunganController extends Controller
         // return $something;
 
         $meminstansi = session('memnamasingkat');
-        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Produk Tabungan</b>.';
+        $remark = 'Halaman ini digunakan untuk menampilkan, menambah, mengubah dan menghapus <b>Produk Simpanan</b>.';
         $page = 'akuntansi01::master.produktabungan';
         $link = '/akuntansi01/master/produktabungan';
         $subtitle = 'Master';
-        $caption = 'Produk Tabungan';
+        $caption = 'Produk Simpanan';
         $jmlhal = 2;
 
         $menu=Menusub::where('link','=',$link)

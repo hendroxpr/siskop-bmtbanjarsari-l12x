@@ -238,9 +238,9 @@ $(document).ready(function(){
                 listkabupatenx1Datatable = tampil_listkabupatenx();
                 listkabupaten1Datatable = tampil_listkabupaten1();
                 setTimeout(() => {
-                    listkabupatenx1Datatable.ajax.url('{{route('admin.listpropinsi11')}}').load();                
+                    listkabupatenx1Datatable.ajax.url('{{route('admin.listkabupatenx21')}}').load();                
                     listkabupatenx1Datatable.draw(null, false);                                                    
-                    listkabupaten1Datatable.ajax.url('{{route('admin.listpropinsi11')}}').load();                
+                    listkabupaten1Datatable.ajax.url('{{route('admin.listkabupaten21')}}').load();                
                     listkabupaten1Datatable.draw(null, false);
                 }, 500);            
             }, 500);
@@ -263,7 +263,7 @@ $(document).ready(function(){
             setTimeout(() => {
                 listkabupaten1Datatable = tampil_listkabupaten1();
                 setTimeout(() => {
-                    listkabupaten1Datatable.ajax.url('{{route('admin.listpropinsi11')}}').load();                
+                    listkabupaten1Datatable.ajax.url('{{route('admin.listkabupaten21')}}').load();                
                     listkabupaten1Datatable.draw(null, false);
                 }, 500);            
             }, 500);

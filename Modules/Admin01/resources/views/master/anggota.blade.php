@@ -1163,7 +1163,7 @@ $(document).ready(function(){
                 { data: 'img_ktp', name: 'img_ktp' },
                 { data: 'img_kk', name: 'img_kk' },
                 { data: 'img_bukunikah', name: 'img_bukunikah' },
-                { data: 'uangdaftar', name: 'uangdaftar' },
+                { data: 'uangdaftar', name: 'uangdaftar', className: 'dt-right' },
                 { data: 'img_nomorbuktiud', name: 'img_nomorbuktiud' },
                 { data: 'action', name: 'action', className: 'dt-center' },
             ]

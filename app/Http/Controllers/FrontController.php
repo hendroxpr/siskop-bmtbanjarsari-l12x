@@ -44,6 +44,7 @@ class FrontController extends Controller
             'tglakhirx1' => $y . '-' . $mm . '-' . $d,
             'memtahun' => $y,        //   
             'tgltransaksi1' => $y . '-' . $mm . '-' . $d,
+            'tgltransaksix1' => $y . '-' . $mm . '-' . $d,
         ]);
 
         $namabulanx = array(" ", "Januari ", "Februari ", "Maret ", "April ", "Mei ", "Juni ", "Juli ", "Agustus ", "September ", "Oktober ", "Nopember ", "Desember ");

@@ -9,9 +9,13 @@ use Modules\Admin01\Models\Desa;
 use Modules\Admin01\Models\Kabupaten;
 use Modules\Admin01\Models\Kecamatan;
 use Modules\Admin01\Models\Propinsi;
+use Modules\Akuntansi01\Models\Coa;
+use Modules\Akuntansi01\Models\Jenisjurnal;
+use Modules\Akuntansi01\Models\Jenispinjaman;
+use Modules\Akuntansi01\Models\Jenissimpanan;
 use Modules\Akuntansi01\Models\Kategori;
 use Modules\Akuntansi01\Models\Kelompok;
-use Modules\Akuntansi01\Models\Produktabungan;
+use Modules\Simpanan01\Models\Sandi;
 
 class AdminController extends Controller
 {
@@ -228,29 +232,29 @@ class AdminController extends Controller
             echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->kategori . "</option>";
         }
     }
-    // list produktabungan
-    function listproduktabungan10()
+    // list jenissimpanan
+    function listjenissimpanan10()
     {
         // ori
-        $tampil = Produktabungan::get();
+        $tampil = Jenissimpanan::get();
         foreach ($tampil as $baris) {
-            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->produktabungan . "</option>";
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->jenissimpanan . "</option>";
         }
     }
-    function listproduktabungan11()
+    function listjenissimpanan11()
     {
         // asc
-        $tampil = Produktabungan::orderBy('kode', 'asc')->get();
+        $tampil = Jenissimpanan::orderBy('kode', 'asc')->get();
         foreach ($tampil as $baris) {
-            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->produktabungan . "</option>";
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->jenissimpanan . "</option>";
         }
     }
-    function listproduktabungan12()
+    function listjenissimpanan12()
     {
         // asc
-        $tampil = Produktabungan::orderBy('kode', 'desc')->get();
+        $tampil = Jenissimpanan::orderBy('kode', 'desc')->get();
         foreach ($tampil as $baris) {
-            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->produktabungan . "</option>";
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->jenissimpanan . "</option>";
         }
     }
     // list desain
@@ -273,7 +277,107 @@ class AdminController extends Controller
         echo "<option value='" ."KARTU PEGAWAI" . "'>" . "KARTU PEGAWAI" . "</option>";
     }
 
+    // list sandi
+    function listsandi10()
+    {
+        // ori
+        $tampil = Sandi::get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->sandi . "</option>";
+        }
+    }
+    function listsandi11()
+    {
+        // asc
+        $tampil = Sandi::orderBy('kode', 'asc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->sandi . "</option>";
+        }
+    }
+    function listsandi12()
+    {
+        // asc
+        $tampil = Sandi::orderBy('kode', 'desc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->sandi . "</option>";
+        }
+    }
+    // list coa
+    function listcoa10()
+    {
+        // ori
+        $tampil = Coa::where('hd','=','D')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->coa . "</option>";
+        }
+    }
+    function listcoa11()
+    {
+        // asc
+        $tampil = Coa::where('hd','=','D')->orderBy('kode', 'asc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->coa . "</option>";
+        }
+    }
+    function listcoa12()
+    {
+        // asc
+        $tampil = Coa::where('hd','=','D')->orderBy('kode', 'desc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->coa . "</option>";
+        }
+    }
 
+    // list jenisjurnal
+    function listjenisjurnal10()
+    {
+        // ori
+        $tampil = Jenisjurnal::get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->jenisjurnal . "</option>";
+        }
+    }
+    function listjenisjurnal11()
+    {
+        // asc
+        $tampil = Jenisjurnal::orderBy('kode', 'asc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->jenisjurnal . "</option>";
+        }
+    }
+    function listjenisjurnal12()
+    {
+        // asc
+        $tampil = Jenisjurnal::orderBy('kode', 'desc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->jenisjurnal . "</option>";
+        }
+    }
+    // list jenispinjaman
+    function listjenispinjaman10()
+    {
+        // ori
+        $tampil = Jenispinjaman::get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->jenispinjaman . "</option>";
+        }
+    }
+    function listjenispinjaman11()
+    {
+        // asc
+        $tampil = Jenispinjaman::orderBy('kode', 'asc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->jenispinjaman . "</option>";
+        }
+    }
+    function listjenispinjaman12()
+    {
+        // asc
+        $tampil = Jenispinjaman::orderBy('kode', 'desc')->get();
+        foreach ($tampil as $baris) {
+            echo "<option value='" . $baris->id . "'>" . $baris->kode . ' - ' . $baris->jenispinjaman . "</option>";
+        }
+    }
 
 
 

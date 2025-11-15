@@ -329,7 +329,10 @@ class AnggotaController extends Controller
     public function show()
     {
         
-        $datax = Anggota::with(['desa'])->get();
+        $datax = Anggota::with(['desa'])
+            // ->whereRaw('left(nama,2) = ? ', ['BU'])
+            // ->orderByRaw('(select desa from desa where id=anggota.iddesa) ASC')
+            ->get();
         
         $data = DataTables::of($datax)
             ->addIndexColumn()
@@ -364,6 +367,10 @@ class AnggotaController extends Controller
                 return $row->img_nomorbuktiud ? '<span>'.$row->nomorbuktiud.'</span><iframe class="mb-4" style="width: 100%; height: auto;" src="'. route('front.index') . '/storage/'. $row->img_nomorbuktiud.'"></iframe>' : '';
             })
 
+            ->addColumn('uangdaftar', function ($row) {
+                return $row->uangdaftar ? number_format($row->uangdaftar,0) : '';
+            })
+
             ->addColumn('action', function ($row) {
                 return '<a href="#" title="Edit Data" class="btn btn-success btn-xs item_edit" data="' . $row->id . '" data2="'. $row->nia.'" data3="'. $row->nik.'" data4="'. $row->ecard.'" data5="'. $row->nama.'" data6="'.$row->desa->desa.'" data7="'.$row->desa->kecamatan->kecamatan.'" data8="'.$row->desa->kecamatan->kabupaten->kabupaten.'" data9="'.$row->desa->kecamatan->kabupaten->propinsi->propinsi.'"><i style="font-size:18px" class="fa">&#xf044;</i></a> ' .
                        '<a href="#" title="Hapus Data" class="btn btn-danger btn-xs item_hapus" data="' . $row->id . '" data2="'. $row->nia.'" data3="'. $row->nik.'" data4="'. $row->ecard.'" data5="'. $row->nama.'"><i style="font-size:18px" class="fa">&#xf00d;</i></a>';
@@ -379,6 +386,7 @@ class AnggotaController extends Controller
                 'img_ktp',
                 'img_bukunikah',
                 'img_nomorbuktiud',
+                'uangdaftar',
                 'action'])
 
 

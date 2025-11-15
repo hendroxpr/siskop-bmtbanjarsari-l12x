@@ -3,10 +3,12 @@
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 use Modules\Admin01\Http\Controllers\master\AnggotaController;
+use Modules\Admin01\Http\Controllers\master\BulanController;
 use Modules\Admin01\Http\Controllers\master\DesaController;
 use Modules\Admin01\Http\Controllers\master\KabupatenController;
 use Modules\Admin01\Http\Controllers\master\KecamatanController;
 use Modules\Admin01\Http\Controllers\master\PropinsiController;
+use Modules\Admin01\Http\Controllers\transaksi\UangpendaftaranController;
 
 // use Modules\Admin01\Http\Controllers\master\MaminController;
 
@@ -71,5 +73,32 @@ Route::prefix('admin01')->group(function() {
     Route::get('/master/anggotaedit/{id}', [AnggotaController::class, 'edit'])->name('admin01.master.anggota_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
     Route::get('/master/anggotadestroy/{id}', [AnggotaController::class, 'destroy'])->name('admin01.master.anggota_destroy')->middleware('auth'); /* hapus data anggota */
     Route::post('/master/anggotania', [AnggotaController::class, 'nia'])->name('admin01.master.anggota_nia')->middleware('auth'); /* generate nia */
+
+    /* master - bulan */
+    Route::get('/master/bulan', [BulanController::class, 'index'])->name('admin01.master.bulan.index')->middleware('auth'); /* halaman bulan */
+    Route::get('/master/bulanshow', [BulanController::class, 'show'])->name('admin01.master.bulan_show')->middleware('auth'); /* menampilkan data bulan pada datatable javascript */
+    Route::post('/master/bulancreate', [BulanController::class, 'create'])->name('admin01.master.bulan_create')->middleware('auth'); /* menambah data bulan */
+    Route::get('/master/bulanedit/{id}', [BulanController::class, 'edit'])->name('admin01.master.bulan_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+    Route::post('/master/bulanupdate', [BulanController::class, 'update'])->name('admin01.master.bulan_update')->middleware('auth'); /* update data bulan */
+    Route::get('/master/bulandestroy/{id}', [BulanController::class, 'destroy'])->name('admin01.master.bulan_destroy')->middleware('auth'); /* hapus data bulan */
+    Route::post('/master/bulankirimsyarat', [BulanController::class, 'kirimsyarat'])->name('admin01.master.bulan_kirimsyarat')->middleware('auth'); /* kirimsyarat */
+
+    /* transaksi - uangpendaftaran */
+    Route::get('/transaksi/uangpendaftaran', [UangpendaftaranController::class, 'index'])->name('admin01.transaksi.uangpendaftaran.index')->middleware('auth'); /* halaman uangpendaftaran */
+    Route::get('/transaksi/uangpendaftaranshow', [UangpendaftaranController::class, 'show'])->name('admin01.transaksi.uangpendaftaran_show')->middleware('auth'); /* menampilkan data uangpendaftaran pada datatable javascript */
+    Route::get('/transaksi/uangpendaftaranshowanggota', [UangpendaftaranController::class, 'showanggota'])->name('admin01.transaksi.uangpendaftaran_showanggota')->middleware('auth'); /* menampilkan data anggota pada datatable javascript */
+    Route::post('/transaksi/uangpendaftarankirimsyarat', [UangpendaftaranController::class, 'kirimsyarat'])->name('admin01.transaksi.uangpendaftaran_kirimsyarat')->middleware('auth'); /* kirim syarat */
+    Route::post('/transaksi/uangpendaftarancariid', [UangpendaftaranController::class, 'cariid'])->name('admin01.transaksi.uangpendaftaran_cariid')->middleware('auth'); /* cari data nasabah */
+    Route::post('/transaksi/uangpendaftarannomorbukti', [UangpendaftaranController::class, 'nomorbukti'])->name('admin01.transaksi.uangpendaftaran_nomorbukti')->middleware('auth'); /* buat nomorbukti */
+    Route::post('/transaksi/uangpendaftarannomorposting', [UangpendaftaranController::class, 'nomorposting'])->name('admin01.transaksi.uangpendaftaran_nomorposting')->middleware('auth'); /* buat nomorposting */
+    Route::get('/transaksi/uangpendaftaranlistanggota', [UangpendaftaranController::class, 'listanggota'])->name('admin01.transaksi.uangpendaftaran_listanggota')->middleware('auth'); /* menampilkan list anggota */
+    Route::post('/transaksi/uangpendaftarancreate', [UangpendaftaranController::class, 'create'])->name('admin01.transaksi.uangpendaftaran_create')->middleware('auth'); /* menambah data uangpendaftaran */
+    Route::get('/transaksi/uangpendaftaranedit/{id}', [UangpendaftaranController::class, 'edit'])->name('admin01.transaksi.uangpendaftaran_edit')->middleware('auth'); /* menampilkan data yang akan dirubah */
+    Route::post('/transaksi/uangpendaftaranupdate', [UangpendaftaranController::class, 'update'])->name('admin01.transaksi.uangpendaftaran_update')->middleware('auth'); /* update data uangpendaftaran */
+    Route::post('/transaksi/uangpendaftaranposting', [UangpendaftaranController::class, 'posting'])->name('admin01.transaksi.uangpendaftaran_posting')->middleware('auth'); /* posting data uangpendaftaran */
+    Route::get('/transaksi/uangpendaftarandestroy/{id}', [UangpendaftaranController::class, 'destroy'])->name('admin01.transaksi.uangpendaftaran_destroy')->middleware('auth'); /* hapus data uangpendaftaran */
+    Route::get('/transaksi/uangpendaftaranprintkwitansi', [UangpendaftaranController::class, 'printkwitansi'])->name('admin01.transaksi.uangpendaftaran_printkwitansi')->middleware('auth'); /* printkwitansi */
+  
+
 
 });

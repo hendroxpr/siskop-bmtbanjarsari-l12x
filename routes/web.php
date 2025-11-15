@@ -79,14 +79,30 @@ Route::get('/admin/listkelompok12', [AdminController::class, 'listkelompok12'])-
 Route::get('/admin/listkategori20', [AdminController::class, 'listkategori20'])->name('admin.listkategori20')->middleware('auth'); /* list kategori ori */
 Route::get('/admin/listkategori21', [AdminController::class, 'listkategori21'])->name('admin.listkategori21')->middleware('auth'); /* list kategori sort asc */
 Route::get('/admin/listkategori22', [AdminController::class, 'listkategori22'])->name('admin.listkategori22')->middleware('auth'); /* list kategori sort desc */
-/* khusus list produktabungan*/
-Route::get('/admin/listproduktabungan10', [AdminController::class, 'listproduktabungan10'])->name('admin.listproduktabungan10')->middleware('auth'); /* list produktabungan ori */
-Route::get('/admin/listproduktabungan11', [AdminController::class, 'listproduktabungan11'])->name('admin.listproduktabungan11')->middleware('auth'); /* list produktabungan sort asc */
-Route::get('/admin/listproduktabungan12', [AdminController::class, 'listproduktabungan12'])->name('admin.listproduktabungan12')->middleware('auth'); /* list produktabungan sort desc */
+/* khusus list jenissimpanan*/
+Route::get('/admin/listjenissimpanan10', [AdminController::class, 'listjenissimpanan10'])->name('admin.listjenissimpanan10')->middleware('auth'); /* list jenissimpanan ori */
+Route::get('/admin/listjenissimpanan11', [AdminController::class, 'listjenissimpanan11'])->name('admin.listjenissimpanan11')->middleware('auth'); /* list jenissimpanan sort asc */
+Route::get('/admin/listjenissimpanan12', [AdminController::class, 'listjenissimpanan12'])->name('admin.listjenissimpanan12')->middleware('auth'); /* list jenissimpanan sort desc */
 /* khusus list desain*/
 Route::get('/admin/listdesain10', [AdminController::class, 'listdesain10'])->name('admin.listdesain10')->middleware('auth'); /* list desain ori */
 /* khusus list tandapengenal*/
 Route::get('/admin/listtandapengenal10', [AdminController::class, 'listtandapengenal10'])->name('admin.listtandapengenal10')->middleware('auth'); /* list tandapengenal ori */
+/* khusus list sandi*/
+Route::get('/admin/listsandi10', [AdminController::class, 'listsandi10'])->name('admin.listsandi10')->middleware('auth'); /* list sandi ori */
+Route::get('/admin/listsandi11', [AdminController::class, 'listsandi11'])->name('admin.listsandi11')->middleware('auth'); /* list sandi sort asc */
+Route::get('/admin/listsandi12', [AdminController::class, 'listsandi12'])->name('admin.listsandi12')->middleware('auth'); /* list sandi sort desc */
+/* khusus list coa*/
+Route::get('/admin/listcoa10', [AdminController::class, 'listcoa10'])->name('admin.listcoa10')->middleware('auth'); /* list coa ori */
+Route::get('/admin/listcoa11', [AdminController::class, 'listcoa11'])->name('admin.listcoa11')->middleware('auth'); /* list coa sort asc */
+Route::get('/admin/listcoa12', [AdminController::class, 'listcoa12'])->name('admin.listcoa12')->middleware('auth'); /* list coa sort desc */
+/* khusus list jenisjurnal*/
+Route::get('/admin/listjenisjurnal10', [AdminController::class, 'listjenisjurnal10'])->name('admin.listjenisjurnal10')->middleware('auth'); /* list jenisjurnal ori */
+Route::get('/admin/listjenisjurnal11', [AdminController::class, 'listjenisjurnal11'])->name('admin.listjenisjurnal11')->middleware('auth'); /* list jenisjurnal sort asc */
+Route::get('/admin/listjenisjurnal12', [AdminController::class, 'listjenisjurnal12'])->name('admin.listjenisjurnal12')->middleware('auth'); /* list jenisjurnal sort desc */
+/* khusus list jenispinjaman*/
+Route::get('/admin/listjenispinjaman10', [AdminController::class, 'listjenispinjaman10'])->name('admin.listjenispinjaman10')->middleware('auth'); /* list jenispinjaman ori */
+Route::get('/admin/listjenispinjaman11', [AdminController::class, 'listjenispinjaman11'])->name('admin.listjenispinjaman11')->middleware('auth'); /* list jenispinjaman sort asc */
+Route::get('/admin/listjenispinjaman12', [AdminController::class, 'listjenispinjaman12'])->name('admin.listjenispinjaman12')->middleware('auth'); /* list jenispinjaman sort desc */
 
 
 
