@@ -314,6 +314,11 @@ class  JurnalangsuranController extends Controller
         $data = $datax
         
         ->addIndexColumn()
+        ->addColumn('updated_ats', function ($row) {
+            $updated_at = explode(" ", $row->updated_at);
+            $times = $updated_at[1];
+            return $row->tgltransaksi . ' ' . $times;
+        })
         
         ->addColumn('debet', function ($row) {
             return $row->debet ? number_format($row->debet,0) : '0';
@@ -365,6 +370,7 @@ class  JurnalangsuranController extends Controller
         })
         
         ->rawColumns([
+            'updated_ats',
             'coa',
             'sandi',
             'debet',
@@ -698,6 +704,7 @@ class  JurnalangsuranController extends Controller
     public function kirimsyarat(Request $request)
     {
         session([
+            'id1' => $request['id1'],
             'tgltransaksix1' => $request['tgltransaksix1'],
             'nomorbuktix1' => $request['nomorbuktix1'],
             'idjenispinjamanx1' => $request['idjenispinjamanx1'],
@@ -777,25 +784,36 @@ class  JurnalangsuranController extends Controller
 
     public function printkwitansi()
     {
-        
         $nomorbuktix1 = session('nomorbuktix1');
         $tgltransaksix1 = session('tgltransaksix1');
-        $jml1 = Jurnalpinjaman::where('nomorbukti','=',$nomorbuktix1)
-            ->where('tgltransaksi','=',$tgltransaksix1)
-            ->sum('debet');
-        $tampil = Jurnalpinjaman::limit(1)
-            ->with(['anggota'])
-            ->where('nomorbukti','=',$nomorbuktix1)
-            ->where('tgltransaksi','=',$tgltransaksix1)
-            ->get();
-        foreach ($tampil as $baris) {
-            $nomorbukti1 = $baris->nomorbukti;
-            $pemberi1 = $baris->anggota->nama . ' / ' . $baris->anggota->nia;
-            $guna1 = $baris->keterangan;
-            $guna2 = 'Nomor : ' . $baris->kode;
-            $tgltransaksi1 = $baris->tgltransaksi;
+        $id1 = session('id1');
+        if($id1==''){
+            $id1=0;
+            $nomorbukti1 = $nomorbuktix1;
+            $pemberi1 = '';
+            $guna1 = '';
+            $guna2 = 'Nomor : ' . '';
+            $tgltransaksi1 = $tgltransaksix1;
+            $jml1 = 0;
+        }else{
+            // $jml1 = Jurnalpinjaman::where('nomorbukti','=',$nomorbuktix1)
+            //     ->where('tgltransaksi','=',$tgltransaksix1)
+            //     ->sum('debet');
+            $tampil = Jurnalpinjaman::limit(1)
+                ->with(['anggota'])
+                ->where('nomorbukti','=',$nomorbuktix1)
+                ->where('tgltransaksi','=',$tgltransaksix1)
+                ->where('id','=',$id1)
+                ->get();
+            foreach ($tampil as $baris) {
+                $nomorbukti1 = $baris->nomorbukti;
+                $pemberi1 = $baris->anggota->nama . ' / ' . $baris->anggota->nia;
+                $guna1 = $baris->keterangan;
+                $guna2 = 'Nomor : ' . $baris->kode;
+                $tgltransaksi1 = $baris->tgltransaksi;
+                $jml1 = $baris->debet + $baris->kredit; 
+            }
         }
-
         
             $penerima1 = session('memnama');
             $namapenerima1 = auth()->user()->name;

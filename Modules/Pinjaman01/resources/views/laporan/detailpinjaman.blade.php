@@ -539,7 +539,7 @@
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'kode', name: 'kode', className: 'dt-center' },
+                { data: 'kodes', name: 'kode', className: 'dt-center' },
                 { data: 'nama', name: 'anggota.nama' },
                 { data: 'nia', name: 'anggota.nia', className: 'dt-center' },
                 { data: 'jenispinjaman', name: 'jenispinjaman.jenispinjaman', orderable: false },

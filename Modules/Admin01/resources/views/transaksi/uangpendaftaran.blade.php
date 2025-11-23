@@ -291,13 +291,13 @@
                 <div class="modal-body">
                     
                         <div class="row">
-                            <div class="col-md-5" align="right">										
+                            <div class="col-md-4" align="right">										
                                 <h4 class="mt-2">Tgl. Transaksi</h4>
                             </div>
                             <div class="col-md-1" align="center">                                
                                 <h4 class="mt-2">:</h4>
                             </div>								  
-                            <div class="col-md-6">                                
+                            <div class="col-md-7">                                
                                 <h4 class="mt-2"></h4>
                                 <h4 class="mt-2">
                                     <span  id="tgltransaksi5" name="tgltransaksi5" style="display: none"></span>
@@ -306,46 +306,46 @@
                             </div>								  
                         </div> 			
                         <div class="row">
-                            <div class="col-md-5" align="right">										
+                            <div class="col-md-4" align="right">										
                                 <h4 class="mt-2">Nomor Bukti</h4>
                             </div>
                             <div class="col-md-1" align="center">                                
                                 <h4 class="mt-2">:</h4>
                             </div>								  
-                            <div class="col-md-6">                                
+                            <div class="col-md-7">                                
                                 <h4 class="mt-2"><span  id="nomorbukti5" name="nomorbukti5"></span></h4>
                             </div>								  
                         </div> 			
                         <div class="row">
-                            <div class="col-md-5" align="right">										
+                            <div class="col-md-4" align="right">										
                                 <h4 class="mt-2">Tgl. Posting</h4>
                             </div>
                             <div class="col-md-1" align="center">                                
                                 <h4 class="mt-2">:</h4>
                             </div>								  
-                            <div class="col-md-6"> 
+                            <div class="col-md-7"> 
                                 <h4 class="mt-2"><span  id="tglposting5" name="tglposting5"></span></h4> 
                             </div>								  
                         </div>  			
                         <div class="row">
-                            <div class="col-md-5" align="right">										
-                                <h4 class="mt-2">Nomor Posting</h4>
+                            <div class="col-md-4" align="right">										
+                                <h4 class="mt-2">No. Posting</h4>
                             </div>
                             <div class="col-md-1" align="center">                                
                                 <h4 class="mt-2">:</h4>
                             </div>								  
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <h4 class="mt-2"><span  id="nomorposting5" name="nomorposting5"></span></h4>
                             </div>								  
                         </div>
                         <div class="row">
-                            <div class="col-md-5" align="right">										
+                            <div class="col-md-4" align="right">										
                                 <h4 class="mt-2">Jumlah</h4>
                             </div>
                             <div class="col-md-1" align="center">                                
                                 <h4 class="mt-2">:</h4>
                             </div>								  
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <h4 class="mt-2"><span  id="jml5" name="jml5"></span></h4>                                                                
                             </div>								  
                         </div>                        			
@@ -635,7 +635,7 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'updated_at', name: 'updated_at' },
+                { data: 'updated_ats', name: 'updated_at' },
                 { data: 'nomorbukti', name: 'nomorbukti' },
                 { data: 'jml', name: 'jml', class: 'text-right'},
                 { data: 'tglposting', name: 'tglposting' },
@@ -674,15 +674,15 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'nama', name: 'anggota.nama' },
-                { data: 'nia', name: 'anggota.nia' },
-                { data: 'nik', name: 'anggota.nik' },
-                { data: 'ecard', name: 'anggota.ecard' },
-                { data: 'alamat', name: 'anggota.alamat' },
-                { data: 'desa', name: 'anggota.desa.desa' },
-                { data: 'kecamatan', name: 'anggota.desa.kecamatan.kecamatan' },
-                { data: 'kabupaten', name: 'anggota.desa.kecamatan.kabupaten.kabupaten' },
-                { data: 'propinsi', name: 'anggota.desa.kecamatan.kabupaten.propinsi.propinsi' },
+                { data: 'namas', name: 'nama' },
+                { data: 'nias', name: 'nia' },
+                { data: 'niks', name: 'nik' },
+                { data: 'ecards', name: 'ecard' },
+                { data: 'alamat', name: 'alamat' },
+                { data: 'desa', name: 'desa.desa' },
+                { data: 'kecamatan', name: 'desa.kecamatan.kecamatan' },
+                { data: 'kabupaten', name: 'desa.kecamatan.kabupaten.kabupaten' },
+                { data: 'propinsi', name: 'desa.kecamatan.kabupaten.propinsi.propinsi' },
                                
                 // { data: 'action', name: 'action'},
             ]
@@ -1098,6 +1098,7 @@ $(document).ready(function(){
 
     function nomorbukti(){        
         var tgltransaksi1=$('#tgltransaksi1').val();
+        
 
         $.ajax({
             enctype: 'multipart/form-data',
@@ -1171,9 +1172,10 @@ $(document).ready(function(){
     });
 
     $('#show_data1').on('click','.item_posting',function(){
+        $('#tglposting5').text($('#tgltransaksi1').val());
         var id1 = $(this).attr('data'); 
         var tgltransaksi5 = $(this).attr('data3'); 
-        var tgltransaksi5x = $(this).attr('data4'); 
+        var tgltransaksi5x = $(this).attr('data3'); 
         var nomorbukti5 = $(this).attr('data5'); 
         var jml5 = formatAngka(parseFloat($(this).attr('data6')),'');
 

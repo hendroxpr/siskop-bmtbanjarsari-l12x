@@ -285,6 +285,11 @@ class  JurnalumumController extends Controller
         $data = $datax
         
         ->addIndexColumn()
+        ->addColumn('updated_ats', function ($row) {
+            $updated_at = explode(" ", $row->updated_at);
+            $times = $updated_at[1];
+            return $row->tgltransaksi . ' ' . $times;
+        })
         
         ->addColumn('debet', function ($row) {
             return $row->debet ? number_format($row->debet,0) : '0';
@@ -313,6 +318,7 @@ class  JurnalumumController extends Controller
         })
         
         ->rawColumns([
+            'updated_ats',
             'coa',
             'sandi',
             'debet',

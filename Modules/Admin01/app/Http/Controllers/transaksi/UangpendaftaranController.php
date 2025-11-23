@@ -18,14 +18,7 @@ use Modules\Akuntansi01\Models\Coa;
 use Modules\Akuntansi01\Models\Jurnal;
 use Modules\Akuntansi01\Models\Kategori;
 use Modules\Akuntansi01\Models\Setingjurnal;
-// use Modules\Akuntansi01\Models\Jurnal;
-// use Modules\Akuntansi01\Models\Kategori;
-// use Modules\Akuntansi01\Models\Produktabungan;
-// use Modules\Simpanan01\Models\Nasabah;
-// use Modules\Simpanan01\Models\Tfkeluar;
-// use Modules\Simpanan01\Models\Tfmasuk;
-// use Modules\Simpanan01\Models\Tsetor;
-// use Modules\Simpanan01\Models\Ttarik;
+
 
 use Yajra\DataTables\Facades\DataTables;
 
@@ -338,7 +331,11 @@ class  UangpendaftaranController extends Controller
         $data = $datax
         
         ->addIndexColumn()
-        
+        ->addColumn('updated_ats', function ($row) {
+            $updated_at = explode(" ", $row->updated_at);
+            $times = $updated_at[1];
+            return $row->tgltransaksi . ' ' . $times;
+        })
         ->addColumn('jml', function ($row) {
             return $row->jml ? number_format($row->jml,0) : '0';
         })
@@ -354,7 +351,10 @@ class  UangpendaftaranController extends Controller
             }
         })
         
-        ->rawColumns(['action'])
+        ->rawColumns([
+            'updated_ats',
+            'action'
+            ])
 
 
         ->make(true);
@@ -375,7 +375,7 @@ class  UangpendaftaranController extends Controller
         $data = $datax
             ->addIndexColumn()
 
-            ->addColumn('nama', function ($row) {
+            ->addColumn('namas', function ($row) {
                 return '<a href="#" style="color: white;" title="'. ($row->nama ? $row->nama : '-') .'" class="item_nama" 
                     data1="' . $row->id . '" 
                     data2="'. $row->nama . '" 
@@ -393,7 +393,7 @@ class  UangpendaftaranController extends Controller
                     data14="'. $row->uangdaftar . '"
                     >'.($row->nama ? $row->nama : '-').'</a> ';
             })
-            ->addColumn('nia', function ($row) {
+            ->addColumn('nias', function ($row) {
                 return '<a href="#" style="color: white;" title="'. ($row->nia ? $row->nia : '-') .'" class="item_nia" 
                     data1="' . $row->id . '" 
                     data2="'. $row->nama . '" 
@@ -411,7 +411,7 @@ class  UangpendaftaranController extends Controller
                     data14="'. $row->uangdaftar . '"
                     >'.($row->nia ? $row->nia : '-').'</a> ';
             })
-            ->addColumn('nik', function ($row) {
+            ->addColumn('niks', function ($row) {
                 return '<a href="#" style="color: white;" title="'. ($row->nik ? $row->nik : '-') .'" class="item_nik" 
                     data1="' . $row->id . '" 
                     data2="'. $row->nama . '" 
@@ -430,7 +430,7 @@ class  UangpendaftaranController extends Controller
                     >'.($row->nik ? $row->nik : '-').'</a> ';
             })
             
-            ->addColumn('ecard', function ($row) {
+            ->addColumn('ecards', function ($row) {
                 return '<a href="#" style="color: white;" title="'. ($row->ecard ? $row->ecard : '-') .'" class="item_ecard " 
                     data1="' . $row->id . '" 
                     data2="'. $row->nama . '" 
@@ -464,10 +464,10 @@ class  UangpendaftaranController extends Controller
             })
 
             ->rawColumns([
-                'nama',
-                'nia',
-                'nik',
-                'ecard',
+                'namas',
+                'nias',
+                'niks',
+                'ecards',
                 'desa',                
                 'kecamatan',
                 'kabupaten',

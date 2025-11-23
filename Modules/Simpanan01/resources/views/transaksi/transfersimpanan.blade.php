@@ -748,7 +748,7 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'updated_at', name: 'updated_at' },
+                { data: 'updated_ats', name: 'updated_at' },
                 { data: 'nomorbukti', name: 'nomorbukti' },
                 { data: 'debet', name: 'debet', class: 'text-right'},
                 { data: 'kredit', name: 'kredit', class: 'text-right'},
@@ -1467,6 +1467,7 @@ $(document).ready(function(){
     });
 
     $('#show_data1').on('click','.item_posting',function(){
+        $('#tglposting5').text($('#tgltransaksi1').val());
         var id1 = $(this).attr('data'); 
         var tgltransaksi5 = $(this).attr('data3'); 
         var tgltransaksi5x = $(this).attr('data3'); 
@@ -1553,6 +1554,7 @@ $(document).ready(function(){
     
     function nomorbukti(){        
         var tgltransaksi1=$('#tgltransaksi1').val();
+        
 
         $.ajax({
             enctype: 'multipart/form-data',

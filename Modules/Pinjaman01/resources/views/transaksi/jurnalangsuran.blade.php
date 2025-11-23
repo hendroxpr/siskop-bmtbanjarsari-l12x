@@ -804,7 +804,7 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'updated_at', name: 'updated_at' },
+                { data: 'updated_ats', name: 'updated_at' },
                 { data: 'nomorbukti', name: 'nomorbukti' },
                 { data: 'sandi', name: 'sandi.sandi' },
                 { data: 'coa', name: 'coa.coa' },
@@ -1064,6 +1064,7 @@ $(document).ready(function(){
     }
 
     $('#btn_posting1').on('click',function(){
+        $('#tglposting5').val($('#tgltransaksix1').val());
         let cek = $('#cek1').val();
         if(cek==''){
             var totd1=$('#totaldebet1').text().replace(/[^,\d]/g, '').toString();
@@ -1268,6 +1269,7 @@ $(document).ready(function(){
     }
 
     function kirimsyarat(){        
+        var id1=$('#id1').val();
         var tgltransaksix1=$('#tgltransaksix1').val();
         var nomorbuktix1=$('#nomorbuktix1').val();
         var idjenispinjamanx1=$('#idjenispinjamanx1').val();
@@ -1277,6 +1279,7 @@ $(document).ready(function(){
         var kodepinjamanx1=$('#kodepinjamanx1').val();
 
         let formData = new FormData();
+            formData.append('id1', id1);
             formData.append('tgltransaksix1', tgltransaksix1);
             formData.append('nomorbuktix1', nomorbuktix1);
             formData.append('idjenispinjamanx1', idjenispinjamanx1);
@@ -1603,6 +1606,7 @@ $(document).ready(function(){
 
     function nomorbukti(){        
         var tgltransaksix1=$('#tgltransaksix1').val();
+        
 
         $.ajax({
             enctype: 'multipart/form-data',
@@ -1876,7 +1880,7 @@ $(document).ready(function(){
         })
     } 
     
-    function data_posting(){
+    function data_posting(){        
         var tgltransaksi1=$('#tgltransaksi5').text();
         var nomorbukti1=$('#nomorbukti5').text();
         var tglposting1=$('#tglposting5').text();
@@ -1977,7 +1981,7 @@ $(document).ready(function(){
         kirimsyarat();
         setTimeout(() => {
             window.open('{{ route('pinjaman01.transaksi.jurnalangsuran_printkwitansi') }}');
-        }, 100);
+        }, 1000);
     });
 
     $('#show_data1').on('click','.item_printxxx',function(){

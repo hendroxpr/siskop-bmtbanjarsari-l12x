@@ -617,7 +617,7 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'updated_at', name: 'updated_at' },
+                { data: 'updated_ats', name: 'updated_at' },
                 { data: 'nomorbukti', name: 'nomorbukti' },
                 { data: 'sandi', name: 'sandi.sandi' },
                 { data: 'coa', name: 'coa.coa' },
@@ -678,6 +678,7 @@ $(document).ready(function(){
     }
 
     $('#btn_posting1').on('click',function(){
+        $('#tglposting5').text($('#tgltransaksix1').val());
         let cek = $('#cek1').val();
         if(cek==''){
             var totd1=$('#totaldebet1').text().replace(/[^,\d]/g, '').toString();
@@ -1040,7 +1041,7 @@ $(document).ready(function(){
 
     function nomorbukti(){        
         var tgltransaksix1=$('#tgltransaksix1').val();
-
+        
         $.ajax({
             enctype: 'multipart/form-data',
             type   : 'post',

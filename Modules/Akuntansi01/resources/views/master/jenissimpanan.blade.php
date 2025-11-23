@@ -66,8 +66,8 @@
                         <th style="width:50px">Tfkeluar-K</th>							
                         <th style="width:50px">Admin-D</th>							
                         <th style="width:50px">Admin-K</th>							
-                        <th style="width:50px">Ujroh-D</th>							
-                        <th style="width:50px">Ujroh-K</th>							
+                        <th style="width:50px">Nisbah-D</th>							
+                        <th style="width:50px">Nisbah-K</th>							
                         <th style="width:50px">Keterangan</th>							
                         <th style="width:50px">Action</th>
                     </tr>

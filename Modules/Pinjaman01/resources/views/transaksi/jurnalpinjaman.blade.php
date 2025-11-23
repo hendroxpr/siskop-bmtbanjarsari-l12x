@@ -789,7 +789,7 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'updated_at', name: 'updated_at' },
+                { data: 'updated_ats', name: 'updated_at' },
                 { data: 'nomorbukti', name: 'nomorbukti' },
                 { data: 'sandi', name: 'sandi.sandi' },
                 { data: 'coa', name: 'coa.coa' },
@@ -839,15 +839,15 @@ $(document).ready(function(){
                 {  "data": 'DT_RowIndex',
                     orderable: false, 
                     searchable: false },
-                { data: 'nama', name: 'anggota.nama' },
-                { data: 'nia', name: 'anggota.nia' },
-                { data: 'nik', name: 'anggota.nik' },
-                { data: 'ecard', name: 'anggota.ecard' },
-                { data: 'alamat', name: 'anggota.alamat' },
-                { data: 'desa', name: 'anggota.desa.desa' },
-                { data: 'kecamatan', name: 'anggota.desa.kecamatan.kecamatan' },
-                { data: 'kabupaten', name: 'anggota.desa.kecamatan.kabupaten.kabupaten' },
-                { data: 'propinsi', name: 'anggota.desa.kecamatan.kabupaten.propinsi.propinsi' },
+                { data: 'namas', name: 'nama' },
+                { data: 'nias', name: 'nia' },
+                { data: 'niks', name: 'nik' },
+                { data: 'ecards', name: 'ecard' },
+                { data: 'alamat', name: 'alamat' },
+                { data: 'desa', name: 'desa.desa' },
+                { data: 'kecamatan', name: 'desa.kecamatan.kecamatan' },
+                { data: 'kabupaten', name: 'desa.kecamatan.kabupaten.kabupaten' },
+                { data: 'propinsi', name: 'desa.kecamatan.kabupaten.propinsi.propinsi' },
                                
                 // { data: 'action', name: 'action'},
             ]
@@ -1075,6 +1075,7 @@ $(document).ready(function(){
     }
 
     $('#btn_posting1').on('click',function(){
+        $('#tglposting5').val($('#tgltransaksix1').val());
         let cek = $('#cek1').val();
         if(cek==''){
             var totd1=$('#totaldebet1').text().replace(/[^,\d]/g, '').toString();
@@ -1281,7 +1282,8 @@ $(document).ready(function(){
         data1Datatable.draw(null, false);               
     }
 
-    function kirimsyarat(){        
+    function kirimsyarat(){
+        var id1 = $('#id1').val();         
         var tgltransaksix1=$('#tgltransaksix1').val();
         var nomorbuktix1=$('#nomorbuktix1').val();
         var idjenispinjamanx1=$('#idjenispinjamanx1').val();
@@ -1291,6 +1293,7 @@ $(document).ready(function(){
         var kodepinjamanx1=$('#kodepinjamanx1').val();
 
         let formData = new FormData();
+            formData.append('id1', id1);
             formData.append('tgltransaksix1', tgltransaksix1);
             formData.append('nomorbuktix1', nomorbuktix1);
             formData.append('idjenispinjamanx1', idjenispinjamanx1);
@@ -1618,6 +1621,7 @@ $(document).ready(function(){
 
     function nomorbukti(){        
         var tgltransaksix1=$('#tgltransaksix1').val();
+        
 
         $.ajax({
             enctype: 'multipart/form-data',
@@ -1931,7 +1935,7 @@ $(document).ready(function(){
         kirimsyarat();
         setTimeout(() => {
             window.open('{{ route('pinjaman01.transaksi.jurnalpinjaman_printkwitansi') }}');
-        }, 100);
+        }, 1000);
     });
 
     $('#show_data1').on('click','.item_printxxx',function(){

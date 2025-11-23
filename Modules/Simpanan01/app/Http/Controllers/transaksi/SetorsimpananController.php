@@ -406,6 +406,11 @@ class SetorsimpananController extends Controller
         
         ->addIndexColumn()
         
+        ->addColumn('updated_ats', function ($row) {
+            $updated_at = explode(" ", $row->updated_at);
+            $times = $updated_at[1];
+            return $row->tgltransaksi . ' ' . $times;
+          })
         ->addColumn('kredit', function ($row) {
             return $row->kredit ? number_format($row->kredit,0) : '0';
         })
@@ -450,7 +455,10 @@ class SetorsimpananController extends Controller
             }
         })
         
-        ->rawColumns(['action'])
+        ->rawColumns([
+            'updated_ats',
+            'action'
+            ])
 
 
         ->make(true);

@@ -247,7 +247,7 @@ class  DetailpinjamanController extends Controller
         $data = $datax
             ->addIndexColumn()
 
-            ->addColumn('kode', function ($row) {
+            ->addColumn('kodes', function ($row) {
                 $idjenispinjaman1 = $row->idjenispinjaman;
                 $idcoa01d =Jenispinjaman::select('idcoa01d')
                     ->where('id','=',$idjenispinjaman1)
@@ -374,7 +374,7 @@ class  DetailpinjamanController extends Controller
             })
 
             ->rawColumns([
-                'kode',
+                'kodes',
                 'nama',
                 'nia',
                 'jenispinjaman',
